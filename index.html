@@ -3,38 +3,44 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Aerarium</title>
+    <title>Aerarium — Portfolio Discipline and Market Research</title>
     <meta
       name="description"
-      content="Aerarium brings private portfolio discipline and source-first public-market research into one clean investing system."
+      content="Aerarium Portfolio turns your investing rules into a private cockpit. Aerarium Research gives you source-first public-market data before you make the next decision."
     />
     <style>
       :root {
         color-scheme: dark;
-        --bg: #101412;
-        --bg-2: #181c1a;
-        --panel: rgba(24, 28, 26, 0.78);
-        --line: rgba(217, 197, 155, 0.16);
-        --text: #f4f0e6;
-        --muted: #aab2ad;
-        --brand: #2fbf71;
-        --brand-2: #59d593;
+        --bg: #090d0b;
+        --bg-soft: #101412;
+        --panel: #0d130f;
+        --panel-2: #0d0f0e;
+        --text: #f6f2e7;
+        --muted: #aeb8b2;
+        --green: #59d593;
+        --green-2: #2fbf71;
         --gold: #d9c59b;
+        --line: rgba(255, 255, 255, 0.1);
+        --green-line: rgba(89, 213, 147, 0.22);
+        --gold-line: rgba(217, 197, 155, 0.24);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
-        min-height: 100vh;
-        background:
-          radial-gradient(circle at 20% 5%, rgba(47, 191, 113, 0.18), transparent 30rem),
-          radial-gradient(circle at 80% 10%, rgba(217, 197, 155, 0.16), transparent 34rem),
-          linear-gradient(135deg, #0b0f0d 0%, var(--bg) 52%, #080a09 100%);
+        overflow-x: hidden;
+        background: var(--bg);
         color: var(--text);
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
       }
 
       a {
@@ -42,284 +48,787 @@
         text-decoration: none;
       }
 
-      .shell {
-        width: min(1180px, calc(100vw - 32px));
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: rgba(9, 13, 11, 0.9);
+        backdrop-filter: blur(16px);
+      }
+
+      .header-inner,
+      .section-inner,
+      .hero-inner {
+        width: min(1280px, calc(100vw - 32px));
         margin: 0 auto;
       }
 
-      header {
+      .header-inner {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 28px 0;
+        gap: 18px;
+        padding: 18px 0;
       }
 
-      .wordmark {
-        letter-spacing: 0.18em;
-        font-size: 14px;
-        font-weight: 800;
+      .brand {
+        font-size: 22px;
+        font-weight: 950;
+        letter-spacing: 0.04em;
       }
 
-      nav {
+      .nav {
         display: flex;
         align-items: center;
-        gap: 18px;
+        gap: 26px;
         color: var(--muted);
         font-size: 14px;
+      }
+
+      .nav a:hover {
+        color: var(--text);
       }
 
       .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 46px;
-        padding: 0 18px;
-        border: 1px solid rgba(244, 240, 230, 0.14);
+        gap: 9px;
         border-radius: 999px;
-        background: rgba(244, 240, 230, 0.08);
-        font-weight: 700;
+        border: 1px solid var(--gold-line);
+        min-height: 46px;
+        padding: 0 20px;
+        color: var(--gold);
+        font-size: 14px;
+        font-weight: 850;
+        white-space: nowrap;
       }
 
       .button.primary {
-        border-color: rgba(89, 213, 147, 0.55);
-        background: linear-gradient(135deg, var(--brand), #4dba6f);
-        color: #06100b;
-        box-shadow: 0 20px 55px rgba(47, 191, 113, 0.18);
+        border-color: transparent;
+        background: var(--green);
+        color: #08110c;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
       }
 
       .hero {
-        min-height: calc(100vh - 104px);
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 18% 22%, rgba(47, 191, 113, 0.15), transparent 31%),
+          linear-gradient(135deg, #101412, #080b09);
+      }
+
+      .hero-inner {
         display: grid;
-        grid-template-columns: 1.02fr 0.98fr;
-        gap: 18px;
-        align-items: stretch;
-        padding-bottom: 34px;
-      }
-
-      .hero-copy {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 52px;
-        border: 1px solid var(--line);
-        border-radius: 28px;
-        background: linear-gradient(160deg, rgba(24, 28, 26, 0.82), rgba(12, 16, 14, 0.74));
-      }
-
-      .eyebrow {
-        color: var(--brand-2);
-        font-size: 13px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
+        grid-template-columns: 1.03fr 0.97fr;
+        gap: 42px;
+        align-items: center;
+        padding: 72px 0 80px;
       }
 
       h1 {
-        margin: 18px 0 22px;
-        font-size: clamp(52px, 8vw, 110px);
-        line-height: 0.88;
+        max-width: 920px;
+        margin: 0;
+        color: var(--text);
+        font-size: clamp(56px, 7.5vw, 104px);
+        line-height: 0.98;
         letter-spacing: 0;
+        font-weight: 950;
       }
 
       .lead {
-        max-width: 610px;
-        margin: 0 0 30px;
+        max-width: 690px;
+        margin: 30px 0 0;
         color: var(--muted);
-        font-size: clamp(18px, 2vw, 24px);
-        line-height: 1.42;
+        font-size: 22px;
+        line-height: 1.58;
       }
 
-      .actions {
+      .hero-actions,
+      .proof {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 14px;
       }
 
-      .product-grid {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        gap: 18px;
+      .hero-actions {
+        margin-top: 34px;
       }
 
-      .product {
+      .proof {
+        margin-top: 34px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .proof span {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .check {
+        display: inline-grid;
+        place-items: center;
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--green);
+        border-radius: 50%;
+        color: var(--green);
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      .hero-visual {
         position: relative;
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 330px;
-        padding: 34px;
         border: 1px solid var(--line);
-        border-radius: 28px;
-        background: var(--panel);
+        border-radius: 34px;
+        background: linear-gradient(135deg, #17201b, #050706);
+        padding: 24px;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.46);
       }
 
-      .product::after {
+      .hero-visual::after {
         content: "";
         position: absolute;
-        inset: auto -20% -36% 22%;
-        height: 220px;
-        background: radial-gradient(circle, rgba(89, 213, 147, 0.24), transparent 65%);
-        pointer-events: none;
+        right: -90px;
+        bottom: -110px;
+        width: 330px;
+        height: 330px;
+        border-radius: 50%;
+        background: rgba(89, 213, 147, 0.12);
+        filter: blur(20px);
       }
 
-      .product.research::after {
-        background: radial-gradient(circle, rgba(217, 197, 155, 0.22), transparent 65%);
-      }
-
-      .tag {
-        width: fit-content;
-        padding: 7px 11px;
-        border: 1px solid rgba(244, 240, 230, 0.14);
-        border-radius: 999px;
-        color: var(--gold);
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-      }
-
-      h2 {
-        margin: 18px 0 12px;
-        font-size: clamp(31px, 4vw, 54px);
-        line-height: 0.98;
-        letter-spacing: 0;
-      }
-
-      .product p,
-      .feature p {
+      .visual-labels {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
         color: var(--muted);
-        line-height: 1.5;
-        margin: 0;
-      }
-
-      .feature-row {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 14px;
-        padding: 0 0 48px;
-      }
-
-      .feature {
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        background: rgba(24, 28, 26, 0.66);
-        padding: 22px;
-      }
-
-      .feature strong {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 17px;
-      }
-
-      footer {
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        padding: 24px 0 36px;
         font-size: 13px;
       }
 
-      @media (max-width: 900px) {
-        header {
-          align-items: flex-start;
-          gap: 18px;
-        }
+      .visual-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 16px;
+        margin-top: 28px;
+      }
 
-        nav {
+      .score-card,
+      .xray-card,
+      .source-card {
+        border-radius: 28px;
+        padding: 24px;
+      }
+
+      .score-card {
+        border: 1px solid rgba(89, 213, 147, 0.26);
+        background: #0d130f;
+      }
+
+      .score-number {
+        color: var(--green);
+        font-size: 88px;
+        font-weight: 950;
+        line-height: 0.9;
+      }
+
+      .score-label {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .bars {
+        display: grid;
+        gap: 10px;
+        margin-top: 26px;
+      }
+
+      .bar {
+        height: 9px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #26312b;
+      }
+
+      .fill {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--green);
+      }
+
+      .fill.gold {
+        background: var(--gold);
+      }
+
+      .xray-card {
+        border: 1px solid rgba(217, 197, 155, 0.22);
+        background: #0d0f0e;
+      }
+
+      .xray-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--gold);
+        font-size: 15px;
+        font-weight: 850;
+      }
+
+      .xray-sub {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .live {
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .exposures {
+        display: grid;
+        gap: 14px;
+        margin-top: 26px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .exposure {
+        display: grid;
+        grid-template-columns: 54px 1fr 44px;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .exposure b {
+        color: var(--text);
+      }
+
+      .mini-track {
+        height: 9px;
+        border-radius: 999px;
+        background: #1f2723;
+      }
+
+      .mini-track span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--gold);
+      }
+
+      .source-card {
+        position: relative;
+        z-index: 1;
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .source-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .source-lines {
+        height: 82px;
+        margin-top: 16px;
+        border-radius: 18px;
+        background:
+          linear-gradient(90deg, rgba(217, 197, 155, 0.13), transparent),
+          repeating-linear-gradient(
+            90deg,
+            rgba(217, 197, 155, 0.42) 0 5px,
+            transparent 5px 24px
+          );
+      }
+
+      section.product-section {
+        background: var(--bg-soft);
+      }
+
+      section.product-section.research {
+        background: var(--panel-2);
+      }
+
+      .section-inner {
+        padding: 58px 0;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 28px;
+      }
+
+      .label {
+        color: var(--green);
+        font-size: 15px;
+        font-weight: 850;
+      }
+
+      .research .label {
+        color: var(--gold);
+      }
+
+      h2 {
+        margin: 14px 0 0;
+        color: var(--text);
+        font-size: clamp(42px, 5vw, 64px);
+        line-height: 1.02;
+        letter-spacing: 0;
+        font-weight: 950;
+      }
+
+      .section-copy {
+        max-width: 720px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 38px;
+      }
+
+      .feature-card,
+      .bridge-card,
+      .security-card {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .feature-card {
+        padding: 26px;
+      }
+
+      .icon {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 18px;
+        border-radius: 15px;
+        background: rgba(89, 213, 147, 0.12);
+        color: var(--green);
+        font-size: 24px;
+        font-weight: 850;
+      }
+
+      .research .icon,
+      .icon.gold {
+        background: rgba(217, 197, 155, 0.12);
+        color: var(--gold);
+      }
+
+      h3 {
+        margin: 0;
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .feature-card p,
+      .bridge-card p,
+      .security-card p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .bridge-section {
+        border-top: 1px solid var(--line);
+        background: linear-gradient(#0c100e, #090d0b);
+      }
+
+      .bridge-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .bridge-card {
+        padding: 28px;
+      }
+
+      .security-section {
+        border-top: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      .security-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .security-card {
+        padding: 32px;
+      }
+
+      .security-card.private {
+        border-color: var(--green-line);
+        background: var(--panel);
+      }
+
+      .security-card.access {
+        border-color: var(--gold-line);
+        background: var(--panel-2);
+      }
+
+      .security-card h2 {
+        font-size: 30px;
+      }
+
+      .security-card .button {
+        margin-top: 26px;
+      }
+
+      @media (max-width: 980px) {
+        .nav {
           display: none;
         }
 
-        .hero {
-          min-height: auto;
+        .hero-inner,
+        .visual-grid,
+        .section-head,
+        .feature-grid,
+        .bridge-grid,
+        .security-grid {
           grid-template-columns: 1fr;
         }
 
-        .hero-copy,
-        .product {
-          padding: 28px;
+        .section-head {
+          display: grid;
+        }
+
+        .hero-inner {
+          padding-top: 56px;
+        }
+
+        h1 {
+          font-size: clamp(54px, 13vw, 86px);
+        }
+
+        .lead {
+          font-size: 21px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .header-inner,
+        .section-inner,
+        .hero-inner {
+          width: calc(100vw - 28px);
+        }
+
+        .header-inner {
+          padding: 17px 0;
+        }
+
+        .brand {
+          font-size: 20px;
+        }
+
+        .button {
+          min-height: 44px;
+          padding: 0 16px;
+          font-size: 14px;
+        }
+
+        .hero-inner {
+          gap: 42px;
+          padding: 54px 0 64px;
+        }
+
+        .hero-actions .button {
+          flex: 1 1 auto;
+        }
+
+        .hero-visual {
+          border-radius: 28px;
+          padding: 20px;
+        }
+
+        .score-card,
+        .xray-card,
+        .source-card {
+          border-radius: 24px;
+        }
+
+        .score-number {
+          font-size: 78px;
+        }
+
+        .section-inner {
+          padding: 54px 0;
+        }
+
+        .feature-grid,
+        .bridge-grid,
+        .security-grid {
+          gap: 14px;
+        }
+
+        .feature-card,
+        .bridge-card,
+        .security-card {
+          padding: 26px;
           border-radius: 22px;
-        }
-
-        .feature-row {
-          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
   <body>
-    <div class="shell">
-      <header>
-        <a class="wordmark" href="/">AERARIUM</a>
-        <nav aria-label="Primary">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/">AERARIUM</a>
+        <nav class="nav" aria-label="Primary">
           <a href="#portfolio">Portfolio</a>
           <a href="#research">Research</a>
-          <a href="https://finsight-beryl.vercel.app/">Open Research</a>
+          <a href="#security">Security</a>
+          <a href="https://testflight.apple.com/join/Xna39VKU">Early Access</a>
         </nav>
-      </header>
+        <a class="button" href="https://finsight-beryl.vercel.app/">Open Research</a>
+      </div>
+    </header>
 
-      <main>
-        <section class="hero" aria-labelledby="hero-title">
-          <div class="hero-copy">
-            <div class="eyebrow">Private discipline. Source-first research.</div>
-            <h1 id="hero-title">Investing rules, finally enforced.</h1>
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <h1>Portfolio discipline and market research, under one roof.</h1>
             <p class="lead">
-              Aerarium combines a private portfolio cockpit with clean market research so investors can set a policy, inspect exposure, and make decisions without noise.
+              Aerarium Portfolio turns your investing rules into a private cockpit. Aerarium Research gives you source-first public-market data before you make the next decision.
             </p>
-            <div class="actions">
-              <a class="button primary" href="mailto:hello@aerarium.app?subject=Aerarium%20Portfolio%20Beta">Request Portfolio Beta</a>
+            <div class="hero-actions">
+              <a class="button primary" href="https://testflight.apple.com/join/Xna39VKU">Join iOS Beta</a>
               <a class="button" href="https://finsight-beryl.vercel.app/">Open Research</a>
+            </div>
+            <div class="proof" aria-label="Proof points">
+              <span><i class="check">✓</i> Private user data</span>
+              <span><i class="check">✓</i> Primary-source market data</span>
+              <span><i class="check">✓</i> Rules-first investing</span>
             </div>
           </div>
 
-          <div class="product-grid" aria-label="Aerarium products">
-            <article class="product" id="portfolio">
-              <div>
-                <span class="tag">Aerarium Portfolio</span>
-                <h2>Your private policy cockpit.</h2>
-                <p>
-                  Build an IPS, score your portfolio against your rules, inspect ETF look-through exposure, and keep thesis check-ins from drifting into hindsight.
-                </p>
+          <div class="hero-visual" aria-label="Aerarium product preview">
+            <div class="visual-labels">
+              <span>Private cockpit</span>
+              <span>Research workspace</span>
+            </div>
+            <div class="visual-grid">
+              <div class="score-card">
+                <div class="score-number">94</div>
+                <div class="score-label">Policy score</div>
+                <div class="bars">
+                  <div class="bar"><span class="fill" style="width: 86%"></span></div>
+                  <div class="bar"><span class="fill gold" style="width: 64%"></span></div>
+                  <div class="bar"><span class="fill" style="width: 78%"></span></div>
+                </div>
               </div>
-              <a class="button" href="mailto:hello@aerarium.app?subject=Aerarium%20Portfolio%20Beta">Join iOS beta</a>
-            </article>
 
-            <article class="product research" id="research">
-              <div>
-                <span class="tag">Aerarium Research</span>
-                <h2>Market data from primary sources.</h2>
-                <p>
-                  Search companies, track earnings, monitor fund activity, review ownership changes, and study filings-backed fundamentals in the research workspace.
-                </p>
+              <div class="xray-card">
+                <div class="xray-head">
+                  <div>
+                    ETF look-through
+                    <div class="xray-sub">SPY -&gt; NVDA, AAPL, MSFT exposure</div>
+                  </div>
+                  <span class="live">live</span>
+                </div>
+                <div class="exposures">
+                  <div class="exposure">
+                    <b>AAPL</b>
+                    <div class="mini-track"><span style="width: 74%"></span></div>
+                    <span>$498</span>
+                  </div>
+                  <div class="exposure">
+                    <b>MSFT</b>
+                    <div class="mini-track"><span style="width: 58%"></span></div>
+                    <span>$355</span>
+                  </div>
+                  <div class="exposure">
+                    <b>NVDA</b>
+                    <div class="mini-track"><span style="width: 46%"></span></div>
+                    <span>$236</span>
+                  </div>
+                </div>
               </div>
-              <a class="button" href="https://finsight-beryl.vercel.app/">Launch research</a>
+            </div>
+            <div class="source-card">
+              <div class="source-head">
+                <span>Source-first research</span>
+                <span>EDGAR + funds + macro</span>
+              </div>
+              <div class="source-lines" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio" class="product-section">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <div class="label">Private discipline</div>
+              <h2>Aerarium Portfolio</h2>
+              <p class="section-copy">
+                A private iOS cockpit for turning your investment policy into live guardrails.
+              </p>
+            </div>
+            <a class="button primary" href="https://testflight.apple.com/join/Xna39VKU">Join iOS Beta →</a>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="icon">↗</div>
+              <h3>IPS Cockpit</h3>
+              <p>Build an Investment Policy Statement, track rules, review versions, and surface what needs attention.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">⚖</div>
+              <h3>Policy Score</h3>
+              <p>Explain allocation drift, concentration risk, liquidity, goals, and review cadence in one score.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">◎</div>
+              <h3>Portfolio X-Ray</h3>
+              <p>Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">◉</div>
+              <h3>Goals + Funding Plan</h3>
+              <p>Assign portfolio sleeves to goals without hiding global allocation tradeoffs.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">✓</div>
+              <h3>Thesis Check-ins</h3>
+              <p>Keep investing decisions tied to a written thesis instead of impulse trades.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">▣</div>
+              <h3>Private by Design</h3>
+              <p>Encrypted financial fields, Keychain-backed recovery planning, and user-controlled data.</p>
             </article>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="feature-row" aria-label="Portfolio features">
-          <div class="feature">
-            <strong>Policy Score</strong>
-            <p>See how allocation drift, concentration risk, cash runway, and review cadence affect your discipline.</p>
+      <section id="research" class="product-section research">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <div class="label">Source-first analytics</div>
+              <h2>Aerarium Research</h2>
+              <p class="section-copy">
+                A research workspace for companies, funds, macro signals, and ownership flows.
+              </p>
+            </div>
+            <a class="button" href="https://finsight-beryl.vercel.app/">Open Research →</a>
           </div>
-          <div class="feature">
-            <strong>Portfolio X-Ray</strong>
-            <p>Look through supported ETFs to understand real holdings, sector, asset-class, and currency exposure.</p>
-          </div>
-          <div class="feature">
-            <strong>IPS Guardrails</strong>
-            <p>Turn risk profile, targets, caps, liquidity, and exclusions into a durable rulebook.</p>
-          </div>
-          <div class="feature">
-            <strong>Source-First Research</strong>
-            <p>Use public-market context before changing the portfolio, without mixing research with private data.</p>
-          </div>
-        </section>
-      </main>
 
-      <footer>
-        Aerarium Portfolio is a private portfolio discipline app. Aerarium Research links to the existing FinSight market analytics product while branding is finalized.
-      </footer>
-    </div>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="icon gold">⌁</div>
+              <h3>Company Fundamentals</h3>
+              <p>Revenue, cash flow, margins, valuation, debt, dividends, buybacks, and segment charts.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon gold">▥</div>
+              <h3>Operational KPIs</h3>
+              <p>Filing-derived metrics like subscribers, vehicles, customers, energy, regional splits, and growth series.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon gold">▤</div>
+              <h3>Funds + Ownership</h3>
+              <p>13F-style top buys, top sells, top holdings, sector allocation, and institutional ownership views.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon gold">⌂</div>
+              <h3>Macro Signals</h3>
+              <p>Yield curve, Fed funds futures, mortgage rates, commodities, and economic calendar.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon gold">⌕</div>
+              <h3>Market Screens</h3>
+              <p>Sector heatmap, top movers, index changes, earnings calendar, analyst estimates, and short interest.</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon gold">▭</div>
+              <h3>Watchlists</h3>
+              <p>Track names and lightweight portfolios while researching public-market ideas.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="bridge-section">
+        <div class="section-inner">
+          <div class="bridge-grid">
+            <article class="bridge-card">
+              <div class="icon">□</div>
+              <h3>Use Portfolio when</h3>
+              <p>you want to govern your own money with policy rules, scorecards, X-Ray exposure, and check-ins.</p>
+            </article>
+            <article class="bridge-card">
+              <div class="icon">▤</div>
+              <h3>Use Research when</h3>
+              <p>you want to understand companies, filings, ownership, funds, macro context, and market signals.</p>
+            </article>
+            <article class="bridge-card">
+              <div class="icon">◌</div>
+              <h3>Together</h3>
+              <p>research informs decisions; portfolio discipline keeps those decisions aligned with your policy.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="security" class="security-section">
+        <div class="section-inner">
+          <div class="security-grid">
+            <article class="security-card private">
+              <div class="icon">□</div>
+              <h2>Private data stays private.</h2>
+              <p>
+                Portfolio is designed around user-owned financial data, encrypted fields, and recovery flows. Research uses public-market data and stays separate from private portfolio records.
+              </p>
+            </article>
+            <article class="security-card access">
+              <div class="icon gold">◷</div>
+              <h2>Portfolio access opens first on iOS.</h2>
+              <p>
+                Research is already usable on web. Portfolio is the private discipline layer that will launch through iOS early access.
+              </p>
+              <a class="button primary" href="https://testflight.apple.com/join/Xna39VKU">Join iOS Beta →</a>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
