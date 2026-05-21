@@ -213,6 +213,44 @@
         filter: blur(20px);
       }
 
+      .product-frame {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: #080b0f;
+        box-shadow: 0 18px 56px rgba(0, 0, 0, 0.28);
+      }
+
+      .product-frame img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .product-frame figcaption {
+        position: absolute;
+        left: 14px;
+        bottom: 14px;
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 12px;
+        border: 1px solid rgba(246, 242, 231, 0.1);
+        border-radius: 999px;
+        background: rgba(5, 7, 6, 0.72);
+        color: var(--text);
+        font-size: 12px;
+        font-weight: 850;
+        backdrop-filter: blur(12px);
+      }
+
+      .hero-shot {
+        height: 250px;
+      }
+
       .visual-labels {
         position: relative;
         z-index: 1;
@@ -222,7 +260,7 @@
         font-size: 12px;
       }
 
-      .visual-grid {
+      .portfolio-teaser {
         position: relative;
         z-index: 1;
         display: grid;
@@ -232,8 +270,7 @@
       }
 
       .score-card,
-      .xray-card,
-      .source-card {
+      .xray-card {
         border-radius: 16px;
         padding: 18px;
       }
@@ -336,81 +373,6 @@
         height: 100%;
         border-radius: inherit;
         background: var(--gold);
-      }
-
-      .source-card {
-        position: relative;
-        z-index: 1;
-        margin-top: 12px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.03);
-      }
-
-      .source-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .research-preview {
-        display: grid;
-        gap: 8px;
-        margin-top: 14px;
-      }
-
-      .research-row {
-        display: grid;
-        grid-template-columns: 52px minmax(0, 1fr) auto;
-        align-items: center;
-        gap: 10px;
-        min-height: 36px;
-        padding: 8px 10px;
-        border: 1px solid rgba(246, 242, 231, 0.08);
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.026);
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .research-row strong {
-        overflow: hidden;
-        color: var(--text);
-        font-size: 12px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .research-row span:last-child {
-        text-align: right;
-        white-space: nowrap;
-      }
-
-      .research-source {
-        display: inline-grid;
-        place-items: center;
-        min-width: 42px;
-        min-height: 21px;
-        border: 1px solid rgba(89, 213, 147, 0.24);
-        border-radius: 999px;
-        background: rgba(89, 213, 147, 0.1);
-        color: var(--green);
-        font-size: 10px;
-        font-weight: 900;
-        letter-spacing: 0.06em;
-      }
-
-      .research-source.gold {
-        border-color: rgba(217, 197, 155, 0.28);
-        background: rgba(217, 197, 155, 0.1);
-        color: var(--gold);
-      }
-
-      .research-source.blue {
-        border-color: rgba(139, 176, 255, 0.26);
-        background: rgba(139, 176, 255, 0.09);
-        color: #b5caff;
       }
 
       section.product-section {
@@ -516,6 +478,22 @@
         line-height: 1.55;
       }
 
+      .screenshot-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: 14px;
+        margin-top: 32px;
+      }
+
+      .screenshot-grid .wide {
+        grid-column: 1 / -1;
+        height: 430px;
+      }
+
+      .screenshot-grid .half {
+        height: 300px;
+      }
+
       .bridge-section {
         border-top: 1px solid var(--line);
         background: transparent;
@@ -576,9 +554,10 @@
         }
 
         .hero-inner,
-        .visual-grid,
+        .portfolio-teaser,
         .section-head,
         .feature-grid,
+        .screenshot-grid,
         .bridge-grid,
         .security-grid {
           grid-template-columns: 1fr;
@@ -603,6 +582,12 @@
 
         .feature-card {
           min-height: 0;
+        }
+
+        .screenshot-grid .wide,
+        .screenshot-grid .half {
+          grid-column: auto;
+          height: 280px;
         }
 
         .section-inner {
@@ -652,7 +637,7 @@
 
         .score-card,
         .xray-card,
-        .source-card {
+        .product-frame {
           border-radius: 24px;
         }
 
@@ -660,14 +645,8 @@
           font-size: 78px;
         }
 
-        .research-row {
-          grid-template-columns: 48px minmax(0, 1fr);
-        }
-
-        .research-row span:last-child {
-          grid-column: 2;
-          text-align: left;
-          white-space: normal;
+        .hero-shot {
+          height: 210px;
         }
 
         .section-inner {
@@ -685,6 +664,11 @@
         .security-card {
           padding: 26px;
           border-radius: 22px;
+        }
+
+        .screenshot-grid .wide,
+        .screenshot-grid .half {
+          height: 220px;
         }
       }
     </style>
@@ -727,7 +711,15 @@
               <span>Private cockpit</span>
               <span>Research workspace</span>
             </div>
-            <div class="visual-grid">
+            <figure class="product-frame hero-shot">
+              <img
+                src="assets/screenshots/finsight-macro-hero.png"
+                alt="Aerarium Research macro dashboard with inflation, labor, yield curve, and credit risk signals"
+              />
+              <figcaption>Live Research dashboard</figcaption>
+            </figure>
+
+            <div class="portfolio-teaser">
               <div class="score-card">
                 <div class="score-number">94</div>
                 <div class="score-label">Policy score</div>
@@ -762,29 +754,6 @@
                     <div class="mini-track"><span style="width: 46%"></span></div>
                     <span>$236</span>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="source-card">
-              <div class="source-head">
-                <span>Source-first research</span>
-                <span>from FinSight</span>
-              </div>
-              <div class="research-preview" aria-label="Aerarium Research preview">
-                <div class="research-row">
-                  <span class="research-source">EDGAR</span>
-                  <strong>Company fundamentals</strong>
-                  <span>Revenue · margins · cash flow</span>
-                </div>
-                <div class="research-row">
-                  <span class="research-source gold">13F</span>
-                  <strong>Funds + ownership</strong>
-                  <span>Top holders · fund flows</span>
-                </div>
-                <div class="research-row">
-                  <span class="research-source blue">MACRO</span>
-                  <strong>Market signals</strong>
-                  <span>CPI · yield curve · credit</span>
                 </div>
               </div>
             </div>
@@ -837,6 +806,7 @@
               <p>Encrypted financial fields, Keychain-backed recovery planning, and user-controlled data.</p>
             </article>
           </div>
+
         </div>
       </section>
 
@@ -851,6 +821,30 @@
               </p>
             </div>
             <a class="button" href="https://finsight-beryl.vercel.app/">Open Research →</a>
+          </div>
+
+          <div class="screenshot-grid" aria-label="Aerarium Research product screenshots">
+            <figure class="product-frame wide">
+              <img
+                src="assets/screenshots/finsight-overlap.png"
+                alt="Stock overlap heatmap showing common equity exposure across tracked funds"
+              />
+              <figcaption>Stock overlap heatmap</figcaption>
+            </figure>
+            <figure class="product-frame half">
+              <img
+                src="assets/screenshots/finsight-macro.png"
+                alt="Macro dashboard with inflation, labor, rates, and cross-asset risk cards"
+              />
+              <figcaption>Macro dashboard</figcaption>
+            </figure>
+            <figure class="product-frame half">
+              <img
+                src="assets/screenshots/finsight-segments.png"
+                alt="Company financials page with revenue segment and metric charts"
+              />
+              <figcaption>Company financials</figcaption>
+            </figure>
           </div>
 
           <div class="feature-grid">
