@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aerarium</title>
+    <meta
+      name="description"
+      content="Aerarium brings private portfolio discipline and source-first public-market research into one clean investing system."
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #101412;
+        --bg-2: #181c1a;
+        --panel: rgba(24, 28, 26, 0.78);
+        --line: rgba(217, 197, 155, 0.16);
+        --text: #f4f0e6;
+        --muted: #aab2ad;
+        --brand: #2fbf71;
+        --brand-2: #59d593;
+        --gold: #d9c59b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 20% 5%, rgba(47, 191, 113, 0.18), transparent 30rem),
+          radial-gradient(circle at 80% 10%, rgba(217, 197, 155, 0.16), transparent 34rem),
+          linear-gradient(135deg, #0b0f0d 0%, var(--bg) 52%, #080a09 100%);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .shell {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 28px 0;
+      }
+
+      .wordmark {
+        letter-spacing: 0.18em;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 18px;
+        border: 1px solid rgba(244, 240, 230, 0.14);
+        border-radius: 999px;
+        background: rgba(244, 240, 230, 0.08);
+        font-weight: 700;
+      }
+
+      .button.primary {
+        border-color: rgba(89, 213, 147, 0.55);
+        background: linear-gradient(135deg, var(--brand), #4dba6f);
+        color: #06100b;
+        box-shadow: 0 20px 55px rgba(47, 191, 113, 0.18);
+      }
+
+      .hero {
+        min-height: calc(100vh - 104px);
+        display: grid;
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 18px;
+        align-items: stretch;
+        padding-bottom: 34px;
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 52px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(160deg, rgba(24, 28, 26, 0.82), rgba(12, 16, 14, 0.74));
+      }
+
+      .eyebrow {
+        color: var(--brand-2);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 18px 0 22px;
+        font-size: clamp(52px, 8vw, 110px);
+        line-height: 0.88;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 610px;
+        margin: 0 0 30px;
+        color: var(--muted);
+        font-size: clamp(18px, 2vw, 24px);
+        line-height: 1.42;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .product {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 330px;
+        padding: 34px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--panel);
+      }
+
+      .product::after {
+        content: "";
+        position: absolute;
+        inset: auto -20% -36% 22%;
+        height: 220px;
+        background: radial-gradient(circle, rgba(89, 213, 147, 0.24), transparent 65%);
+        pointer-events: none;
+      }
+
+      .product.research::after {
+        background: radial-gradient(circle, rgba(217, 197, 155, 0.22), transparent 65%);
+      }
+
+      .tag {
+        width: fit-content;
+        padding: 7px 11px;
+        border: 1px solid rgba(244, 240, 230, 0.14);
+        border-radius: 999px;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        margin: 18px 0 12px;
+        font-size: clamp(31px, 4vw, 54px);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .product p,
+      .feature p {
+        color: var(--muted);
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .feature-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        padding: 0 0 48px;
+      }
+
+      .feature {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(24, 28, 26, 0.66);
+        padding: 22px;
+      }
+
+      .feature strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 17px;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        padding: 24px 0 36px;
+        font-size: 13px;
+      }
+
+      @media (max-width: 900px) {
+        header {
+          align-items: flex-start;
+          gap: 18px;
+        }
+
+        nav {
+          display: none;
+        }
+
+        .hero {
+          min-height: auto;
+          grid-template-columns: 1fr;
+        }
+
+        .hero-copy,
+        .product {
+          padding: 28px;
+          border-radius: 22px;
+        }
+
+        .feature-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <a class="wordmark" href="/">AERARIUM</a>
+        <nav aria-label="Primary">
+          <a href="#portfolio">Portfolio</a>
+          <a href="#research">Research</a>
+          <a href="https://finsight-beryl.vercel.app/">Open Research</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <div class="eyebrow">Private discipline. Source-first research.</div>
+            <h1 id="hero-title">Investing rules, finally enforced.</h1>
+            <p class="lead">
+              Aerarium combines a private portfolio cockpit with clean market research so investors can set a policy, inspect exposure, and make decisions without noise.
+            </p>
+            <div class="actions">
+              <a class="button primary" href="mailto:hello@aerarium.app?subject=Aerarium%20Portfolio%20Beta">Request Portfolio Beta</a>
+              <a class="button" href="https://finsight-beryl.vercel.app/">Open Research</a>
+            </div>
+          </div>
+
+          <div class="product-grid" aria-label="Aerarium products">
+            <article class="product" id="portfolio">
+              <div>
+                <span class="tag">Aerarium Portfolio</span>
+                <h2>Your private policy cockpit.</h2>
+                <p>
+                  Build an IPS, score your portfolio against your rules, inspect ETF look-through exposure, and keep thesis check-ins from drifting into hindsight.
+                </p>
+              </div>
+              <a class="button" href="mailto:hello@aerarium.app?subject=Aerarium%20Portfolio%20Beta">Join iOS beta</a>
+            </article>
+
+            <article class="product research" id="research">
+              <div>
+                <span class="tag">Aerarium Research</span>
+                <h2>Market data from primary sources.</h2>
+                <p>
+                  Search companies, track earnings, monitor fund activity, review ownership changes, and study filings-backed fundamentals in the research workspace.
+                </p>
+              </div>
+              <a class="button" href="https://finsight-beryl.vercel.app/">Launch research</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="feature-row" aria-label="Portfolio features">
+          <div class="feature">
+            <strong>Policy Score</strong>
+            <p>See how allocation drift, concentration risk, cash runway, and review cadence affect your discipline.</p>
+          </div>
+          <div class="feature">
+            <strong>Portfolio X-Ray</strong>
+            <p>Look through supported ETFs to understand real holdings, sector, asset-class, and currency exposure.</p>
+          </div>
+          <div class="feature">
+            <strong>IPS Guardrails</strong>
+            <p>Turn risk profile, targets, caps, liquidity, and exclusions into a durable rulebook.</p>
+          </div>
+          <div class="feature">
+            <strong>Source-First Research</strong>
+            <p>Use public-market context before changing the portfolio, without mixing research with private data.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        Aerarium Portfolio is a private portfolio discipline app. Aerarium Research links to the existing FinSight market analytics product while branding is finalized.
+      </footer>
+    </div>
+  </body>
+</html>
