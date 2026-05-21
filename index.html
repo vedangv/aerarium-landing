@@ -354,17 +354,63 @@
         font-size: 13px;
       }
 
-      .source-lines {
-        height: 58px;
+      .research-preview {
+        display: grid;
+        gap: 8px;
         margin-top: 14px;
-        border-radius: 12px;
-        background:
-          linear-gradient(90deg, rgba(217, 197, 155, 0.13), transparent),
-          repeating-linear-gradient(
-            90deg,
-            rgba(217, 197, 155, 0.42) 0 5px,
-            transparent 5px 24px
-          );
+      }
+
+      .research-row {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+        min-height: 36px;
+        padding: 8px 10px;
+        border: 1px solid rgba(246, 242, 231, 0.08);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.026);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .research-row strong {
+        overflow: hidden;
+        color: var(--text);
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .research-row span:last-child {
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .research-source {
+        display: inline-grid;
+        place-items: center;
+        min-width: 42px;
+        min-height: 21px;
+        border: 1px solid rgba(89, 213, 147, 0.24);
+        border-radius: 999px;
+        background: rgba(89, 213, 147, 0.1);
+        color: var(--green);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+      }
+
+      .research-source.gold {
+        border-color: rgba(217, 197, 155, 0.28);
+        background: rgba(217, 197, 155, 0.1);
+        color: var(--gold);
+      }
+
+      .research-source.blue {
+        border-color: rgba(139, 176, 255, 0.26);
+        background: rgba(139, 176, 255, 0.09);
+        color: #b5caff;
       }
 
       section.product-section {
@@ -614,6 +660,16 @@
           font-size: 78px;
         }
 
+        .research-row {
+          grid-template-columns: 48px minmax(0, 1fr);
+        }
+
+        .research-row span:last-child {
+          grid-column: 2;
+          text-align: left;
+          white-space: normal;
+        }
+
         .section-inner {
           padding: 54px 0;
         }
@@ -712,9 +768,25 @@
             <div class="source-card">
               <div class="source-head">
                 <span>Source-first research</span>
-                <span>EDGAR + funds + macro</span>
+                <span>from FinSight</span>
               </div>
-              <div class="source-lines" aria-hidden="true"></div>
+              <div class="research-preview" aria-label="Aerarium Research preview">
+                <div class="research-row">
+                  <span class="research-source">EDGAR</span>
+                  <strong>Company fundamentals</strong>
+                  <span>Revenue · margins · cash flow</span>
+                </div>
+                <div class="research-row">
+                  <span class="research-source gold">13F</span>
+                  <strong>Funds + ownership</strong>
+                  <span>Top holders · fund flows</span>
+                </div>
+                <div class="research-row">
+                  <span class="research-source blue">MACRO</span>
+                  <strong>Market signals</strong>
+                  <span>CPI · yield curve · credit</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
