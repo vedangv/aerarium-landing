@@ -1,0 +1,469 @@
+import React, { useState, useEffect } from "react";
+import { 
+  Lock, 
+  Sparkles, 
+  Smartphone, 
+  PieChart, 
+  Search, 
+  Activity, 
+  BookOpen, 
+  Fingerprint, 
+  Layers, 
+  TrendingUp, 
+  ArrowUpRight, 
+  Globe, 
+  FileText,
+  BadgeAlert,
+  Sliders,
+  DollarSign,
+  Briefcase,
+  ShieldAlert,
+  CheckCircle,
+  HelpCircle
+} from "lucide-react";
+import { motion } from "motion/react";
+
+export default function FeatureGrid() {
+  const [simulatedScore, setSimulatedScore] = useState<number>(88);
+  const [driftValue, setDriftValue] = useState<number>(12);
+
+  // Dynamic ticking search text simulator inside the research mockup
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchCandidates = ["AAPL", "NVDA", "MSFT", "Securities", "Consumer Staples", "13F Whale Transfers", "Yield Curve"];
+  
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setSearchQuery(searchCandidates[index]);
+      index = (index + 1) % searchCandidates.length;
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="space-y-0">
+      
+      {/* SECTION 1: AERARIUM PORTFOLIO */}
+      <motion.section 
+        id="portfolio" 
+        style={{ scrollMarginTop: "100px" }} 
+        className="py-24 relative overflow-hidden border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          
+          {/* Section Heading */}
+          <div className="max-w-3xl text-left mb-16 space-y-4">
+            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs uppercase font-semibold">
+              <Smartphone className="w-3.5 h-3.5" />
+              <span>Pillar One</span>
+            </div>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-white tracking-tight">
+              Aerarium Portfolio
+            </h2>
+            <p className="text-base md:text-lg text-slate-350 leading-relaxed max-w-2xl font-light">
+              A private iOS cockpit for turning your investment policy into live guardrails.
+            </p>
+            <div className="pt-2">
+              <a 
+                href="https://testflight.apple.com/join/Xna39VKU"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 text-emerald-400 hover:text-emerald-300 font-medium text-sm transition-colors group"
+                id="link-portfolio-testflight"
+              >
+                <span>Join iOS Beta →</span>
+                <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-all font-mono">TestFlight</span>
+              </a>
+            </div>
+          </div>          {/* Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* 1. IPS Cockpit */}
+            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-ips-cockpit">
+              <div className="flex items-center space-x-2 text-emerald-450">
+                <Sliders className="w-5 h-5" />
+                <span className="font-display text-sm font-semibold text-white">IPS Cockpit</span>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Build an Investment Policy Statement, track rules, review versions, and surface what needs attention.
+              </p>
+            </div>
+
+            {/* 2. Policy Score */}
+            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-policy-score">
+              <div className="flex items-center space-x-2 text-emerald-450">
+                <PieChart className="w-5 h-5" />
+                <span className="font-display text-sm font-semibold text-white">Policy Score</span>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Explain allocation drift, concentration risk, liquidity, goals, and review cadence in one score.
+              </p>
+            </div>
+
+            {/* 3. Portfolio X-Ray */}
+            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-portfolio-xray">
+              <div className="flex items-center space-x-2 text-emerald-450">
+                <Activity className="w-5 h-5" />
+                <span className="font-display text-sm font-semibold text-white">Portfolio X-Ray</span>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.
+              </p>
+            </div>
+
+            {/* 4. Goals + Funding Plan */}
+            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-goals-funding">
+              <div className="flex items-center space-x-2 text-emerald-450">
+                <Globe className="w-5 h-5" />
+                <span className="font-display text-sm font-semibold text-white">Goals + Funding Plan</span>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Assign portfolio sleeves to goals without hiding global allocation tradeoffs.
+              </p>
+            </div>
+
+            {/* 5. Thesis Check-ins */}
+            <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-thesis-checkins">
+              <div className="flex items-center space-x-2 text-emerald-450">
+                <BookOpen className="w-5 h-5" />
+                <span className="font-display text-sm font-semibold text-white">Thesis Check-ins</span>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Keep investing decisions tied to a written thesis instead of impulse trades.
+              </p>
+            </div>
+
+            {/* 6. Private by Design */}
+            <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-private-by-design">
+              <div className="flex items-center space-x-2 text-emerald-450">
+                <Fingerprint className="w-5 h-5" />
+                <span className="font-display text-sm font-semibold text-white">Private by Design</span>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Encrypted financial fields, Keychain-backed recovery planning, and user-controlled data.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </motion.section>
+
+      {/* SECTION 2: AERARIUM RESEARCH */}
+      <motion.section 
+        id="research" 
+        style={{ scrollMarginTop: "100px" }} 
+        className="py-24 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          
+          {/* Section Heading */}
+          <div className="max-w-3xl text-left mb-16 space-y-4">
+            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-xs uppercase font-semibold">
+              <Search className="w-3.5 h-3.5" />
+              <span>Pillar Two</span>
+            </div>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-white tracking-tight">
+              Aerarium Research
+            </h2>
+            <p className="text-base md:text-lg text-slate-350 leading-relaxed max-w-2xl font-light">
+              A research workspace for companies, funds, macro signals, and ownership flows.
+            </p>
+            <div className="pt-2">
+              <a 
+                href="https://finsight-beryl.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 font-medium text-sm transition-colors group"
+                id="link-research-finsight"
+              >
+                <span>Open Research →</span>
+                <span className="text-xs px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-all font-mono">Live Workspace</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Features Description Cards */}
+            <div className="lg:col-span-7 lg:order-last space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                {/* 1. Company Fundamentals */}
+                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-company-fundamentals">
+                  <div className="flex items-center space-x-2 text-cyan-400">
+                    <TrendingUp className="w-5 h-5" />
+                    <span className="font-display text-sm font-semibold text-white">Company Fundamentals</span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Revenue, cash flow, margins, valuation, debt, dividends, buybacks, and segment charts.
+                  </p>
+                </div>
+
+                {/* 2. Operational KPIs */}
+                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-operational-kpis">
+                  <div className="flex items-center space-x-2 text-cyan-400">
+                    <Activity className="w-5 h-5" />
+                    <span className="font-display text-sm font-semibold text-white">Operational KPIs</span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Filing-derived metrics like subscribers, vehicles, customers, energy, regional splits, and growth series.
+                  </p>
+                </div>
+
+                {/* 3. Funds + Ownership */}
+                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-funds-ownership">
+                  <div className="flex items-center space-x-2 text-cyan-400">
+                    <Briefcase className="w-5 h-5" />
+                    <span className="font-display text-sm font-semibold text-white">Funds + Ownership</span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    13F-style top buys, top sells, top holdings, sector allocation, and institutional ownership views.
+                  </p>
+                </div>
+
+                {/* 4. Macro Signals */}
+                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-macro-signals">
+                  <div className="flex items-center space-x-2 text-cyan-400">
+                    <Globe className="w-5 h-5" />
+                    <span className="font-display text-sm font-semibold text-white">Macro Signals</span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Yield curve, Fed funds futures, mortgage rates, commodities, and economic calendar.
+                  </p>
+                </div>
+
+                {/* 5. Market Screens */}
+                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-market-screens">
+                  <div className="flex items-center space-x-2 text-cyan-400">
+                    <Layers className="w-5 h-5" />
+                    <span className="font-display text-sm font-semibold text-white">Market Screens</span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Sector heatmap, top movers, index changes, earnings calendar, analyst estimates, and short interest.
+                  </p>
+                </div>
+
+                {/* 6. Watchlists */}
+                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-watchlists">
+                  <div className="flex items-center space-x-2 text-cyan-400">
+                    <FileText className="w-5 h-5" />
+                    <span className="font-display text-sm font-semibold text-white">Watchlists</span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Track names and lightweight portfolios while researching public-market ideas.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Interactive Analytical Dashboard Side */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-4">
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block font-bold">
+                Live Data Console
+              </span>
+              <div className="relative w-full max-w-[380px] rounded-2xl bg-slate-950 border border-white/10 p-5 shadow-[0_20px_50px_rgba(6,182,212,0.15)] text-left space-y-5">
+                
+                {/* Simulated Workspace Header */}
+                <div className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500/50" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                    <span className="text-[10px] font-mono text-slate-400 ml-1">Market Analytics</span>
+                  </div>
+                  <span className="text-[9px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded">
+                    529 STOCKS
+                  </span>
+                </div>
+
+                {/* Simulated Search bar ticking */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+                  <input
+                    type="text"
+                    readOnly
+                    value={`Query: "${searchQuery}"`}
+                    className="w-full bg-slate-900 border border-white/5 rounded-xl py-2 px-9 text-[11px] font-mono text-cyan-300 pointer-events-none"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[8px] font-mono text-slate-500 animate-pulse">
+                    Scanning
+                  </span>
+                </div>
+
+                {/* S&P 500 Heathmap segment visual block */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 uppercase">
+                    <span>SECTOR STRENGTH</span>
+                    <span>529 CORPS</span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-lg space-y-1">
+                      <div className="font-bold text-emerald-400 text-[10px]">+3.42%</div>
+                      <div className="text-[8px] font-mono text-slate-400 truncate">Tech</div>
+                    </div>
+
+                    <div className="bg-emerald-500/5 border border-emerald-500/10 p-2 rounded-lg space-y-1">
+                      <div className="font-bold text-emerald-500 text-[10px]">+1.15%</div>
+                      <div className="text-[8px] font-mono text-slate-400 truncate">Telecom</div>
+                    </div>
+
+                    <div className="bg-rose-500/10 border border-rose-500/20 p-2 rounded-lg space-y-1">
+                      <div className="font-bold text-rose-400 text-[10px]">-0.84%</div>
+                      <div className="text-[8px] font-mono text-slate-400 truncate">Finance</div>
+                    </div>
+
+                    <div className="bg-rose-500/5 border border-rose-500/10 p-2 rounded-lg space-y-1">
+                      <div className="font-bold text-rose-500 text-[10px]">-0.12%</div>
+                      <div className="text-[8px] font-mono text-slate-400 truncate">Utilities</div>
+                    </div>
+
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-lg space-y-1">
+                      <div className="font-bold text-emerald-400 text-[10px]">+2.18%</div>
+                      <div className="text-[8px] font-mono text-slate-400 truncate">Consumer</div>
+                    </div>
+
+                    <div className="bg-slate-900 border border-white/5 p-2 rounded-lg space-y-1">
+                      <div className="font-bold text-slate-400 text-[10px]">0.00%</div>
+                      <div className="text-[8px] font-mono text-slate-400 truncate">Health</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Macro FRED Signals snippet visual */}
+                <div className="bg-slate-900/40 border border-white/5 rounded-xl p-3 space-y-2">
+                  <div className="flex justify-between text-[9px] text-slate-500 font-mono">
+                    <span>FED FUNDS SENSITIVITY</span>
+                    <span className="text-cyan-400">FRED</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] font-mono">
+                    <span className="text-slate-450">Effective Fed Funds Rate:</span>
+                    <span className="text-white">5.33%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] font-mono">
+                    <span className="text-slate-450">30Y Fixed Mortgage:</span>
+                    <span className="text-white">6.82%</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </motion.section>
+
+      {/* SECTION 3: DECISION MATRIX ("USE PORTFOLIO WHEN / USE RESEARCH WHEN / TOGETHER") */}
+      <section className="py-24 relative overflow-hidden bg-slate-950 border-t border-b border-white/5">
+        <div className="absolute inset-0 bg-cyber-grid opacity-10 pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+          
+          <div className="text-center mb-16">
+            <span className="text-xs font-mono font-semibold text-emerald-400 uppercase tracking-widest">ECOSYSTEM FIT</span>
+            <h3 className="font-display font-medium text-2xl md:text-3xl text-white mt-1">Ecosystem Playbook</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            
+            {/* Card 1 */}
+            <div className="p-8 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-emerald-500/20 transition-all flex flex-col justify-between" id="fit-portfolio-card">
+              <div className="space-y-4">
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase bg-emerald-500/10 px-2 py-0.5 rounded">PORTFOLIO</span>
+                  <h4 className="font-display text-lg font-bold text-white">Use Portfolio when</h4>
+                </div>
+                <p className="text-slate-350 text-sm leading-relaxed">
+                  you want to govern your own money with policy rules, scorecards, X-Ray exposure, and check-ins.
+                </p>
+              </div>
+              <div className="pt-6 border-t border-white/5 mt-8 flex items-center text-xs text-slate-500 space-x-2">
+                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                <span>Private personal device layer</span>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="p-8 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/20 transition-all flex flex-col justify-between" id="fit-research-card">
+              <div className="space-y-4">
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-[10px] font-mono font-bold text-cyan-400 uppercase bg-cyan-500/10 px-2 py-0.5 rounded">RESEARCH</span>
+                  <h4 className="font-display text-lg font-bold text-white">Use Research when</h4>
+                </div>
+                <p className="text-slate-350 text-sm leading-relaxed">
+                  you want to understand companies, filings, ownership, funds, macro context, and market signals.
+                </p>
+              </div>
+              <div className="pt-6 border-t border-white/5 mt-8 flex items-center text-xs text-slate-500 space-x-2">
+                <CheckCircle className="w-4 h-4 text-cyan-400" />
+                <span>Web-accessible public database</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Together footer accent bar */}
+          <div className="mt-12 p-6 rounded-2xl bg-gradient-to-r from-emerald-500/5 via-slate-900/50 to-cyan-500/5 border border-white/5 text-center">
+            <span className="text-xs font-mono font-bold text-white block uppercase mb-1 tracking-wider">Together</span>
+            <p className="text-slate-300 text-sm max-w-xl mx-auto leading-relaxed font-sans">
+              research informs decisions; portfolio discipline keeps those decisions aligned with your policy.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION 4: SECURITY / PRIVACY */}
+      <motion.section 
+        id="security" 
+        style={{ scrollMarginTop: "100px" }} 
+        className="py-24 relative overflow-hidden bg-slate-950"
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative z-10">
+          <div className="inline-flex h-12 w-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 items-center justify-center text-emerald-400 mx-auto">
+            <Lock className="w-5 h-5 animate-pulse" />
+          </div>
+          
+          <h2 className="font-display font-medium text-3xl md:text-5xl text-white tracking-tight leading-none">
+            Private data stays private.
+          </h2>
+          
+          <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-sans">
+            Portfolio is designed around user-owned financial data, encrypted fields, and recovery flows. Research uses public-market data and stays separate from private portfolio records.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 max-w-3xl mx-auto text-left text-xs font-mono">
+            <div className="p-4 bg-slate-900/30 border border-white/5 rounded-xl space-y-1">
+              <span className="text-emerald-400 font-bold block">01 CLIENT-ONLY</span>
+              <span className="text-slate-400">Zero database syncing. No server records your personal credentials.</span>
+            </div>
+            <div className="p-4 bg-slate-900/30 border border-white/5 rounded-xl space-y-1">
+              <span className="text-emerald-400 font-bold block">02 ENCRYPTED</span>
+              <span className="text-slate-400">Values are locked with secure device-level keychain hashes.</span>
+            </div>
+            <div className="p-4 bg-slate-900/30 border border-white/5 rounded-xl space-y-1">
+              <span className="text-emerald-400 font-bold block">03 DECOUPLING</span>
+              <span className="text-slate-400">Public research runs on external servers: completely isolated from assets.</span>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+    </div>
+  );
+}
