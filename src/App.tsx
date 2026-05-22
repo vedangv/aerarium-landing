@@ -232,13 +232,13 @@ export default function App() {
                     const d = getDistance(index);
                     const isActive = index === activeIndex;
                     
-                    // Height steps of 66px, curve rotated, depth translation
-                    const translateY = d * 82; 
+                    // Height steps, curve rotated, depth translation
+                    const translateY = d * 92; 
                     const rotateX = -d * 18; 
                     const translateZ = -Math.abs(d) * 45; 
                     const scale = isActive ? 1.05 : 1 - Math.abs(d) * 0.1;
                     const opacity = Math.max(0.12, 1 - Math.abs(d) * 0.35);
-                    const zIndex = 20 - Math.abs(d);
+                    const zIndex = 50 - Math.abs(d);
 
                     return (
                       <motion.div
@@ -254,7 +254,6 @@ export default function App() {
                           z: translateZ,
                           scale: scale,
                           opacity: opacity,
-                          zIndex: zIndex,
                         }}
                         transition={{
                           type: "spring",
@@ -268,11 +267,12 @@ export default function App() {
                           top: "calc(50% - 46px)",
                           left: 0,
                           right: 0,
+                          zIndex: zIndex,
                         }}
-                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-all duration-300 ${
+                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors duration-300 ${
                           isActive
-                            ? "bg-slate-900/95 border-emerald-500/25 shadow-lg shadow-emerald-500/10 text-white z-20"
-                            : "bg-slate-950/10 border-white/[0.01] hover:bg-slate-900/5 text-slate-450 hover:text-slate-200 z-10"
+                            ? "bg-slate-900/95 border-emerald-500/25 shadow-lg shadow-emerald-500/10 text-white"
+                            : "bg-slate-950/10 border-white/[0.01] hover:bg-slate-900/5 text-slate-450 hover:text-slate-200"
                         }`}
                         id={`pill-desktop-${feat.id}`}
                       >

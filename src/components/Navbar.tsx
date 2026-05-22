@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ArrowUpRight, Lock, Menu, X } from "lucide-react";
+import logoSrc from "../assets/logo.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -38,7 +39,7 @@ export default function Navbar() {
           id="btn-nav-logo"
         >
           <div className="h-9 w-9 rounded-xl overflow-hidden shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
-            <img src="/src/assets/logo.png" alt="Aerarium Logo" className="w-full h-full object-cover" />
+            <img src={logoSrc} alt="Aerarium Logo" className="w-full h-full object-cover" />
           </div>
           <span className="text-xl font-display font-bold tracking-tight text-white group-hover:text-emerald-300 transition-colors">
             Aerarium

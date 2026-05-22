@@ -22,6 +22,9 @@ import {
   HelpCircle
 } from "lucide-react";
 import { motion } from "motion/react";
+import finsightSegmentsSrc from "../assets/finsight-segments.png";
+import finsightOverlapSrc from "../assets/finsight-overlap.png";
+import finsightMacroHeroSrc from "../assets/finsight-macro-hero.png";
 
 export default function FeatureGrid() {
   const [simulatedScore, setSimulatedScore] = useState<number>(88);
@@ -283,7 +286,7 @@ export default function FeatureGrid() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.4, duration: 0.7 }}
                 >
-                  <img src="/src/assets/finsight-segments.png" alt="Revenue Segments" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <img src={finsightSegmentsSrc} alt="Revenue Segments" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
                 </motion.div>
 
                 {/* Back Image (Right) */}
@@ -294,7 +297,7 @@ export default function FeatureGrid() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, duration: 0.7 }}
                 >
-                  <img src="/src/assets/finsight-overlap.png" alt="Stock Overlap" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <img src={finsightOverlapSrc} alt="Stock Overlap" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
                 </motion.div>
 
                 {/* Main Front Image */}
@@ -310,7 +313,7 @@ export default function FeatureGrid() {
                     <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
                     <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
                   </div>
-                  <img src="/src/assets/finsight-macro-hero.png" alt="Macro Dashboard" className="w-full h-full object-cover object-left pt-6" />
+                  <img src={finsightMacroHeroSrc} alt="Macro Dashboard" className="w-full h-full object-cover object-left pt-6" />
                 </motion.div>
               </div>
             </div>
