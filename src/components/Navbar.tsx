@@ -37,10 +37,8 @@ export default function Navbar() {
           className="flex items-center space-x-3 cursor-pointer group"
           id="btn-nav-logo"
         >
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-emerald-400 to-cyan-500 p-[1.5px] shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
-            <div className="h-full w-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <Lock className="w-4.5 h-4.5 text-emerald-400 group-hover:text-cyan-400 transition-colors" />
-            </div>
+          <div className="h-9 w-9 rounded-xl overflow-hidden shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
+            <img src="/src/assets/logo.png" alt="Aerarium Logo" className="w-full h-full object-cover" />
           </div>
           <span className="text-xl font-display font-bold tracking-tight text-white group-hover:text-emerald-300 transition-colors">
             Aerarium

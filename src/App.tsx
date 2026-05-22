@@ -233,11 +233,12 @@ export default function App() {
                     const isActive = index === activeIndex;
                     
                     // Height steps of 66px, curve rotated, depth translation
-                    const translateY = d * 64; 
-                    const rotateX = -d * 16; 
-                    const translateZ = -Math.abs(d) * 35; 
-                    const scale = isActive ? 1.02 : 1 - Math.abs(d) * 0.08;
+                    const translateY = d * 82; 
+                    const rotateX = -d * 18; 
+                    const translateZ = -Math.abs(d) * 45; 
+                    const scale = isActive ? 1.05 : 1 - Math.abs(d) * 0.1;
                     const opacity = Math.max(0.12, 1 - Math.abs(d) * 0.35);
+                    const zIndex = 20 - Math.abs(d);
 
                     return (
                       <motion.div
@@ -253,6 +254,7 @@ export default function App() {
                           z: translateZ,
                           scale: scale,
                           opacity: opacity,
+                          zIndex: zIndex,
                         }}
                         transition={{
                           type: "spring",

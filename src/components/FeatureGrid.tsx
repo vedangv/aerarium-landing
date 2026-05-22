@@ -269,95 +269,49 @@ export default function FeatureGrid() {
             </div>
 
             {/* Interactive Analytical Dashboard Side */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-4">
-              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block font-bold">
-                Live Data Console
+            <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-4 relative">
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block font-bold z-10 md:mb-6">
+                Research Workspace
               </span>
-              <div className="relative w-full max-w-[380px] rounded-2xl bg-slate-950 border border-white/10 p-5 shadow-[0_20px_50px_rgba(6,182,212,0.15)] text-left space-y-5">
-                
-                {/* Simulated Workspace Header */}
-                <div className="flex justify-between items-center border-b border-white/5 pb-3">
-                  <div className="flex items-center space-x-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500/50" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                    <span className="text-[10px] font-mono text-slate-400 ml-1">Market Analytics</span>
+              
+              <div className="relative w-full max-w-[380px] aspect-[4/3] group mt-8">
+                {/* Back Image (Left) */}
+                <motion.div 
+                  className="absolute -top-6 -left-6 w-3/4 aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-10 transition-transform duration-500 group-hover:-translate-x-3 group-hover:-translate-y-3 group-hover:-rotate-2 bg-slate-900"
+                  initial={{ opacity: 0, x: 20, rotate: 2 }}
+                  whileInView={{ opacity: 1, x: 0, rotate: -4 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.7 }}
+                >
+                  <img src="/src/assets/finsight-segments.png" alt="Revenue Segments" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
+                </motion.div>
+
+                {/* Back Image (Right) */}
+                <motion.div 
+                  className="absolute -bottom-6 -right-6 w-[85%] aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 transition-transform duration-500 group-hover:translate-x-3 group-hover:translate-y-3 group-hover:rotate-2 bg-slate-900"
+                  initial={{ opacity: 0, x: -20, rotate: -2 }}
+                  whileInView={{ opacity: 1, x: 0, rotate: 4 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.7 }}
+                >
+                  <img src="/src/assets/finsight-overlap.png" alt="Stock Overlap" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
+                </motion.div>
+
+                {/* Main Front Image */}
+                <motion.div 
+                  className="absolute inset-0 rounded-xl overflow-hidden border border-cyan-500/20 shadow-[0_20px_50px_rgba(6,182,212,0.15)] z-30 transition-transform duration-500 group-hover:scale-105 bg-slate-950"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                >
+                  <div className="absolute top-0 left-0 right-0 h-6 bg-slate-900 border-b border-white/5 flex items-center px-3 space-x-1.5 z-10">
+                    <span className="w-2 h-2 rounded-full bg-rose-500/80" />
+                    <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
                   </div>
-                  <span className="text-[9px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded">
-                    529 STOCKS
-                  </span>
-                </div>
-
-                {/* Simulated Search bar ticking */}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
-                  <input
-                    type="text"
-                    readOnly
-                    value={`Query: "${searchQuery}"`}
-                    className="w-full bg-slate-900 border border-white/5 rounded-xl py-2 px-9 text-[11px] font-mono text-cyan-300 pointer-events-none"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[8px] font-mono text-slate-500 animate-pulse">
-                    Scanning
-                  </span>
-                </div>
-
-                {/* S&P 500 Heathmap segment visual block */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 uppercase">
-                    <span>SECTOR STRENGTH</span>
-                    <span>529 CORPS</span>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-lg space-y-1">
-                      <div className="font-bold text-emerald-400 text-[10px]">+3.42%</div>
-                      <div className="text-[8px] font-mono text-slate-400 truncate">Tech</div>
-                    </div>
-
-                    <div className="bg-emerald-500/5 border border-emerald-500/10 p-2 rounded-lg space-y-1">
-                      <div className="font-bold text-emerald-500 text-[10px]">+1.15%</div>
-                      <div className="text-[8px] font-mono text-slate-400 truncate">Telecom</div>
-                    </div>
-
-                    <div className="bg-rose-500/10 border border-rose-500/20 p-2 rounded-lg space-y-1">
-                      <div className="font-bold text-rose-400 text-[10px]">-0.84%</div>
-                      <div className="text-[8px] font-mono text-slate-400 truncate">Finance</div>
-                    </div>
-
-                    <div className="bg-rose-500/5 border border-rose-500/10 p-2 rounded-lg space-y-1">
-                      <div className="font-bold text-rose-500 text-[10px]">-0.12%</div>
-                      <div className="text-[8px] font-mono text-slate-400 truncate">Utilities</div>
-                    </div>
-
-                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-lg space-y-1">
-                      <div className="font-bold text-emerald-400 text-[10px]">+2.18%</div>
-                      <div className="text-[8px] font-mono text-slate-400 truncate">Consumer</div>
-                    </div>
-
-                    <div className="bg-slate-900 border border-white/5 p-2 rounded-lg space-y-1">
-                      <div className="font-bold text-slate-400 text-[10px]">0.00%</div>
-                      <div className="text-[8px] font-mono text-slate-400 truncate">Health</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Macro FRED Signals snippet visual */}
-                <div className="bg-slate-900/40 border border-white/5 rounded-xl p-3 space-y-2">
-                  <div className="flex justify-between text-[9px] text-slate-500 font-mono">
-                    <span>FED FUNDS SENSITIVITY</span>
-                    <span className="text-cyan-400">FRED</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-slate-450">Effective Fed Funds Rate:</span>
-                    <span className="text-white">5.33%</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-slate-450">30Y Fixed Mortgage:</span>
-                    <span className="text-white">6.82%</span>
-                  </div>
-                </div>
-
+                  <img src="/src/assets/finsight-macro-hero.png" alt="Macro Dashboard" className="w-full h-full object-cover object-left pt-6" />
+                </motion.div>
               </div>
             </div>
 
