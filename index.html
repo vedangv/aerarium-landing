@@ -193,24 +193,250 @@
 
       .hero-visual {
         position: relative;
-        overflow: hidden;
-        border: 1px solid rgba(89, 213, 147, 0.18);
-        border-radius: 24px;
-        background: linear-gradient(135deg, #17201b, #050706);
-        padding: 18px;
-        box-shadow: 0 28px 80px var(--shadow);
+        min-height: 620px;
+        isolation: isolate;
       }
 
+      .hero-visual::before,
       .hero-visual::after {
         content: "";
         position: absolute;
-        right: -90px;
-        bottom: -110px;
-        width: 330px;
-        height: 330px;
+        z-index: -1;
+        border-radius: 999px;
+        pointer-events: none;
+      }
+
+      .hero-visual::before {
+        inset: 7% -4% 8% 10%;
+        border: 1px solid rgba(89, 213, 147, 0.18);
+        background:
+          linear-gradient(115deg, rgba(89, 213, 147, 0.07), transparent 42%),
+          radial-gradient(circle at 70% 34%, rgba(217, 197, 155, 0.16), transparent 28%);
+        filter: drop-shadow(0 36px 80px rgba(0, 0, 0, 0.36));
+      }
+
+      .hero-visual::after {
+        right: 3%;
+        bottom: 4%;
+        width: 240px;
+        height: 240px;
+        background: rgba(89, 213, 147, 0.14);
+        filter: blur(54px);
+      }
+
+      .showcase {
+        display: grid;
+        grid-template-columns: minmax(260px, 340px) minmax(210px, 1fr);
+        align-items: center;
+        gap: 24px;
+        min-height: 620px;
+      }
+
+      .phone-wrap {
+        position: relative;
+        justify-self: center;
+      }
+
+      .phone-wrap::before,
+      .phone-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 9% 2%;
+        border-radius: 48px;
+        pointer-events: none;
+      }
+
+      .phone-wrap::before {
+        border: 1px solid rgba(89, 213, 147, 0.22);
+        transform: translate(30px, 26px) rotate(-5deg);
+      }
+
+      .phone-wrap::after {
+        background: linear-gradient(180deg, rgba(217, 197, 155, 0.16), transparent 52%);
+        filter: blur(34px);
+        transform: translate(22px, 30px);
+        opacity: 0.72;
+      }
+
+      .phone-device {
+        position: relative;
+        z-index: 1;
+        width: min(342px, 76vw);
+        aspect-ratio: 393 / 852;
+        padding: 12px;
+        border: 1px solid rgba(246, 242, 231, 0.12);
+        border-radius: 48px;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 18%),
+          linear-gradient(180deg, #171b19, #020303);
+        box-shadow:
+          0 40px 90px rgba(0, 0, 0, 0.48),
+          inset 0 0 0 1px rgba(0, 0, 0, 0.8);
+      }
+
+      .phone-device::before {
+        content: "";
+        position: absolute;
+        top: 22px;
+        left: 50%;
+        z-index: 3;
+        width: 104px;
+        height: 30px;
+        border-radius: 999px;
+        background: #030404;
+        transform: translateX(-50%);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      }
+
+      .phone-screen {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        border-radius: 38px;
+        background: #07100c;
+      }
+
+      .phone-screen::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 22%, transparent 76%, rgba(255, 255, 255, 0.06)),
+          repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 5px);
+        mix-blend-mode: screen;
+        opacity: 0.26;
+      }
+
+      .phone-screen img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition:
+          opacity 240ms ease,
+          transform 520ms ease;
+      }
+
+      .phone-screen img.is-swapping {
+        opacity: 0;
+        transform: scale(1.018);
+      }
+
+      .feature-panel {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(246, 242, 231, 0.1);
+        border-radius: 22px;
+        background: rgba(8, 11, 10, 0.7);
+        padding: 22px;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(16px);
+      }
+
+      .feature-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(89, 213, 147, 0.12), transparent 42%);
+        opacity: 0.72;
+        pointer-events: none;
+      }
+
+      .feature-panel > * {
+        position: relative;
+      }
+
+      .feature-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .feature-kicker::before {
+        content: "";
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
-        background: rgba(89, 213, 147, 0.08);
-        filter: blur(20px);
+        background: var(--green);
+        box-shadow: 0 0 16px rgba(89, 213, 147, 0.85);
+      }
+
+      .feature-title {
+        margin: 16px 0 0;
+        color: var(--text);
+        font-size: clamp(30px, 4vw, 44px);
+        line-height: 1;
+        font-weight: 950;
+      }
+
+      .feature-caption {
+        min-height: 74px;
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .feature-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .feature-pill {
+        appearance: none;
+        min-height: 38px;
+        padding: 0 14px;
+        border: 1px solid rgba(246, 242, 231, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.045);
+        color: var(--muted);
+        font: inherit;
+        font-size: 13px;
+        font-weight: 850;
+        cursor: pointer;
+        transition:
+          border-color 180ms ease,
+          background 180ms ease,
+          color 180ms ease,
+          transform 180ms ease;
+      }
+
+      .feature-pill:hover {
+        transform: translateY(-1px);
+        color: var(--text);
+      }
+
+      .feature-pill.is-active {
+        border-color: rgba(89, 213, 147, 0.48);
+        background: rgba(89, 213, 147, 0.16);
+        color: var(--green);
+        box-shadow: 0 0 28px rgba(89, 213, 147, 0.12);
+      }
+
+      .tour-progress {
+        overflow: hidden;
+        height: 3px;
+        margin-top: 22px;
+        border-radius: 999px;
+        background: rgba(246, 242, 231, 0.1);
+      }
+
+      .tour-progress span {
+        display: block;
+        width: 20%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--green), var(--gold));
+        transition: transform 260ms ease;
       }
 
       .product-frame {
@@ -247,132 +473,17 @@
         backdrop-filter: blur(12px);
       }
 
-      .hero-shot {
-        height: 250px;
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 700ms ease,
+          transform 700ms ease;
       }
 
-      .visual-labels {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        justify-content: space-between;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .portfolio-teaser {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: 0.9fr 1.1fr;
-        gap: 12px;
-        margin-top: 20px;
-      }
-
-      .score-card,
-      .xray-card {
-        border-radius: 16px;
-        padding: 18px;
-      }
-
-      .score-card {
-        border: 1px solid rgba(89, 213, 147, 0.26);
-        background: #0d130f;
-      }
-
-      .score-number {
-        color: var(--green);
-        font-size: 70px;
-        font-weight: 950;
-        line-height: 0.9;
-      }
-
-      .score-label {
-        margin-top: 10px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .bars {
-        display: grid;
-        gap: 8px;
-        margin-top: 22px;
-      }
-
-      .bar {
-        height: 7px;
-        overflow: hidden;
-        border-radius: 999px;
-        background: #26312b;
-      }
-
-      .fill {
-        display: block;
-        height: 100%;
-        border-radius: inherit;
-        background: var(--green);
-      }
-
-      .fill.gold {
-        background: var(--gold);
-      }
-
-      .xray-card {
-        border: 1px solid rgba(217, 197, 155, 0.22);
-        background: #0d0f0e;
-      }
-
-      .xray-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        color: var(--gold);
-        font-size: 13px;
-        font-weight: 850;
-      }
-
-      .xray-sub {
-        margin-top: 5px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .live {
-        color: var(--green);
-        font-size: 12px;
-        font-weight: 500;
-      }
-
-      .exposures {
-        display: grid;
-        gap: 12px;
-        margin-top: 24px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .exposure {
-        display: grid;
-        grid-template-columns: 54px 1fr 44px;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .exposure b {
-        color: var(--text);
-      }
-
-      .mini-track {
-        height: 7px;
-        border-radius: 999px;
-        background: #1f2723;
-      }
-
-      .mini-track span {
-        display: block;
-        height: 100%;
-        border-radius: inherit;
-        background: var(--gold);
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       section.product-section {
@@ -554,7 +665,7 @@
         }
 
         .hero-inner,
-        .portfolio-teaser,
+        .showcase,
         .section-head,
         .feature-grid,
         .screenshot-grid,
@@ -570,6 +681,19 @@
         .hero-inner {
           min-height: auto;
           padding-top: 56px;
+        }
+
+        .hero-visual,
+        .showcase {
+          min-height: auto;
+        }
+
+        .showcase {
+          gap: 28px;
+        }
+
+        .feature-panel {
+          order: -1;
         }
 
         h1 {
@@ -631,22 +755,38 @@
         }
 
         .hero-visual {
-          border-radius: 28px;
-          padding: 20px;
+          margin-top: 4px;
         }
 
-        .score-card,
-        .xray-card,
-        .product-frame {
+        .hero-visual::before {
+          inset: 5% -16% 4% -16%;
+          border-radius: 44px;
+        }
+
+        .feature-panel {
+          padding: 20px;
           border-radius: 24px;
         }
 
-        .score-number {
-          font-size: 78px;
+        .feature-pills {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          margin-right: -20px;
+          padding-bottom: 4px;
+          scrollbar-width: none;
         }
 
-        .hero-shot {
-          height: 210px;
+        .feature-pills::-webkit-scrollbar {
+          display: none;
+        }
+
+        .phone-device {
+          width: min(314px, 80vw);
+          border-radius: 44px;
+        }
+
+        .product-frame {
+          border-radius: 24px;
         }
 
         .section-inner {
@@ -669,6 +809,25 @@
         .screenshot-grid .wide,
         .screenshot-grid .half {
           height: 220px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
         }
       }
     </style>
@@ -706,55 +865,34 @@
             </div>
           </div>
 
-          <div class="hero-visual" aria-label="Aerarium product preview">
-            <div class="visual-labels">
-              <span>Private cockpit</span>
-              <span>Research workspace</span>
-            </div>
-            <figure class="product-frame hero-shot">
-              <img
-                src="assets/screenshots/finsight-macro-hero.png"
-                alt="Aerarium Research macro dashboard with inflation, labor, yield curve, and credit risk signals"
-              />
-              <figcaption>Live Research dashboard</figcaption>
-            </figure>
-
-            <div class="portfolio-teaser">
-              <div class="score-card">
-                <div class="score-number">94</div>
-                <div class="score-label">Policy score</div>
-                <div class="bars">
-                  <div class="bar"><span class="fill" style="width: 86%"></span></div>
-                  <div class="bar"><span class="fill gold" style="width: 64%"></span></div>
-                  <div class="bar"><span class="fill" style="width: 78%"></span></div>
+          <div class="hero-visual" aria-label="Aerarium Portfolio preview">
+            <div class="showcase" data-showcase>
+              <div class="phone-wrap">
+                <div class="phone-device" aria-live="polite">
+                  <div class="phone-screen">
+                    <img
+                      id="showcase-image"
+                      src="assets/portfolio-showcase/policy-score.jpg"
+                      alt="Aerarium iOS Policy Score cockpit"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div class="xray-card">
-                <div class="xray-head">
-                  <div>
-                    ETF look-through
-                    <div class="xray-sub">SPY -&gt; NVDA, AAPL, MSFT exposure</div>
-                  </div>
-                  <span class="live">live</span>
+              <div class="feature-panel">
+                <div class="feature-kicker">Live iOS beta</div>
+                <div id="showcase-title" class="feature-title">Policy Score</div>
+                <p id="showcase-caption" class="feature-caption">
+                  One score explains allocation drift, concentration risk, liquidity, goals, and review cadence.
+                </p>
+                <div class="feature-pills" aria-label="Preview Aerarium Portfolio features">
+                  <button class="feature-pill is-active" type="button" data-showcase-index="0">Policy Score</button>
+                  <button class="feature-pill" type="button" data-showcase-index="1">ETF X-Ray</button>
+                  <button class="feature-pill" type="button" data-showcase-index="2">IPS Cockpit</button>
+                  <button class="feature-pill" type="button" data-showcase-index="3">Goals Funding</button>
+                  <button class="feature-pill" type="button" data-showcase-index="4">Private Profile</button>
                 </div>
-                <div class="exposures">
-                  <div class="exposure">
-                    <b>AAPL</b>
-                    <div class="mini-track"><span style="width: 74%"></span></div>
-                    <span>$498</span>
-                  </div>
-                  <div class="exposure">
-                    <b>MSFT</b>
-                    <div class="mini-track"><span style="width: 58%"></span></div>
-                    <span>$355</span>
-                  </div>
-                  <div class="exposure">
-                    <b>NVDA</b>
-                    <div class="mini-track"><span style="width: 46%"></span></div>
-                    <span>$236</span>
-                  </div>
-                </div>
+                <div class="tour-progress" aria-hidden="true"><span id="tour-progress"></span></div>
               </div>
             </div>
           </div>
@@ -926,5 +1064,119 @@
         </div>
       </section>
     </main>
+    <script>
+      const showcaseItems = [
+        {
+          title: "Policy Score",
+          caption:
+            "One score explains allocation drift, concentration risk, liquidity, goals, and review cadence.",
+          src: "assets/portfolio-showcase/policy-score.jpg",
+          alt: "Aerarium iOS Policy Score cockpit"
+        },
+        {
+          title: "ETF X-Ray",
+          caption:
+            "Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.",
+          src: "assets/portfolio-showcase/etf-xray.jpg",
+          alt: "Aerarium Portfolio X-Ray holdings exposure sheet"
+        },
+        {
+          title: "IPS Cockpit",
+          caption:
+            "Turn your policy into live guardrails, review rules, inspect violations, and keep every version.",
+          src: "assets/portfolio-showcase/ips-cockpit.jpg",
+          alt: "Aerarium IPS guardrails view"
+        },
+        {
+          title: "Goals Funding",
+          caption:
+            "Assign portfolio sleeves to goals from one central funding plan without hiding tradeoffs.",
+          src: "assets/portfolio-showcase/goals-funding.jpg",
+          alt: "Aerarium Goals funding plan"
+        },
+        {
+          title: "Private Profile",
+          caption:
+            "Security, encryption, brokerage access, export, and account controls stay visible and user-owned.",
+          src: "assets/portfolio-showcase/private-profile.jpg",
+          alt: "Aerarium Profile privacy and security view"
+        }
+      ];
+
+      const image = document.querySelector("#showcase-image");
+      const title = document.querySelector("#showcase-title");
+      const caption = document.querySelector("#showcase-caption");
+      const progress = document.querySelector("#tour-progress");
+      const pills = Array.from(document.querySelectorAll("[data-showcase-index]"));
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let activeIndex = 0;
+      let tourTimer;
+
+      function setShowcase(index, manual = false) {
+        const item = showcaseItems[index];
+        if (!item || !image) return;
+
+        activeIndex = index;
+        image.classList.add("is-swapping");
+
+        window.setTimeout(() => {
+          image.src = item.src;
+          image.alt = item.alt;
+          title.textContent = item.title;
+          caption.textContent = item.caption;
+          pills.forEach((pill, pillIndex) => {
+            pill.classList.toggle("is-active", pillIndex === index);
+            pill.setAttribute("aria-pressed", pillIndex === index ? "true" : "false");
+          });
+          if (progress) progress.style.transform = `translateX(${index * 100}%)`;
+          image.classList.remove("is-swapping");
+        }, prefersReducedMotion ? 0 : 140);
+
+        if (manual && !prefersReducedMotion) {
+          window.clearInterval(tourTimer);
+          window.setTimeout(startTour, 12000);
+        }
+      }
+
+      function startTour() {
+        if (prefersReducedMotion) return;
+        window.clearInterval(tourTimer);
+        tourTimer = window.setInterval(() => {
+          setShowcase((activeIndex + 1) % showcaseItems.length);
+        }, 4800);
+      }
+
+      pills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          setShowcase(Number(pill.dataset.showcaseIndex), true);
+        });
+      });
+
+      image?.closest(".phone-device")?.addEventListener("click", () => {
+        setShowcase((activeIndex + 1) % showcaseItems.length, true);
+      });
+
+      startTour();
+
+      const revealTargets = document.querySelectorAll(
+        ".section-head, .feature-card, .product-frame, .bridge-card, .security-card"
+      );
+
+      if ("IntersectionObserver" in window && !prefersReducedMotion) {
+        revealTargets.forEach((target) => target.classList.add("reveal"));
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+        );
+        revealTargets.forEach((target) => observer.observe(target));
+      }
+    </script>
   </body>
 </html>
