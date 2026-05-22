@@ -129,7 +129,21 @@
           linear-gradient(135deg, #151a17, #0d100f 58%, #111513);
       }
 
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(to right, rgba(89, 213, 147, 0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(89, 213, 147, 0.035) 1px, transparent 1px);
+        background-size: 44px 44px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 70%);
+      }
+
       .hero-inner {
+        position: relative;
+        z-index: 1;
         display: grid;
         grid-template-columns: minmax(0, 0.94fr) minmax(430px, 0.86fr);
         gap: clamp(42px, 7vw, 96px);
@@ -226,7 +240,7 @@
 
       .showcase {
         display: grid;
-        grid-template-columns: minmax(260px, 340px) minmax(210px, 1fr);
+        grid-template-columns: minmax(260px, 340px) minmax(270px, 1fr);
         align-items: center;
         gap: 24px;
         min-height: 620px;
@@ -330,7 +344,7 @@
         border: 1px solid rgba(246, 242, 231, 0.1);
         border-radius: 22px;
         background: rgba(8, 11, 10, 0.7);
-        padding: 22px;
+        padding: 18px;
         box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
         backdrop-filter: blur(16px);
       }
@@ -368,10 +382,25 @@
         box-shadow: 0 0 16px rgba(89, 213, 147, 0.85);
       }
 
+      .tour-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .screen-count {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
       .feature-title {
         margin: 16px 0 0;
         color: var(--text);
-        font-size: clamp(30px, 4vw, 44px);
+        font-size: clamp(28px, 3.4vw, 40px);
         line-height: 1;
         font-weight: 950;
       }
@@ -384,23 +413,23 @@
         line-height: 1.55;
       }
 
-      .feature-pills {
+      .tour-groups {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 22px;
+        gap: 8px;
+        margin-top: 20px;
       }
 
-      .feature-pill {
+      .tour-group {
         appearance: none;
-        min-height: 38px;
-        padding: 0 14px;
+        min-height: 34px;
+        padding: 0 12px;
         border: 1px solid rgba(246, 242, 231, 0.1);
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.045);
+        background: rgba(255, 255, 255, 0.04);
         color: var(--muted);
         font: inherit;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 850;
         cursor: pointer;
         transition:
@@ -410,16 +439,138 @@
           transform 180ms ease;
       }
 
-      .feature-pill:hover {
+      .tour-group:hover {
+        color: var(--text);
         transform: translateY(-1px);
+      }
+
+      .tour-group.is-active {
+        border-color: rgba(89, 213, 147, 0.48);
+        background: rgba(89, 213, 147, 0.14);
+        color: var(--green);
+      }
+
+      .screen-strip {
+        display: grid;
+        gap: 9px;
+        margin-top: 16px;
+      }
+
+      .screen-option {
+        appearance: none;
+        display: grid;
+        grid-template-columns: 38px 1fr;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 54px;
+        padding: 7px;
+        border: 1px solid rgba(246, 242, 231, 0.08);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.035);
+        color: var(--muted);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .screen-option:hover {
+        border-color: rgba(246, 242, 231, 0.16);
+        background: rgba(255, 255, 255, 0.055);
+      }
+
+      .screen-option.is-active {
+        border-color: rgba(217, 197, 155, 0.36);
+        background: rgba(217, 197, 155, 0.08);
         color: var(--text);
       }
 
-      .feature-pill.is-active {
-        border-color: rgba(89, 213, 147, 0.48);
-        background: rgba(89, 213, 147, 0.16);
-        color: var(--green);
-        box-shadow: 0 0 28px rgba(89, 213, 147, 0.12);
+      .screen-option img {
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        object-fit: cover;
+        object-position: top;
+        background: #050706;
+      }
+
+      .screen-option strong {
+        display: block;
+        color: inherit;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .screen-option span {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.25;
+      }
+
+      .feature-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .feature-pills:empty,
+      .screen-strip:empty,
+      .tour-groups:empty {
+        display: none;
+      }
+
+      .feature-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 11px;
+        border: 1px solid rgba(246, 242, 231, 0.1);
+        border-radius: 999px;
+        background: rgba(89, 213, 147, 0.08);
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 850;
+      }
+
+      .scroll-cue {
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        z-index: 2;
+        display: grid;
+        justify-items: center;
+        gap: 6px;
+        color: rgba(174, 184, 178, 0.72);
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transform: translateX(-50%);
+        animation: cueFloat 2.2s ease-in-out infinite;
+      }
+
+      .scroll-cue::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid var(--green);
+        border-bottom: 2px solid var(--green);
+        transform: rotate(45deg);
+      }
+
+      @keyframes cueFloat {
+        0%,
+        100% {
+          opacity: 0.55;
+          transform: translate(-50%, 0);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(-50%, 7px);
+        }
       }
 
       .tour-progress {
@@ -432,10 +583,11 @@
 
       .tour-progress span {
         display: block;
-        width: 20%;
+        width: 100%;
         height: 100%;
         border-radius: inherit;
         background: linear-gradient(90deg, var(--green), var(--gold));
+        transform-origin: left center;
         transition: transform 260ms ease;
       }
 
@@ -768,7 +920,9 @@
           border-radius: 24px;
         }
 
-        .feature-pills {
+        .tour-groups,
+        .feature-pills,
+        .screen-strip {
           flex-wrap: nowrap;
           overflow-x: auto;
           margin-right: -20px;
@@ -776,8 +930,18 @@
           scrollbar-width: none;
         }
 
-        .feature-pills::-webkit-scrollbar {
+        .screen-strip {
+          display: flex;
+        }
+
+        .tour-groups::-webkit-scrollbar,
+        .feature-pills::-webkit-scrollbar,
+        .screen-strip::-webkit-scrollbar {
           display: none;
+        }
+
+        .screen-option {
+          min-width: 182px;
         }
 
         .phone-device {
@@ -872,31 +1036,31 @@
                   <div class="phone-screen">
                     <img
                       id="showcase-image"
-                      src="assets/portfolio-showcase/policy-score.jpg"
-                      alt="Aerarium iOS Policy Score cockpit"
+                      src="assets/product-tour/dashboard.jpg"
+                      alt="Aerarium dashboard overview"
                     />
                   </div>
                 </div>
               </div>
 
               <div class="feature-panel">
-                <div class="feature-kicker">Live iOS beta</div>
-                <div id="showcase-title" class="feature-title">Policy Score</div>
-                <p id="showcase-caption" class="feature-caption">
-                  One score explains allocation drift, concentration risk, liquidity, goals, and review cadence.
-                </p>
-                <div class="feature-pills" aria-label="Preview Aerarium Portfolio features">
-                  <button class="feature-pill is-active" type="button" data-showcase-index="0">Policy Score</button>
-                  <button class="feature-pill" type="button" data-showcase-index="1">ETF X-Ray</button>
-                  <button class="feature-pill" type="button" data-showcase-index="2">IPS Cockpit</button>
-                  <button class="feature-pill" type="button" data-showcase-index="3">Goals Funding</button>
-                  <button class="feature-pill" type="button" data-showcase-index="4">Private Profile</button>
+                <div class="tour-status">
+                  <div class="feature-kicker">Guided iOS tour</div>
+                  <div id="screen-count" class="screen-count">1 / 24</div>
                 </div>
+                <div id="showcase-title" class="feature-title">Dashboard Cockpit</div>
+                <p id="showcase-caption" class="feature-caption">
+                  Net worth, spend, invest, holdings, and account health stay visible without turning into a spreadsheet.
+                </p>
+                <div id="tour-groups" class="tour-groups" aria-label="Product areas"></div>
+                <div id="screen-strip" class="screen-strip" aria-label="Screens in selected product area"></div>
+                <div id="highlight-pills" class="feature-pills" aria-label="What to notice"></div>
                 <div class="tour-progress" aria-hidden="true"><span id="tour-progress"></span></div>
               </div>
             </div>
           </div>
         </div>
+        <div class="scroll-cue" aria-hidden="true">Scroll</div>
       </section>
 
       <section id="portfolio" class="product-section">
@@ -1065,76 +1229,325 @@
       </section>
     </main>
     <script>
-      const showcaseItems = [
+      const tourGroups = [
         {
-          title: "Policy Score",
-          caption:
-            "One score explains allocation drift, concentration risk, liquidity, goals, and review cadence.",
-          src: "assets/portfolio-showcase/policy-score.jpg",
-          alt: "Aerarium iOS Policy Score cockpit"
+          id: "dashboard",
+          label: "Dashboard",
+          screens: [
+            {
+              title: "Dashboard Cockpit",
+              shortTitle: "Overview",
+              caption: "Net worth, spend, invest, holdings, and account health stay visible without turning into a spreadsheet.",
+              src: "assets/product-tour/dashboard.jpg",
+              alt: "Aerarium dashboard overview",
+              highlights: ["Net worth", "Spend + invest", "Holdings", "Account cards"]
+            },
+            {
+              title: "Net Worth Sheet",
+              shortTitle: "Net worth",
+              caption: "A focused snapshot opens from the dashboard when the user wants history instead of more homepage clutter.",
+              src: "assets/product-tour/dashboard-net-worth.jpg",
+              alt: "Aerarium net worth sheet",
+              highlights: ["Snapshot history", "Privacy toggle", "Trend context"]
+            },
+            {
+              title: "Policy Score Detail",
+              shortTitle: "Score detail",
+              caption: "The score sheet explains what is helping or hurting discipline in plain language.",
+              src: "assets/product-tour/dashboard-policy-score.jpg",
+              alt: "Aerarium policy score breakdown sheet",
+              highlights: ["Score drivers", "Healthy areas", "Review compliance"]
+            }
+          ]
         },
         {
-          title: "ETF X-Ray",
-          caption:
-            "Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.",
-          src: "assets/portfolio-showcase/etf-xray.jpg",
-          alt: "Aerarium Portfolio X-Ray holdings exposure sheet"
+          id: "portfolio",
+          label: "Portfolio",
+          screens: [
+            {
+              title: "Portfolio Overview",
+              shortTitle: "Overview",
+              caption: "Assets, positions, liabilities, exposure, and tools are organized into a clean portfolio command center.",
+              src: "assets/product-tour/portfolio.jpg",
+              alt: "Aerarium portfolio overview",
+              highlights: ["Assets", "Positions", "Liabilities", "Exposure"]
+            },
+            {
+              title: "Assets Sheet",
+              shortTitle: "Assets",
+              caption: "Grouped assets open as a sheet, keeping the main page light while preserving detail.",
+              src: "assets/product-tour/portfolio-assets.jpg",
+              alt: "Aerarium portfolio assets sheet",
+              highlights: ["Grouped accounts", "Totals", "Top holdings"]
+            },
+            {
+              title: "Positions Sheet",
+              shortTitle: "Positions",
+              caption: "Position-level detail is one tap away without overwhelming the default portfolio view.",
+              src: "assets/product-tour/portfolio-positions.jpg",
+              alt: "Aerarium portfolio positions sheet",
+              highlights: ["Holdings", "Cash separated", "Performance"]
+            },
+            {
+              title: "Portfolio Tools",
+              shortTitle: "Tools",
+              caption: "Brokerage connections, trade checker, and imports are grouped where portfolio work happens.",
+              src: "assets/product-tour/portfolio-tools.jpg",
+              alt: "Aerarium portfolio tools rail",
+              highlights: ["Brokerage sync", "Trade checker", "CSV import"]
+            }
+          ]
         },
         {
-          title: "IPS Cockpit",
-          caption:
-            "Turn your policy into live guardrails, review rules, inspect violations, and keep every version.",
-          src: "assets/portfolio-showcase/ips-cockpit.jpg",
-          alt: "Aerarium IPS guardrails view"
+          id: "xray",
+          label: "X-Ray",
+          screens: [
+            {
+              title: "Sector Exposure",
+              shortTitle: "Sector",
+              caption: "Exposure views show what the user truly owns after ETF look-through is applied.",
+              src: "assets/product-tour/xray-sector.jpg",
+              alt: "Aerarium Portfolio X-Ray sector exposure",
+              highlights: ["ETF look-through", "Effective exposure", "Sector concentration"]
+            },
+            {
+              title: "Asset Class Exposure",
+              shortTitle: "Asset",
+              caption: "Asset-class exposure reconciles direct holdings, funds, and cash into one view.",
+              src: "assets/product-tour/xray-asset.jpg",
+              alt: "Aerarium Portfolio X-Ray asset class exposure",
+              highlights: ["Stocks", "Cash", "Funds", "Allocation"]
+            },
+            {
+              title: "Holdings Look-through",
+              shortTitle: "Holdings",
+              caption: "SPY and QQQ can reveal underlying single-name exposure instead of hiding it inside fund wrappers.",
+              src: "assets/product-tour/xray-holdings.jpg",
+              alt: "Aerarium Portfolio X-Ray holdings look-through",
+              highlights: ["Direct + through funds", "AAPL", "MSFT", "NVDA"]
+            },
+            {
+              title: "Currency Exposure",
+              shortTitle: "Currency",
+              caption: "Currency exposure stays separated from holdings so cash and FX risk remain understandable.",
+              src: "assets/product-tour/xray-currency.jpg",
+              alt: "Aerarium Portfolio X-Ray currency exposure",
+              highlights: ["Cash holdings", "FX view", "Base currency"]
+            }
+          ]
         },
         {
-          title: "Goals Funding",
-          caption:
-            "Assign portfolio sleeves to goals from one central funding plan without hiding tradeoffs.",
-          src: "assets/portfolio-showcase/goals-funding.jpg",
-          alt: "Aerarium Goals funding plan"
+          id: "goals",
+          label: "Goals",
+          screens: [
+            {
+              title: "Goals Hub",
+              shortTitle: "Hub",
+              caption: "Goals are framed as an operating system for priorities, not a demoralizing mountain of remaining dollars.",
+              src: "assets/product-tour/goals-hub.jpg",
+              alt: "Aerarium goals hub",
+              highlights: ["Need / want / wish", "Progress", "Funding plan"]
+            },
+            {
+              title: "Funding Plan",
+              shortTitle: "Plan",
+              caption: "Users assign assets centrally instead of drilling into every goal one at a time.",
+              src: "assets/product-tour/goals-funding.jpg",
+              alt: "Aerarium central goals funding plan",
+              highlights: ["Central assignment", "Sleeves", "Unassigned pool"]
+            },
+            {
+              title: "Stocks Sleeve",
+              shortTitle: "Stocks",
+              caption: "Asset-class tabs keep the global constraint visible while users allocate across goals.",
+              src: "assets/product-tour/goals-stocks.jpg",
+              alt: "Aerarium goals stock sleeve assignment",
+              highlights: ["Stocks available", "Goal rows", "Save plan"]
+            }
+          ]
         },
         {
-          title: "Private Profile",
-          caption:
-            "Security, encryption, brokerage access, export, and account controls stay visible and user-owned.",
-          src: "assets/portfolio-showcase/private-profile.jpg",
-          alt: "Aerarium Profile privacy and security view"
+          id: "ips",
+          label: "IPS",
+          screens: [
+            {
+              title: "Policy Score Cockpit",
+              shortTitle: "Score",
+              caption: "The IPS tab acts as the action center: what is wrong, why it matters, and which rules apply.",
+              src: "assets/product-tour/ips-score.jpg",
+              alt: "Aerarium IPS score cockpit",
+              highlights: ["Policy score", "Allocation check", "Action center"]
+            },
+            {
+              title: "Score Ledger",
+              shortTitle: "Ledger",
+              caption: "The score remains transparent, with drivers and healthy areas separated for trust.",
+              src: "assets/product-tour/ips-score-sheet.jpg",
+              alt: "Aerarium IPS score breakdown",
+              highlights: ["Point drivers", "Healthy areas", "Education hooks"]
+            },
+            {
+              title: "Guardrails",
+              shortTitle: "Guardrails",
+              caption: "Guardrails keep policy rules inspectable without forcing the whole IPS into one long scroll.",
+              src: "assets/product-tour/ips-guardrails.jpg",
+              alt: "Aerarium IPS guardrails tab",
+              highlights: ["Position cap", "Sector cap", "Liquidity"]
+            },
+            {
+              title: "Policy Rules",
+              shortTitle: "Policies",
+              caption: "Exclusions, dividend policy, and speculative caps are visible when they matter.",
+              src: "assets/product-tour/ips-policies.jpg",
+              alt: "Aerarium IPS policies tab",
+              highlights: ["Restrictions", "Dividend policy", "Speculative cap"]
+            },
+            {
+              title: "Liquidity Health",
+              shortTitle: "Liquidity",
+              caption: "Liquidity is measured directly against the policy floor and separated from goal funding.",
+              src: "assets/product-tour/ips-liquidity.jpg",
+              alt: "Aerarium IPS liquidity health tab",
+              highlights: ["Cash floor", "Months covered", "Surplus"]
+            },
+            {
+              title: "Version History",
+              shortTitle: "History",
+              caption: "IPS versions remain immutable so every policy change is auditable.",
+              src: "assets/product-tour/ips-history.jpg",
+              alt: "Aerarium IPS version history tab",
+              highlights: ["Immutable versions", "Current policy", "Review trail"]
+            }
+          ]
+        },
+        {
+          id: "profile",
+          label: "Profile",
+          screens: [
+            {
+              title: "Private Profile",
+              shortTitle: "Profile",
+              caption: "Security, brokerage access, and account controls are exposed without burying privacy-critical actions.",
+              src: "assets/product-tour/profile-main.jpg",
+              alt: "Aerarium profile overview",
+              highlights: ["Face ID", "Encryption", "Base currency"]
+            },
+            {
+              title: "Settings",
+              shortTitle: "Settings",
+              caption: "Profile tools keep privacy policy, export, support, and account controls easy to reach.",
+              src: "assets/product-tour/profile-settings.jpg",
+              alt: "Aerarium profile settings",
+              highlights: ["Export", "Privacy", "Terms", "Account deletion"]
+            },
+            {
+              title: "Support + Tools",
+              shortTitle: "Support",
+              caption: "Education and support surfaces live together with practical user controls.",
+              src: "assets/product-tour/profile-support.jpg",
+              alt: "Aerarium profile support tools",
+              highlights: ["Learn finance", "Help", "Trade checker"]
+            },
+            {
+              title: "Trade Checker",
+              shortTitle: "Trade checker",
+              caption: "Trades can be checked against policy before the user acts on impulse.",
+              src: "assets/product-tour/trade-checker.jpg",
+              alt: "Aerarium trade checker",
+              highlights: ["Policy preview", "Thesis check", "Risk flags"]
+            }
+          ]
         }
       ];
+
+      const screens = tourGroups.flatMap((group) =>
+        group.screens.map((screen) => ({ ...screen, groupId: group.id, groupLabel: group.label }))
+      );
 
       const image = document.querySelector("#showcase-image");
       const title = document.querySelector("#showcase-title");
       const caption = document.querySelector("#showcase-caption");
       const progress = document.querySelector("#tour-progress");
-      const pills = Array.from(document.querySelectorAll("[data-showcase-index]"));
+      const groupRail = document.querySelector("#tour-groups");
+      const screenStrip = document.querySelector("#screen-strip");
+      const highlightRail = document.querySelector("#highlight-pills");
+      const screenCount = document.querySelector("#screen-count");
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let activeIndex = 0;
+      let activeGroupId = screens[0].groupId;
       let tourTimer;
+      let resumeTimer;
 
-      function setShowcase(index, manual = false) {
-        const item = showcaseItems[index];
+      function screenIndexByGroup(groupId) {
+        return screens.findIndex((screen) => screen.groupId === groupId);
+      }
+
+      function renderGroups() {
+        groupRail.innerHTML = tourGroups
+          .map(
+            (group) =>
+              `<button class="tour-group${group.id === activeGroupId ? " is-active" : ""}" type="button" data-group-id="${group.id}" aria-pressed="${group.id === activeGroupId}">${group.label}</button>`
+          )
+          .join("");
+
+        groupRail.querySelectorAll("[data-group-id]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const index = screenIndexByGroup(button.dataset.groupId);
+            if (index >= 0) setShowcase(index, true);
+          });
+        });
+      }
+
+      function renderScreenStrip() {
+        const group = tourGroups.find((item) => item.id === activeGroupId);
+        if (!group) return;
+
+        screenStrip.innerHTML = group.screens
+          .map((screen) => {
+            const index = screens.findIndex((candidate) => candidate.src === screen.src);
+            return `<button class="screen-option${index === activeIndex ? " is-active" : ""}" type="button" data-screen-index="${index}" aria-pressed="${index === activeIndex}">
+              <img src="${screen.src}" alt="" loading="lazy" />
+              <span><strong>${screen.shortTitle}</strong><span>${screen.highlights.slice(0, 2).join(" / ")}</span></span>
+            </button>`;
+          })
+          .join("");
+
+        screenStrip.querySelectorAll("[data-screen-index]").forEach((button) => {
+          button.addEventListener("click", () => setShowcase(Number(button.dataset.screenIndex), true));
+        });
+      }
+
+      function renderHighlights(item) {
+        highlightRail.innerHTML = item.highlights
+          .map((highlight) => `<span class="feature-pill">${highlight}</span>`)
+          .join("");
+      }
+
+      function setShowcase(index, manual = false, animate = true) {
+        const item = screens[index];
         if (!item || !image) return;
 
         activeIndex = index;
-        image.classList.add("is-swapping");
+        activeGroupId = item.groupId;
+        if (animate && !prefersReducedMotion) image.classList.add("is-swapping");
 
         window.setTimeout(() => {
           image.src = item.src;
           image.alt = item.alt;
           title.textContent = item.title;
           caption.textContent = item.caption;
-          pills.forEach((pill, pillIndex) => {
-            pill.classList.toggle("is-active", pillIndex === index);
-            pill.setAttribute("aria-pressed", pillIndex === index ? "true" : "false");
-          });
-          if (progress) progress.style.transform = `translateX(${index * 100}%)`;
+          screenCount.textContent = `${index + 1} / ${screens.length}`;
+          if (progress) progress.style.transform = `scaleX(${(index + 1) / screens.length})`;
+          renderGroups();
+          renderScreenStrip();
+          renderHighlights(item);
           image.classList.remove("is-swapping");
-        }, prefersReducedMotion ? 0 : 140);
+        }, animate && !prefersReducedMotion ? 130 : 0);
 
         if (manual && !prefersReducedMotion) {
           window.clearInterval(tourTimer);
-          window.setTimeout(startTour, 12000);
+          window.clearTimeout(resumeTimer);
+          resumeTimer = window.setTimeout(startTour, 14000);
         }
       }
 
@@ -1142,20 +1555,15 @@
         if (prefersReducedMotion) return;
         window.clearInterval(tourTimer);
         tourTimer = window.setInterval(() => {
-          setShowcase((activeIndex + 1) % showcaseItems.length);
-        }, 4800);
+          setShowcase((activeIndex + 1) % screens.length);
+        }, 4300);
       }
 
-      pills.forEach((pill) => {
-        pill.addEventListener("click", () => {
-          setShowcase(Number(pill.dataset.showcaseIndex), true);
-        });
-      });
-
       image?.closest(".phone-device")?.addEventListener("click", () => {
-        setShowcase((activeIndex + 1) % showcaseItems.length, true);
+        setShowcase((activeIndex + 1) % screens.length, true);
       });
 
+      setShowcase(0, false, false);
       startTour();
 
       const revealTargets = document.querySelectorAll(
