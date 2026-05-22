@@ -265,8 +265,8 @@ export default function App() {
                           transformStyle: "preserve-3d",
                           position: "absolute",
                           top: "calc(50% - 46px)",
-                          left: 0,
-                          right: 0,
+                          left: "48px",
+                          right: "48px",
                           zIndex: zIndex,
                         }}
                         className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors duration-300 ${
