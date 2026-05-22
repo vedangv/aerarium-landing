@@ -33,13 +33,11 @@ export default function WaitlistPortal() {
     }
 
     const referralCode = `AER-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-    const ticketNo = Math.floor(Math.random() * 2000) + 8744 + 1;
-    const ticketNumber = `#${ticketNo.toString().padStart(5, "0")}`;
 
     const newUser: WaitlistUser = {
       email,
       registeredAt: new Date().toISOString(),
-      ticketNumber,
+      ticketNumber: referralCode,
       referralCode,
       referralCount: 0,
     };
@@ -103,9 +101,9 @@ export default function WaitlistPortal() {
                 </h4>
               </div>
               <div className="text-right">
-                <span className="text-[10px] font-mono text-slate-500 block">ALPHA QUEUE</span>
+                <span className="text-[10px] font-mono text-slate-500 block">ACCESS ID</span>
                 <span className="font-mono text-emerald-400 font-bold tracking-tight text-sm">
-                  {registeredUser.ticketNumber}
+                  {registeredUser.referralCode}
                 </span>
               </div>
             </div>
@@ -150,10 +148,10 @@ export default function WaitlistPortal() {
           <div className="space-y-3 bg-slate-950/40 p-4 rounded-xl border border-white/2">
             <h4 className="text-xs font-semibold text-white flex items-center justify-center space-x-1.5">
               <Trophy className="w-3.5 h-3.5 text-amber-500" />
-              <span>Invite Peers to Boost Queue Slot</span>
+              <span>Invite Peers for Priority Access</span>
             </h4>
             <p className="text-[11px] text-slate-400">
-              Each priority registration made with your link bumps your access queue positioning up by 1500 places.
+              Each priority registration made with your link grants you priority onboarding and early access to new portfolio modules.
             </p>
             <div className="flex items-center space-x-2 mt-2">
               <input
