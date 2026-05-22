@@ -10,7 +10,7 @@ import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
 import { motion } from "motion/react";
-import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown } from "lucide-react";
+import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown, CheckCircle2 } from "lucide-react";
 
 const FEATURES = [
   {
@@ -147,20 +147,17 @@ export default function App() {
               </p>
             </div>
 
-            {/* Premium proof points list */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-y-2.5 gap-x-6 py-1 text-[11px] font-mono text-slate-400 leading-none">
-              <div className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-555 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse" />
-                <span>Private user data</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-555 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse" />
-                <span>Primary-source market data</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-555 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse" />
-                <span>Rules-first investing</span>
-              </div>
+            {/* Premium proof chips */}
+            <div className="flex flex-wrap gap-2.5 py-1">
+              {["Private user data", "ETF look-through", "Policy Score", "SEC/FRED/13F research", "TestFlight beta"].map((proof) => (
+                <div
+                  key={proof}
+                  className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-3 py-2 text-[11px] font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
+                  <span>{proof}</span>
+                </div>
+              ))}
             </div>
 
             {/* Primary Action Button Row */}
@@ -186,10 +183,6 @@ export default function App() {
               </a>
             </div>
 
-            {/* Extra description caption from Vercel */}
-            <p className="text-xs text-slate-500 max-w-md font-sans italic pt-2">
-              Net worth, spend, invest, holdings, and account health stay visible without turning into a spreadsheet.
-            </p>
           </div>
 
           {/* Right Interactive Simulator Segment Container */}
@@ -204,7 +197,7 @@ export default function App() {
                 style={{ perspective: "1000px" }}
               >
                 {/* Visual Viewfinder Highlight Guides */}
-                <div className="absolute left-0 right-0 h-28 border-y border-emerald-500/10 bg-slate-900/30 backdrop-blur-[2px] pointer-events-none rounded-2xl z-0" />
+                <div className="absolute left-0 right-0 h-30 border-y border-emerald-500/18 bg-slate-900/45 backdrop-blur-[2px] pointer-events-none rounded-2xl z-0" />
 
                 {/* Vertical rotation button controls */}
                 <button
@@ -229,7 +222,7 @@ export default function App() {
                     const rotateX = -d * 18; 
                     const translateZ = -Math.abs(d) * 45; 
                     const scale = isActive ? 1.05 : 1 - Math.abs(d) * 0.1;
-                    const opacity = Math.max(0.12, 1 - Math.abs(d) * 0.35);
+                    const opacity = Math.max(0.32, 1 - Math.abs(d) * 0.28);
                     const zIndex = 50 - Math.abs(d);
 
                     return (
@@ -263,8 +256,8 @@ export default function App() {
                         }}
                         className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors duration-300 ${
                           isActive
-                            ? "bg-slate-900/95 border-emerald-500/25 shadow-lg shadow-emerald-500/10 text-white"
-                            : "bg-slate-950/10 border-white/[0.01] hover:bg-slate-900/5 text-slate-450 hover:text-slate-200"
+                            ? "bg-slate-900/95 border-emerald-500/35 shadow-lg shadow-emerald-500/10 text-white"
+                            : "bg-slate-950/35 border-white/[0.05] hover:bg-slate-900/55 text-slate-400 hover:text-slate-200"
                         }`}
                         id={`pill-desktop-${feat.id}`}
                       >

@@ -1,50 +1,108 @@
 import React, { useState, useEffect } from "react";
 import { 
-  Lock, 
-  Sparkles, 
   Smartphone, 
   PieChart, 
   Search, 
   Activity, 
   BookOpen, 
   Fingerprint, 
-  Layers, 
-  TrendingUp, 
-  ArrowUpRight, 
   Globe, 
-  FileText,
-  BadgeAlert,
   Sliders,
-  DollarSign,
-  Briefcase,
-  ShieldAlert,
-  CheckCircle,
-  HelpCircle
+  ChevronUp,
+  ChevronDown,
+  ChevronRight
 } from "lucide-react";
-import { motion } from "motion/react";
-import finsightSegmentsSrc from "../assets/finsight-segments.png";
-import finsightOverlapSrc from "../assets/finsight-overlap.png";
-import finsightMacroHeroSrc from "../assets/finsight-macro-hero.png";
+import { AnimatePresence, motion } from "motion/react";
+import finsightFundsHeatmapSrc from "../assets/finsight-funds-heatmap.png";
+import finsightMacroDashboardSrc from "../assets/finsight-macro-dashboard.png";
+import finsightFedCurveSrc from "../assets/finsight-fed-curve.png";
+import finsightAaplSegmentsSrc from "../assets/finsight-aapl-segments.png";
+import finsightAaplMetricsSrc from "../assets/finsight-aapl-metrics.png";
+import finsightNvdaOwnershipSrc from "../assets/finsight-nvda-ownership.png";
+import finsightNvdaTradingSrc from "../assets/finsight-nvda-trading.png";
+import finsightEarningsSrc from "../assets/finsight-earnings.png";
+
+const RESEARCH_SHOWCASES = [
+  {
+    id: "funds-heatmap",
+    title: "13F Overlap Heatmap",
+    label: "Funds",
+    description: "See which institutional managers cluster around the same names and how much each position weighs.",
+    image: finsightFundsHeatmapSrc,
+  },
+  {
+    id: "macro-dashboard",
+    title: "Macro Dashboard",
+    label: "Macro",
+    description: "Rates, inflation, labor, credit, commodities, and high-impact releases in one source-first view.",
+    image: finsightMacroDashboardSrc,
+  },
+  {
+    id: "fed-curve",
+    title: "Fed Funds Curve",
+    label: "Rates",
+    description: "Market-implied policy path, meeting markers, target bands, and repricing context.",
+    image: finsightFedCurveSrc,
+  },
+  {
+    id: "segments",
+    title: "Revenue Segments",
+    label: "Company",
+    description: "Segment and geography breakouts from filings, built for inspecting the business behind the ticker.",
+    image: finsightAaplSegmentsSrc,
+  },
+  {
+    id: "metric-charts",
+    title: "Financial Chart Grid",
+    label: "Financials",
+    description: "Revenue, cash flow, net income, debt, buybacks, and margin series with consistent visual grammar.",
+    image: finsightAaplMetricsSrc,
+  },
+  {
+    id: "ownership",
+    title: "Ownership + Insiders",
+    label: "Ownership",
+    description: "Institutional holders, QoQ changes, net insider sentiment, and price-linked activity.",
+    image: finsightNvdaOwnershipSrc,
+  },
+  {
+    id: "trading",
+    title: "Shorts + FTDs",
+    label: "Trading",
+    description: "Short-interest context, fails-to-deliver history, and trading pressure diagnostics.",
+    image: finsightNvdaTradingSrc,
+  },
+  {
+    id: "earnings",
+    title: "Earnings Calendar",
+    label: "Earnings",
+    description: "Weekly earnings map, valuation aggregates, surprise context, and forward-estimate pressure.",
+    image: finsightEarningsSrc,
+  },
+];
 
 export default function FeatureGrid() {
-  const [simulatedScore, setSimulatedScore] = useState<number>(88);
-  const [driftValue, setDriftValue] = useState<number>(12);
-
-  // Dynamic ticking search text simulator inside the research mockup
-  const [searchQuery, setSearchQuery] = useState("");
-  const searchCandidates = ["AAPL", "NVDA", "MSFT", "Securities", "Consumer Staples", "13F Whale Transfers", "Yield Curve"];
-  
-  // Track which research image is popped to front
-  const [activeResearchImage, setActiveResearchImage] = useState<number>(2);
+  const [activeResearchImage, setActiveResearchImage] = useState<number>(0);
+  const activeResearch = RESEARCH_SHOWCASES[activeResearchImage];
   
   useEffect(() => {
-    let index = 0;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) return;
+
     const interval = setInterval(() => {
-      setSearchQuery(searchCandidates[index]);
-      index = (index + 1) % searchCandidates.length;
-    }, 4000);
+      setActiveResearchImage((prev) => (prev + 1) % RESEARCH_SHOWCASES.length);
+    }, 5200);
+
     return () => clearInterval(interval);
   }, []);
+
+  const getResearchDistance = (index: number) => {
+    const total = RESEARCH_SHOWCASES.length;
+    let distance = index - activeResearchImage;
+    while (distance < -total / 2) distance += total;
+    while (distance > total / 2) distance -= total;
+    return distance;
+  };
 
   return (
     <div className="space-y-0">
@@ -198,132 +256,162 @@ export default function FeatureGrid() {
             </div>
           </div>
 
-          {/* Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Features Description Cards */}
-            <div className="lg:col-span-7 lg:order-last space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                {/* 1. Company Fundamentals */}
-                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-company-fundamentals">
-                  <div className="flex items-center space-x-2 text-cyan-400">
-                    <TrendingUp className="w-5 h-5" />
-                    <span className="font-display text-sm font-semibold text-white">Company Fundamentals</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Revenue, cash flow, margins, valuation, debt, dividends, buybacks, and segment charts.
-                  </p>
+          {/* Research product tour */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <div className="lg:col-span-5">
+              <div className="hidden md:flex relative h-[520px] flex-col items-center justify-center rounded-[28px] border border-white/5 bg-slate-950/35 p-4">
+                <div className="absolute left-4 right-4 top-1/2 h-28 -translate-y-1/2 rounded-2xl border-y border-cyan-400/18 bg-cyan-400/[0.04] pointer-events-none" />
+
+                <button
+                  onClick={() => setActiveResearchImage((activeResearchImage - 1 + RESEARCH_SHOWCASES.length) % RESEARCH_SHOWCASES.length)}
+                  className="absolute top-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/8 bg-slate-950/80 p-2 text-slate-400 transition hover:border-cyan-400/30 hover:text-cyan-300"
+                  aria-label="Previous research feature"
+                >
+                  <ChevronUp className="h-4 w-4" />
+                </button>
+
+                <div className="relative h-full w-full" style={{ transformStyle: "preserve-3d", perspective: "900px" }}>
+                  {RESEARCH_SHOWCASES.map((feature, index) => {
+                    const distance = getResearchDistance(index);
+                    const isActive = index === activeResearchImage;
+
+                    return (
+                      <motion.button
+                        key={feature.id}
+                        type="button"
+                        onClick={() => setActiveResearchImage(index)}
+                        initial={false}
+                        animate={{
+                          y: distance * 74,
+                          rotateX: -distance * 13,
+                          z: -Math.abs(distance) * 34,
+                          scale: isActive ? 1.02 : 1 - Math.abs(distance) * 0.055,
+                          opacity: Math.max(0.26, 1 - Math.abs(distance) * 0.23),
+                        }}
+                        transition={{ type: "spring", stiffness: 145, damping: 20, mass: 0.85 }}
+                        className={`absolute left-0 right-0 top-[calc(50%_-_48px)] rounded-2xl border p-4 text-left transition-colors ${
+                          isActive
+                            ? "border-cyan-400/35 bg-slate-900/95 text-white shadow-[0_20px_55px_rgba(6,182,212,0.12)]"
+                            : "border-white/[0.05] bg-slate-950/40 text-slate-400 hover:border-cyan-400/16 hover:bg-slate-900/55"
+                        }`}
+                        style={{ zIndex: 50 - Math.abs(distance) }}
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300/80">
+                              {feature.label}
+                            </div>
+                            <div className="mt-1 font-display text-base font-bold tracking-tight">
+                              {feature.title}
+                            </div>
+                          </div>
+                          <span className="font-mono text-xs text-slate-500">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+                        {isActive && (
+                          <motion.p
+                            initial={{ opacity: 0, y: -4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-2 max-w-sm text-xs leading-relaxed text-slate-400"
+                          >
+                            {feature.description}
+                          </motion.p>
+                        )}
+                      </motion.button>
+                    );
+                  })}
                 </div>
 
-                {/* 2. Operational KPIs */}
-                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-operational-kpis">
-                  <div className="flex items-center space-x-2 text-cyan-400">
-                    <Activity className="w-5 h-5" />
-                    <span className="font-display text-sm font-semibold text-white">Operational KPIs</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Filing-derived metrics like subscribers, vehicles, customers, energy, regional splits, and growth series.
-                  </p>
-                </div>
+                <button
+                  onClick={() => setActiveResearchImage((activeResearchImage + 1) % RESEARCH_SHOWCASES.length)}
+                  className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/8 bg-slate-950/80 p-2 text-slate-400 transition hover:border-cyan-400/30 hover:text-cyan-300"
+                  aria-label="Next research feature"
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+              </div>
 
-                {/* 3. Funds + Ownership */}
-                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-funds-ownership">
-                  <div className="flex items-center space-x-2 text-cyan-400">
-                    <Briefcase className="w-5 h-5" />
-                    <span className="font-display text-sm font-semibold text-white">Funds + Ownership</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    13F-style top buys, top sells, top holdings, sector allocation, and institutional ownership views.
-                  </p>
+              <div className="md:hidden space-y-4">
+                <div className="flex gap-2 overflow-x-auto pb-1">
+                  {RESEARCH_SHOWCASES.map((feature, index) => (
+                    <button
+                      key={feature.id}
+                      type="button"
+                      onClick={() => setActiveResearchImage(index)}
+                      className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold transition ${
+                        index === activeResearchImage
+                          ? "border-cyan-400/35 bg-cyan-400/10 text-cyan-200"
+                          : "border-white/6 bg-slate-900/55 text-slate-400"
+                      }`}
+                    >
+                      {feature.label}
+                    </button>
+                  ))}
                 </div>
-
-                {/* 4. Macro Signals */}
-                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-macro-signals">
-                  <div className="flex items-center space-x-2 text-cyan-400">
-                    <Globe className="w-5 h-5" />
-                    <span className="font-display text-sm font-semibold text-white">Macro Signals</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Yield curve, Fed funds futures, mortgage rates, commodities, and economic calendar.
-                  </p>
+                <div className="rounded-2xl border border-cyan-400/12 bg-slate-900/55 p-4">
+                  <div className="font-display text-base font-bold text-white">{activeResearch.title}</div>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">{activeResearch.description}</p>
                 </div>
-
-                {/* 5. Market Screens */}
-                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-market-screens">
-                  <div className="flex items-center space-x-2 text-cyan-400">
-                    <Layers className="w-5 h-5" />
-                    <span className="font-display text-sm font-semibold text-white">Market Screens</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Sector heatmap, top movers, index changes, earnings calendar, analyst estimates, and short interest.
-                  </p>
-                </div>
-
-                {/* 6. Watchlists */}
-                <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-cyan-500/25 transition-all group" id="feat-watchlists">
-                  <div className="flex items-center space-x-2 text-cyan-400">
-                    <FileText className="w-5 h-5" />
-                    <span className="font-display text-sm font-semibold text-white">Watchlists</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Track names and lightweight portfolios while researching public-market ideas.
-                  </p>
-                </div>
-
               </div>
             </div>
 
-            {/* Interactive Analytical Dashboard Side */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-4 relative">
-              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block font-bold z-10 md:mb-6">
-                Research Workspace
-              </span>
-              
-              <div className="relative w-full max-w-[380px] aspect-[4/3] group mt-8">
-                {/* Image 0: Segments (Left Back) */}
-                <motion.div 
-                  className={`absolute -top-6 -left-6 w-3/4 aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer bg-slate-900 ${activeResearchImage === 0 ? 'z-40 scale-110 shadow-[0_20px_50px_rgba(6,182,212,0.2)]' : 'z-10 group-hover:-translate-x-3 group-hover:-translate-y-3 group-hover:-rotate-2'}`}
-                  initial={{ opacity: 0, x: 20, rotate: 2 }}
-                  whileInView={{ opacity: 1, x: 0, rotate: -4 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4, duration: 0.7 }}
-                  onClick={() => setActiveResearchImage(0)}
-                >
-                  <img src={finsightSegmentsSrc} alt="Revenue Segments" className={`w-full h-full object-cover object-left-top transition-opacity ${activeResearchImage === 0 ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`} />
-                </motion.div>
-
-                {/* Image 1: Overlap (Right Back) */}
-                <motion.div 
-                  className={`absolute -bottom-6 -right-6 w-[85%] aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer bg-slate-900 ${activeResearchImage === 1 ? 'z-40 scale-110 shadow-[0_20px_50px_rgba(6,182,212,0.2)]' : 'z-20 group-hover:translate-x-3 group-hover:translate-y-3 group-hover:rotate-2'}`}
-                  initial={{ opacity: 0, x: -20, rotate: -2 }}
-                  whileInView={{ opacity: 1, x: 0, rotate: 4 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2, duration: 0.7 }}
-                  onClick={() => setActiveResearchImage(1)}
-                >
-                  <img src={finsightOverlapSrc} alt="Stock Overlap" className={`w-full h-full object-cover object-left-top transition-opacity ${activeResearchImage === 1 ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`} />
-                </motion.div>
-
-                {/* Image 2: Macro (Main Front) */}
-                <motion.div 
-                  className={`absolute inset-0 rounded-xl overflow-hidden border border-cyan-500/20 shadow-[0_20px_50px_rgba(6,182,212,0.15)] transition-all duration-500 cursor-pointer bg-slate-950 ${activeResearchImage === 2 ? 'z-40 scale-105 shadow-[0_20px_50px_rgba(6,182,212,0.3)]' : 'z-30'}`}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                  onClick={() => setActiveResearchImage(2)}
-                >
-                  <div className="absolute top-0 left-0 right-0 h-6 bg-slate-900 border-b border-white/5 flex items-center px-3 space-x-1.5 z-10">
-                    <span className="w-2 h-2 rounded-full bg-rose-500/80" />
-                    <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
-                    <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
+            <div className="lg:col-span-7">
+              <div className="relative overflow-hidden rounded-[28px] border border-cyan-400/16 bg-slate-950/70 shadow-[0_28px_90px_rgba(0,0,0,0.35)]">
+                <div className="flex items-center justify-between border-b border-white/6 bg-slate-900/75 px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
                   </div>
-                  <img src={finsightMacroHeroSrc} alt="Macro Dashboard" className="w-full h-full object-cover object-left pt-6" />
-                </motion.div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500">
+                    Aerarium Research
+                  </div>
+                </div>
+
+                <div className="relative aspect-[16/9] bg-slate-950">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={activeResearch.id}
+                      src={activeResearch.image}
+                      alt={activeResearch.title}
+                      className="absolute inset-0 h-full w-full object-cover object-top"
+                      initial={{ opacity: 0, scale: 1.01 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.995 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                    />
+                  </AnimatePresence>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent p-5">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                      <div>
+                        <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
+                          {activeResearch.label}
+                        </div>
+                        <h3 className="mt-1 font-display text-xl font-bold text-white">{activeResearch.title}</h3>
+                      </div>
+                      <a
+                        href="https://finsight-beryl.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-white"
+                      >
+                        Open Research
+                        <ChevronRight className="h-4 w-4" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {["SEC EDGAR", "FRED macro", "13F funds", "Company KPIs"].map((item) => (
+                  <div key={item} className="rounded-xl border border-white/5 bg-slate-900/35 px-3 py-2 text-center text-[11px] font-semibold text-slate-300">
+                    {item}
+                  </div>
+                ))}
               </div>
             </div>
-
           </div>
         </div>
       </motion.section>
