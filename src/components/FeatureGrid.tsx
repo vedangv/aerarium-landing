@@ -34,6 +34,9 @@ export default function FeatureGrid() {
   const [searchQuery, setSearchQuery] = useState("");
   const searchCandidates = ["AAPL", "NVDA", "MSFT", "Securities", "Consumer Staples", "13F Whale Transfers", "Yield Curve"];
   
+  // Track which research image is popped to front
+  const [activeResearchImage, setActiveResearchImage] = useState<number>(2);
+  
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -278,35 +281,38 @@ export default function FeatureGrid() {
               </span>
               
               <div className="relative w-full max-w-[380px] aspect-[4/3] group mt-8">
-                {/* Back Image (Left) */}
+                {/* Image 0: Segments (Left Back) */}
                 <motion.div 
-                  className="absolute -top-6 -left-6 w-3/4 aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-10 transition-transform duration-500 group-hover:-translate-x-3 group-hover:-translate-y-3 group-hover:-rotate-2 bg-slate-900"
+                  className={`absolute -top-6 -left-6 w-3/4 aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer bg-slate-900 ${activeResearchImage === 0 ? 'z-40 scale-110 shadow-[0_20px_50px_rgba(6,182,212,0.2)]' : 'z-10 group-hover:-translate-x-3 group-hover:-translate-y-3 group-hover:-rotate-2'}`}
                   initial={{ opacity: 0, x: 20, rotate: 2 }}
                   whileInView={{ opacity: 1, x: 0, rotate: -4 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4, duration: 0.7 }}
+                  onClick={() => setActiveResearchImage(0)}
                 >
-                  <img src={finsightSegmentsSrc} alt="Revenue Segments" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <img src={finsightSegmentsSrc} alt="Revenue Segments" className={`w-full h-full object-cover object-left-top transition-opacity ${activeResearchImage === 0 ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`} />
                 </motion.div>
 
-                {/* Back Image (Right) */}
+                {/* Image 1: Overlap (Right Back) */}
                 <motion.div 
-                  className="absolute -bottom-6 -right-6 w-[85%] aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 transition-transform duration-500 group-hover:translate-x-3 group-hover:translate-y-3 group-hover:rotate-2 bg-slate-900"
+                  className={`absolute -bottom-6 -right-6 w-[85%] aspect-video rounded-lg overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer bg-slate-900 ${activeResearchImage === 1 ? 'z-40 scale-110 shadow-[0_20px_50px_rgba(6,182,212,0.2)]' : 'z-20 group-hover:translate-x-3 group-hover:translate-y-3 group-hover:rotate-2'}`}
                   initial={{ opacity: 0, x: -20, rotate: -2 }}
                   whileInView={{ opacity: 1, x: 0, rotate: 4 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, duration: 0.7 }}
+                  onClick={() => setActiveResearchImage(1)}
                 >
-                  <img src={finsightOverlapSrc} alt="Stock Overlap" className="w-full h-full object-cover object-left-top opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <img src={finsightOverlapSrc} alt="Stock Overlap" className={`w-full h-full object-cover object-left-top transition-opacity ${activeResearchImage === 1 ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`} />
                 </motion.div>
 
-                {/* Main Front Image */}
+                {/* Image 2: Macro (Main Front) */}
                 <motion.div 
-                  className="absolute inset-0 rounded-xl overflow-hidden border border-cyan-500/20 shadow-[0_20px_50px_rgba(6,182,212,0.15)] z-30 transition-transform duration-500 group-hover:scale-105 bg-slate-950"
+                  className={`absolute inset-0 rounded-xl overflow-hidden border border-cyan-500/20 shadow-[0_20px_50px_rgba(6,182,212,0.15)] transition-all duration-500 cursor-pointer bg-slate-950 ${activeResearchImage === 2 ? 'z-40 scale-105 shadow-[0_20px_50px_rgba(6,182,212,0.3)]' : 'z-30'}`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1, duration: 0.6 }}
+                  onClick={() => setActiveResearchImage(2)}
                 >
                   <div className="absolute top-0 left-0 right-0 h-6 bg-slate-900 border-b border-white/5 flex items-center px-3 space-x-1.5 z-10">
                     <span className="w-2 h-2 rounded-full bg-rose-500/80" />
@@ -318,105 +324,6 @@ export default function FeatureGrid() {
               </div>
             </div>
 
-          </div>
-        </div>
-      </motion.section>
-
-      {/* SECTION 3: DECISION MATRIX ("USE PORTFOLIO WHEN / USE RESEARCH WHEN / TOGETHER") */}
-      <section className="py-24 relative overflow-hidden bg-slate-950 border-t border-b border-white/5">
-        <div className="absolute inset-0 bg-cyber-grid opacity-10 pointer-events-none" />
-        <div className="max-w-5xl mx-auto px-6 relative z-10">
-          
-          <div className="text-center mb-16">
-            <span className="text-xs font-mono font-semibold text-emerald-400 uppercase tracking-widest">ECOSYSTEM FIT</span>
-            <h3 className="font-display font-medium text-2xl md:text-3xl text-white mt-1">Ecosystem Playbook</h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            
-            {/* Card 1 */}
-            <div className="p-8 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-emerald-500/20 transition-all flex flex-col justify-between" id="fit-portfolio-card">
-              <div className="space-y-4">
-                <div className="flex items-baseline space-x-2">
-                  <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase bg-emerald-500/10 px-2 py-0.5 rounded">PORTFOLIO</span>
-                  <h4 className="font-display text-lg font-bold text-white">Use Portfolio when</h4>
-                </div>
-                <p className="text-slate-350 text-sm leading-relaxed">
-                  you want to govern your own money with policy rules, scorecards, X-Ray exposure, and check-ins.
-                </p>
-              </div>
-              <div className="pt-6 border-t border-white/5 mt-8 flex items-center text-xs text-slate-500 space-x-2">
-                <CheckCircle className="w-4 h-4 text-emerald-400" />
-                <span>Private personal device layer</span>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="p-8 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/20 transition-all flex flex-col justify-between" id="fit-research-card">
-              <div className="space-y-4">
-                <div className="flex items-baseline space-x-2">
-                  <span className="text-[10px] font-mono font-bold text-cyan-400 uppercase bg-cyan-500/10 px-2 py-0.5 rounded">RESEARCH</span>
-                  <h4 className="font-display text-lg font-bold text-white">Use Research when</h4>
-                </div>
-                <p className="text-slate-350 text-sm leading-relaxed">
-                  you want to understand companies, filings, ownership, funds, macro context, and market signals.
-                </p>
-              </div>
-              <div className="pt-6 border-t border-white/5 mt-8 flex items-center text-xs text-slate-500 space-x-2">
-                <CheckCircle className="w-4 h-4 text-cyan-400" />
-                <span>Web-accessible public database</span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Together footer accent bar */}
-          <div className="mt-12 p-6 rounded-2xl bg-gradient-to-r from-emerald-500/5 via-slate-900/50 to-cyan-500/5 border border-white/5 text-center">
-            <span className="text-xs font-mono font-bold text-white block uppercase mb-1 tracking-wider">Together</span>
-            <p className="text-slate-300 text-sm max-w-xl mx-auto leading-relaxed font-sans">
-              research informs decisions; portfolio discipline keeps those decisions aligned with your policy.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 4: SECURITY / PRIVACY */}
-      <motion.section 
-        id="security" 
-        style={{ scrollMarginTop: "100px" }} 
-        className="py-24 relative overflow-hidden bg-slate-950"
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative z-10">
-          <div className="inline-flex h-12 w-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 items-center justify-center text-emerald-400 mx-auto">
-            <Lock className="w-5 h-5 animate-pulse" />
-          </div>
-          
-          <h2 className="font-display font-medium text-3xl md:text-5xl text-white tracking-tight leading-none">
-            Private data stays private.
-          </h2>
-          
-          <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-sans">
-            Portfolio is designed around user-owned financial data, encrypted fields, and recovery flows. Research uses public-market data and stays separate from private portfolio records.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 max-w-3xl mx-auto text-left text-xs font-mono">
-            <div className="p-4 bg-slate-900/30 border border-white/5 rounded-xl space-y-1">
-              <span className="text-emerald-400 font-bold block">01 CLIENT-ONLY</span>
-              <span className="text-slate-400">Zero database syncing. No server records your personal credentials.</span>
-            </div>
-            <div className="p-4 bg-slate-900/30 border border-white/5 rounded-xl space-y-1">
-              <span className="text-emerald-400 font-bold block">02 ENCRYPTED</span>
-              <span className="text-slate-400">Values are locked with secure device-level keychain hashes.</span>
-            </div>
-            <div className="p-4 bg-slate-900/30 border border-white/5 rounded-xl space-y-1">
-              <span className="text-emerald-400 font-bold block">03 DECOUPLING</span>
-              <span className="text-slate-400">Public research runs on external servers: completely isolated from assets.</span>
-            </div>
           </div>
         </div>
       </motion.section>

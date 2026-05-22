@@ -4,8 +4,8 @@ import { Calendar, Clock } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function CountdownTimer() {
-  // Target Launch Date: June 09, 2026
-  const targetDate = new Date("2026-06-09T00:00:00Z").getTime();
+    // Target Launch Date: June 09, 2026 12:00 AM PDT
+  const targetDate = new Date("2026-06-09T00:00:00-07:00").getTime();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
     hours: 0,
@@ -128,7 +128,7 @@ export default function CountdownTimer() {
             </span>
             <span className="flex items-center space-x-1.5 font-mono">
               <Clock className="w-3.5 h-3.5 text-cyan-400/70" />
-              <span>Timezone: UTC</span>
+              <span>Timezone: PDT/PST</span>
             </span>
           </div>
         </div>

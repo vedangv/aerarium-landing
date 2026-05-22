@@ -7,7 +7,6 @@ export default function WaitlistPortal() {
   const [error, setError] = useState("");
   const [registeredUser, setRegisteredUser] = useState<WaitlistUser | null>(null);
   const [copiedReferral, setCopiedReferral] = useState(false);
-  const [totalSignups, setTotalSignups] = useState(8744);
 
   useEffect(() => {
     // Read from local storage upon mount to check if user already signed up
@@ -20,12 +19,8 @@ export default function WaitlistPortal() {
       }
     }
 
-    // Dynamic ticking signup tracker for hyper hype
-    const interval = setInterval(() => {
-      setTotalSignups((prev) => prev + Math.floor(Math.random() * 2) + 1);
-    }, 12000);
-
-    return () => clearInterval(interval);
+    // Clean up if needed
+    return () => {};
   }, []);
 
   const handleRegister = (e: React.FormEvent) => {
@@ -38,7 +33,7 @@ export default function WaitlistPortal() {
     }
 
     const referralCode = `AER-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-    const ticketNo = Math.floor(Math.random() * 2000) + totalSignups + 1;
+    const ticketNo = Math.floor(Math.random() * 2000) + 8744 + 1;
     const ticketNumber = `#${ticketNo.toString().padStart(5, "0")}`;
 
     const newUser: WaitlistUser = {
@@ -51,7 +46,6 @@ export default function WaitlistPortal() {
 
     localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
     setRegisteredUser(newUser);
-    setTotalSignups((prev) => prev + 1);
   };
 
   const copyReferralLink = () => {
@@ -194,16 +188,11 @@ export default function WaitlistPortal() {
         /* Empty Input Registration State */
         <div className="space-y-6" id="waitlist-register-view">
           <div>
-            <div className="flex items-center space-x-2 mb-3">
-              <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-[9px] font-bold uppercase tracking-wider">
-                Phase-1 iOS Beta Active
-              </span>
-            </div>
             <h3 className="font-display font-medium text-lg text-white">
               Portfolio access opens first on iOS
             </h3>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-              Research is already usable on web. Portfolio is the private discipline layer that will launch through iOS early access. Join <strong className="text-emerald-400 font-medium">{totalSignups.toLocaleString()} allocators</strong> in the queue.
+              Research is already usable on web. Portfolio is the private discipline layer that will launch through iOS early access.
             </p>
           </div>
 
@@ -251,18 +240,33 @@ export default function WaitlistPortal() {
             <div className="flex-grow border-t border-white/5"></div>
           </div>
 
-          <a
-            href="https://testflight.apple.com/join/Xna39VKU"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-white/10 rounded-xl py-3 text-xs font-semibold text-emerald-400 transition-colors cursor-pointer"
-            id="link-testflight-direct"
-          >
-            <span className="flex items-center justify-center space-x-2">
-              <Sparkles className="w-4 h-4" />
-              <span>Get Immediate iOS Beta (TestFlight) →</span>
-            </span>
-          </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a
+              href="https://testflight.apple.com/join/Xna39VKU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-emerald-500/20 hover:border-emerald-500/40 rounded-xl py-3 text-xs font-semibold text-emerald-400 transition-colors cursor-pointer"
+              id="link-testflight-direct"
+            >
+              <span className="flex items-center justify-center space-x-2">
+                <Sparkles className="w-4 h-4" />
+                <span>Immediate iOS Beta</span>
+              </span>
+            </a>
+            
+            <a
+              href="https://finsight-beryl.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-cyan-500/20 hover:border-cyan-500/40 rounded-xl py-3 text-xs font-semibold text-cyan-400 transition-colors cursor-pointer"
+              id="link-research-direct"
+            >
+              <span className="flex items-center justify-center space-x-2">
+                <ArrowRight className="w-4 h-4" />
+                <span>Open Web Research</span>
+              </span>
+            </a>
+          </div>
 
           {/* Secure lock disclaimer footer */}
           <div className="flex items-center space-x-2 bg-slate-950/40 p-3 rounded-xl border border-white/5 text-[10px] text-slate-400">

@@ -9,7 +9,6 @@ import IosCockpitMockup from "./components/IosCockpitMockup";
 import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
-import SocialHub from "./components/SocialHub";
 import { motion } from "motion/react";
 import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown } from "lucide-react";
 
@@ -206,13 +205,6 @@ export default function App() {
               >
                 {/* Visual Viewfinder Highlight Guides */}
                 <div className="absolute left-0 right-0 h-28 border-y border-emerald-500/10 bg-slate-900/30 backdrop-blur-[2px] pointer-events-none rounded-2xl z-0" />
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[9px] font-mono text-emerald-500/50 uppercase tracking-widest pointer-events-none z-10">
-                  FOCUS
-                </div>
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-1.5 text-[9px] font-mono text-emerald-500/50 uppercase pointer-events-none z-10">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                  <span>ACTIVE</span>
-                </div>
 
                 {/* Vertical rotation button controls */}
                 <button
@@ -265,8 +257,8 @@ export default function App() {
                           transformStyle: "preserve-3d",
                           position: "absolute",
                           top: "calc(50% - 46px)",
-                          left: "48px",
-                          right: "48px",
+                          left: 0,
+                          right: 0,
                           zIndex: zIndex,
                         }}
                         className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors duration-300 ${
@@ -391,9 +383,6 @@ export default function App() {
           <WaitlistPortal />
         </motion.div>
       </section>
-
-      {/* 7. Community Share Optimization */}
-      <SocialHub />
 
       {/* 8. Humble and Professional Footer */}
       <footer className="bg-slate-950 py-12 relative z-10 border-t border-white/5 font-sans">
