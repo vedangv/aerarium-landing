@@ -46,6 +46,14 @@ describe("waitlist API", () => {
       if (options?.method === "POST") {
         return { ok: false, status: 409, json: async () => ({ code: "23505" }) };
       }
+      if (String(url).includes("referred_by=eq.")) {
+        return {
+          ok: true,
+          status: 200,
+          headers: { get: () => "0-0/1" },
+          json: async () => [{ id: "referral" }],
+        };
+      }
       return {
         ok: true,
         status: 200,
@@ -67,6 +75,7 @@ describe("waitlist API", () => {
     assert.equal(res.body.alreadyRegistered, true);
     assert.equal(res.body.email, "user@example.com");
     assert.equal(res.body.referralCode, "AER-EXISTING");
-    assert.equal(fetchCalls.length, 2);
+    assert.equal(res.body.referralCount, 1);
+    assert.equal(fetchCalls.length, 3);
   });
 });

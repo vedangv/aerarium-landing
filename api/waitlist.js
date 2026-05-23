@@ -51,6 +51,33 @@ async function fetchExistingWaitlistUser({ supabaseUrl, serviceKey, email, fetch
   return Array.isArray(rows) ? rows[0] ?? null : null;
 }
 
+async function fetchReferralCount({ supabaseUrl, serviceKey, referralCode, fetchImpl }) {
+  if (!referralCode) return 0;
+
+  const response = await fetchImpl(
+    `${supabaseUrl}/rest/v1/${TABLE}?referred_by=eq.${encodeURIComponent(referralCode)}&select=id`,
+    {
+      method: "GET",
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+        Prefer: "count=exact",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`supabase_referral_count_failed_${response.status}`);
+  }
+
+  const contentRange = response.headers?.get?.("content-range");
+  const total = contentRange?.split("/")?.[1];
+  if (total && total !== "*") return Number.parseInt(total, 10) || 0;
+
+  const rows = await response.json();
+  return Array.isArray(rows) ? rows.length : 0;
+}
+
 async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl }) {
   const response = await fetchImpl(`${supabaseUrl}/rest/v1/${TABLE}`, {
     method: "POST",
@@ -87,13 +114,19 @@ async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl }) {
   throw new Error(`supabase_insert_failed_${response.status}:${detail}`);
 }
 
-function publicPayload(row, alreadyRegistered = false) {
+async function publicPayload({ row, alreadyRegistered = false, config, fetchImpl }) {
+  const referralCount = await fetchReferralCount({
+    ...config,
+    referralCode: row.referral_code,
+    fetchImpl,
+  });
+
   return {
     email: row.email,
     registeredAt: row.created_at,
     ticketNumber: row.referral_code,
     referralCode: row.referral_code,
-    referralCount: 0,
+    referralCount,
     alreadyRegistered,
   };
 }
@@ -141,13 +174,13 @@ export default async function handler(req, res, context = {}) {
     try {
       const inserted = await insertWaitlistUser({ ...config, row, fetchImpl });
       if (!inserted.duplicate) {
-        res.status(200).json(publicPayload(inserted.row));
+        res.status(200).json(await publicPayload({ row: inserted.row, config, fetchImpl }));
         return;
       }
 
       const existing = await fetchExistingWaitlistUser({ ...config, email, fetchImpl });
       if (existing) {
-        res.status(200).json(publicPayload(existing, true));
+        res.status(200).json(await publicPayload({ row: existing, alreadyRegistered: true, config, fetchImpl }));
         return;
       }
     } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { WaitlistUser } from "../types";
-import { ArrowRight, CheckCircle, Mail, Share2, Sparkles, Trophy, RotateCcw, AlertCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Mail, Share2, Sparkles, RotateCcw, AlertCircle } from "lucide-react";
 
 export default function WaitlistPortal() {
   const [email, setEmail] = useState("");
@@ -105,8 +105,8 @@ export default function WaitlistPortal() {
           </div>
 
           <div>
-            <h3 className="font-display font-bold text-xl text-white">Priority Claim Verified</h3>
-            <p className="text-slate-400 text-xs mt-1">A holographic entry pass was reserved for: {registeredUser.email}</p>
+            <h3 className="font-display font-bold text-xl text-white">You're on the founder list</h3>
+            <p className="text-slate-400 text-xs mt-1">Launch updates and founder pricing notes will go to: {registeredUser.email}</p>
           </div>
 
           {/* Interactive Hype Ticket Visualizer */}
@@ -122,10 +122,10 @@ export default function WaitlistPortal() {
             <div className="flex justify-between items-start text-left mb-6">
               <div>
                 <span className="text-[9px] font-mono tracking-widest text-emerald-400 uppercase font-semibold">
-                  AERARIUM PORTFOLIO
+                  AERARIUM FOUNDER LIST
                 </span>
                 <h4 className="font-display font-medium text-lg text-white mt-1">
-                  Access Ticket
+                  Launch Pass
                 </h4>
               </div>
               <div className="text-right">
@@ -139,15 +139,15 @@ export default function WaitlistPortal() {
             {/* Middle Section: Stats */}
             <div className="grid grid-cols-2 gap-4 border-t border-b border-white/5 py-4 my-2 text-left">
               <div>
-                <span className="text-[10px] font-mono text-slate-500 block">TIER RATING</span>
+                <span className="text-[10px] font-mono text-slate-500 block">STATUS</span>
                 <span className="text-xs font-semibold text-white tracking-wide uppercase">
-                  Genesis Reservist
+                  Launch updates
                 </span>
               </div>
               <div>
-                <span className="text-[10px] font-mono text-slate-500 block">REFERRALS</span>
+                <span className="text-[10px] font-mono text-slate-500 block">REFERRED SIGNUPS</span>
                 <span className="text-xs font-semibold text-cyan-400 tracking-wide">
-                  {registeredUser.referralCount} ACTIVE
+                  {registeredUser.referralCount}
                 </span>
               </div>
             </div>
@@ -175,11 +175,11 @@ export default function WaitlistPortal() {
           {/* Referral action module */}
           <div className="space-y-3 bg-slate-950/40 p-4 rounded-xl border border-white/2">
             <h4 className="text-xs font-semibold text-white flex items-center justify-center space-x-1.5">
-              <Trophy className="w-3.5 h-3.5 text-amber-500" />
-              <span>Invite Peers for Priority Access</span>
+              <Share2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Share launch updates</span>
             </h4>
             <p className="text-[11px] text-slate-400">
-              Each priority registration made with your link grants you priority onboarding and early access to new portfolio modules.
+              Share this link with people who want Aerarium launch updates. We track referrals quietly for future founder offers.
             </p>
             <div className="flex items-center space-x-2 mt-2">
               <input
@@ -215,10 +215,10 @@ export default function WaitlistPortal() {
         <div className="space-y-6" id="waitlist-register-view">
           <div>
             <h3 className="font-display font-medium text-lg text-white">
-              Portfolio access opens first on iOS
+              Founder launch list
             </h3>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-              Research is already usable on web. Portfolio is the private discipline layer that will launch through iOS early access.
+              Get App Store launch updates, founder pricing notes, and major Portfolio release news.
             </p>
           </div>
 
@@ -256,7 +256,7 @@ export default function WaitlistPortal() {
               id="btn-waitlist-submit"
             >
               <div className="bg-slate-950 rounded-[11px] py-3 text-xs font-semibold text-white group-hover:bg-transparent transition-colors flex items-center justify-center space-x-2">
-                <span>{isSubmitting ? "Securing Priority Pass..." : "Secure Gen-0 Priority Pass"}</span>
+                <span>{isSubmitting ? "Saving..." : "Get launch updates"}</span>
                 <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSubmitting ? "animate-pulse" : "group-hover:translate-x-0.5"}`} />
               </div>
             </button>
@@ -265,7 +265,7 @@ export default function WaitlistPortal() {
           {/* Sourced direct Apple TestFlight download link */}
           <div className="relative flex py-2 items-center">
             <div className="flex-grow border-t border-white/5"></div>
-            <span className="flex-shrink mx-4 text-[10px] font-mono text-slate-500 uppercase">Or Immediate Early TestFlight</span>
+            <span className="flex-shrink mx-4 text-[10px] font-mono text-slate-500 uppercase">Already ready to test?</span>
             <div className="flex-grow border-t border-white/5"></div>
           </div>
 
@@ -300,7 +300,7 @@ export default function WaitlistPortal() {
           {/* Secure lock disclaimer footer */}
           <div className="flex items-center space-x-2 bg-slate-950/40 p-3 rounded-xl border border-white/5 text-[10px] text-slate-400">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span>Portfolio access launches first on iOS. The private investing rules model lives securely on your device.</span>
+            <span>Email signup is for launch updates. Beta access and Research stay available through the links above.</span>
           </div>
         </div>
       )}
