@@ -4,6 +4,7 @@ export interface WaitlistUser {
   ticketNumber: string;
   referralCode: string;
   referralCount: number;
+  alreadyRegistered?: boolean;
 }
 
 export interface TimeLeft {

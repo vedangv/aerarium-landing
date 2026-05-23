@@ -7,6 +7,7 @@ export default function WaitlistPortal() {
   const [error, setError] = useState("");
   const [registeredUser, setRegisteredUser] = useState<WaitlistUser | null>(null);
   const [copiedReferral, setCopiedReferral] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     // Read from local storage upon mount to check if user already signed up
@@ -23,7 +24,7 @@ export default function WaitlistPortal() {
     return () => {};
   }, []);
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -32,18 +33,45 @@ export default function WaitlistPortal() {
       return;
     }
 
-    const referralCode = `AER-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    setIsSubmitting(true);
 
-    const newUser: WaitlistUser = {
-      email,
-      registeredAt: new Date().toISOString(),
-      ticketNumber: referralCode,
-      referralCode,
-      referralCount: 0,
-    };
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          referredBy: params.get("ref"),
+          source: "landing-waitlist-portal",
+        }),
+      });
 
-    localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
-    setRegisteredUser(newUser);
+      const payload = await response.json();
+      if (!response.ok) {
+        setError(payload?.error === "invalid_email"
+          ? "Please enter a valid personal or corporate email address."
+          : "Couldn't reserve your priority pass. Try again in a moment."
+        );
+        return;
+      }
+
+      const newUser: WaitlistUser = {
+        email: payload.email,
+        registeredAt: payload.registeredAt ?? new Date().toISOString(),
+        ticketNumber: payload.ticketNumber,
+        referralCode: payload.referralCode,
+        referralCount: payload.referralCount ?? 0,
+        alreadyRegistered: payload.alreadyRegistered,
+      };
+
+      localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
+      setRegisteredUser(newUser);
+    } catch {
+      setError("Couldn't reserve your priority pass. Check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const copyReferralLink = () => {
@@ -221,12 +249,15 @@ export default function WaitlistPortal() {
 
             <button
               type="submit"
-              className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-cyan-500 p-[1px] rounded-xl hover:shadow-lg hover:shadow-cyan-400/15 transition-all duration-300 cursor-pointer"
+              disabled={isSubmitting}
+              className={`w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-cyan-500 p-[1px] rounded-xl hover:shadow-lg hover:shadow-cyan-400/15 transition-all duration-300 ${
+                isSubmitting ? "cursor-wait opacity-75" : "cursor-pointer"
+              }`}
               id="btn-waitlist-submit"
             >
               <div className="bg-slate-950 rounded-[11px] py-3 text-xs font-semibold text-white group-hover:bg-transparent transition-colors flex items-center justify-center space-x-2">
-                <span>Secure Gen-0 Priority Pass</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                <span>{isSubmitting ? "Securing Priority Pass..." : "Secure Gen-0 Priority Pass"}</span>
+                <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSubmitting ? "animate-pulse" : "group-hover:translate-x-0.5"}`} />
               </div>
             </button>
           </form>
