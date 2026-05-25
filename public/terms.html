@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aerarium Terms of Service</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #020617;
+        --panel: #0b1210;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --line: rgba(255, 255, 255, 0.1);
+        --green: #74d99f;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top left, rgba(47, 191, 113, 0.16), transparent 34%), var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.65;
+      }
+      main {
+        width: min(860px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 72px 0;
+      }
+      a { color: var(--green); }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--green);
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 12px;
+      }
+      h1 {
+        font-size: clamp(34px, 7vw, 64px);
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+        margin: 26px 0 14px;
+      }
+      h2 {
+        margin-top: 34px;
+        font-size: 20px;
+      }
+      p, li { color: var(--muted); }
+      .panel {
+        margin-top: 28px;
+        border: 1px solid var(--line);
+        background: rgba(15, 23, 42, 0.58);
+        border-radius: 22px;
+        padding: 24px;
+      }
+      .updated {
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="brand" href="/">Aerarium</a>
+      <h1>Terms of Service</h1>
+      <p class="updated">Last updated: May 25, 2026</p>
+
+      <section class="panel">
+        <p>
+          These terms cover use of the Aerarium launch page, founder list, public Research
+          workspace links, and beta access links. They are intentionally concise while Aerarium
+          is in beta.
+        </p>
+
+        <h2>No financial advice</h2>
+        <p>
+          Aerarium provides tools for tracking rules, research, portfolio context, and personal
+          investment discipline. It does not provide personalized financial, legal, or tax advice.
+          You remain responsible for investment decisions.
+        </p>
+
+        <h2>Beta status</h2>
+        <p>
+          Aerarium Portfolio is available through TestFlight during beta. Features may change,
+          break, or be removed before public App Store launch.
+        </p>
+
+        <h2>Read-only product posture</h2>
+        <p>
+          Aerarium Portfolio is designed around read-only brokerage visibility and does not place
+          trades. Do not use Aerarium as your only source of truth for balances, tax records, or
+          legally required reporting.
+        </p>
+
+        <h2>Acceptable use</h2>
+        <ul>
+          <li>Do not attempt to disrupt, scrape, or reverse engineer the service.</li>
+          <li>Do not submit someone else's email address without permission.</li>
+          <li>Do not rely on beta features where loss, compliance, or legal obligations depend on them.</li>
+        </ul>
+
+        <h2>Changes</h2>
+        <p>
+          These terms may be updated as Aerarium moves from beta to public launch, including when
+          pricing and subscription terms are finalized.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

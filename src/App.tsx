@@ -156,7 +156,7 @@ export default function App() {
 
             {/* Premium proof chips */}
             <div className="flex flex-wrap gap-2.5 py-1">
-              {["Read-only brokerage sync", "ETF look-through", "Policy Score", "SEC/FRED/13F research", "Free during beta"].map((proof) => (
+              {["Read-only sync", "ETF look-through", "Policy Score", "SEC/FRED/13F research", "Free during beta"].map((proof) => (
                 <div
                   key={proof}
                   className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-3 py-2 text-[11px] font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
@@ -405,6 +405,8 @@ export default function App() {
 
           <div className="flex flex-col items-center gap-3 md:items-end">
             <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-400">
+              <a href="/privacy.html" className="hover:text-emerald-300 transition-colors">Privacy</a>
+              <a href="/terms.html" className="hover:text-emerald-300 transition-colors">Terms</a>
               <a href="#security" className="hover:text-emerald-300 transition-colors">Security</a>
               <a href="#waitlist" className="hover:text-emerald-300 transition-colors">Founder list</a>
               <a href="https://testflight.apple.com/join/Xna39VKU" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">TestFlight</a>

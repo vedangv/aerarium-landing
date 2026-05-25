@@ -127,7 +127,7 @@ export default function FeatureGrid() {
               Aerarium Portfolio
             </h2>
             <p className="text-base md:text-lg text-slate-350 leading-relaxed max-w-2xl font-light">
-              A private iOS cockpit for investors who want rules, visibility, and accountability without a trading-first interface.
+              Turn your investment policy into live guardrails.
             </p>
             <div className="pt-2">
               <a 
@@ -360,7 +360,7 @@ export default function FeatureGrid() {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="relative overflow-hidden rounded-[28px] border border-cyan-400/16 bg-slate-950/70 shadow-[0_28px_90px_rgba(0,0,0,0.35)]">
+              <div className="relative overflow-hidden rounded-[28px] border border-cyan-300/30 bg-slate-900/80 shadow-[0_28px_90px_rgba(34,211,238,0.16)] ring-1 ring-white/10">
                 <div className="flex items-center justify-between border-b border-white/6 bg-slate-900/75 px-4 py-3">
                   <div className="flex items-center gap-2">
                     <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
@@ -378,7 +378,7 @@ export default function FeatureGrid() {
                       key={activeResearch.id}
                       src={activeResearch.image}
                       alt={activeResearch.title}
-                      className="absolute inset-0 h-full w-full object-cover object-top"
+                      className="absolute inset-0 h-full w-full object-cover object-top brightness-110 contrast-110 saturate-110"
                       initial={{ opacity: 0, scale: 1.01 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.995 }}
@@ -439,10 +439,10 @@ export default function FeatureGrid() {
               </div>
               <div className="space-y-3">
                 <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-5xl">
-                  Trust without fake social proof.
+                  Security you can verify, not just trust.
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-slate-350 md:text-lg">
-                  Aerarium is built around read-only portfolio visibility, explicit controls, and source-first research. No testimonials are needed to explain the promise: your data should stay controlled by you.
+                  Aerarium is built around read-only portfolio visibility, explicit controls, and source-first research. Your data should stay controlled by you.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/6 bg-slate-900/35 p-5">
@@ -452,6 +452,7 @@ export default function FeatureGrid() {
                 <p className="mt-2 text-sm leading-relaxed text-slate-300">
                   I built Aerarium because I wanted a tool that helped enforce my own investing rules instead of nudging me to trade more.
                 </p>
+                <p className="mt-3 text-xs font-semibold text-emerald-300">- Vedang, solo founder</p>
               </div>
             </div>
 
