@@ -108,8 +108,8 @@ export default function FeatureGrid() {
       <motion.section 
         id="portfolio" 
         style={{ scrollMarginTop: "100px" }} 
-        className="py-20 relative overflow-hidden border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
-        initial={false}
+        className="scroll-stop-section py-20 relative overflow-hidden border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
+        initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -224,8 +224,8 @@ export default function FeatureGrid() {
       <motion.section 
         id="research" 
         style={{ scrollMarginTop: "100px" }} 
-        className="py-24 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
-        initial={false}
+        className="scroll-stop-section py-24 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
+        initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -423,8 +423,8 @@ export default function FeatureGrid() {
       <motion.section
         id="security"
         style={{ scrollMarginTop: "100px" }}
-        className="relative overflow-hidden border-t border-white/5 bg-slate-950 py-20"
-        initial={false}
+        className="scroll-stop-section relative overflow-hidden border-t border-white/5 bg-slate-950 py-20"
+        initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}

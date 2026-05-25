@@ -135,7 +135,7 @@ export default function App() {
       <Navbar />
 
       {/* 3. Hero Section (Visual Fintech Asset Redesign) */}
-      <header id="hero" className="relative min-h-screen flex items-center pt-28 pb-16 z-10">
+      <header id="hero" className="scroll-stop-section relative min-h-screen flex items-center pt-28 pb-16 z-10">
         <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Text Block */}
@@ -374,7 +374,7 @@ export default function App() {
       </header>
 
       {/* 4. Launch Countdown Block Tracker */}
-      <section className="bg-slate-950/80 border-t border-b border-white/5 py-8 relative z-10 font-sans">
+      <section className="scroll-stop-section bg-slate-950/80 border-t border-b border-white/5 py-8 relative z-10 font-sans">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <CountdownTimer />
         </div>
@@ -384,9 +384,9 @@ export default function App() {
       <FeatureGrid />
 
       {/* 6. Reservation Portal Section */}
-      <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="py-24 relative z-10 px-6 max-w-4xl mx-auto font-sans">
+      <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="scroll-stop-section py-24 relative z-10 px-6 max-w-4xl mx-auto font-sans">
         <motion.div 
-          initial={false}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
