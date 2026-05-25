@@ -247,7 +247,7 @@ export default function FeatureGrid() {
             </p>
             <div className="pt-2">
               <a 
-                href="https://finsight-beryl.vercel.app/"
+                href="https://research.aerarium.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 font-medium text-sm transition-colors group"
@@ -394,7 +394,7 @@ export default function FeatureGrid() {
                         <h3 className="mt-1 font-display text-xl font-bold text-white">{activeResearch.title}</h3>
                       </div>
                       <a
-                        href="https://finsight-beryl.vercel.app/"
+                        href="https://research.aerarium.app/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-white"

@@ -179,7 +179,7 @@ export default function App() {
                 Join iOS Beta
               </a>
               <a
-                href="https://finsight-beryl.vercel.app/"
+                href="https://research.aerarium.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="py-3.5 px-8 rounded-xl bg-slate-900 hover:bg-slate-850 text-sm font-semibold text-white border border-white/5 hover:border-slate-500/20 transition-all cursor-pointer flex items-center justify-center space-x-2"
@@ -410,7 +410,7 @@ export default function App() {
               <a href="#security" className="hover:text-emerald-300 transition-colors">Security</a>
               <a href="#waitlist" className="hover:text-emerald-300 transition-colors">Founder list</a>
               <a href="https://testflight.apple.com/join/Xna39VKU" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">TestFlight</a>
-              <a href="https://finsight-beryl.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">Research</a>
+              <a href="https://research.aerarium.app/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">Research</a>
             </div>
             <p className="text-xs text-slate-500 font-mono text-center md:text-right leading-relaxed">
               © 2026 Aerarium. High-end tools for rules-based personal investing and public-market research. All rights reserved.

@@ -79,7 +79,7 @@ export default function Navbar() {
             Early Access
           </a>
           <a
-            href="https://finsight-beryl.vercel.app/"
+            href="https://research.aerarium.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
@@ -149,7 +149,7 @@ export default function Navbar() {
             Early Access
           </a>
           <a
-            href="https://finsight-beryl.vercel.app/"
+            href="https://research.aerarium.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"

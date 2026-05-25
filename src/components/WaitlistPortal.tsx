@@ -303,7 +303,7 @@ export default function WaitlistPortal() {
             </a>
             
             <a
-              href="https://finsight-beryl.vercel.app/"
+              href="https://research.aerarium.app/"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => track("outbound_research_click", { source: "waitlist-portal" })}
