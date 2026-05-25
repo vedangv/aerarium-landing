@@ -4,6 +4,26 @@
   "installCommand": "npm install",
   "framework": "vite",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.aerarium.app" }],
+      "destination": "https://aerarium.app/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "aerariumapp.com" }],
+      "destination": "https://aerarium.app/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.aerariumapp.com" }],
+      "destination": "https://aerarium.app/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]
