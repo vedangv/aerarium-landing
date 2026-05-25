@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { track } from "@vercel/analytics";
 import { WaitlistUser } from "../types";
 import { ArrowRight, CheckCircle, Mail, Share2, Sparkles, RotateCcw, AlertCircle } from "lucide-react";
 
@@ -66,6 +67,11 @@ export default function WaitlistPortal() {
       };
 
       localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
+      track("founder_list_signup", {
+        alreadyRegistered: Boolean(newUser.alreadyRegistered),
+        hasReferral: Boolean(params.get("ref")),
+        source: "landing-waitlist-portal",
+      });
       setRegisteredUser(newUser);
     } catch {
       setError("Couldn't reserve your priority pass. Check your connection and try again.");
@@ -78,6 +84,10 @@ export default function WaitlistPortal() {
     if (!registeredUser) return;
     const shareUrl = `${window.location.origin}/?ref=${registeredUser.referralCode}`;
     navigator.clipboard.writeText(shareUrl);
+    track("referral_link_copied", {
+      referralCount: registeredUser.referralCount,
+      source: "landing-waitlist-portal",
+    });
     setCopiedReferral(true);
     setTimeout(() => setCopiedReferral(false), 2000);
   };
@@ -282,6 +292,7 @@ export default function WaitlistPortal() {
               href="https://testflight.apple.com/join/Xna39VKU"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("outbound_testflight_click", { source: "waitlist-portal" })}
               className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-emerald-500/20 hover:border-emerald-500/40 rounded-xl py-3 text-xs font-semibold text-emerald-400 transition-colors cursor-pointer"
               id="link-testflight-direct"
             >
@@ -295,6 +306,7 @@ export default function WaitlistPortal() {
               href="https://finsight-beryl.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("outbound_research_click", { source: "waitlist-portal" })}
               className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-cyan-500/20 hover:border-cyan-500/40 rounded-xl py-3 text-xs font-semibold text-cyan-400 transition-colors cursor-pointer"
               id="link-research-direct"
             >
