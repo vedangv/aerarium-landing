@@ -10,17 +10,21 @@ import {
   Sliders,
   ChevronUp,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  ShieldCheck,
+  LockKeyhole,
+  FileDown,
+  EyeOff,
+  Database
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import finsightFundsHeatmapSrc from "../assets/finsight-funds-heatmap.png";
-import finsightMacroDashboardSrc from "../assets/finsight-macro-dashboard.png";
-import finsightFedCurveSrc from "../assets/finsight-fed-curve.png";
-import finsightAaplSegmentsSrc from "../assets/finsight-aapl-segments.png";
-import finsightAaplMetricsSrc from "../assets/finsight-aapl-metrics.png";
-import finsightNvdaOwnershipSrc from "../assets/finsight-nvda-ownership.png";
-import finsightNvdaTradingSrc from "../assets/finsight-nvda-trading.png";
-import finsightEarningsSrc from "../assets/finsight-earnings.png";
+import researchFundsHeatmapSrc from "../../assets/screenshots/aerarium-research-funds-overlap-heatmap.png";
+import researchMacroDashboardSrc from "../../assets/screenshots/aerarium-research-macro-dashboard.png";
+import researchFedCurveSrc from "../../assets/screenshots/aerarium-research-macro-fed-yield-curve.png";
+import researchAaplSegmentsSrc from "../../assets/screenshots/aerarium-research-aapl-segments.png";
+import researchAaplMetricsSrc from "../../assets/screenshots/aerarium-research-aapl-financial-charts.png";
+import researchNvdaOwnershipSrc from "../../assets/screenshots/aerarium-research-nvda-ownership-insiders.png";
+import researchHomeSrc from "../../assets/screenshots/aerarium-research-home-market-browser.png";
 
 const RESEARCH_SHOWCASES = [
   {
@@ -28,56 +32,49 @@ const RESEARCH_SHOWCASES = [
     title: "13F Overlap Heatmap",
     label: "Funds",
     description: "See which institutional managers cluster around the same names and how much each position weighs.",
-    image: finsightFundsHeatmapSrc,
+    image: researchFundsHeatmapSrc,
   },
   {
     id: "macro-dashboard",
     title: "Macro Dashboard",
     label: "Macro",
     description: "Rates, inflation, labor, credit, commodities, and high-impact releases in one source-first view.",
-    image: finsightMacroDashboardSrc,
+    image: researchMacroDashboardSrc,
   },
   {
     id: "fed-curve",
     title: "Fed Funds Curve",
     label: "Rates",
     description: "Market-implied policy path, meeting markers, target bands, and repricing context.",
-    image: finsightFedCurveSrc,
+    image: researchFedCurveSrc,
   },
   {
     id: "segments",
     title: "Revenue Segments",
     label: "Company",
     description: "Segment and geography breakouts from filings, built for inspecting the business behind the ticker.",
-    image: finsightAaplSegmentsSrc,
+    image: researchAaplSegmentsSrc,
   },
   {
     id: "metric-charts",
     title: "Financial Chart Grid",
     label: "Financials",
     description: "Revenue, cash flow, net income, debt, buybacks, and margin series with consistent visual grammar.",
-    image: finsightAaplMetricsSrc,
+    image: researchAaplMetricsSrc,
   },
   {
     id: "ownership",
     title: "Ownership + Insiders",
     label: "Ownership",
     description: "Institutional holders, QoQ changes, net insider sentiment, and price-linked activity.",
-    image: finsightNvdaOwnershipSrc,
+    image: researchNvdaOwnershipSrc,
   },
   {
-    id: "trading",
-    title: "Shorts + FTDs",
-    label: "Trading",
-    description: "Short-interest context, fails-to-deliver history, and trading pressure diagnostics.",
-    image: finsightNvdaTradingSrc,
-  },
-  {
-    id: "earnings",
-    title: "Earnings Calendar",
-    label: "Earnings",
-    description: "Weekly earnings map, valuation aggregates, surprise context, and forward-estimate pressure.",
-    image: finsightEarningsSrc,
+    id: "market-browser",
+    title: "Market Nerve Center",
+    label: "Home",
+    description: "Sector browser, market movers, analyst activity, and fund activity in one research starting point.",
+    image: researchHomeSrc,
   },
 ];
 
@@ -111,8 +108,8 @@ export default function FeatureGrid() {
       <motion.section 
         id="portfolio" 
         style={{ scrollMarginTop: "100px" }} 
-        className="py-24 relative overflow-hidden border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
-        initial={{ opacity: 0, y: 35 }}
+        className="py-20 relative overflow-hidden border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -130,7 +127,7 @@ export default function FeatureGrid() {
               Aerarium Portfolio
             </h2>
             <p className="text-base md:text-lg text-slate-350 leading-relaxed max-w-2xl font-light">
-              A private iOS cockpit for turning your investment policy into live guardrails.
+              A private iOS cockpit for investors who want rules, visibility, and accountability without a trading-first interface.
             </p>
             <div className="pt-2">
               <a 
@@ -151,8 +148,9 @@ export default function FeatureGrid() {
             <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-ips-cockpit">
               <div className="flex items-center space-x-2 text-emerald-450">
                 <Sliders className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">IPS Cockpit</span>
+                <span className="font-display text-sm font-semibold text-white">Stop Drifting From Your Plan</span>
               </div>
+              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">IPS Cockpit</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Build an Investment Policy Statement, track rules, review versions, and surface what needs attention.
               </p>
@@ -162,8 +160,9 @@ export default function FeatureGrid() {
             <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-policy-score">
               <div className="flex items-center space-x-2 text-emerald-450">
                 <PieChart className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Policy Score</span>
+                <span className="font-display text-sm font-semibold text-white">Know Portfolio Health at a Glance</span>
               </div>
+              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Policy Score</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Explain allocation drift, concentration risk, liquidity, goals, and review cadence in one score.
               </p>
@@ -173,8 +172,9 @@ export default function FeatureGrid() {
             <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-portfolio-xray">
               <div className="flex items-center space-x-2 text-emerald-450">
                 <Activity className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Portfolio X-Ray</span>
+                <span className="font-display text-sm font-semibold text-white">See Through Your ETFs</span>
               </div>
+              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Portfolio X-Ray</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.
               </p>
@@ -184,8 +184,9 @@ export default function FeatureGrid() {
             <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-goals-funding">
               <div className="flex items-center space-x-2 text-emerald-450">
                 <Globe className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Goals + Funding Plan</span>
+                <span className="font-display text-sm font-semibold text-white">Assign Assets to Goals</span>
               </div>
+              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Goals + Funding Plan</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Assign portfolio sleeves to goals without hiding global allocation tradeoffs.
               </p>
@@ -195,8 +196,9 @@ export default function FeatureGrid() {
             <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-thesis-checkins">
               <div className="flex items-center space-x-2 text-emerald-450">
                 <BookOpen className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Thesis Check-ins</span>
+                <span className="font-display text-sm font-semibold text-white">Never Forget Why You Bought</span>
               </div>
+              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Thesis Check-ins</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Keep investing decisions tied to a written thesis instead of impulse trades.
               </p>
@@ -206,8 +208,9 @@ export default function FeatureGrid() {
             <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-private-by-design">
               <div className="flex items-center space-x-2 text-emerald-450">
                 <Fingerprint className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Private by Design</span>
+                <span className="font-display text-sm font-semibold text-white">Keep Private Data Private</span>
               </div>
+              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Private by Design</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Encrypted financial fields, Keychain-backed recovery planning, and user-controlled data.
               </p>
@@ -222,7 +225,7 @@ export default function FeatureGrid() {
         id="research" 
         style={{ scrollMarginTop: "100px" }} 
         className="py-24 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
-        initial={{ opacity: 0, y: 35 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -411,6 +414,81 @@ export default function FeatureGrid() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* SECTION 3: SECURITY + TRUST */}
+      <motion.section
+        id="security"
+        style={{ scrollMarginTop: "100px" }}
+        className="relative overflow-hidden border-t border-white/5 bg-slate-950 py-20"
+        initial={false}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 bg-cyber-grid opacity-15 pointer-events-none" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="space-y-5">
+              <div className="inline-flex items-center space-x-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase text-emerald-400">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span>Security</span>
+              </div>
+              <div className="space-y-3">
+                <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-5xl">
+                  Trust without fake social proof.
+                </h2>
+                <p className="max-w-xl text-base leading-relaxed text-slate-350 md:text-lg">
+                  Aerarium is built around read-only portfolio visibility, explicit controls, and source-first research. No testimonials are needed to explain the promise: your data should stay controlled by you.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/6 bg-slate-900/35 p-5">
+                <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">
+                  Founder note
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                  I built Aerarium because I wanted a tool that helped enforce my own investing rules instead of nudging me to trade more.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                {
+                  title: "Read-only brokerage sync",
+                  body: "SnapTrade connections keep holdings current. Aerarium never places trades.",
+                  icon: EyeOff,
+                },
+                {
+                  title: "Encrypted sensitive fields",
+                  body: "Financial fields are protected with a recovery-aware encryption flow.",
+                  icon: LockKeyhole,
+                },
+                {
+                  title: "Export and delete controls",
+                  body: "Data export stays available, and account deletion is treated as a first-class account right.",
+                  icon: FileDown,
+                },
+                {
+                  title: "Private portfolio, public research",
+                  body: "Research uses public-market data and stays separate from private portfolio records.",
+                  icon: Database,
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.title} className="rounded-2xl border border-white/6 bg-slate-900/40 p-5">
+                    <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-emerald-400/16 bg-emerald-400/10 text-emerald-300">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-display text-base font-bold text-white">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.body}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

@@ -15,38 +15,45 @@ import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown, CheckC
 const FEATURES = [
   {
     id: "overview",
-    title: "Overview Dashboard",
+    label: "Overview Dashboard",
+    title: "Understand Your Portfolio Fast",
     description: "Net worth, spend, invest, holdings, and account health stay visible without turning into a spreadsheet.",
   },
   {
     id: "ips-cockpit",
-    title: "IPS Cockpit",
-    description: "Build an Investment Policy Statement, track rules, review versions, and surface what needs attention.",
+    label: "IPS Cockpit",
+    title: "Stop Drifting From Your Plan",
+    description: "Turn a written investment policy into live guardrails, review versions, and surface what needs attention.",
   },
   {
     id: "policy-score",
-    title: "Policy Score",
-    description: "Explain allocation drift, concentration risk, liquidity, goals, and review cadence in one score.",
+    label: "Policy Score",
+    title: "Know Portfolio Health at a Glance",
+    description: "Allocation drift, concentration risk, liquidity, goals, and review cadence collapse into one transparent score.",
   },
   {
     id: "portfolio-xray",
-    title: "Portfolio X-Ray",
-    description: "Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.",
+    label: "Portfolio X-Ray",
+    title: "See Through Your ETFs",
+    description: "Look through fund holdings to reveal true stock, sector, asset-class, and currency exposure.",
   },
   {
     id: "goals-funding",
-    title: "Goals + Funding Plan",
-    description: "Assign portfolio sleeves to goals without hiding global allocation tradeoffs.",
+    label: "Goals + Funding Plan",
+    title: "Assign Assets to Goals",
+    description: "Centralize funding decisions so goal sleeves are easy to adjust without hiding global tradeoffs.",
   },
   {
     id: "thesis-checkins",
-    title: "Thesis Check-ins",
-    description: "Keep investing decisions tied to a written thesis instead of impulse trades.",
+    label: "Thesis Check-ins",
+    title: "Never Forget Why You Bought",
+    description: "Keep investing decisions tied to a written thesis instead of letting impulse trades rewrite the plan.",
   },
   {
     id: "private-design",
-    title: "Private by Design",
-    description: "Encrypted financial fields, Keychain-backed recovery planning, and user-controlled data.",
+    label: "Private by Design",
+    title: "Keep Private Data Private",
+    description: "Read-only brokerage sync, encrypted financial fields, recovery planning, and user-controlled data.",
   },
 ];
 
@@ -149,7 +156,7 @@ export default function App() {
 
             {/* Premium proof chips */}
             <div className="flex flex-wrap gap-2.5 py-1">
-              {["Private user data", "ETF look-through", "Policy Score", "SEC/FRED/13F research", "TestFlight beta"].map((proof) => (
+              {["Read-only brokerage sync", "ETF look-through", "Policy Score", "SEC/FRED/13F research", "Free during beta"].map((proof) => (
                 <div
                   key={proof}
                   className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-3 py-2 text-[11px] font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
@@ -181,6 +188,11 @@ export default function App() {
                 <span>Open Research</span>
                 <ChevronRight className="w-4 h-4 text-emerald-400" />
               </a>
+            </div>
+
+            <div className="rounded-2xl border border-white/6 bg-slate-900/35 p-4 text-sm leading-relaxed text-slate-350">
+              <span className="font-semibold text-white">Built for investors who</span>{" "}
+              write theses before buying, track allocation against a plan, and want to know what they actually own inside funds.
             </div>
 
           </div>
@@ -276,6 +288,9 @@ export default function App() {
                             transition={{ duration: 0.25 }}
                             className="mt-1.5 text-[11px] text-slate-400 leading-normal pl-4.5 font-sans"
                           >
+                            <span className="block pb-1 text-[9px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/80">
+                              {feat.label}
+                            </span>
                             {feat.description}
                           </motion.p>
                         )}
@@ -326,6 +341,9 @@ export default function App() {
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     {FEATURES[activeIndex].title}
                   </h3>
+                  <div className="mt-1 text-[9px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">
+                    {FEATURES[activeIndex].label}
+                  </div>
                   <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
                     {FEATURES[activeIndex].description}
                   </p>
@@ -356,7 +374,7 @@ export default function App() {
       </header>
 
       {/* 4. Launch Countdown Block Tracker */}
-      <section className="bg-slate-950/80 border-t border-b border-white/5 py-16 relative z-10 font-sans">
+      <section className="bg-slate-950/80 border-t border-b border-white/5 py-8 relative z-10 font-sans">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <CountdownTimer />
         </div>
@@ -368,7 +386,7 @@ export default function App() {
       {/* 6. Reservation Portal Section */}
       <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="py-24 relative z-10 px-6 max-w-4xl mx-auto font-sans">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -385,9 +403,17 @@ export default function App() {
             <span className="text-base font-display font-bold text-white tracking-tight">Aerarium</span>
           </div>
 
-          <p className="text-xs text-slate-500 font-mono text-center md:text-right leading-relaxed">
-            © 2026 Aerarium. High-end tools for rules-based personal investing and public-market research. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center gap-3 md:items-end">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-400">
+              <a href="#security" className="hover:text-emerald-300 transition-colors">Security</a>
+              <a href="#waitlist" className="hover:text-emerald-300 transition-colors">Founder list</a>
+              <a href="https://testflight.apple.com/join/Xna39VKU" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">TestFlight</a>
+              <a href="https://finsight-beryl.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">Research</a>
+            </div>
+            <p className="text-xs text-slate-500 font-mono text-center md:text-right leading-relaxed">
+              © 2026 Aerarium. High-end tools for rules-based personal investing and public-market research. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
