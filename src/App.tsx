@@ -113,7 +113,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+    <div className="relative min-h-screen overflow-x-clip bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
       
       {/* 1. Global Ambient Parallax Backdrops */}
       <div 
