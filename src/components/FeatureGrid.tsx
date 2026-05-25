@@ -450,9 +450,23 @@ export default function FeatureGrid() {
                   Founder note
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                  I built Aerarium because I wanted a tool that helped enforce my own investing rules instead of nudging me to trade more.
+                  I built Aerarium because I wanted a tool that helped enforce my own investing rules instead of nudging me to trade more. My background as a CFA charterholder shapes the product: disciplined policy, transparent exposure, and no trading-first incentives.
                 </p>
-                <p className="mt-3 text-xs font-semibold text-emerald-300">- Vedang, solo founder</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {["CFA charterholder", "Solo founder", "Rules-first investing"].map((item) => (
+                    <span key={item} className="rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-bold text-emerald-200">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="https://www.linkedin.com/in/vedangv/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex text-xs font-semibold text-emerald-300 transition hover:text-emerald-200"
+                >
+                  - Vedang, solo founder
+                </a>
               </div>
             </div>
 
