@@ -9,6 +9,7 @@ import IosCockpitMockup from "./components/IosCockpitMockup";
 import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
+import MobileSnapBeat from "./components/MobileSnapBeat";
 import { motion } from "motion/react";
 import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown, CheckCircle2 } from "lucide-react";
 
@@ -137,6 +138,7 @@ export default function App() {
       {/* 3. Hero Section (Visual Fintech Asset Redesign) */}
       <header id="hero" className="scroll-stop-section relative min-h-screen flex items-center pt-28 pb-16 z-10">
         <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <MobileSnapBeat className="lg:col-span-12" />
           
           {/* Left Text Block */}
           <div className="lg:col-span-5 space-y-8 text-left flex flex-col justify-center">
@@ -198,6 +200,8 @@ export default function App() {
           </div>
 
           {/* Right Interactive Simulator Segment Container */}
+          <MobileSnapBeat className="lg:col-span-12" />
+
           <div className="lg:col-span-7 w-full flex flex-col md:flex-row items-center gap-8 md:gap-4 relative">
             
             {/* Feature Pills Selector - Left of Simulator on Desktop, Stacks on Mobile */}
@@ -374,7 +378,8 @@ export default function App() {
       </header>
 
       {/* 4. Launch Countdown Block Tracker */}
-      <section className="scroll-stop-section bg-slate-950/80 border-t border-b border-white/5 py-8 relative z-10 font-sans">
+      <section className="bg-slate-950/80 border-t border-b border-white/5 py-8 relative z-10 font-sans">
+        <MobileSnapBeat />
         <div className="max-w-7xl mx-auto px-6 text-center">
           <CountdownTimer />
         </div>
@@ -385,10 +390,11 @@ export default function App() {
 
       {/* 6. Reservation Portal Section */}
       <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="scroll-stop-section py-24 relative z-10 px-6 max-w-4xl mx-auto font-sans">
+        <MobileSnapBeat />
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, amount: 0.35, margin: "0px 0px -12% 0px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <WaitlistPortal />

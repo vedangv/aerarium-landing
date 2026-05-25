@@ -8,16 +8,46 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
-}
-
-body {
-  scroll-snap-type: y proximity;
 }
 
 .scroll-stop-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+.snap-beat {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  html,
+  body {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 72px;
+  }
+
+  .scroll-stop-section {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+
+  .snap-beat {
+    display: block;
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+    scroll-margin-top: 72px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  html,
+  body {
+    scroll-snap-type: y proximity;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

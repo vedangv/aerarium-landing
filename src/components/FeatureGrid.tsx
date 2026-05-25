@@ -25,6 +25,7 @@ import researchAaplSegmentsSrc from "../../assets/screenshots/aerarium-research-
 import researchAaplMetricsSrc from "../../assets/screenshots/aerarium-research-aapl-financial-charts.png";
 import researchNvdaOwnershipSrc from "../../assets/screenshots/aerarium-research-nvda-ownership-insiders.png";
 import researchHomeSrc from "../../assets/screenshots/aerarium-research-home-market-browser.png";
+import MobileSnapBeat from "./MobileSnapBeat";
 
 const RESEARCH_SHOWCASES = [
   {
@@ -111,9 +112,10 @@ export default function FeatureGrid() {
         className="scroll-stop-section py-20 relative overflow-hidden border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, amount: 0.28, margin: "0px 0px -12% 0px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
+        <MobileSnapBeat />
         <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           
@@ -142,6 +144,8 @@ export default function FeatureGrid() {
               </a>
             </div>
           </div>          {/* Grid Layout */}
+          <MobileSnapBeat />
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             {/* 1. IPS Cockpit */}
@@ -179,6 +183,8 @@ export default function FeatureGrid() {
                 Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.
               </p>
             </div>
+
+            <MobileSnapBeat className="col-span-full" />
 
             {/* 4. Goals + Funding Plan */}
             <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-goals-funding">
@@ -227,9 +233,10 @@ export default function FeatureGrid() {
         className="scroll-stop-section py-24 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, amount: 0.24, margin: "0px 0px -12% 0px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
+        <MobileSnapBeat />
         <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           
@@ -260,6 +267,8 @@ export default function FeatureGrid() {
           </div>
 
           {/* Research product tour */}
+          <MobileSnapBeat />
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <div className="lg:col-span-5">
               <div className="hidden md:flex relative h-[520px] flex-col items-center justify-center rounded-[28px] border border-white/5 bg-slate-950/35 p-4">
@@ -426,9 +435,10 @@ export default function FeatureGrid() {
         className="scroll-stop-section relative overflow-hidden border-t border-white/5 bg-slate-950 py-20"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, amount: 0.3, margin: "0px 0px -12% 0px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
+        <MobileSnapBeat />
         <div className="absolute inset-0 bg-cyber-grid opacity-15 pointer-events-none" />
         <div className="relative z-10 mx-auto max-w-7xl px-6">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
