@@ -109,7 +109,7 @@ export default function FeatureGrid() {
       <motion.section 
         id="portfolio" 
         style={{ scrollMarginTop: "100px" }} 
-        className="scroll-stop-section py-20 relative overflow-hidden border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
+        className="scroll-stop-section py-20 relative overflow-clip border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.28, margin: "0px 0px -12% 0px" }}
@@ -230,7 +230,7 @@ export default function FeatureGrid() {
       <motion.section 
         id="research" 
         style={{ scrollMarginTop: "100px" }} 
-        className="scroll-stop-section py-24 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
+        className="scroll-stop-section py-24 relative overflow-clip bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.24, margin: "0px 0px -12% 0px" }}
@@ -432,7 +432,7 @@ export default function FeatureGrid() {
       <motion.section
         id="security"
         style={{ scrollMarginTop: "100px" }}
-        className="scroll-stop-section relative overflow-hidden border-t border-white/5 bg-slate-950 py-20"
+        className="scroll-stop-section relative overflow-clip border-t border-white/5 bg-slate-950 py-20"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3, margin: "0px 0px -12% 0px" }}
