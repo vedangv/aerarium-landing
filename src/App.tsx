@@ -357,6 +357,7 @@ export default function App() {
             </div>
 
             {/* iPhone Device frame rendering */}
+            <MobileSnapBeat className="md:hidden" />
             <div className="w-full md:w-7/12 flex justify-center flex-shrink-0">
               <IosCockpitMockup 
                 activeIndex={activeIndex}
