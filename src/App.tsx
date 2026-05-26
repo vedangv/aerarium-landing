@@ -11,7 +11,7 @@ import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import { motion } from "motion/react";
-import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown, CheckCircle2 } from "lucide-react";
+import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown, CheckCircle2, Instagram } from "lucide-react";
 
 const FEATURES = [
   {
@@ -417,6 +417,10 @@ export default function App() {
               <a href="#waitlist" className="hover:text-emerald-300 transition-colors">Founder list</a>
               <a href="https://testflight.apple.com/join/Xna39VKU" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">TestFlight</a>
               <a href="https://research.aerarium.app/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">Research</a>
+              <a href="https://www.instagram.com/aerarium.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-emerald-300 transition-colors">
+                <Instagram className="h-3.5 w-3.5" />
+                <span>Instagram</span>
+              </a>
             </div>
             <p className="text-xs text-slate-500 font-mono text-center md:text-right leading-relaxed">
               © 2026 Aerarium. High-end tools for rules-based personal investing and public-market research. All rights reserved.
