@@ -39,6 +39,11 @@ html {
     scroll-snap-stop: always;
     width: 100%;
   }
+
+  .footer-snap {
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
+  }
 }
 
 @media (min-width: 1024px) {

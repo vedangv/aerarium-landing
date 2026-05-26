@@ -402,7 +402,7 @@ export default function App() {
       </section>
 
       {/* 8. Humble and Professional Footer */}
-      <footer className="bg-slate-950 py-12 relative z-10 border-t border-white/5 font-sans">
+      <footer className="footer-snap bg-slate-950 py-12 relative z-10 border-t border-white/5 font-sans">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center space-x-3">
             <Lock className="w-4.5 h-4.5 text-emerald-400" />
