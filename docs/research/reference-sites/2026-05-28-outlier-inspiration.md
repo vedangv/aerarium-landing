@@ -213,11 +213,31 @@ Shorter page version:
 
 ## Gemini Review Status
 
-Attempted Gemini review with:
+First attempted Gemini review with:
 
 ```bash
 gemini --model gemini-3.1-pro-preview
 ```
 
-The command returned a quota exhaustion error and should be retried later before
-the final redesign direction is locked.
+That command returned a quota exhaustion error.
+
+Second review was run without the explicit model flag:
+
+```bash
+gemini -p "<landing redesign review prompt>"
+```
+
+Useful Gemini critique:
+
+- The moat is not brokerage sync or ETF look-through alone. The moat is the
+  closed loop between the written rule and live portfolio reality.
+- Aerarium should be framed as a personal compliance layer: most tools tell the
+  user what they have; Aerarium tells them whether they are breaking their own
+  rules.
+- Policy Score should become the primary proof metric, similar to a credit score
+  for investment discipline.
+- The hero should lead with the memory/spreadsheet burden.
+- The CFA founder + NVDA-overlap story is strong enough to move near the top of
+  the page instead of being buried in a generic founder section.
+- The next prototype should reduce cyber/neon cues and shift toward a calmer
+  wealth-management tone.
