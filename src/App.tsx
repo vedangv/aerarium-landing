@@ -5,65 +5,17 @@
 
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import IosCockpitMockup from "./components/IosCockpitMockup";
 import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
+import HeroSignalScene from "./components/HeroSignalScene";
 import { motion } from "motion/react";
-import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown, CheckCircle2, Instagram } from "lucide-react";
-
-const FEATURES = [
-  {
-    id: "overview",
-    label: "Overview Dashboard",
-    title: "Understand Your Portfolio Fast",
-    description: "Net worth, spend, invest, holdings, and account health stay visible without turning into a spreadsheet.",
-  },
-  {
-    id: "ips-cockpit",
-    label: "IPS Cockpit",
-    title: "Stop Drifting From Your Plan",
-    description: "Turn a written investment policy into live guardrails, review versions, and surface what needs attention.",
-  },
-  {
-    id: "policy-score",
-    label: "Policy Score",
-    title: "Know Portfolio Health at a Glance",
-    description: "Allocation drift, concentration risk, liquidity, goals, and review cadence collapse into one transparent score.",
-  },
-  {
-    id: "portfolio-xray",
-    label: "Portfolio X-Ray",
-    title: "See Through Your ETFs",
-    description: "Look through fund holdings to reveal true stock, sector, asset-class, and currency exposure.",
-  },
-  {
-    id: "goals-funding",
-    label: "Goals + Funding Plan",
-    title: "Assign Assets to Goals",
-    description: "Centralize funding decisions so goal sleeves are easy to adjust without hiding global tradeoffs.",
-  },
-  {
-    id: "thesis-checkins",
-    label: "Thesis Check-ins",
-    title: "Never Forget Why You Bought",
-    description: "Keep investing decisions tied to a written thesis instead of letting impulse trades rewrite the plan.",
-  },
-  {
-    id: "private-design",
-    label: "Private by Design",
-    title: "Keep Private Data Private",
-    description: "Read-only brokerage sync, encrypted financial fields, recovery planning, and user-controlled data.",
-  },
-];
+import { Sparkles, ArrowDown, ChevronRight, Lock, CheckCircle2, Instagram } from "lucide-react";
 
 export default function App() {
   const [scrollY, setScrollY] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [autoTourActive, setAutoTourActive] = useState(true);
-  const [lastInteraction, setLastInteraction] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,46 +24,6 @@ export default function App() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleUserInteraction = () => {
-    setLastInteraction(Date.now());
-  };
-
-  useEffect(() => {
-    // Respect prefers-reduced-motion queries in core timers
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
-      setAutoTourActive(false);
-      return;
-    }
-
-    if (!autoTourActive) return;
-
-    const interval = setInterval(() => {
-      // Pause auto-rotation for 15s after physical user interaction
-      if (Date.now() - lastInteraction < 15000) {
-        return;
-      }
-      setActiveIndex((prev) => (prev + 1) % FEATURES.length);
-    }, 4500);
-
-    return () => clearInterval(interval);
-  }, [autoTourActive, lastInteraction]);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const getDistance = (index: number) => {
-    const total = FEATURES.length;
-    let d = index - activeIndex;
-    while (d < -total / 2) d += total;
-    while (d > total / 2) d -= total;
-    return d;
-  };
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
@@ -200,175 +112,8 @@ export default function App() {
 
           </div>
 
-          {/* Right Interactive Simulator Segment Container */}
-          <MobileSnapBeat className="lg:col-span-12" />
-
-          <div className="lg:col-span-7 w-full flex flex-col md:flex-row items-center gap-8 md:gap-4 relative">
-            
-            {/* Feature Pills Selector - Left of Simulator on Desktop, Stacks on Mobile */}
-            <div className="w-full md:w-5/12 flex-1 md:flex-initial" id="hero-interactive-controls">
-              
-              {/* Desktop layout: Vertical rotating cylindrical spinner wheel */}
-              <div 
-                className="hidden md:flex flex-col items-center justify-center relative w-full h-[410px] select-none py-4"
-                style={{ perspective: "1000px" }}
-              >
-                {/* Visual Viewfinder Highlight Guides */}
-                <div className="absolute left-0 right-0 h-30 border-y border-emerald-500/18 bg-slate-900/45 backdrop-blur-[2px] pointer-events-none rounded-2xl z-0" />
-
-                {/* Vertical rotation button controls */}
-                <button
-                  onClick={() => {
-                    handleUserInteraction();
-                    setActiveIndex((activeIndex - 1 + FEATURES.length) % FEATURES.length);
-                  }}
-                  className="absolute top-0 left-1/2 -translate-x-1/2 p-1.5 rounded-full border border-white/5 bg-slate-950/80 text-slate-500 hover:text-emerald-400 hover:border-emerald-500/25 transition-all cursor-pointer z-30"
-                  aria-label="Previous feature"
-                >
-                  <ChevronUp className="w-3.5 h-3.5" />
-                </button>
-
-                {/* Spinner Cylinder Area */}
-                <div className="relative w-full h-full" style={{ transformStyle: "preserve-3d" }}>
-                  {FEATURES.map((feat, index) => {
-                    const d = getDistance(index);
-                    const isActive = index === activeIndex;
-                    
-                    // Height steps, curve rotated, depth translation
-                    const translateY = d * 92; 
-                    const rotateX = -d * 18; 
-                    const translateZ = -Math.abs(d) * 45; 
-                    const scale = isActive ? 1.05 : 1 - Math.abs(d) * 0.1;
-                    const opacity = Math.max(0.32, 1 - Math.abs(d) * 0.28);
-                    const zIndex = 50 - Math.abs(d);
-
-                    return (
-                      <motion.div
-                        key={feat.id}
-                        onClick={() => {
-                          handleUserInteraction();
-                          setActiveIndex(index);
-                        }}
-                        initial={false}
-                        animate={{
-                          y: translateY,
-                          rotateX: rotateX,
-                          z: translateZ,
-                          scale: scale,
-                          opacity: opacity,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 140,
-                          damping: 18,
-                          mass: 0.8,
-                        }}
-                        style={{
-                          transformStyle: "preserve-3d",
-                          position: "absolute",
-                          top: "calc(50% - 46px)",
-                          left: 0,
-                          right: 0,
-                          zIndex: zIndex,
-                        }}
-                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors duration-300 ${
-                          isActive
-                            ? "bg-slate-900/95 border-emerald-500/35 shadow-lg shadow-emerald-500/10 text-white"
-                            : "bg-slate-950/35 border-white/[0.05] hover:bg-slate-900/55 text-slate-400 hover:text-slate-200"
-                        }`}
-                        id={`pill-desktop-${feat.id}`}
-                      >
-                        <div className="flex items-center space-x-3">
-                          <div className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                            isActive ? "bg-emerald-450 shadow-[0_0_8px_rgba(16,185,129,0.8)]" : "bg-slate-600"
-                          }`} />
-                          <span className="text-[12.5px] font-bold font-display tracking-tight transition-colors duration-300">
-                            {feat.title}
-                          </span>
-                        </div>
-                        {isActive && (
-                          <motion.p
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            transition={{ duration: 0.25 }}
-                            className="mt-1.5 text-[11px] text-slate-400 leading-normal pl-4.5 font-sans"
-                          >
-                            <span className="block pb-1 text-[9px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/80">
-                              {feat.label}
-                            </span>
-                            {feat.description}
-                          </motion.p>
-                        )}
-                      </motion.div>
-                    );
-                  })}
-                </div>
-
-                <button
-                  onClick={() => {
-                    handleUserInteraction();
-                    setActiveIndex((activeIndex + 1) % FEATURES.length);
-                  }}
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 p-1.5 rounded-full border border-white/5 bg-slate-950/80 text-slate-500 hover:text-emerald-400 hover:border-emerald-500/25 transition-all cursor-pointer z-30"
-                  aria-label="Next feature"
-                >
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              {/* Mobile layout: Horizontal scroll horizontal strip + details panel */}
-              <div className="flex md:hidden flex-col gap-4 w-full">
-                <div className="flex items-center space-x-2 overflow-x-auto scrollbar-none pb-1 w-full justify-start">
-                  {FEATURES.map((feat, index) => {
-                    const isActive = index === activeIndex;
-                    return (
-                      <button
-                        key={feat.id}
-                        onClick={() => {
-                          handleUserInteraction();
-                          setActiveIndex(index);
-                        }}
-                        className={`px-3.5 py-2 rounded-full text-xs font-bold whitespace-nowrap border shrink-0 transition-all duration-300 cursor-pointer ${
-                          isActive
-                            ? "bg-emerald-500/10 border-emerald-500/35 text-emerald-300"
-                            : "bg-slate-900/60 border-white/5 text-slate-400"
-                        }`}
-                        id={`pill-mobile-${feat.id}`}
-                      >
-                        {feat.title}
-                      </button>
-                    );
-                  })}
-                </div>
-                
-                <div className="p-4 bg-slate-900/40 border border-white/5 rounded-2xl text-left">
-                  <h3 className="font-display font-bold text-xs text-white flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    {FEATURES[activeIndex].title}
-                  </h3>
-                  <div className="mt-1 text-[9px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">
-                    {FEATURES[activeIndex].label}
-                  </div>
-                  <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
-                    {FEATURES[activeIndex].description}
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
-            {/* iPhone Device frame rendering */}
-            <MobileSnapBeat className="md:hidden" />
-            <div className="w-full md:w-7/12 flex justify-center flex-shrink-0">
-              <IosCockpitMockup 
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
-                autoTourActive={autoTourActive}
-                setAutoTourActive={setAutoTourActive}
-                handleUserInteraction={handleUserInteraction}
-              />
-            </div>
-
+          <div className="lg:col-span-7 w-full">
+            <HeroSignalScene />
           </div>
         </div>
 

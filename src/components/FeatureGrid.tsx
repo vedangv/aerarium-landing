@@ -26,6 +26,7 @@ import researchAaplMetricsSrc from "../../assets/screenshots/aerarium-research-a
 import researchNvdaOwnershipSrc from "../../assets/screenshots/aerarium-research-nvda-ownership-insiders.png";
 import researchHomeSrc from "../../assets/screenshots/aerarium-research-home-market-browser.png";
 import MobileSnapBeat from "./MobileSnapBeat";
+import PortfolioCockpitTour from "./PortfolioCockpitTour";
 
 const RESEARCH_SHOWCASES = [
   {
@@ -145,11 +146,13 @@ export default function FeatureGrid() {
             </div>
           </div>
 
+          <PortfolioCockpitTour />
+
           {/* Policy Score proof block */}
           <MobileSnapBeat />
 
           <motion.div
-            className="mb-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]"
+            className="mb-8 mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}

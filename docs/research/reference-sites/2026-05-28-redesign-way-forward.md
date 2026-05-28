@@ -264,6 +264,19 @@ scene works, the rest of the page has a clear emotional and product spine.
 - Visual tone was pulled slightly away from neon/cyber by reducing global glow
   opacity and using warmer graphite/green proof surfaces.
 
+2026-05-28 second prototype pass:
+
+- The iPhone simulator and chapter carousel moved out of the hero.
+- Hero now uses a Luffu-style before/after discipline signal:
+  - manual spreadsheet tracking on one side;
+  - Aerarium live policy signal on the other;
+  - a closed-loop rail connecting policy, holdings, exposure, and score.
+- Portfolio section now carries the Poly-style guided product tour:
+  - chapter selector on the left;
+  - anchored iPhone product object on the right;
+  - auto-rotation pauses after interaction;
+  - mobile uses softer horizontal selector pills instead of a forced hero snap.
+
 Verification:
 
 - `npm run lint`
