@@ -2,6 +2,29 @@
 
 Standalone Vercel project for the Aerarium launch page.
 
+## Product role
+
+This site is the Aerarium brand umbrella. It should help visitors discover:
+
+- **Aerarium Portfolio:** the iOS app and primary monetizable product. This is
+  where users connect brokerages, build an IPS, monitor Policy Score, inspect
+  ETF look-through exposure, manage goals/funding, and keep thesis check-ins.
+- **Aerarium Research:** the public web research workspace at
+  `https://research.aerarium.app/`. This is the source-first market research
+  surface and long-tail SEO engine.
+
+The intended funnel is:
+
+```text
+SEO / social / Research traffic
+  -> aerarium.app
+  -> TestFlight or founder launch list
+  -> Aerarium Portfolio iOS activation
+```
+
+Research can also route users back to the iOS app through contextual CTAs such
+as “analyze this exposure in your own portfolio.”
+
 This project is intentionally separate from:
 
 - `website` / FinSight (`https://finsight-beryl.vercel.app/`)
@@ -21,6 +44,23 @@ This repository is safe to keep public only while it remains a marketing surface
 
 Current production landing project: `aerarium-landing` on Vercel.
 Current iOS beta CTA: `https://testflight.apple.com/join/Xna39VKU`.
+Canonical launch domain: `https://aerarium.app/`.
+Secondary domain: `https://aerariumapp.com/`, intended to redirect to
+`https://aerarium.app/`.
+Research domain: `https://research.aerarium.app/`.
+
+## Current planning docs
+
+- `docs/superpowers/specs/2026-05-27-seo-geo-launch-design.md`
+  - Captures the planned SEO/GEO pass across the landing site, Research public
+    routes, and social launch kit.
+  - No SEO implementation should start until the implementation plan is written
+    and approved.
+
+Before the SEO pass, the current product focus is still the landing page itself:
+the page needs more “spark” and a stronger launch feel while staying calm,
+premium, and institutional. Treat the SEO plan as queued work, not the active
+design task, until approved.
 
 ## Founder launch list
 

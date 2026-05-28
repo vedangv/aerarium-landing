@@ -1,7 +1,7 @@
 # Aerarium SEO/GEO Launch Design
 
 Date: 2026-05-27
-Status: Design approved for planning
+Status: Queued after landing-page creative polish
 Repo: aerarium-landing
 
 ## Goal
@@ -11,8 +11,29 @@ Make Aerarium discoverable through Google, AI/LLM answer surfaces, social sharin
 The brand architecture is:
 
 - `aerarium.app`: brand umbrella, conversion hub, founder launch list, TestFlight CTA, trust/security story, and product education for Aerarium Portfolio and Aerarium Research.
+- Aerarium Portfolio iOS app: primary product and monetization destination. This is where users activate the private portfolio discipline workflow: brokerage sync, IPS, Policy Score, Portfolio X-Ray, goals/funding, thesis check-ins, and privacy controls.
 - `research.aerarium.app`: public research product and organic traffic engine through indexable data, explainers, and source-first market views.
 - `aerariumapp.com`: redirect-only secondary domain that should consolidate into `aerarium.app`.
+
+The landing page is not the app. It should make the app feel real, trustworthy, and worth installing, while also routing curious users into Research.
+
+The intended funnel is:
+
+```text
+Google / AI search / social / Research route
+  -> aerarium.app
+  -> TestFlight, App Store, or founder launch list
+  -> Aerarium Portfolio iOS app activation
+```
+
+Research can also route visitors directly back to the app story:
+
+```text
+research.aerarium.app public data page
+  -> contextual Portfolio CTA
+  -> aerarium.app
+  -> iOS app install or launch list
+```
 
 ## Positioning
 
@@ -54,6 +75,24 @@ Avoid:
 
 4. Treat AI-search optimization as disciplined SEO.
    LLMs need clear entity pages, definitions, FAQs, source methodology, and crawlable text. `llms.txt` is useful as an emerging convention, but it is not a substitute for good content.
+
+5. Do not let SEO flatten the landing-page personality.
+   The page still needs launch energy and visual “spark.” SEO work should reinforce the product story, not replace it with generic keyword blocks.
+
+## Current Conversation Capture
+
+The current product decision is to handle SEO as a planned pass, but pause implementation until the landing page itself feels stronger.
+
+Decisions captured so far:
+
+- Use `aerarium.app` for the brand umbrella.
+- Keep Aerarium Portfolio as the iOS app and primary conversion destination.
+- Use `research.aerarium.app` for the Research web product.
+- Use Research as the public, indexable traffic engine where appropriate.
+- Redirect `aerariumapp.com` to `aerarium.app` unless the domain strategy changes later.
+- Keep the social media kit direction and expand it into launch assets, UTMs, and a campaign calendar.
+- Do not implement SEO before the landing-page creative direction is revisited.
+- The next landing-page design pass should look at outside web references and ask whether the current page has enough premium launch energy.
 
 ## Scope
 
@@ -209,6 +248,7 @@ UTM naming convention:
 - No investment advice content.
 - No programmatic ticker SEO until Research public routes are stable.
 - No merging of landing, iOS app, and Research repos.
+- No immediate SEO implementation before the landing page creative pass is approved.
 
 ## Acceptance Criteria
 
@@ -223,7 +263,7 @@ The SEO/GEO launch work is successful when:
 
 ## Recommended Next Step
 
-Create an implementation plan with four workstreams:
+After the landing-page creative direction is revisited, create an implementation plan with four workstreams:
 
 1. Landing technical SEO artifacts.
 2. Landing content page structure and copy.
