@@ -51,6 +51,9 @@ Research domain: `https://research.aerarium.app/`.
 
 ## Current planning docs
 
+- `docs/research/reference-sites/2026-05-28-outlier-inspiration.md`
+  - Captures the Firecrawl scrape results and inspiration synthesis from Luffu,
+    Poly, Fluz, and ISO Meet for the next landing-page creative branch.
 - `docs/superpowers/specs/2026-05-27-seo-geo-launch-design.md`
   - Captures the planned SEO/GEO pass across the landing site, Research public
     routes, and social launch kit.

@@ -4,6 +4,11 @@ This folder tracks planning for the standalone Aerarium landing page.
 
 ## Current Docs
 
+- `research/reference-sites/2026-05-28-outlier-inspiration.md`
+  - Firecrawl-backed inspiration synthesis from Luffu, Poly, Fluz, and ISO
+    Meet.
+  - Captures the proposed emotional arc, product moat, founder-story draft, and
+    next landing-page architecture.
 - `superpowers/specs/2026-05-27-seo-geo-launch-design.md`
   - Planned SEO/GEO and launch-distribution pass.
   - Covers `aerarium.app`, `research.aerarium.app`, the iOS app funnel, social media kit expansion, and Research public-route planning.
