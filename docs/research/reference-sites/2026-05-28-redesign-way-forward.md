@@ -247,3 +247,31 @@ Recommended next step:
 
 Build the first prototype around the spreadsheet/NVDA overlap story. If that
 scene works, the rest of the page has a clear emotional and product spine.
+
+## Prototype Status
+
+2026-05-28 implementation pass:
+
+- Hero copy now leads with the spreadsheet and memory burden.
+- Added a founder/X-Ray bridge near the top of the page:
+  - left side shows the spreadsheet-memory problem across accounts;
+  - right side shows Aerarium X-Ray combining direct plus fund-derived NVDA
+    exposure;
+  - bottom rail shows the relief sequence: write the rule, connect holdings,
+    look through funds, score the drift.
+- Portfolio section now opens with Policy Score as the system proof before the
+  feature chapters.
+- Visual tone was pulled slightly away from neon/cyber by reducing global glow
+  opacity and using warmer graphite/green proof surfaces.
+
+Verification:
+
+- `npm run lint`
+- `npm test`
+- `npm run build`
+
+Next design refinement:
+
+- Continue closing the gap with the reference sites by improving scroll rhythm,
+  staged section reveals, and mobile product-frame inspection before this branch
+  is promoted to a preview deployment.

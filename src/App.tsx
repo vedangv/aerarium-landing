@@ -10,6 +10,7 @@ import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
+import FounderExposureBridge from "./components/FounderExposureBridge";
 import { motion } from "motion/react";
 import { Sparkles, ArrowDown, ChevronRight, Lock, ChevronUp, ChevronDown, CheckCircle2, Instagram } from "lucide-react";
 
@@ -116,27 +117,27 @@ export default function App() {
     <div className="relative min-h-screen overflow-x-clip bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
       
       {/* 1. Global Ambient Parallax Backdrops */}
-      <div 
-        className="absolute top-[10%] left-[5%] w-[350px] h-[350px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-glow-slow-1"
+      <div
+        className="absolute top-[10%] left-[5%] w-[320px] h-[320px] bg-emerald-500/[0.07] rounded-full blur-3xl pointer-events-none animate-glow-slow-1"
         style={{ transform: `translateY(${scrollY * 0.25}px)` }}
       />
-      <div 
-        className="absolute top-[40%] right-[3%] w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none animate-glow-slow-2"
+      <div
+        className="absolute top-[42%] right-[3%] w-[360px] h-[360px] bg-cyan-500/[0.055] rounded-full blur-3xl pointer-events-none animate-glow-slow-2"
         style={{ transform: `translateY(${scrollY * 0.15}px)` }}
       />
-      <div 
-        className="absolute bottom-[20%] left-[10%] w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl pointer-events-none animate-glow-slow-3"
+      <div
+        className="absolute bottom-[20%] left-[10%] w-[460px] h-[460px] bg-amber-200/[0.035] rounded-full blur-3xl pointer-events-none animate-glow-slow-3"
         style={{ transform: `translateY(${scrollY * 0.1}px)` }}
       />
 
       {/* Grid Scanline Overlay */}
-      <div className="absolute inset-0 bg-cyber-grid opacity-30 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none z-0" />
 
       {/* 2. Navigation */}
       <Navbar />
 
       {/* 3. Hero Section (Visual Fintech Asset Redesign) */}
-      <header id="hero" className="scroll-stop-section relative min-h-screen flex items-center pt-28 pb-16 z-10">
+      <header id="hero" className="scroll-stop-section relative min-h-[100svh] flex items-center pt-28 pb-16 z-10">
         <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <MobileSnapBeat className="lg:col-span-12" />
           
@@ -149,16 +150,16 @@ export default function App() {
 
             <div className="space-y-4">
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[45px] xl:text-[52px] text-white tracking-tight leading-[1.12]">
-                Portfolio discipline and market research, under one roof.
+                Stop running your portfolio from memory and spreadsheets.
               </h1>
               <p className="text-sm sm:text-base text-slate-400 font-sans max-w-xl font-normal leading-relaxed">
-                Aerarium Portfolio turns your investing rules into a private cockpit. Aerarium Research gives you source-first public-market data before you make the next decision.
+                Aerarium turns your investment policy, brokerage accounts, fund exposure, goals, and thesis notes into a private cockpit that keeps your rules visible and your true exposure tracked.
               </p>
             </div>
 
             {/* Premium proof chips */}
             <div className="flex flex-wrap gap-2.5 py-1">
-              {["Read-only sync", "ETF look-through", "Policy Score", "SEC/FRED/13F research", "Free during beta"].map((proof) => (
+              {["Read-only sync", "No trades placed", "ETF look-through", "Policy Score", "Free during beta"].map((proof) => (
                 <div
                   key={proof}
                   className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-3 py-2 text-[11px] font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
@@ -194,7 +195,7 @@ export default function App() {
 
             <div className="rounded-2xl border border-white/6 bg-slate-900/35 p-4 text-sm leading-relaxed text-slate-350">
               <span className="font-semibold text-white">Built for investors who</span>{" "}
-              write theses before buying, track allocation against a plan, and want to know what they actually own inside funds.
+              write theses before buying, track allocation against a plan, and want one answer when exposure is scattered across accounts and funds.
             </div>
 
           </div>
@@ -378,7 +379,10 @@ export default function App() {
         </div>
       </header>
 
-      {/* 4. Launch Countdown Block Tracker */}
+      {/* 4. Founder story + flagship X-Ray proof */}
+      <FounderExposureBridge />
+
+      {/* 5. Launch Countdown Block Tracker */}
       <section className="bg-slate-950/80 border-t border-b border-white/5 py-8 relative z-10 font-sans">
         <MobileSnapBeat />
         <div className="max-w-7xl mx-auto px-6 text-center">
@@ -386,10 +390,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. Bento Capabilities Section */}
+      {/* 6. Bento Capabilities Section */}
       <FeatureGrid />
 
-      {/* 6. Reservation Portal Section */}
+      {/* 7. Reservation Portal Section */}
       <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="scroll-stop-section py-24 relative z-10 px-6 max-w-4xl mx-auto font-sans">
         <MobileSnapBeat />
         <motion.div 

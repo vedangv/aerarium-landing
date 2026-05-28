@@ -126,10 +126,10 @@ export default function FeatureGrid() {
               <span>Pillar One</span>
             </div>
             <h2 className="font-display font-bold text-3xl md:text-5xl text-white tracking-tight">
-              Aerarium Portfolio
+              Guided Portfolio Cockpit
             </h2>
             <p className="text-base md:text-lg text-slate-350 leading-relaxed max-w-2xl font-light">
-              Turn your investment policy into live guardrails.
+              Most apps tell you what changed. Aerarium tells you whether the change broke your policy.
             </p>
             <div className="pt-2">
               <a 
@@ -143,9 +143,55 @@ export default function FeatureGrid() {
                 <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-all font-mono">TestFlight</span>
               </a>
             </div>
-          </div>          {/* Grid Layout */}
+          </div>
+
+          {/* Policy Score proof block */}
           <MobileSnapBeat />
 
+          <motion.div
+            className="mb-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <div className="rounded-[28px] border border-emerald-400/18 bg-gradient-to-br from-emerald-400/[0.08] via-slate-900/65 to-slate-950 p-6 shadow-[0_24px_70px_rgba(16,185,129,0.09)]">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-300/80">
+                    System proof
+                  </div>
+                  <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-white">
+                    Policy Score turns rule drift into one visible signal.
+                  </h3>
+                </div>
+                <div className="rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-center">
+                  <div className="font-display text-4xl font-bold text-rose-300">78</div>
+                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-rose-200/75">At risk</div>
+                </div>
+              </div>
+              <p className="mt-5 text-sm leading-relaxed text-slate-350">
+                Allocation drift, concentration, liquidity, goals, and review cadence are scored transparently so the user knows what needs attention before making another decision.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { label: "Rules", value: "IPS guardrails", body: "Written policy, versions, tolerances, and restrictions." },
+                { label: "Reality", value: "Brokerage sync", body: "Read-only accounts and current holdings stay connected." },
+                { label: "Exposure", value: "ETF look-through", body: "Funds resolve into underlying stock and sector exposure." },
+                { label: "Action", value: "Review drivers", body: "The app explains why the score moved and what to inspect." },
+              ].map((item) => (
+                <div key={item.label} className="rounded-2xl border border-white/6 bg-slate-900/40 p-4">
+                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300/75">{item.label}</div>
+                  <div className="mt-1 font-display text-base font-bold text-white">{item.value}</div>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-400">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Chapter cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             {/* 1. IPS Cockpit */}
