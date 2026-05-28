@@ -274,8 +274,13 @@ scene works, the rest of the page has a clear emotional and product spine.
 - Portfolio section now carries the Poly-style guided product tour:
   - chapter selector on the left;
   - anchored iPhone product object on the right;
-  - auto-rotation pauses after interaction;
+  - screen changes are now driven by scroll position instead of a timer;
   - mobile uses softer horizontal selector pills instead of a forced hero snap.
+- Research carousel follows the same control model:
+  - real screenshots stay in a sticky browser frame;
+  - each research chapter card controls the active screenshot as the visitor
+    scrolls;
+  - selector pills remain as jump shortcuts, not the primary mechanic.
 
 Verification:
 

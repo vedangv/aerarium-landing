@@ -85,7 +85,7 @@ export default function IosCockpitMockup({
 
           {/* Interactive Screen Tap Guide overlay */}
           <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-slate-950/80 border border-white/10 rounded-full px-3 py-1.5 text-[9px] font-mono text-slate-400 backdrop-blur-md opacity-45 hover:opacity-100 transition-opacity whitespace-nowrap z-30">
-            Tap device screen to advance
+            Scroll chapters to advance
           </div>
 
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { 
   Smartphone, 
   PieChart, 
@@ -8,8 +8,6 @@ import {
   Fingerprint, 
   Globe, 
   Sliders,
-  ChevronUp,
-  ChevronDown,
   ChevronRight,
   ShieldCheck,
   LockKeyhole,
@@ -82,25 +80,37 @@ const RESEARCH_SHOWCASES = [
 
 export default function FeatureGrid() {
   const [activeResearchImage, setActiveResearchImage] = useState<number>(0);
+  const researchRefs = useRef<(HTMLDivElement | null)[]>([]);
   const activeResearch = RESEARCH_SHOWCASES[activeResearchImage];
-  
+
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const strongest = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-    const interval = setInterval(() => {
-      setActiveResearchImage((prev) => (prev + 1) % RESEARCH_SHOWCASES.length);
-    }, 5200);
+        const nextIndex = strongest?.target.getAttribute("data-research-index");
+        if (nextIndex != null) {
+          setActiveResearchImage(Number(nextIndex));
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-32% 0px -42% 0px",
+        threshold: [0.18, 0.36, 0.54, 0.72],
+      },
+    );
 
-    return () => clearInterval(interval);
+    researchRefs.current.forEach((node) => {
+      if (node) observer.observe(node);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
-  const getResearchDistance = (index: number) => {
-    const total = RESEARCH_SHOWCASES.length;
-    let distance = index - activeResearchImage;
-    while (distance < -total / 2) distance += total;
-    while (distance > total / 2) distance -= total;
-    return distance;
+  const scrollToResearch = (index: number) => {
+    researchRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -110,7 +120,7 @@ export default function FeatureGrid() {
       <motion.section 
         id="portfolio" 
         style={{ scrollMarginTop: "100px" }} 
-        className="scroll-stop-section py-20 relative overflow-clip border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
+        className="scroll-stop-section py-20 relative border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.28, margin: "0px 0px -12% 0px" }}
@@ -279,7 +289,7 @@ export default function FeatureGrid() {
       <motion.section 
         id="research" 
         style={{ scrollMarginTop: "100px" }} 
-        className="scroll-stop-section py-24 relative overflow-clip bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
+        className="scroll-stop-section py-24 relative bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.24, margin: "0px 0px -12% 0px" }}
@@ -318,106 +328,68 @@ export default function FeatureGrid() {
           {/* Research product tour */}
           <MobileSnapBeat />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            <div className="lg:col-span-5">
-              <div className="hidden md:flex relative h-[520px] flex-col items-center justify-center rounded-[28px] border border-white/5 bg-slate-950/35 p-4">
-                <div className="absolute left-4 right-4 top-1/2 h-28 -translate-y-1/2 rounded-2xl border-y border-cyan-400/18 bg-cyan-400/[0.04] pointer-events-none" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 lg:items-start">
+            <div className="space-y-5 lg:col-span-5">
+              <div className="flex gap-2 overflow-x-auto pb-1 lg:hidden">
+                {RESEARCH_SHOWCASES.map((feature, index) => (
+                  <button
+                    key={feature.id}
+                    type="button"
+                    onClick={() => scrollToResearch(index)}
+                    className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold transition ${
+                      index === activeResearchImage
+                        ? "border-cyan-400/35 bg-cyan-400/10 text-cyan-200"
+                        : "border-white/6 bg-slate-900/55 text-slate-400"
+                    }`}
+                  >
+                    {feature.label}
+                  </button>
+                ))}
+              </div>
 
-                <button
-                  onClick={() => setActiveResearchImage((activeResearchImage - 1 + RESEARCH_SHOWCASES.length) % RESEARCH_SHOWCASES.length)}
-                  className="absolute top-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/8 bg-slate-950/80 p-2 text-slate-400 transition hover:border-cyan-400/30 hover:text-cyan-300"
-                  aria-label="Previous research feature"
-                >
-                  <ChevronUp className="h-4 w-4" />
-                </button>
-
-                <div className="relative h-full w-full" style={{ transformStyle: "preserve-3d", perspective: "900px" }}>
-                  {RESEARCH_SHOWCASES.map((feature, index) => {
-                    const distance = getResearchDistance(index);
-                    const isActive = index === activeResearchImage;
-
-                    return (
-                      <motion.button
-                        key={feature.id}
-                        type="button"
-                        onClick={() => setActiveResearchImage(index)}
-                        initial={false}
-                        animate={{
-                          y: distance * 74,
-                          rotateX: -distance * 13,
-                          z: -Math.abs(distance) * 34,
-                          scale: isActive ? 1.02 : 1 - Math.abs(distance) * 0.055,
-                          opacity: Math.max(0.26, 1 - Math.abs(distance) * 0.23),
-                        }}
-                        transition={{ type: "spring", stiffness: 145, damping: 20, mass: 0.85 }}
-                        className={`absolute left-0 right-0 top-[calc(50%_-_48px)] rounded-2xl border p-4 text-left transition-colors ${
-                          isActive
-                            ? "border-cyan-400/35 bg-slate-900/95 text-white shadow-[0_20px_55px_rgba(6,182,212,0.12)]"
-                            : "border-white/[0.05] bg-slate-950/40 text-slate-400 hover:border-cyan-400/16 hover:bg-slate-900/55"
-                        }`}
-                        style={{ zIndex: 50 - Math.abs(distance) }}
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300/80">
-                              {feature.label}
-                            </div>
-                            <div className="mt-1 font-display text-base font-bold tracking-tight">
-                              {feature.title}
-                            </div>
-                          </div>
-                          <span className="font-mono text-xs text-slate-500">
-                            {String(index + 1).padStart(2, "0")}
-                          </span>
+              {RESEARCH_SHOWCASES.map((feature, index) => {
+                const isActive = index === activeResearchImage;
+                return (
+                  <motion.div
+                    key={feature.id}
+                    ref={(node) => {
+                      researchRefs.current[index] = node;
+                    }}
+                    data-research-index={index}
+                    className={`min-h-[150px] rounded-3xl border p-5 transition-colors duration-300 lg:min-h-[220px] ${
+                      isActive
+                        ? "border-cyan-400/35 bg-slate-900/92 text-white shadow-[0_20px_55px_rgba(6,182,212,0.12)]"
+                        : "border-white/[0.06] bg-slate-950/42 text-slate-400"
+                    }`}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.25 }}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                    onMouseEnter={() => setActiveResearchImage(index)}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300/80">
+                          {feature.label}
                         </div>
-                        {isActive && (
-                          <motion.p
-                            initial={{ opacity: 0, y: -4 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="mt-2 max-w-sm text-xs leading-relaxed text-slate-400"
-                          >
-                            {feature.description}
-                          </motion.p>
-                        )}
-                      </motion.button>
-                    );
-                  })}
-                </div>
-
-                <button
-                  onClick={() => setActiveResearchImage((activeResearchImage + 1) % RESEARCH_SHOWCASES.length)}
-                  className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/8 bg-slate-950/80 p-2 text-slate-400 transition hover:border-cyan-400/30 hover:text-cyan-300"
-                  aria-label="Next research feature"
-                >
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-              </div>
-
-              <div className="md:hidden space-y-4">
-                <div className="flex gap-2 overflow-x-auto pb-1">
-                  {RESEARCH_SHOWCASES.map((feature, index) => (
-                    <button
-                      key={feature.id}
-                      type="button"
-                      onClick={() => setActiveResearchImage(index)}
-                      className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold transition ${
-                        index === activeResearchImage
-                          ? "border-cyan-400/35 bg-cyan-400/10 text-cyan-200"
-                          : "border-white/6 bg-slate-900/55 text-slate-400"
-                      }`}
-                    >
-                      {feature.label}
-                    </button>
-                  ))}
-                </div>
-                <div className="rounded-2xl border border-cyan-400/12 bg-slate-900/55 p-4">
-                  <div className="font-display text-base font-bold text-white">{activeResearch.title}</div>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">{activeResearch.description}</p>
-                </div>
-              </div>
+                        <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-white">
+                          {feature.title}
+                        </h3>
+                      </div>
+                      <span className="font-mono text-xs text-slate-500">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-350">
+                      {feature.description}
+                    </p>
+                    <div className={`mt-5 h-1 rounded-full transition-colors ${isActive ? "bg-cyan-300/70" : "bg-white/8"}`} />
+                  </motion.div>
+                );
+              })}
             </div>
 
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-7 lg:sticky lg:top-28">
               <div className="relative overflow-hidden rounded-[28px] border border-cyan-300/30 bg-slate-900/80 shadow-[0_28px_90px_rgba(34,211,238,0.16)] ring-1 ring-white/10">
                 <div className="flex items-center justify-between border-b border-white/6 bg-slate-900/75 px-4 py-3">
                   <div className="flex items-center gap-2">
