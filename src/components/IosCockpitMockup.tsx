@@ -18,11 +18,6 @@ export default function IosCockpitMockup({
         className="relative w-[345px] h-[720px] rounded-[52px] bg-slate-950 p-3 shadow-2xl border-4 border-slate-900 overflow-hidden flex flex-col justify-between select-none transition-transform duration-300 hover:scale-[1.01]" 
         id="iphone-chassis-outer"
       >
-        <div className="absolute top-[17px] left-1/2 z-50 flex h-[34px] w-[122px] -translate-x-1/2 items-center justify-center rounded-full bg-black shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
-          <span className="mr-5 h-2 w-2 rounded-full bg-slate-900" />
-          <span className="h-1.5 w-12 rounded-full bg-slate-900" />
-        </div>
-
         <div className="absolute left-[-3px] top-[120px] w-[3px] h-[34px] bg-slate-800 rounded-r" id="iphone-btn-action" />
         <div className="absolute left-[-3px] top-[170px] w-[3px] h-[50px] bg-slate-800 rounded-r" id="iphone-btn-volup" />
         <div className="absolute left-[-3px] top-[230px] w-[3px] h-[50px] bg-slate-800 rounded-r" id="iphone-btn-voldown" />

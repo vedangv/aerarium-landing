@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { 
-  Smartphone, 
-  PieChart, 
-  Search, 
-  Activity, 
-  BookOpen, 
-  Fingerprint, 
-  Globe, 
-  Sliders,
+import {
+  Smartphone,
+  Search,
   ChevronRight,
   ShieldCheck,
   LockKeyhole,
@@ -124,22 +118,22 @@ export default function FeatureGrid() {
       <section
         id="portfolio" 
         style={{ scrollMarginTop: "100px" }} 
-        className="scroll-stop-section py-20 relative border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
+        className="scroll-stop-section py-24 relative border-t border-white/5 bg-gradient-to-b from-slate-950 via-[#080d0b] to-slate-950"
       >
         <MobileSnapBeat />
-        <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-cyber-grid opacity-[0.045] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           
           {/* Section Heading */}
-          <div className="max-w-3xl text-left mb-16 space-y-4">
-            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs uppercase font-semibold">
+          <div className="max-w-4xl text-left mb-16 space-y-5">
+            <div className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm font-semibold">
               <Smartphone className="w-3.5 h-3.5" />
-              <span>Pillar One</span>
+              <span>Aerarium Portfolio</span>
             </div>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white tracking-tight">
-              Guided Portfolio Cockpit
+            <h2 className="font-editorial text-5xl leading-[0.95] tracking-tight text-white md:text-7xl">
+              Your policy should move with your portfolio.
             </h2>
-            <p className="text-base md:text-lg text-slate-350 leading-relaxed max-w-2xl font-light">
+            <p className="text-lg md:text-xl text-slate-350 leading-relaxed max-w-2xl">
               Most apps tell you what changed. Aerarium tells you whether the change broke your policy.
             </p>
             <div className="pt-2">
@@ -158,130 +152,25 @@ export default function FeatureGrid() {
 
           <PortfolioCockpitTour />
 
-          {/* Policy Score proof block */}
-          <MobileSnapBeat />
-
           <motion.div
-            className="mb-8 mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]"
+            className="mt-10 grid gap-4 md:grid-cols-3"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <div className="rounded-[28px] border border-emerald-400/18 bg-gradient-to-br from-emerald-400/[0.08] via-slate-900/65 to-slate-950 p-6 shadow-[0_24px_70px_rgba(16,185,129,0.09)]">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-300/80">
-                    System proof
-                  </div>
-                  <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-white">
-                    Policy Score turns rule drift into one visible signal.
-                  </h3>
-                </div>
-                <div className="rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-center">
-                  <div className="font-display text-4xl font-bold text-rose-300">78</div>
-                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-rose-200/75">At risk</div>
-                </div>
+            {[
+              ["Exposure first", "Funds, accounts, currencies, sectors, and direct holdings roll up before policy rules run."],
+              ["Score with reasons", "Allocation drift, concentration, liquidity, goals, and review cadence explain the health signal."],
+              ["Built for restraint", "Thesis check-ins and IPS versions help preserve the reason behind each decision."],
+            ].map(([title, body]) => (
+              <div key={title} className="rounded-3xl border border-white/6 bg-slate-950/50 p-6">
+                <ShieldCheck className="h-5 w-5 text-emerald-300" />
+                <h3 className="mt-4 font-display text-xl font-bold text-white">{title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-slate-400">{body}</p>
               </div>
-              <p className="mt-5 text-sm leading-relaxed text-slate-350">
-                Allocation drift, concentration, liquidity, goals, and review cadence are scored transparently so the user knows what needs attention before making another decision.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                { label: "Rules", value: "IPS guardrails", body: "Written policy, versions, tolerances, and restrictions." },
-                { label: "Reality", value: "Brokerage sync", body: "Read-only accounts and current holdings stay connected." },
-                { label: "Exposure", value: "ETF look-through", body: "Funds resolve into underlying stock and sector exposure." },
-                { label: "Action", value: "Review drivers", body: "The app explains why the score moved and what to inspect." },
-              ].map((item) => (
-                <div key={item.label} className="rounded-2xl border border-white/6 bg-slate-900/40 p-4">
-                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300/75">{item.label}</div>
-                  <div className="mt-1 font-display text-base font-bold text-white">{item.value}</div>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-400">{item.body}</p>
-                </div>
-              ))}
-            </div>
+            ))}
           </motion.div>
-
-          {/* Chapter cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            {/* 1. IPS Cockpit */}
-            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-ips-cockpit">
-              <div className="flex items-center space-x-2 text-emerald-450">
-                <Sliders className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Stop Drifting From Your Plan</span>
-              </div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">IPS Cockpit</div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Build an Investment Policy Statement, track rules, review versions, and surface what needs attention.
-              </p>
-            </div>
-
-            {/* 2. Policy Score */}
-            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-policy-score">
-              <div className="flex items-center space-x-2 text-emerald-450">
-                <PieChart className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Know Portfolio Health at a Glance</span>
-              </div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Policy Score</div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Explain allocation drift, concentration risk, liquidity, goals, and review cadence in one score.
-              </p>
-            </div>
-
-            {/* 3. Portfolio X-Ray */}
-            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-portfolio-xray">
-              <div className="flex items-center space-x-2 text-emerald-450">
-                <Activity className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">See Through Your ETFs</span>
-              </div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Portfolio X-Ray</div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Look through ETF holdings to reveal true stock, sector, asset-class, and currency exposure.
-              </p>
-            </div>
-
-            <MobileSnapBeat className="col-span-full" />
-
-            {/* 4. Goals + Funding Plan */}
-            <div className="p-6 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-goals-funding">
-              <div className="flex items-center space-x-2 text-emerald-450">
-                <Globe className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Assign Assets to Goals</span>
-              </div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Goals + Funding Plan</div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Assign portfolio sleeves to goals without hiding global allocation tradeoffs.
-              </p>
-            </div>
-
-            {/* 5. Thesis Check-ins */}
-            <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-thesis-checkins">
-              <div className="flex items-center space-x-2 text-emerald-450">
-                <BookOpen className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Never Forget Why You Bought</span>
-              </div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Thesis Check-ins</div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Keep investing decisions tied to a written thesis instead of impulse trades.
-              </p>
-            </div>
-
-            {/* 6. Private by Design */}
-            <div className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl space-y-3 hover:border-emerald-500/25 transition-all group" id="feat-private-by-design">
-              <div className="flex items-center space-x-2 text-emerald-450">
-                <Fingerprint className="w-5 h-5" />
-                <span className="font-display text-sm font-semibold text-white">Keep Private Data Private</span>
-              </div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">Private by Design</div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Encrypted financial fields, Keychain-backed recovery planning, and user-controlled data.
-              </p>
-            </div>
-
-          </div>
         </div>
       </section>
 
@@ -289,22 +178,22 @@ export default function FeatureGrid() {
       <section
         id="research" 
         style={{ scrollMarginTop: "100px" }} 
-        className="scroll-stop-section py-24 relative bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
+        className="scroll-stop-section py-28 relative bg-gradient-to-b from-slate-950 via-[#0a0d12] to-slate-950"
       >
         <MobileSnapBeat />
-        <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-cyber-grid opacity-[0.04] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           
           {/* Section Heading */}
-          <div className="max-w-3xl text-left mb-16 space-y-4">
-            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-xs uppercase font-semibold">
+          <div className="max-w-4xl text-left mb-16 space-y-5">
+            <div className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-sm font-semibold">
               <Search className="w-3.5 h-3.5" />
-              <span>Pillar Two</span>
+              <span>Aerarium Research</span>
             </div>
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white tracking-tight">
-              Aerarium Research
+            <h2 className="font-editorial text-5xl leading-[0.95] tracking-tight text-white md:text-7xl">
+              Source-first market context before the next decision.
             </h2>
-            <p className="text-base md:text-lg text-slate-350 leading-relaxed max-w-2xl font-light">
+            <p className="text-lg md:text-xl text-slate-350 leading-relaxed max-w-2xl">
               A research workspace for companies, funds, macro signals, and ownership flows.
             </p>
             <div className="pt-2">
@@ -531,39 +420,39 @@ export default function FeatureGrid() {
       <motion.section
         id="security"
         style={{ scrollMarginTop: "100px" }}
-        className="scroll-stop-section relative overflow-clip border-t border-white/5 bg-slate-950 py-20"
+        className="scroll-stop-section relative overflow-clip border-t border-white/5 bg-[#0b0d0b] py-24"
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3, margin: "0px 0px -12% 0px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <MobileSnapBeat />
-        <div className="absolute inset-0 bg-cyber-grid opacity-15 pointer-events-none" />
+        <div className="absolute inset-0 bg-cyber-grid opacity-[0.025] pointer-events-none" />
         <div className="relative z-10 mx-auto max-w-7xl px-6">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="space-y-5">
-              <div className="inline-flex items-center space-x-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase text-emerald-400">
+              <div className="inline-flex items-center space-x-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-2 text-sm font-semibold text-emerald-300">
                 <ShieldCheck className="h-3.5 w-3.5" />
                 <span>Security</span>
               </div>
               <div className="space-y-3">
-                <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-5xl">
+                <h2 className="font-editorial text-5xl leading-[0.95] tracking-tight text-white md:text-7xl">
                   Security you can verify, not just trust.
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-slate-350 md:text-lg">
                   Aerarium is built around read-only portfolio visibility, explicit controls, and source-first research. Your data should stay controlled by you.
                 </p>
               </div>
-              <div className="rounded-2xl border border-white/6 bg-slate-900/35 p-5">
-                <div className="text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-emerald-300/75">
+              <div className="rounded-[28px] border border-white/6 bg-slate-900/35 p-6">
+                <div className="text-sm font-semibold text-emerald-300/75">
                   Founder note
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                <p className="mt-3 text-base leading-relaxed text-slate-300">
                   I built Aerarium because I wanted a tool that helped enforce my own investing rules instead of nudging me to trade more. My background as a CFA charterholder shapes the product: disciplined policy, transparent exposure, and no trading-first incentives.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {["CFA charterholder", "Solo founder", "Rules-first investing"].map((item) => (
-                    <span key={item} className="rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-bold text-emerald-200">
+                    <span key={item} className="rounded-full border border-emerald-400/15 bg-emerald-400/[0.06] px-3 py-1.5 text-xs font-semibold text-emerald-200">
                       {item}
                     </span>
                   ))}

@@ -116,20 +116,20 @@ export default function PortfolioCockpitTour() {
       </div>
 
       <div className="hidden lg:block">
-        <div className="sticky top-24 z-10 rounded-[36px] border border-emerald-400/16 bg-gradient-to-br from-slate-900/65 via-slate-950/80 to-emerald-950/20 p-8 shadow-[0_36px_100px_rgba(0,0,0,0.3)]">
-          <div className="absolute inset-0 rounded-[36px] bg-cyber-grid opacity-15 pointer-events-none" />
+        <div className="sticky top-24 z-10 rounded-[40px] border border-emerald-400/14 bg-gradient-to-br from-slate-900/52 via-slate-950/88 to-emerald-950/16 p-8 shadow-[0_36px_100px_rgba(0,0,0,0.3)]">
+          <div className="absolute inset-0 rounded-[40px] bg-cyber-grid opacity-[0.04] pointer-events-none" />
           <div className="absolute -right-24 top-10 h-64 w-64 rounded-full bg-emerald-300/[0.08] blur-3xl" />
 
           <div className="relative z-10 grid min-h-[calc(100svh-9rem)] items-center gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(380px,1.12fr)]">
             <div className="space-y-7">
               <div className="space-y-3">
-                <div className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300/80">
+                <div className="text-sm font-semibold text-emerald-300/85">
                   Scroll-guided iOS tour
                 </div>
-                <h3 className="font-display text-4xl font-bold tracking-tight text-white">
+                <h3 className="font-display text-5xl font-bold leading-tight tracking-tight text-white">
                   The cockpit changes as you move through the system.
                 </h3>
-                <p className="max-w-xl text-base leading-relaxed text-slate-350">
+                <p className="max-w-xl text-lg leading-relaxed text-slate-350">
                   Scroll to advance the screen. The tour stays pinned until the final iOS view has appeared.
                 </p>
               </div>
@@ -141,16 +141,16 @@ export default function PortfolioCockpitTour() {
                     type="button"
                     onClick={() => scrollToChapter(index)}
                     aria-current={index === activeIndex ? "true" : undefined}
-                    className={`rounded-2xl border px-4 py-3 text-left transition ${
+                    className={`rounded-2xl border px-4 py-4 text-left transition ${
                       index === activeIndex
                         ? "border-emerald-400/35 bg-emerald-400/10 text-white shadow-[0_18px_55px_rgba(16,185,129,0.1)]"
                         : "border-white/[0.06] bg-slate-950/42 text-slate-500 hover:border-emerald-400/18 hover:text-slate-300"
                     }`}
                   >
-                    <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300/70">
+                    <div className="text-xs font-semibold text-emerald-300/70">
                       {feature.label}
                     </div>
-                    <div className="mt-1 font-display text-sm font-bold">{feature.title}</div>
+                    <div className="mt-1 font-display text-base font-bold">{feature.title}</div>
                   </button>
                 ))}
               </div>
@@ -166,7 +166,7 @@ export default function PortfolioCockpitTour() {
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-300/75">
+                        <div className="text-sm font-semibold text-emerald-300/75">
                           {activeFeature.label}
                         </div>
                         <h4 className="mt-2 font-display text-2xl font-bold tracking-tight text-white">
@@ -177,7 +177,7 @@ export default function PortfolioCockpitTour() {
                         {String(activeIndex + 1).padStart(2, "0")} / {FEATURES.length}
                       </span>
                     </div>
-                    <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-350">
+                    <p className="mt-4 max-w-md text-base leading-relaxed text-slate-350">
                       {activeFeature.description}
                     </p>
                     <div className="mt-5 h-1 rounded-full bg-white/8">
@@ -219,78 +219,47 @@ export default function PortfolioCockpitTour() {
         </div>
       </div>
 
-      <div className="lg:hidden">
-        <div className="sticky top-24 z-10 rounded-[32px] border border-emerald-400/16 bg-gradient-to-br from-slate-900/75 via-slate-950/90 to-emerald-950/20 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.35)]">
-          <div className="absolute inset-0 rounded-[32px] bg-cyber-grid opacity-15 pointer-events-none" />
-          <div className="relative z-10 space-y-4">
+      <div className="space-y-7 lg:hidden">
+        {FEATURES.map((feature, index) => (
+          <motion.article
+            key={feature.id}
+            ref={(node) => {
+              mobileChapterRefs.current[index] = node;
+            }}
+            data-tour-index={index}
+            className="rounded-[32px] border border-emerald-400/14 bg-gradient-to-br from-slate-900/68 via-slate-950/90 to-emerald-950/14 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.26)]"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.22 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+          >
             <div className="flex items-start justify-between gap-4">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeFeature.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.28, ease: "easeOut" }}
-                >
-                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-emerald-300/75">
-                    {activeFeature.label}
-                  </div>
-                  <h3 className="mt-1 font-display text-xl font-bold tracking-tight text-white">
-                    {activeFeature.title}
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-350">
-                    {activeFeature.description}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
+              <div>
+                <div className="text-xs font-semibold text-emerald-300/75">
+                  {feature.label}
+                </div>
+                <h3 className="mt-1 font-display text-2xl font-bold tracking-tight text-white">
+                  {feature.title}
+                </h3>
+              </div>
               <span className="shrink-0 font-mono text-[11px] text-slate-500">
-                {String(activeIndex + 1).padStart(2, "0")} / {FEATURES.length}
+                {String(index + 1).padStart(2, "0")}
               </span>
             </div>
+            <p className="mt-3 text-base leading-relaxed text-slate-350">
+              {feature.description}
+            </p>
 
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {FEATURES.map((feature, index) => (
-                <button
-                  key={feature.id}
-                  type="button"
-                  onClick={() => scrollToChapter(index)}
-                  aria-current={index === activeIndex ? "true" : undefined}
-                  className={`shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-bold transition ${
-                    index === activeIndex
-                      ? "border-emerald-400/35 bg-emerald-400/10 text-emerald-200"
-                      : "border-white/6 bg-slate-900/55 text-slate-400"
-                  }`}
-                >
-                  {feature.title}
-                </button>
-              ))}
+            <div className="mt-5 overflow-hidden rounded-[26px] border border-white/8 bg-slate-950/80">
+              <img
+                src={feature.screenshot}
+                alt={feature.screenshotAlt}
+                className="h-auto w-full object-cover brightness-[1.08] contrast-[1.04]"
+                loading={index > 1 ? "lazy" : "eager"}
+              />
             </div>
-
-            <div className="mx-auto flex h-[54svh] min-h-[430px] max-h-[560px] max-w-[360px] items-start justify-center overflow-hidden">
-              <div className="origin-top scale-[0.68] min-[390px]:scale-[0.74]">
-                <IosCockpitMockup
-                  frameKey={activeFeature.id}
-                  screenshotSrc={activeFeature.screenshot}
-                  screenshotAlt={activeFeature.screenshotAlt}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="pointer-events-none" aria-hidden="true">
-          {FEATURES.map((feature, index) => (
-            <div
-              key={feature.id}
-              ref={(node) => {
-                mobileChapterRefs.current[index] = node;
-              }}
-              data-tour-index={index}
-              className="h-[64svh]"
-            />
-          ))}
-          <div className="h-[54svh]" />
-        </div>
+          </motion.article>
+        ))}
       </div>
     </div>
   );

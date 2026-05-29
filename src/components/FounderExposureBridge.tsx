@@ -24,25 +24,25 @@ export default function FounderExposureBridge() {
   return (
     <section
       id="founder-story"
-      className="scroll-stop-section relative overflow-clip border-t border-white/5 bg-[#090d0b] py-20"
+      className="scroll-stop-section relative overflow-clip border-t border-white/5 bg-[#0c0e0b] py-24"
     >
       <MobileSnapBeat />
-      <div className="absolute inset-0 bg-cyber-grid opacity-[0.055] pointer-events-none" />
+      <div className="absolute inset-0 bg-cyber-grid opacity-[0.03] pointer-events-none" />
       <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/18 bg-amber-200/[0.07] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-amber-100">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/18 bg-amber-200/[0.07] px-3.5 py-2 text-sm font-semibold text-amber-100">
             <ShieldCheck className="h-3.5 w-3.5" />
             Built from a real portfolio problem
           </div>
 
           <div className="space-y-4">
-            <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-5xl">
+            <h2 className="font-editorial text-5xl leading-[0.95] tracking-tight text-white md:text-7xl">
               The spreadsheet stopped answering the real question.
             </h2>
-            <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
+            <p className="max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">
               I built Aerarium because my own investing system kept outgrowing spreadsheets. As a CFA charterholder, I knew the rules I wanted to follow. But when SPY, QQQ, and NVDA lived across retirement and taxable accounts, the spreadsheet stopped answering the question that mattered.
             </p>
-            <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
+            <p className="max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">
               Aerarium started there: a private discipline layer for investors who want policy, exposure, goals, and thesis notes tracked in one place.
             </p>
           </div>
@@ -63,14 +63,14 @@ export default function FounderExposureBridge() {
 
         <div className="relative">
           <div className="absolute -inset-8 rounded-[48px] bg-emerald-400/[0.055] blur-3xl" />
-          <div className="relative overflow-hidden rounded-[34px] border border-emerald-400/16 bg-gradient-to-br from-slate-900/70 via-slate-950 to-emerald-950/18 p-6 shadow-[0_36px_110px_rgba(0,0,0,0.34)] ring-1 ring-white/8 md:p-8">
-            <div className="absolute inset-0 bg-cyber-grid opacity-[0.08] pointer-events-none" />
+          <div className="relative overflow-hidden rounded-[34px] border border-emerald-400/14 bg-gradient-to-br from-slate-900/62 via-slate-950 to-emerald-950/14 p-6 shadow-[0_36px_110px_rgba(0,0,0,0.34)] ring-1 ring-white/8 md:p-8">
+            <div className="absolute inset-0 bg-cyber-grid opacity-[0.035] pointer-events-none" />
             <div className="relative">
               <div className="max-w-xl">
-                <div className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">
+                <div className="text-sm font-semibold text-emerald-300">
                   Closed-loop discipline
                 </div>
-                <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-white md:text-3xl">
+                <h3 className="mt-3 font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
                   Most apps show what changed. Aerarium shows whether the change broke your rules.
                 </h3>
               </div>
@@ -81,7 +81,7 @@ export default function FounderExposureBridge() {
                   return (
                     <div
                       key={point.title}
-                      className="group rounded-2xl border border-white/6 bg-slate-950/55 p-5 transition hover:border-emerald-400/20 hover:bg-emerald-400/[0.055]"
+                    className="group rounded-2xl border border-white/6 bg-slate-950/55 p-5 transition hover:border-emerald-400/20 hover:bg-emerald-400/[0.055]"
                     >
                       <div className="flex items-start gap-4">
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-emerald-300/16 bg-emerald-300/10 text-emerald-300">
@@ -89,7 +89,7 @@ export default function FounderExposureBridge() {
                         </div>
                         <div>
                           <div className="flex items-center gap-3">
-                            <span className="font-mono text-xs font-bold text-slate-500">
+                            <span className="text-xs font-semibold text-slate-500">
                               {String(index + 1).padStart(2, "0")}
                             </span>
                             <h4 className="font-display text-lg font-bold text-white">{point.title}</h4>

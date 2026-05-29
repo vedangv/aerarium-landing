@@ -265,3 +265,34 @@ The next pass is successful when:
   founder narrative.
 - The founder section now explains the closed loop across exposure, policy, and
   discipline without repeating the same phone screenshot from the hero.
+
+2026-05-29 second pass:
+
+- The full page is being moved toward Luffu/Poly-style restraint, not only the
+  hero.
+- The hero now separates the revelation message, product proof scene, and proof
+  claims instead of cramming all proof into one vertical dashboard rail.
+- Display typography uses a warmer editorial face for major page headlines,
+  with mono reduced to actual data/progress moments.
+- Cyber-grid/glow intensity is reduced across the hero, founder bridge,
+  Portfolio, Research, and Security sections.
+- The Portfolio section relies on the scroll-guided product tour as the primary
+  feature surface, with redundant feature-card density removed.
+- The founder story remains lower on the page as origin/trust context rather
+  than first-viewport persuasion.
+
+2026-05-29 implementation follow-through:
+
+- The hero right rail was simplified again after visual review: the phone and a
+  compact X-Ray result card now carry the product proof instead of a dense
+  mini-dashboard with secondary trust claims.
+- The fake hardware dynamic-island overlay was removed from product frames
+  because the real iOS screenshots already include the device status area.
+- The founder story moved below the Portfolio, Research, and Security sections
+  so the first half of the page stays focused on revelation and product proof.
+- Mobile Portfolio tour behavior now degrades to stacked product cards instead
+  of a sticky pinned tour, reducing scroll-snap friction.
+- Gemini reviewed the diff with `gemini --model gemini-3.1-pro-preview`; the
+  actionable feedback was to verify the font URL and slightly reduce large
+  breakpoint hero typography. The font URL was confirmed valid, and the large
+  breakpoint type scale was tightened.
