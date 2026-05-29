@@ -296,3 +296,16 @@ The next pass is successful when:
   actionable feedback was to verify the font URL and slightly reduce large
   breakpoint hero typography. The font URL was confirmed valid, and the large
   breakpoint type scale was tightened.
+
+2026-05-29 walkthrough polish:
+
+- Added an app-surface bridge between launch status and the deep feature tours
+  so the page feels more like a product walkthrough and less like isolated
+  marketing modules.
+- The bridge uses real screenshots for X-Ray, IPS, Goals, and Profile rather
+  than abstract/generated art.
+- Claude's viewport-aware iPhone sizing and pinned-panel max-height fixes were
+  preserved so laptop viewports can inspect the full product frame.
+- The bridge is intentionally non-sticky on mobile: screenshots stack in
+  reading order so users can pause on the product surface without fighting snap
+  behavior.

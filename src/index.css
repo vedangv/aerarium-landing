@@ -5,6 +5,11 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-editorial: "Instrument Serif", ui-serif, Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Warm near-black base tuned to the dark-emerald app UI. */
+  --color-slate-950: #080b09;
+  --color-slate-900: #0e1310;
+  --color-slate-850: #141b16;
 }
 
 html {
@@ -117,16 +122,25 @@ html {
   animation: floatCore 12s infinite linear;
 }
 
+/* Retired legacy cyber-grid usage. */
 .bg-cyber-grid {
-  background-image: 
-    linear-gradient(to right, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: gridScroll 30s linear infinite;
+  background-image: none;
 }
 
 .bg-radial-aurora {
   background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 35%, rgba(15, 23, 42, 0.95) 75%);
+}
+
+/* Warm ambient halo for product sections. */
+.ambient-warm {
+  background:
+    radial-gradient(60% 55% at 60% 38%, rgba(16, 185, 129, 0.16) 0%, transparent 70%),
+    radial-gradient(45% 45% at 72% 70%, rgba(245, 200, 130, 0.07) 0%, transparent 72%);
+}
+
+/* Warm hairline section divider. */
+.warm-hairline {
+  background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.22), transparent);
 }
 
 .glass-card {

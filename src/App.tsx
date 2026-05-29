@@ -11,6 +11,7 @@ import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
 import HeroSignalScene from "./components/HeroSignalScene";
+import AppSurfaceStrip from "./components/AppSurfaceStrip";
 import { motion } from "motion/react";
 import { Sparkles, ArrowDown, ChevronRight, Lock, CheckCircle2, Instagram, ShieldCheck } from "lucide-react";
 
@@ -28,22 +29,19 @@ export default function App() {
   return (
     <div className="relative min-h-screen overflow-x-clip bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
       
-      {/* 1. Global Ambient Parallax Backdrops */}
+      {/* 1. Global ambient backdrops */}
       <div
-        className="absolute top-[10%] left-[5%] w-[320px] h-[320px] bg-emerald-500/[0.045] rounded-full blur-3xl pointer-events-none animate-glow-slow-1"
-        style={{ transform: `translateY(${scrollY * 0.25}px)` }}
+        className="absolute top-[6%] right-[2%] w-[560px] h-[560px] bg-emerald-500/[0.06] rounded-full blur-[120px] pointer-events-none animate-glow-slow-1"
+        style={{ transform: `translateY(${scrollY * 0.18}px)` }}
       />
       <div
-        className="absolute top-[42%] right-[3%] w-[360px] h-[360px] bg-cyan-500/[0.035] rounded-full blur-3xl pointer-events-none animate-glow-slow-2"
-        style={{ transform: `translateY(${scrollY * 0.15}px)` }}
+        className="absolute top-[46%] left-[2%] w-[420px] h-[420px] bg-amber-200/[0.035] rounded-full blur-[120px] pointer-events-none animate-glow-slow-2"
+        style={{ transform: `translateY(${scrollY * 0.12}px)` }}
       />
       <div
-        className="absolute bottom-[20%] left-[10%] w-[460px] h-[460px] bg-amber-200/[0.026] rounded-full blur-3xl pointer-events-none animate-glow-slow-3"
-        style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+        className="absolute bottom-[14%] right-[12%] w-[480px] h-[480px] bg-emerald-400/[0.035] rounded-full blur-[120px] pointer-events-none animate-glow-slow-3"
+        style={{ transform: `translateY(${scrollY * 0.08}px)` }}
       />
-
-      {/* Subtle grid overlay */}
-      <div className="absolute inset-0 bg-cyber-grid opacity-[0.035] pointer-events-none z-0" />
 
       {/* 2. Navigation */}
       <Navbar />
@@ -125,38 +123,54 @@ export default function App() {
         </div>
       </header>
 
-      <section className="relative z-10 border-y border-white/5 bg-[#090d0b]/90 py-7">
+      <section className="relative z-10 border-y border-white/5 bg-slate-900/40 py-12 sm:py-14">
         <MobileSnapBeat />
         <div className="mx-auto grid max-w-7xl gap-4 px-6 md:grid-cols-3">
           {[
             ["True exposure across accounts", "Direct positions and ETF look-through roll into one number."],
             ["Rules after reality", "The Policy Score evaluates the real portfolio, not a stale spreadsheet."],
             ["Private by design", "Read-only sync, encrypted sensitive fields, and no trade placement."],
-          ].map(([title, body]) => (
-            <div key={title} className="rounded-2xl border border-white/6 bg-slate-950/45 p-5">
+          ].map(([title, body], i) => (
+            <motion.div
+              key={title}
+              className="rounded-2xl border border-white/6 bg-slate-950/55 p-6"
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.08 }}
+            >
               <ShieldCheck className="h-4 w-4 text-emerald-300" />
               <h2 className="mt-3 font-display text-base font-bold text-white">{title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-slate-400">{body}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* 4. Launch Status */}
-      <section className="bg-slate-950/80 border-t border-b border-white/5 py-8 relative z-10 font-sans">
+      <section className="bg-slate-950 py-14 relative z-10 font-sans">
         <MobileSnapBeat />
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <motion.div
+          className="max-w-7xl mx-auto px-6 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <CountdownTimer />
-        </div>
+        </motion.div>
       </section>
 
-      {/* 5. Product Proof */}
+      {/* 5. Product surfaces */}
+      <AppSurfaceStrip />
+
+      {/* 6. Product proof */}
       <FeatureGrid />
 
-      {/* 6. Founder story + product philosophy */}
+      {/* 7. Founder story + product philosophy */}
       <FounderExposureBridge />
 
-      {/* 7. Reservation Portal Section */}
+      {/* 8. Reservation Portal Section */}
       <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="scroll-stop-section py-24 relative z-10 px-6 max-w-4xl mx-auto font-sans">
         <MobileSnapBeat />
         <motion.div 
@@ -169,7 +183,7 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* 8. Humble and Professional Footer */}
+      {/* 9. Humble and Professional Footer */}
       <footer className="footer-snap bg-slate-950 py-12 relative z-10 border-t border-white/5 font-sans">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center space-x-3">

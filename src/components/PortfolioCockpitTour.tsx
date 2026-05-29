@@ -116,20 +116,19 @@ export default function PortfolioCockpitTour() {
       </div>
 
       <div className="hidden lg:block">
-        <div className="sticky top-24 z-10 rounded-[40px] border border-emerald-400/14 bg-gradient-to-br from-slate-900/52 via-slate-950/88 to-emerald-950/16 p-8 shadow-[0_36px_100px_rgba(0,0,0,0.3)]">
-          <div className="absolute inset-0 rounded-[40px] bg-cyber-grid opacity-[0.04] pointer-events-none" />
+        <div className="sticky top-20 z-10 max-h-[calc(100svh-6rem)] overflow-hidden rounded-[40px] border border-emerald-400/14 bg-gradient-to-br from-slate-900/52 via-slate-950/88 to-emerald-950/16 p-6 shadow-[0_36px_100px_rgba(0,0,0,0.3)]">
           <div className="absolute -right-24 top-10 h-64 w-64 rounded-full bg-emerald-300/[0.08] blur-3xl" />
 
-          <div className="relative z-10 grid min-h-[calc(100svh-9rem)] items-center gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(380px,1.12fr)]">
-            <div className="space-y-7">
-              <div className="space-y-3">
+          <div className="relative z-10 grid h-[calc(100svh-9rem)] items-center gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(360px,1.12fr)]">
+            <div className="space-y-5">
+              <div className="space-y-2.5">
                 <div className="text-sm font-semibold text-emerald-300/85">
                   Scroll-guided iOS tour
                 </div>
-                <h3 className="font-display text-5xl font-bold leading-tight tracking-tight text-white">
+                <h3 className="font-display text-3xl font-bold leading-tight tracking-tight text-white xl:text-4xl">
                   The cockpit changes as you move through the system.
                 </h3>
-                <p className="max-w-xl text-lg leading-relaxed text-slate-350">
+                <p className="max-w-xl text-base leading-relaxed text-slate-350">
                   Scroll to advance the screen. The tour stays pinned until the final iOS view has appeared.
                 </p>
               </div>
@@ -141,21 +140,21 @@ export default function PortfolioCockpitTour() {
                     type="button"
                     onClick={() => scrollToChapter(index)}
                     aria-current={index === activeIndex ? "true" : undefined}
-                    className={`rounded-2xl border px-4 py-4 text-left transition ${
+                    className={`rounded-2xl border px-3.5 py-2.5 text-left transition ${
                       index === activeIndex
                         ? "border-emerald-400/35 bg-emerald-400/10 text-white shadow-[0_18px_55px_rgba(16,185,129,0.1)]"
                         : "border-white/[0.06] bg-slate-950/42 text-slate-500 hover:border-emerald-400/18 hover:text-slate-300"
                     }`}
                   >
-                    <div className="text-xs font-semibold text-emerald-300/70">
+                    <div className="text-[11px] font-semibold text-emerald-300/70">
                       {feature.label}
                     </div>
-                    <div className="mt-1 font-display text-base font-bold">{feature.title}</div>
+                    <div className="mt-0.5 font-display text-sm font-bold">{feature.title}</div>
                   </button>
                 ))}
               </div>
 
-              <div className="rounded-3xl border border-emerald-400/22 bg-slate-950/55 p-6">
+              <div className="rounded-3xl border border-emerald-400/22 bg-slate-950/55 p-5">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeFeature.id}
@@ -212,10 +211,10 @@ export default function PortfolioCockpitTour() {
                 desktopBeatRefs.current[index] = node;
               }}
               data-tour-index={index}
-              className="h-[58svh]"
+              className="h-[52svh]"
             />
           ))}
-          <div className="h-[46svh]" />
+          <div className="h-[40svh]" />
         </div>
       </div>
 

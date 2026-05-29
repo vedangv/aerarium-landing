@@ -33,9 +33,10 @@ export default function HeroSignalScene() {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
     >
-      <div className="absolute -inset-6 rounded-[48px] bg-emerald-300/[0.045] blur-3xl" />
+      <div className="ambient-warm absolute -inset-12 rounded-[64px] blur-3xl" />
       <div className="relative overflow-hidden rounded-[36px] border border-emerald-400/16 bg-gradient-to-br from-slate-900/46 via-slate-950/72 to-emerald-950/18 px-3 py-6 shadow-[0_44px_140px_rgba(0,0,0,0.34)] ring-1 ring-white/[0.035] sm:rounded-[44px] sm:px-7 lg:px-8">
-        <div className="absolute right-[-10%] top-[12%] h-72 w-72 rounded-full bg-emerald-300/[0.07] blur-3xl" />
+        <div className="absolute right-[-6%] top-[6%] h-80 w-80 rounded-full bg-emerald-300/[0.10] blur-[90px]" />
+        <div className="absolute bottom-[-10%] left-[8%] h-64 w-64 rounded-full bg-amber-200/[0.06] blur-[90px]" />
 
         <div className="relative z-10 grid items-center gap-7 lg:grid-cols-[0.42fr_0.58fr]">
           <motion.div

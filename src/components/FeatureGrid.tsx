@@ -214,7 +214,7 @@ export default function FeatureGrid() {
           <MobileSnapBeat />
 
           <div className="hidden lg:block">
-            <div className="sticky top-24 z-10 grid min-h-[calc(100svh-9rem)] grid-cols-12 items-center gap-10">
+            <div className="sticky top-20 z-10 grid max-h-[calc(100svh-6rem)] grid-cols-12 items-center gap-10">
               <div className="col-span-5 space-y-7">
                 <div className="grid grid-cols-2 gap-2">
                   {RESEARCH_SHOWCASES.map((feature, index) => (

@@ -14,8 +14,8 @@ export default function IosCockpitMockup({
 }: IosCockpitMockupProps) {
   return (
     <div className="w-full flex flex-col items-center justify-center p-1" id="ios-device-mockup">
-      <div 
-        className="relative w-[345px] h-[720px] rounded-[52px] bg-slate-950 p-3 shadow-2xl border-4 border-slate-900 overflow-hidden flex flex-col justify-between select-none transition-transform duration-300 hover:scale-[1.01]" 
+      <div
+        className="relative aspect-[345/720] h-[clamp(420px,calc(100svh-13rem),680px)] rounded-[52px] bg-slate-950 p-3 shadow-2xl border-4 border-slate-900 overflow-hidden flex flex-col justify-between select-none transition-transform duration-300 hover:scale-[1.01]"
         id="iphone-chassis-outer"
       >
         <div className="absolute left-[-3px] top-[120px] w-[3px] h-[34px] bg-slate-800 rounded-r" id="iphone-btn-action" />
