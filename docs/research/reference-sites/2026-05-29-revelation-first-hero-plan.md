@@ -218,13 +218,16 @@ Avoid:
 1. Preserve the current branch and preview as the baseline.
 2. Refactor the hero to lead with the hidden-exposure revelation.
 3. Move founder story below the hero proof.
-4. Reduce hero CTAs and proof chips.
-5. Tighten typography and remove decorative mono where it weakens the premium
+4. Replace the self-referential "product opens as you scroll" bridge with a
+   question-led 2x2 grid of real app screenshots: portfolio exposure, central
+   funding plan, goals hub, and IPS allocation check.
+5. Reduce hero CTAs and proof chips.
+6. Tighten typography and remove decorative mono where it weakens the premium
    feel.
-6. Reduce cyber-grid/glow intensity.
-7. Verify feature-to-screenshot mapping, especially X-Ray.
-8. Run desktop and mobile QA for scroll rhythm and product-frame inspection.
-9. Ask Gemini and Claude for critique before promoting to production.
+7. Reduce cyber-grid/glow intensity.
+8. Verify feature-to-screenshot mapping, especially X-Ray.
+9. Run desktop and mobile QA for scroll rhythm and product-frame inspection.
+10. Ask Gemini and Claude for critique before promoting to production.
 
 ## Acceptance Criteria
 
