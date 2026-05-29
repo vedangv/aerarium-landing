@@ -21,10 +21,9 @@ interface IosCockpitMockupProps {
 export default function IosCockpitMockup({
   activeIndex,
   setActiveIndex,
-  autoTourActive,
-  setAutoTourActive,
   handleUserInteraction,
 }: IosCockpitMockupProps) {
+  const activeScreenshot = screenshots[((activeIndex % screenshots.length) + screenshots.length) % screenshots.length];
 
   // Handlers for interaction
   const onScreenTap = () => {
@@ -71,7 +70,7 @@ export default function IosCockpitMockup({
                 className="absolute inset-0 w-full h-full"
               >
                 <img 
-                  src={screenshots[activeIndex]} 
+                  src={activeScreenshot}
                   alt={`Aerarium Screen ${activeIndex}`} 
                   className="w-full h-full object-cover select-none pointer-events-none rounded-[39px]"
                   referrerPolicy="no-referrer"

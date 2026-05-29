@@ -80,7 +80,8 @@ const RESEARCH_SHOWCASES = [
 
 export default function FeatureGrid() {
   const [activeResearchImage, setActiveResearchImage] = useState<number>(0);
-  const researchRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const desktopResearchRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileResearchRefs = useRef<(HTMLDivElement | null)[]>([]);
   const activeResearch = RESEARCH_SHOWCASES[activeResearchImage];
 
   useEffect(() => {
@@ -102,7 +103,8 @@ export default function FeatureGrid() {
       },
     );
 
-    researchRefs.current.forEach((node) => {
+    const nodes = [...desktopResearchRefs.current, ...mobileResearchRefs.current];
+    nodes.forEach((node) => {
       if (node) observer.observe(node);
     });
 
@@ -110,21 +112,19 @@ export default function FeatureGrid() {
   }, []);
 
   const scrollToResearch = (index: number) => {
-    researchRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    const target = isDesktop ? desktopResearchRefs.current[index] : mobileResearchRefs.current[index];
+    target?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
     <div className="space-y-0">
       
       {/* SECTION 1: AERARIUM PORTFOLIO */}
-      <motion.section 
+      <section
         id="portfolio" 
         style={{ scrollMarginTop: "100px" }} 
         className="scroll-stop-section py-20 relative border-t border-white/5 bg-gradient-to-b from-slate-950 via-slate-900/10 to-slate-950"
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.28, margin: "0px 0px -12% 0px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <MobileSnapBeat />
         <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
@@ -283,17 +283,13 @@ export default function FeatureGrid() {
 
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* SECTION 2: AERARIUM RESEARCH */}
-      <motion.section 
+      <section
         id="research" 
         style={{ scrollMarginTop: "100px" }} 
         className="scroll-stop-section py-24 relative bg-gradient-to-b from-slate-950 via-slate-900/5 to-slate-950"
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.24, margin: "0px 0px -12% 0px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <MobileSnapBeat />
         <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none" />
@@ -328,126 +324,208 @@ export default function FeatureGrid() {
           {/* Research product tour */}
           <MobileSnapBeat />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 lg:items-start">
-            <div className="space-y-5 lg:col-span-5">
-              <div className="flex gap-2 overflow-x-auto pb-1 lg:hidden">
-                {RESEARCH_SHOWCASES.map((feature, index) => (
-                  <button
-                    key={feature.id}
-                    type="button"
-                    onClick={() => scrollToResearch(index)}
-                    className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold transition ${
-                      index === activeResearchImage
-                        ? "border-cyan-400/35 bg-cyan-400/10 text-cyan-200"
-                        : "border-white/6 bg-slate-900/55 text-slate-400"
-                    }`}
-                  >
-                    {feature.label}
-                  </button>
-                ))}
+          <div className="hidden lg:block">
+            <div className="sticky top-24 z-10 grid min-h-[calc(100svh-9rem)] grid-cols-12 items-center gap-10">
+              <div className="col-span-5 space-y-7">
+                <div className="grid grid-cols-2 gap-2">
+                  {RESEARCH_SHOWCASES.map((feature, index) => (
+                    <button
+                      key={feature.id}
+                      type="button"
+                      onClick={() => scrollToResearch(index)}
+                      className={`rounded-2xl border px-4 py-3 text-left transition ${
+                        index === activeResearchImage
+                          ? "border-cyan-400/35 bg-cyan-400/10 text-white shadow-[0_18px_55px_rgba(6,182,212,0.1)]"
+                          : "border-white/[0.06] bg-slate-950/42 text-slate-500 hover:border-cyan-400/18 hover:text-slate-300"
+                      }`}
+                    >
+                      <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-cyan-300/75">
+                        {feature.label}
+                      </div>
+                      <div className="mt-1 font-display text-sm font-bold">{feature.title}</div>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="rounded-3xl border border-cyan-400/22 bg-slate-950/55 p-6">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeResearch.id}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                      <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300/75">
+                        {activeResearch.label}
+                      </div>
+                      <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-white">
+                        {activeResearch.title}
+                      </h3>
+                      <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-350">
+                        {activeResearch.description}
+                      </p>
+                      <div className="mt-5 h-1 rounded-full bg-white/8">
+                        <div
+                          className="h-full rounded-full bg-cyan-300/75 transition-all duration-500"
+                          style={{ width: `${((activeResearchImage + 1) / RESEARCH_SHOWCASES.length) * 100}%` }}
+                        />
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
 
-              {RESEARCH_SHOWCASES.map((feature, index) => {
-                const isActive = index === activeResearchImage;
-                return (
-                  <motion.div
-                    key={feature.id}
-                    ref={(node) => {
-                      researchRefs.current[index] = node;
-                    }}
-                    data-research-index={index}
-                    className={`min-h-[150px] rounded-3xl border p-5 transition-colors duration-300 lg:min-h-[220px] ${
-                      isActive
-                        ? "border-cyan-400/35 bg-slate-900/92 text-white shadow-[0_20px_55px_rgba(6,182,212,0.12)]"
-                        : "border-white/[0.06] bg-slate-950/42 text-slate-400"
-                    }`}
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.25 }}
-                    transition={{ duration: 0.55, ease: "easeOut" }}
-                    onMouseEnter={() => setActiveResearchImage(index)}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300/80">
-                          {feature.label}
-                        </div>
-                        <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-white">
-                          {feature.title}
-                        </h3>
-                      </div>
-                      <span className="font-mono text-xs text-slate-500">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+              <div className="col-span-7">
+                <div className="relative overflow-hidden rounded-[28px] border border-cyan-300/30 bg-slate-900/80 shadow-[0_28px_90px_rgba(34,211,238,0.16)] ring-1 ring-white/10">
+                  <div className="flex items-center justify-between border-b border-white/6 bg-slate-900/75 px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
                     </div>
-                    <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-350">
-                      {feature.description}
-                    </p>
-                    <div className={`mt-5 h-1 rounded-full transition-colors ${isActive ? "bg-cyan-300/70" : "bg-white/8"}`} />
-                  </motion.div>
-                );
-              })}
+                    <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500">
+                      Aerarium Research
+                    </div>
+                  </div>
+
+                  <div className="relative aspect-[16/9] bg-slate-950">
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={activeResearch.id}
+                        src={activeResearch.image}
+                        alt={activeResearch.title}
+                        className="absolute inset-0 h-full w-full object-cover object-top brightness-110 contrast-110 saturate-110"
+                        initial={{ opacity: 0, scale: 1.01 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.995 }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                      />
+                    </AnimatePresence>
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent p-5">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                          <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
+                            {activeResearch.label}
+                          </div>
+                          <h3 className="mt-1 font-display text-xl font-bold text-white">{activeResearch.title}</h3>
+                        </div>
+                        <a
+                          href="https://research.aerarium.app/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-white"
+                        >
+                          Open Research
+                          <ChevronRight className="h-4 w-4" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 grid grid-cols-4 gap-2">
+                  {["SEC EDGAR", "FRED macro", "13F funds", "Company KPIs"].map((item) => (
+                    <div key={item} className="rounded-xl border border-white/5 bg-slate-900/35 px-3 py-2 text-center text-[11px] font-semibold text-slate-300">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="lg:col-span-7 lg:sticky lg:top-28">
-              <div className="relative overflow-hidden rounded-[28px] border border-cyan-300/30 bg-slate-900/80 shadow-[0_28px_90px_rgba(34,211,238,0.16)] ring-1 ring-white/10">
-                <div className="flex items-center justify-between border-b border-white/6 bg-slate-900/75 px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-                  </div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500">
-                    Aerarium Research
-                  </div>
-                </div>
-
-                <div className="relative aspect-[16/9] bg-slate-950">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={activeResearch.id}
-                      src={activeResearch.image}
-                      alt={activeResearch.title}
-                      className="absolute inset-0 h-full w-full object-cover object-top brightness-110 contrast-110 saturate-110"
-                      initial={{ opacity: 0, scale: 1.01 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.995 }}
-                      transition={{ duration: 0.35, ease: "easeOut" }}
-                    />
-                  </AnimatePresence>
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent p-5">
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                      <div>
-                        <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
-                          {activeResearch.label}
-                        </div>
-                        <h3 className="mt-1 font-display text-xl font-bold text-white">{activeResearch.title}</h3>
-                      </div>
-                      <a
-                        href="https://research.aerarium.app/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-white"
-                      >
-                        Open Research
-                        <ChevronRight className="h-4 w-4" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {["SEC EDGAR", "FRED macro", "13F funds", "Company KPIs"].map((item) => (
-                  <div key={item} className="rounded-xl border border-white/5 bg-slate-900/35 px-3 py-2 text-center text-[11px] font-semibold text-slate-300">
-                    {item}
-                  </div>
-                ))}
-              </div>
+            <div className="pointer-events-none" aria-hidden="true">
+              {RESEARCH_SHOWCASES.map((feature, index) => (
+                <div
+                  key={feature.id}
+                  ref={(node) => {
+                    desktopResearchRefs.current[index] = node;
+                  }}
+                  data-research-index={index}
+                  className="h-[58svh]"
+                />
+              ))}
+              <div className="h-[46svh]" />
             </div>
           </div>
+
+          <div className="space-y-6 lg:hidden">
+            <div className="flex gap-2 overflow-x-auto pb-1">
+              {RESEARCH_SHOWCASES.map((feature, index) => (
+                <button
+                  key={feature.id}
+                  type="button"
+                  onClick={() => scrollToResearch(index)}
+                  className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold transition ${
+                    index === activeResearchImage
+                      ? "border-cyan-400/35 bg-cyan-400/10 text-cyan-200"
+                      : "border-white/6 bg-slate-900/55 text-slate-400"
+                  }`}
+                >
+                  {feature.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="relative overflow-hidden rounded-[24px] border border-cyan-300/30 bg-slate-900/80 shadow-[0_28px_90px_rgba(34,211,238,0.16)] ring-1 ring-white/10">
+              <div className="relative aspect-[16/9] bg-slate-950">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeResearch.id}
+                    src={activeResearch.image}
+                    alt={activeResearch.title}
+                    className="absolute inset-0 h-full w-full object-cover object-top brightness-110 contrast-110 saturate-110"
+                    initial={{ opacity: 0, scale: 1.01 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.995 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                  />
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {RESEARCH_SHOWCASES.map((feature, index) => {
+              const isActive = index === activeResearchImage;
+              return (
+                <motion.div
+                  key={feature.id}
+                  ref={(node) => {
+                    mobileResearchRefs.current[index] = node;
+                  }}
+                  data-research-index={index}
+                  className={`min-h-[150px] rounded-3xl border p-5 transition-colors duration-300 ${
+                    isActive
+                      ? "border-cyan-400/35 bg-slate-900/92 text-white shadow-[0_20px_55px_rgba(6,182,212,0.12)]"
+                      : "border-white/[0.06] bg-slate-950/42 text-slate-400"
+                  }`}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.25 }}
+                  transition={{ duration: 0.55, ease: "easeOut" }}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300/80">
+                        {feature.label}
+                      </div>
+                      <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-white">
+                        {feature.title}
+                      </h3>
+                    </div>
+                    <span className="font-mono text-xs text-slate-500">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-350">
+                    {feature.description}
+                  </p>
+                  <div className={`mt-5 h-1 rounded-full transition-colors ${isActive ? "bg-cyan-300/70" : "bg-white/8"}`} />
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* SECTION 3: SECURITY + TRUST */}
       <motion.section

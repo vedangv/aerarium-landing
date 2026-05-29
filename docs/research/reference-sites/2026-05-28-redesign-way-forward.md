@@ -254,11 +254,11 @@ scene works, the rest of the page has a clear emotional and product spine.
 
 - Hero copy now leads with the spreadsheet and memory burden.
 - Added a founder/X-Ray bridge near the top of the page:
-  - left side shows the spreadsheet-memory problem across accounts;
-  - right side shows Aerarium X-Ray combining direct plus fund-derived NVDA
-    exposure;
-  - bottom rail shows the relief sequence: write the rule, connect holdings,
-    look through funds, score the drift.
+  - left side explains the spreadsheet-memory problem across accounts;
+  - right side now uses a generated Aerarium exposure dashboard visual instead
+    of the earlier grey/text-only composition;
+  - supporting proof chips reinforce true exposure, fund look-through, and the
+    policy-score cockpit.
 - Portfolio section now opens with Policy Score as the system proof before the
   feature chapters.
 - Visual tone was pulled slightly away from neon/cyber by reducing global glow
@@ -275,11 +275,23 @@ scene works, the rest of the page has a clear emotional and product spine.
   - chapter selector on the left;
   - anchored iPhone product object on the right;
   - screen changes are now driven by scroll position instead of a timer;
-  - mobile uses softer horizontal selector pills instead of a forced hero snap.
+  - desktop uses a pinned story section so the tour stays in view until the
+    final iOS screen has been shown;
+  - mobile also keeps the tour pinned with a scaled device frame, so visitors
+    can read each chapter and see the matching screen before scrolling past the
+    final image;
+  - both desktop and mobile include a final release buffer after the last beat,
+    so the last screen lingers before the next page section takes over.
+- Section shells and the Portfolio tour frame stay visible on direct anchor
+  jumps; reveal motion is kept on the inner cards/screens so the Portfolio tour
+  cannot land as a blank band.
 - Research carousel follows the same control model:
   - real screenshots stay in a sticky browser frame;
   - each research chapter card controls the active screenshot as the visitor
     scrolls;
+  - desktop keeps the browser frame pinned until the final research screenshot
+    has been shown, with a final release buffer so the last screenshot has room
+    to breathe;
   - selector pills remain as jump shortcuts, not the primary mechanic.
 
 Verification:
