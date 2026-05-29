@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import IosCockpitMockup from "./IosCockpitMockup";
+import dashboardScreen from "../../assets/product-tour/dashboard.jpg";
+import goalsFundingScreen from "../../assets/product-tour/goals-funding.jpg";
+import ipsScoreScreen from "../../assets/product-tour/ips-score.jpg";
+import ipsScoreSheetScreen from "../../assets/product-tour/ips-score-sheet.jpg";
+import profileMainScreen from "../../assets/product-tour/profile-main.jpg";
+import tradeCheckerScreen from "../../assets/product-tour/trade-checker.jpg";
+import xrayHoldingsScreen from "../assets/ss1.png";
 
 const FEATURES = [
   {
@@ -8,42 +15,56 @@ const FEATURES = [
     label: "Overview Dashboard",
     title: "Understand Your Portfolio Fast",
     description: "Net worth, spend, invest, holdings, and account health stay visible without turning into spreadsheet upkeep.",
+    screenshot: dashboardScreen,
+    screenshotAlt: "Aerarium dashboard showing net worth, policy score, portfolio, goals, and cash flow",
   },
   {
     id: "ips-cockpit",
     label: "IPS Cockpit",
     title: "Stop Drifting From Your Plan",
     description: "Turn a written investment policy into live guardrails, review versions, and surface what needs attention.",
+    screenshot: ipsScoreScreen,
+    screenshotAlt: "Aerarium IPS cockpit showing policy score and allocation check",
   },
   {
     id: "policy-score",
     label: "Policy Score",
     title: "Know Portfolio Health at a Glance",
     description: "Allocation drift, concentration risk, liquidity, goals, and review cadence collapse into one transparent score.",
+    screenshot: ipsScoreSheetScreen,
+    screenshotAlt: "Aerarium policy score sheet with score drivers and healthy areas",
   },
   {
     id: "portfolio-xray",
     label: "Portfolio X-Ray",
     title: "See Through Your ETFs",
     description: "Look through fund holdings to reveal true stock, sector, asset-class, and currency exposure.",
+    screenshot: xrayHoldingsScreen,
+    screenshotAlt: "Aerarium Portfolio X-Ray showing direct and fund-derived stock exposure",
   },
   {
     id: "goals-funding",
     label: "Goals + Funding Plan",
     title: "Assign Assets to Goals",
     description: "Centralize funding decisions so goal sleeves are easy to adjust without hiding global tradeoffs.",
+    screenshot: goalsFundingScreen,
+    screenshotAlt: "Aerarium funding plan showing central goal sleeve allocation",
   },
   {
     id: "thesis-checkins",
     label: "Thesis Check-ins",
     title: "Never Forget Why You Bought",
     description: "Keep investing decisions tied to a written thesis instead of letting impulse trades rewrite the plan.",
+    screenshot: tradeCheckerScreen,
+    screenshotAlt: "Aerarium trade checker and thesis workflow",
   },
   {
     id: "private-design",
     label: "Private by Design",
     title: "Keep Private Data Private",
     description: "Read-only brokerage sync, encrypted financial fields, recovery planning, and user-controlled data.",
+    screenshot: profileMainScreen,
+    screenshotAlt: "Aerarium profile showing security, privacy, and account controls",
   },
 ];
 
@@ -88,6 +109,12 @@ export default function PortfolioCockpitTour() {
 
   return (
     <div className="relative">
+      <div className="hidden" aria-hidden="true">
+        {FEATURES.map((feature) => (
+          <img key={feature.id} src={feature.screenshot} alt="" />
+        ))}
+      </div>
+
       <div className="hidden lg:block">
         <div className="sticky top-24 z-10 rounded-[36px] border border-emerald-400/16 bg-gradient-to-br from-slate-900/65 via-slate-950/80 to-emerald-950/20 p-8 shadow-[0_36px_100px_rgba(0,0,0,0.3)]">
           <div className="absolute inset-0 rounded-[36px] bg-cyber-grid opacity-15 pointer-events-none" />
@@ -113,6 +140,7 @@ export default function PortfolioCockpitTour() {
                     key={feature.id}
                     type="button"
                     onClick={() => scrollToChapter(index)}
+                    aria-current={index === activeIndex ? "true" : undefined}
                     className={`rounded-2xl border px-4 py-3 text-left transition ${
                       index === activeIndex
                         ? "border-emerald-400/35 bg-emerald-400/10 text-white shadow-[0_18px_55px_rgba(16,185,129,0.1)]"
@@ -167,11 +195,9 @@ export default function PortfolioCockpitTour() {
               <div className="relative">
                 <div className="absolute -inset-8 rounded-[64px] bg-emerald-400/[0.06] blur-2xl" />
                 <IosCockpitMockup
-                  activeIndex={activeIndex}
-                  setActiveIndex={setActiveIndex}
-                  autoTourActive={false}
-                  setAutoTourActive={() => {}}
-                  handleUserInteraction={() => {}}
+                  frameKey={activeFeature.id}
+                  screenshotSrc={activeFeature.screenshot}
+                  screenshotAlt={activeFeature.screenshotAlt}
                 />
               </div>
             </div>
@@ -228,6 +254,7 @@ export default function PortfolioCockpitTour() {
                   key={feature.id}
                   type="button"
                   onClick={() => scrollToChapter(index)}
+                  aria-current={index === activeIndex ? "true" : undefined}
                   className={`shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-bold transition ${
                     index === activeIndex
                       ? "border-emerald-400/35 bg-emerald-400/10 text-emerald-200"
@@ -242,11 +269,9 @@ export default function PortfolioCockpitTour() {
             <div className="mx-auto flex h-[54svh] min-h-[430px] max-h-[560px] max-w-[360px] items-start justify-center overflow-hidden">
               <div className="origin-top scale-[0.68] min-[390px]:scale-[0.74]">
                 <IosCockpitMockup
-                  activeIndex={activeIndex}
-                  setActiveIndex={setActiveIndex}
-                  autoTourActive={false}
-                  setAutoTourActive={() => {}}
-                  handleUserInteraction={() => {}}
+                  frameKey={activeFeature.id}
+                  screenshotSrc={activeFeature.screenshot}
+                  screenshotAlt={activeFeature.screenshotAlt}
                 />
               </div>
             </div>

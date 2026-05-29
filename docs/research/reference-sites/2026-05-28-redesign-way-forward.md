@@ -70,11 +70,13 @@ card.
 
 Suggested visual:
 
-- Left side: a compact "spreadsheet/memory" mess with SPY, QQQ, NVDA across
-  taxable and retirement accounts.
-- Right side: Aerarium Portfolio X-Ray showing direct plus through-funds
-  exposure.
-- Copy: "SPY + QQQ + direct NVDA become one exposure view."
+- Left side: founder narrative explaining why spreadsheets stopped answering
+  the true-exposure question.
+- Right side: two real Aerarium iOS phone frames, led by Portfolio X-Ray showing
+  the Holdings tab with NVDA direct plus through-funds exposure and supported
+  by the portfolio overview.
+- Copy: "Direct shares and ETF look-through roll up across accounts before
+  policy rules evaluate the portfolio."
 
 ## Page Architecture
 
@@ -127,6 +129,8 @@ Mechanic:
 
 - On desktop, use a fixed or anchored iPhone product object with chapter text
   changing beside it.
+- Each chapter owns an explicit screenshot mapping so the phone screen always
+  matches the active benefit copy.
 - On mobile, avoid hard snap behavior that hides the full phone. Use softer
   in-section reveal and allow the user to inspect the screenshot without being
   bounced to a text block.
