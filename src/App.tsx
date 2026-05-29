@@ -42,8 +42,8 @@ export default function App() {
         style={{ transform: `translateY(${scrollY * 0.1}px)` }}
       />
 
-      {/* Grid Scanline Overlay */}
-      <div className="absolute inset-0 bg-cyber-grid opacity-20 pointer-events-none z-0" />
+      {/* Subtle grid overlay */}
+      <div className="absolute inset-0 bg-cyber-grid opacity-10 pointer-events-none z-0" />
 
       {/* 2. Navigation */}
       <Navbar />
@@ -54,27 +54,31 @@ export default function App() {
           <MobileSnapBeat className="lg:col-span-12" />
           
           {/* Left Text Block */}
-          <div className="lg:col-span-5 space-y-8 text-left flex flex-col justify-center">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-450/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px] font-bold tracking-wider w-fit">
+          <div className="min-w-0 max-w-[320px] sm:max-w-none lg:col-span-5 space-y-8 text-left flex flex-col justify-center">
+            <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-450/10 border border-emerald-500/20 text-emerald-300 text-xs font-bold tracking-wide w-fit">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>AERARIUM PORTFOLIO & RESEARCH</span>
+              <span>Hidden exposure, made visible</span>
             </div>
 
             <div className="space-y-4">
-              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[45px] xl:text-[52px] text-white tracking-tight leading-[1.12]">
-                Stop running your portfolio from memory and spreadsheets.
+              <h1 className="max-w-full break-words font-display font-bold text-[34px] min-[380px]:text-[36px] sm:text-6xl lg:text-[62px] xl:text-[72px] text-white tracking-tight leading-[0.98]">
+                <span className="block lg:inline">You thought you</span>{" "}
+                <span className="block lg:inline">owned 8% NVDA.</span>
+                <br className="hidden lg:block" />
+                <span className="block lg:inline">You actually</span>{" "}
+                <span className="block lg:inline">owned 18.7%.</span>
               </h1>
-              <p className="text-sm sm:text-base text-slate-400 font-sans max-w-xl font-normal leading-relaxed">
-                Aerarium turns your investment policy, brokerage accounts, fund exposure, goals, and thesis notes into a private cockpit that keeps your rules visible and your true exposure tracked.
+              <p className="max-w-[320px] text-base sm:max-w-xl sm:text-lg text-slate-300 font-sans font-normal leading-relaxed">
+                Aerarium looks through ETFs and accounts, then ties the real exposure back to your investment policy, goals, and Policy Score.
               </p>
             </div>
 
             {/* Premium proof chips */}
-            <div className="flex flex-wrap gap-2.5 py-1">
-              {["Read-only sync", "No trades placed", "ETF look-through", "Policy Score", "Free during beta"].map((proof) => (
+            <div className="flex flex-wrap gap-2.5 py-1" aria-label="Aerarium proof points">
+              {["ETF look-through", "Read-only sync", "Policy Score"].map((proof) => (
                 <div
                   key={proof}
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-3 py-2 text-[11px] font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-3.5 py-2 text-sm font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
                   <span>{proof}</span>
@@ -83,12 +87,12 @@ export default function App() {
             </div>
 
             {/* Primary Action Button Row */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+            <div className="flex max-w-[320px] flex-col sm:max-w-none sm:flex-row items-stretch sm:items-center gap-4 pt-4">
               <a
                 href="https://testflight.apple.com/join/Xna39VKU"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-3.5 px-8 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-xl text-sm transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 cursor-pointer text-center"
+                className="w-full py-3.5 px-8 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-xl text-sm transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center sm:w-auto"
                 id="btn-hero-join-waitlist"
               >
                 Join iOS Beta
@@ -97,7 +101,7 @@ export default function App() {
                 href="https://research.aerarium.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-3.5 px-8 rounded-xl bg-slate-900 hover:bg-slate-850 text-sm font-semibold text-white border border-white/5 hover:border-slate-500/20 transition-all cursor-pointer flex items-center justify-center space-x-2"
+                className="py-3.5 px-2 sm:px-4 rounded-xl text-sm font-semibold text-slate-300 hover:text-white transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer flex items-center justify-center space-x-2"
                 id="btn-hero-learn-more"
               >
                 <span>Open Research</span>
@@ -105,14 +109,9 @@ export default function App() {
               </a>
             </div>
 
-            <div className="rounded-2xl border border-white/6 bg-slate-900/35 p-4 text-sm leading-relaxed text-slate-350">
-              <span className="font-semibold text-white">Built for investors who</span>{" "}
-              write theses before buying, track allocation against a plan, and want one answer when exposure is scattered across accounts and funds.
-            </div>
-
           </div>
 
-          <div className="lg:col-span-7 w-full">
+          <div className="min-w-0 lg:col-span-7 w-full">
             <HeroSignalScene />
           </div>
         </div>
