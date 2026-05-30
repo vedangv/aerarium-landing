@@ -5,8 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aerarium | Portfolio discipline and market research, under one roof</title>
     <meta name="description" content="Aerarium Portfolio turns your investing rules into a private cockpit. Aerarium Research gives you source-first public-market data before you make the next decision." />
+    <link rel="canonical" href="https://aerarium.app/" />
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64.png" />
     <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" />
+
+    <!-- Open Graph (controls link previews on Slack, iMessage, LinkedIn, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aerarium" />
+    <meta property="og:title" content="Aerarium — See what you actually own" />
+    <meta property="og:description" content="ETF look-through and a Policy Score that shows when your portfolio drifts from your own rules. Read-only. Free iOS beta, plus source-first market research." />
+    <meta property="og:url" content="https://aerarium.app/" />
+    <meta property="og:image" content="https://aerarium.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Aerarium — you think you own 8% NVDA; look through your ETFs and it's 18.7%." />
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aerarium — See what you actually own" />
+    <meta name="twitter:description" content="ETF look-through and a Policy Score. Read-only. Free iOS beta." />
+    <meta name="twitter:image" content="https://aerarium.app/og-image.png" />
+
+    <!-- Structured data: helps Google and AI assistants understand the brand -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://aerarium.app/#organization",
+          "name": "Aerarium",
+          "url": "https://aerarium.app/",
+          "logo": "https://aerarium.app/assets/brand/app-icon-512.png",
+          "description": "Aerarium is the discipline layer between market research and your real portfolio.",
+          "sameAs": [
+            "https://www.instagram.com/aerarium.app/",
+            "https://research.aerarium.app/"
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://aerarium.app/#portfolio-app",
+          "name": "Aerarium Portfolio",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "iOS",
+          "url": "https://aerarium.app/",
+          "description": "Private portfolio monitoring with ETF look-through (Portfolio X-Ray), a transparent Policy Score, an IPS cockpit, goals funding, and thesis tracking. Read-only brokerage sync; Aerarium never places trades.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "Free during beta"
+          },
+          "publisher": { "@id": "https://aerarium.app/#organization" }
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://aerarium.app/#research",
+          "name": "Aerarium Research",
+          "applicationCategory": "FinanceApplication",
+          "browserRequirements": "Requires JavaScript. Requires a modern browser.",
+          "operatingSystem": "Web",
+          "url": "https://research.aerarium.app/",
+          "description": "Source-first public-market research: 13F fund-overlap heatmaps, a macro dashboard, the market-implied Fed funds curve, revenue segments, and ownership/insider activity.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "Free during beta"
+          },
+          "publisher": { "@id": "https://aerarium.app/#organization" }
+        }
+      ]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
