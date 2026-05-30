@@ -1,8 +1,8 @@
-# Aerarium Pricing (working draft)
+# Aerarium Pricing
 
-Status: **draft / not public.** Numbers below are starting points to pressure-test,
-not committed prices. Free during beta for both products; this defines what paid
-looks like once the finishing sprints land.
+Status: **prices decided, not yet public.** App tiers locked 2026-05-30; Research
+tiers near-final (one open item on the $5 tier's exact feature line). Free during
+beta for both products; billing turns on once the finishing sprints land.
 
 Strategy note: **undercut Qualtrim now, raise later with traction.** Qualtrim is
 flat $10/mo, no free tier, 10k+ paying users, $1M+/yr — but its acquisition is a
@@ -26,42 +26,41 @@ different platforms, different value, no premature billing complexity.
 The hidden cost stack: **Apple takes 15%** (Small Business Program, <$1M/yr) AND
 **SnapTrade costs ~$2/user/mo** on the brokerage tier. Both must clear.
 
-| Tier | Founder's spitball | My suggestion | What's included |
-|---|---|---|---|
-| Free | (beta) | **Free** | Manual portfolio entry, core X-Ray, basic Policy Score. Zero marginal cost to us. |
-| Plus | $3.99 | **$4.99** | Manual entry, full Policy Score history, IPS cockpit, thesis tracking, goals. |
-| Pro | $6.99 | **$9.99** | Everything in Plus **+ SnapTrade brokerage auto-sync**, unlimited accounts. |
+**Decided pricing** (2026-05-30):
 
-### Why I'd widen the gap (the margin math)
-Your $3.99 / $6.99 leaves the brokerage tier — which has a real $2 cost — netting
-barely more than manual:
+| Tier | Monthly | Annual (2 mo free) | What's included |
+|---|---|---|---|
+| Free | $0 | — | Manual portfolio entry, core X-Ray, basic Policy Score. **Free-tier cap TBD** (see open questions). Zero marginal cost to us. |
+| Plus | **$4.99** | **$49/yr** | Manual entry, full Policy Score history, IPS cockpit, thesis tracking, goals. |
+| Pro | **$9.99** | **$99/yr** | Everything in Plus **+ SnapTrade brokerage auto-sync**, unlimited accounts. |
+
+### The margin math (why $9.99 for Pro, not $6.99)
+The brokerage tier carries a real ~$2/mo SnapTrade cost on top of Apple's 15%:
 
 | Tier | Price | −Apple 15% | −SnapTrade | **Your net** |
 |---|---|---|---|---|
-| Plus $3.99 | 3.99 | 3.39 | — | **$3.39** |
-| Pro $6.99 | 6.99 | 5.94 | −2.00 | **$3.94** ← only $0.55 more for more value + real cost |
+| ~~Plus $3.99~~ | 3.99 | 3.39 | — | $3.39 |
+| ~~Pro $6.99~~ | 6.99 | 5.94 | −2.00 | $3.94 ← only $0.55 over manual |
 | **Plus $4.99** | 4.99 | 4.24 | — | **$4.24** |
 | **Pro $9.99** | 9.99 | 8.49 | −2.00 | **$6.49** ← upgrade actually pays you |
 
-At $6.99 the upgrade barely rewards you for the cost and convenience you deliver.
 At $9.99 the brokerage tier nets ~$6.49 — healthy, still under Qualtrim, and the
-"connect your brokerage" upgrade trigger is obvious. If $9.99 feels steep pre-
-traction, **$8.99** is a fine middle ($7.64 → $5.64 net).
+"connect your brokerage" upgrade trigger is obvious. Free tier is manual-entry
+only, so free users never touch the SnapTrade budget.
 
-### Add annual plans
-~10× monthly ("2 months free"): Plus ~$49/yr, Pro ~$99/yr. Improves cash flow +
-retention, and Apple's cut stays 15%. Manual-entry free tier means free users
-never touch the SnapTrade budget — good.
+### Annual plans
+10× monthly ("2 months free"): **Plus $49/yr, Pro $99/yr**. Improves cash flow +
+retention; Apple's cut stays 15%.
 
 ---
 
 ## Aerarium Research (web)
 
-| Tier | Founder's spitball | My take | What's included |
+| Tier | Monthly | Annual (2 mo free) | What's included |
 |---|---|---|---|
-| Free | Free SEO/GEO layer | **Keep** | Logged-out, crawlable **overview wedge**: per-ticker partial data + one chart + description. This is the discovery engine — must stay public. |
-| Starter | $5 | **$5 — but give it teeth** | Full charts/history, screener, all data views. **No** AI, **no** portfolio tab, **no** brokerage. |
-| Full | $10–12 | **$10** (raise to $12+ with traction) | Everything **+ AI analysis + portfolio tab + SnapTrade**. |
+| Free | $0 | — | Logged-out, crawlable **overview wedge**: per-ticker partial data + one chart + description. The discovery engine — must stay public. |
+| Starter | **$5** | **$50/yr** | Full charts/history, screener, all data views. **No** AI, **no** portfolio tab, **no** brokerage. (Must have real teeth — see below.) |
+| Full | **$10** → $12+ w/ traction | **$100/yr** | Everything **+ AI analysis + portfolio tab + SnapTrade brokerage**. |
 
 ### The one risk: the $5 tier must feel like "the real tool"
 If $5 is just "free with slightly less crippling," nobody upgrades to it. The
@@ -101,11 +100,21 @@ and we see what users actually bundle.
 2. **Pre-pricing comms:** "Free during beta + founder pricing for early users" on
    the launch list. Signals paid-is-coming, rewards early signups, names no price.
 3. **Turn on billing:** RevenueCat (iOS) + Stripe (web) when features are ready.
-   Honor founder/early-user pricing (e.g. lock early users at the lower rate).
+   **Founder/early-bird = founder price locked for the user's first year, then
+   rolls to standard** (decided). Frame as "founding member — your first year at
+   founder pricing."
 4. **Post-traction:** raise Research Full toward $12–15; introduce unified Pro
    after SSO.
 
-## Open pricing questions
-- Annual discount depth? (10× monthly is standard; some go 8×.)
-- Founder/early-bird: lifetime lock at beta rate, or just first-year discount?
-- Does the app free tier cap accounts/holdings (e.g. 1 account) to nudge upgrades?
+## Decisions locked (2026-05-30)
+- **App:** Free / $4.99 Plus ($49/yr) / $9.99 Pro ($99/yr, brokerage).
+- **Annual depth:** 10× monthly (2 months free) across the board.
+- **Founder offer:** first year at founder price, then standard (not lifetime).
+
+## Still open
+- **App free-tier cap:** how much to limit it (e.g. 1 account vs unlimited manual)
+  — defer until features are closer to done. Leaning "1 account + core features"
+  so multiple accounts/full history become the upgrade reason.
+- **Research $5 tier feature line:** exactly which views are in $5 vs the $10 tier
+  (must give $5 real teeth — full charts/history/screener — gating only AI +
+  portfolio + brokerage above it).
