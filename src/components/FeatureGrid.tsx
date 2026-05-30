@@ -339,37 +339,41 @@ export default function FeatureGrid() {
           </div>
 
           <div className="space-y-6 lg:hidden">
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {RESEARCH_SHOWCASES.map((feature, index) => (
-                <button
-                  key={feature.id}
-                  type="button"
-                  onClick={() => scrollToResearch(index)}
-                  className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold transition ${
-                    index === activeResearchImage
-                      ? "border-cyan-400/35 bg-cyan-400/10 text-cyan-200"
-                      : "border-white/6 bg-slate-900/55 text-slate-400"
-                  }`}
-                >
-                  {feature.label}
-                </button>
-              ))}
-            </div>
+            {/* Sticky preview: tabs + screenshot stay pinned at the top of the
+                viewport while the chapter cards scroll past and drive the image. */}
+            <div className="sticky top-[68px] z-20 -mx-1 space-y-3 rounded-[26px] border border-white/8 bg-slate-950/85 p-3 backdrop-blur-md">
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {RESEARCH_SHOWCASES.map((feature, index) => (
+                  <button
+                    key={feature.id}
+                    type="button"
+                    onClick={() => scrollToResearch(index)}
+                    className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold transition ${
+                      index === activeResearchImage
+                        ? "border-cyan-400/35 bg-cyan-400/10 text-cyan-200"
+                        : "border-white/6 bg-slate-900/55 text-slate-400"
+                    }`}
+                  >
+                    {feature.label}
+                  </button>
+                ))}
+              </div>
 
-            <div className="relative overflow-hidden rounded-[24px] border border-cyan-300/30 bg-slate-900/80 shadow-[0_28px_90px_rgba(34,211,238,0.16)] ring-1 ring-white/10">
-              <div className="relative aspect-[16/9] bg-slate-950">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={activeResearch.id}
-                    src={activeResearch.image}
-                    alt={activeResearch.title}
-                    className="absolute inset-0 h-full w-full object-cover object-top brightness-110 contrast-110 saturate-110"
-                    initial={{ opacity: 0, scale: 1.01 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.995 }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                  />
-                </AnimatePresence>
+              <div className="relative overflow-hidden rounded-[20px] border border-cyan-300/30 bg-slate-900/80 shadow-[0_28px_90px_rgba(34,211,238,0.16)] ring-1 ring-white/10">
+                <div className="relative aspect-[16/9] bg-slate-950">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={activeResearch.id}
+                      src={activeResearch.image}
+                      alt={activeResearch.title}
+                      className="absolute inset-0 h-full w-full object-cover object-top brightness-110 contrast-110 saturate-110"
+                      initial={{ opacity: 0, scale: 1.01 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.995 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                    />
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
 

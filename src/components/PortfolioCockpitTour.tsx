@@ -119,7 +119,7 @@ export default function PortfolioCockpitTour() {
         <div className="sticky top-20 z-10 max-h-[calc(100svh-6rem)] overflow-hidden rounded-[40px] border border-emerald-400/14 bg-gradient-to-br from-slate-900/52 via-slate-950/88 to-emerald-950/16 p-6 shadow-[0_36px_100px_rgba(0,0,0,0.3)]">
           <div className="absolute -right-24 top-10 h-64 w-64 rounded-full bg-emerald-300/[0.08] blur-3xl" />
 
-          <div className="relative z-10 grid h-[calc(100svh-9rem)] items-center gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(360px,1.12fr)]">
+          <div className="relative z-10 grid h-[calc(100svh-9rem)] items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(320px,420px)]">
             <div className="space-y-5">
               <div className="space-y-2.5">
                 <div className="text-sm font-semibold text-emerald-300/85">
@@ -190,7 +190,7 @@ export default function PortfolioCockpitTour() {
               </div>
             </div>
 
-            <div className="flex justify-center lg:justify-end">
+            <div className="flex h-full items-center justify-center">
               <div className="relative">
                 <div className="absolute -inset-8 rounded-[64px] bg-emerald-400/[0.06] blur-2xl" />
                 <IosCockpitMockup
