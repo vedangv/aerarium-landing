@@ -1,0 +1,46 @@
+# Aerarium
+
+> Aerarium is the discipline layer between market research and your real
+> portfolio. It shows you what you actually own — looking through your ETFs and
+> across all your accounts — and tells you when your portfolio has drifted from
+> your own written rules.
+
+Aerarium is a brand with two products under one roof. Both are free during beta.
+
+## Products
+
+- **Aerarium Portfolio** (iOS app, portfolio.aerarium.app / TestFlight): private
+  portfolio monitoring. Read-only brokerage sync (it never places trades),
+  ETF look-through, Policy Score, IPS cockpit, goals funding, and thesis tracking.
+- **Aerarium Research** (web, research.aerarium.app): source-first public-market
+  research workspace covering S&P 500 and NASDAQ-100 companies — 13F fund-overlap
+  heatmaps, a macro dashboard, the market-implied Fed funds curve, revenue
+  segments, financial charts, ownership/insider activity, earnings calendar, and
+  a stock screener. Data from SEC EDGAR and other public sources.
+
+## Key definitions
+
+- **Portfolio X-Ray**: a look-through view of true exposure across direct holdings
+  and the underlying holdings of funds, rolled up across all accounts.
+- **Policy Score**: a transparent score for whether a portfolio still matches the
+  investor's written rules, based on allocation drift, concentration, liquidity,
+  goal funding, and review cadence.
+- **IPS Cockpit**: a control room for an Investment Policy Statement — rules,
+  versions, tolerances, and review reminders.
+
+## What Aerarium does NOT do
+
+Aerarium does not place trades, provide investment advice, recommend securities,
+or predict prices. It shows investors their own data and public market data.
+
+## Links
+
+- Brand / landing: https://aerarium.app
+- Aerarium Research: https://research.aerarium.app
+- iOS beta (TestFlight): https://testflight.apple.com/join/Xna39VKU
+
+## About
+
+Aerarium is built by Vedang, a solo founder and CFA charterholder, from a real
+personal portfolio problem: how much of any single name do you actually own once
+you look through your funds and across your accounts?

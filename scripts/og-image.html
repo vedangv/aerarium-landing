@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden; position: relative;
+    background: #080b09;
+    font-family: "Inter", system-ui, sans-serif;
+    color: #f1f5f4;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 76px 80px;
+  }
+  /* warm ambient glows, matching the site */
+  .glow1 { position: absolute; top: -120px; right: -80px; width: 620px; height: 620px;
+    background: rgba(16,185,129,0.20); border-radius: 50%; filter: blur(120px); }
+  .glow2 { position: absolute; bottom: -160px; left: -60px; width: 460px; height: 460px;
+    background: rgba(245,200,130,0.10); border-radius: 50%; filter: blur(120px); }
+  .brand { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; position: relative; z-index: 2; }
+  .brand img { width: 56px; height: 56px; border-radius: 14px; }
+  .brand span { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.01em; }
+  .headline { position: relative; z-index: 2; font-family: "Instrument Serif", Georgia, serif;
+    font-size: 92px; line-height: 0.98; letter-spacing: -0.01em; color: #ffffff; max-width: 1040px; }
+  .reveal { position: relative; z-index: 2; margin-top: 18px;
+    font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 60px;
+    line-height: 1; letter-spacing: -0.01em; color: #6ee7b7; }
+  .sub { position: relative; z-index: 2; margin-top: 34px; font-size: 25px; color: #cbd5d1; max-width: 880px; line-height: 1.45; }
+  .chips { position: relative; z-index: 2; margin-top: 34px; display: flex; gap: 12px; }
+  .chip { border: 1px solid rgba(110,231,183,0.28); background: rgba(16,185,129,0.07);
+    color: #d1fae5; font-weight: 600; font-size: 19px; padding: 9px 18px; border-radius: 999px; }
+</style>
+</head>
+<body>
+  <div class="glow1"></div>
+  <div class="glow2"></div>
+  <div class="brand">
+    <img src="../assets/brand/app-icon-512.png" alt="" />
+    <span>Aerarium</span>
+  </div>
+  <div class="headline">You think you own 8% NVDA.</div>
+  <div class="reveal">Aerarium found 18.7%.</div>
+  <div class="sub">ETF look-through and a Policy Score that shows when your portfolio drifts from your own rules.</div>
+  <div class="chips">
+    <div class="chip">Portfolio X-Ray</div>
+    <div class="chip">Read-only sync</div>
+    <div class="chip">Free during beta</div>
+  </div>
+</body>
+</html>
