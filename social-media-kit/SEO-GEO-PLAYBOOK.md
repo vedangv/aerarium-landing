@@ -175,6 +175,14 @@ Plan (for the Research repo, separate pass):
   in your own portfolio with Aerarium Portfolio."
 - Only index pages with real data (thin/empty pages hurt you).
 
+**Critical interaction with monetization:** Research is a paid product (see
+`BRAND-AND-RESEARCH-STRATEGY.md` §6) — but SEO/GEO only works on **logged-out,
+crawlable** pages. So the indexable layer must be a *free overview wedge* (partial
+data + one chart per ticker), with the full interactive depth behind login/paywall.
+You're not giving away the months of data-taming work; you're leaving a teaser
+crawlable so Google and AI can find you. Paywall everything and you wall off this
+entire discovery engine. Design the free-wedge/paid boundary deliberately.
+
 This is genuinely your highest-ceiling SEO asset — most fintech landing pages
 can't do this, you can.
 

@@ -124,100 +124,144 @@ data, not app pitches. Lead with Research there; let Portfolio follow.
 
 ---
 
-## 5. Your SSO / "one login for both" idea — strong, with caveats
+## 5. SSO / "one login for both" — yes, and Supabase makes it clean
 
-**Verdict: yes, do this — it's the right strategic bet.** A shared account is
-what turns "two products" into "one platform," and it's the backbone of your
-future paid tier. The Research repo already has `auth/login/signup` routes, so you
-have a foundation.
+**Verdict: do this, and it's simpler than feared.** The iOS app already uses
+**Supabase Auth** (with an iOS Keychain encryption layer for sensitive fields).
+Supabase Auth is explicitly designed for one identity across web + native clients.
 
-**Why it's right:**
-- Removes friction (sign up once, use both).
-- Enables the killer feature you described — *portfolio portability*: pull holdings
-  from Portfolio into Research to analyze them, and push Research insights/watchlists
-  back to Portfolio. That bidirectional flow is a genuine moat.
-- Gives you **one billing relationship** later (one subscription unlocks both).
-- Unifies analytics: one user identity across web + iOS.
+**The clean path:** point the **Research web app at the SAME Supabase project** as
+the iOS app. The Aerarium_Web repo already has `auth/login/signup` routes — wire
+them to the existing Supabase project instead of a separate user store. One
+`auth.users` table, one identity, both clients. No Clerk/Auth0/custom needed.
 
-**The caveats (real ones, plan for them):**
-1. **Identity architecture first.** You need a single source of truth for accounts
-   — one auth provider (e.g. Clerk, Supabase Auth, Auth0, or your own) that BOTH
-   the iOS app and the Research web app authenticate against. Don't build two user
-   tables you later have to merge — that's painful. Decide the shared identity
-   layer *before* you have many users on each side.
-2. **The privacy boundary is a feature, not an afterthought.** Your own messaging
-   says "private portfolio stays separate from public research." Shared login must
-   not blur that: Research is public-data; Portfolio is private holdings. The SSO
-   shares *identity*, and *optionally* lets the user move their portfolio across —
-   but it must be explicit, user-initiated, and clearly consented. Frame it as
-   "your data, you move it," never automatic.
-3. **Scope creep risk.** SSO + portfolio sync is a real engineering project. Don't
-   let it block the June 9 launch. Launch both products with separate logins if
-   needed; introduce unified login as a *milestone feature* (great launch beat for
-   later: "One Aerarium account now works across both products").
-4. **Security/YMYL.** Two surfaces sharing auth = bigger attack surface for a
-   finance product. Read-only sync, encryption, and the "never places trades"
-   stance must hold across both. Worth a security pass before you connect them.
+**Why it's worth it:**
+- Sign up once, use both → frictionless cross-sell.
+- *Portfolio portability* (the moat): user can pull holdings from Portfolio into
+  Research to analyze, and push Research watchlists/insights back. Bidirectional.
+- **One billing relationship** → one subscription unlocks both (see §6).
+- Unified analytics: one user identity across web + iOS.
+
+**Caveats to respect:**
+1. **One Supabase project = source of truth.** Don't let Research build its own
+   parallel user table you later have to merge. Migrate Research to the app's
+   Supabase project *before* it has many web users.
+2. **Keep the privacy boundary explicit.** "Private portfolio stays separate from
+   public research" is your messaging — shared *identity* is fine, but moving
+   private holdings into Research must be **user-initiated and consented**, never
+   automatic. Frame it as "your data, you move it."
+3. **Carry the encryption layer to web.** The iOS Keychain protects sensitive
+   fields on-device; the web app needs an equivalent server-side encryption story
+   for any private portfolio data it touches. Worth a security pass before
+   connecting them.
+4. **Don't block launch on it.** Ship separate logins if needed; unified login is
+   a great *later* marketing beat ("One Aerarium account now works across both").
 
 **Recommended sequence:**
-1. **Now:** launch both in beta, separate logins OK. Don't block on SSO.
-2. **Next:** pick the shared identity provider; migrate both to it.
-3. **Then:** ship unified login (one Aerarium account → both products). Market it
-   as a launch moment.
-4. **Later:** portfolio portability (move holdings Portfolio↔Research) — this is
-   the feature that justifies a paid tier.
+1. **Now → launch:** both in beta; separate logins OK if unified isn't ready.
+2. **Next:** migrate Research auth onto the app's existing Supabase project.
+3. **Then:** ship unified login + RevenueCat/Stripe billing tied to the Supabase
+   user (one subscription → both products).
+4. **Then:** portfolio portability (move holdings Portfolio↔Research) — the
+   feature that most justifies the paid tier.
 
 ---
 
-## 6. Monetization sequencing (you said both go paid eventually)
+## 6. Monetization — paid is the plan; beta-free is only to find bugs
 
-You don't need pricing live now, but decisions you make today affect it. Guidance:
+**Corrected stance (founder is right):** Aerarium is NOT a free-forever product.
+- **Research is a real moat.** The data is public, but taming messy EDGAR/13F/macro
+  sources into a clean, visually digestible format took *months* per ~500 tickers.
+  That work is the product. It gets paid for.
+- **The app can't be free** — SnapTrade brokerage sync costs ~$2/user/month, so
+  free-forever is economically impossible at the app level.
+- **Free now = beta only.** The point of free-during-beta is to attract bug-finders
+  and harden both products *before* charging anyone. Free is a testing phase, not a
+  business model.
 
-**Stay free through beta — but instrument everything now.** The UTM tracking +
-analytics we set up is exactly what tells you *what people value* before you
-charge. Watch which features drive retention; those become the paid tier.
+### The one hard constraint to design around
+SEO and GEO only work on **crawlable, logged-out** pages. Google can't rank, and
+ChatGPT/Perplexity can't cite, anything behind a login or paywall. So the question
+is **not** "free vs paid" — it's **"what thin free wedge stays public so strangers
+(and AIs) can find you, while the real depth is paid."**
 
-**A natural model for a two-product brand (consider, don't commit yet):**
-- **Free forever:** basic Research (public data — keep this free; it's your SEO
-  engine and you *want* it crawled and shared). A limited Portfolio (e.g. 1
-  brokerage connection, core X-Ray).
-- **Aerarium Pro (one subscription, unlocks both):** unlimited accounts, full
-  Policy Score history, advanced Research (saved screens, alerts, deeper data),
-  and the cross-product portfolio portability. *One price, both products* is the
-  whole reason SSO matters.
+This is exactly how stockanalysis.com, Koyfin, TIKR, and Morningstar operate:
+**metered freemium.**
 
-**Important:** keep enough of Research permanently free and public that it stays a
-discovery engine. If you paywall the data pages, you kill the SEO/GEO traffic that
-feeds the whole funnel. Monetize *depth, personalization, and the portfolio side* —
-not public market facts.
+### Recommended model
 
-**Don't, yet:** announce prices, add "premium" badges, or gate beta features. At
-beta stage, "free" is a feature and honesty is the brand. Charging too early on an
-unproven solo product loses more trust than it makes in revenue.
+**Aerarium Research**
+- **Free / public / indexable (the wedge):** a per-ticker *overview* page with
+  partial data — headline metrics + one chart + a description. Enough to rank for
+  "AAPL revenue segments" and get cited by AI; *not* enough to replace the tool.
+  Treat these as marketing pages that happen to live in the product.
+- **Paid (the months-of-work depth):** full interactive chart builder, full
+  history, the 13F/funds tooling, screener, macro suite, saved views, exports,
+  alerts. This is correctly gated — you're not giving away the tamed beast, just
+  leaving a teaser crawlable.
+
+**Aerarium Portfolio**
+- **Free tier:** *manual* portfolio entry + core X-Ray/Policy Score. Manual entry
+  has zero marginal cost to you, so free users don't bleed the SnapTrade budget.
+- **Paid:** **brokerage auto-sync (SnapTrade)** — the obvious upgrade trigger,
+  which conveniently maps to your real per-user cost — plus unlimited accounts,
+  full Policy Score history, thesis tooling.
+
+**Aerarium Pro (one subscription, both products):** the reason SSO matters. One
+price unlocks paid Research + paid Portfolio + cross-product portability. Simplest
+to communicate, highest perceived value, single billing on the shared Supabase user.
+
+### Sequencing (founder wants this "sooner rather than later")
+A few sprints of finishing touches remain on both, then monetize. So:
+1. **These sprints:** finish features AND build the paywall boundary now — decide
+   per-feature what's free-wedge vs paid, and keep the free Research overview pages
+   logged-out and crawlable. Don't accidentally wall off your SEO surface.
+2. **Instrument before charging:** the UTM + analytics setup tells you which
+   features drive retention → those anchor the paid tier. Watch it during beta.
+3. **Pre-pricing comms (now, honest):** "Free during beta" + "founder pricing for
+   early users" on the launch list. Sets the expectation that paid is coming and
+   makes early signups feel rewarded — without naming a price yet.
+4. **Turn on billing** (RevenueCat for iOS, Stripe for web, both keyed to the
+   Supabase user) when features are ready. Honor founder-list/early-user pricing.
+
+**The only "keep free" rule that survives:** the **logged-out Research overview
+pages** — not for generosity, but because they're your discovery engine. Everything
+with real depth is paid.
+
+**Don't, yet:** name a specific price or turn on billing mid-beta. But DO say
+"free during beta, founder pricing for early users" — that signals paid-is-coming
+and rewards early signups without committing to a number.
 
 ---
 
-## 7. Concrete next steps (pick what you want)
+## 7. Concrete next steps
+
+Founder decisions captured (2026-05-30):
+- **Auth:** iOS app already on **Supabase** (+ Keychain encryption). SSO path =
+  point Research at the same Supabase project. ✅ decided.
+- **Monetization:** both products WILL be paid; free is beta-only (to find bugs
+  before charging). App must be paid (SnapTrade ~$2/user/mo); Research is a real
+  moat (months of data-taming work). Timeline: **sooner rather than later** — a
+  few finishing sprints, then monetize.
+- **Rename:** FinSight → Aerarium Research UI rename already done. ✅
 
 | Step | Effort | Payoff | Who |
 |---|---|---|---|
-| Ship landing SEO Phase 1 (DONE in this PR) | done | link previews + Google/AI baseline | ✅ |
-| Rename FinSight → "Aerarium Research" everywhere public | small | brand + AI clarity | you/me |
-| Research SEO Phase 1 (metadata + sitemap + robots + llms.txt) | medium | thousands of pages indexable | me, when ready |
-| Decide shared identity provider | small (decision) | unblocks SSO cleanly | you |
+| Ship landing SEO Phase 1 (DONE) | done | link previews + Google/AI baseline | ✅ |
+| Research SEO Phase 1 (metadata + sitemap + robots + llms.txt) | medium | thousands of indexable pages | me, when ready |
+| Migrate Research auth onto the app's Supabase project | medium | unlocks SSO + unified billing | you/me |
+| Define the free-wedge vs paid boundary per feature | small (decision) | protects SEO surface while monetizing | you + me |
+| Keep logged-out Research overview pages crawlable | design | preserves discovery engine | engineering |
 | Submit both sites to Search Console + Bing | small | indexing + AI (Bing→ChatGPT) | you (I can guide) |
-| Investigate Research path-param URLs | medium-large | highest SEO ceiling | me, when ready |
+| Investigate Research path-param → path URLs | medium-large | highest SEO ceiling | me, when ready |
+| Wire billing (RevenueCat iOS + Stripe web) to Supabase user | medium | turn on revenue | later |
 
 ---
 
-## Open questions for you
+## Open question still pending
 
-1. **Shared identity:** do you already use an auth provider (Supabase? Clerk?
-   custom) in the Research app or iOS app? That determines the cleanest SSO path.
-2. **Research SEO:** want me to do the Research SEO Phase 1 pass next (in the
-   finsight repo), the same way I just did the landing page?
-3. **The FinSight → Aerarium Research rename:** is that already done in the live
-   product's UI/title, or is "FinSight" still user-visible anywhere? If so, that's
-   a quick, high-value cleanup.
-4. **Monetization timeline:** rough idea of when you want to introduce paid — that
-   changes how aggressively we instrument and what we tease in marketing now.
+- **Research SEO Phase 1:** want me to do this pass next in the finsight repo
+  (per-page `generateMetadata`, dynamic `sitemap.ts`, `robots.ts`, `llms.txt`) —
+  the same way I just did the landing page? It's the highest-leverage next move
+  and is self-contained. The path-param URL question can follow as its own
+  investigation.
