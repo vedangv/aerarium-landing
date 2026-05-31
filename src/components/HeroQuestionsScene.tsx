@@ -22,13 +22,17 @@ import MobileSnapBeat from "./MobileSnapBeat";
  * each other); we render a clean stacked hero + questions instead.
  */
 
+// 5 worries, each setting up ONE distinct later feature (no repeats), so the
+// section works when revealed one-at-a-time on scroll. Four are personal-
+// portfolio worries; the last is a Research worry — a deliberate early signal
+// that Aerarium covers both your portfolio AND the companies you research.
+// See social-media-kit/FEATURES.md for the feature each question answers.
 const QUESTIONS = [
-  { text: "How much of one stock do I really own?", pos: "left-[4%] top-[6%]", delay: 0.05 },
-  { text: "What’s hiding inside my ETFs?", pos: "right-[5%] top-[3%]", delay: 0.12 },
-  { text: "Am I too concentrated?", pos: "left-[10%] top-[34%]", delay: 0.2 },
-  { text: "Am I still following my own plan?", pos: "right-[7%] top-[30%]", delay: 0.27 },
-  { text: "Did I drift from my goals?", pos: "left-[6%] bottom-[10%]", delay: 0.34 },
-  { text: "Why did I buy this again?", pos: "right-[9%] bottom-[8%]", delay: 0.41 },
+  { text: "How concentrated am I, really?", pos: "left-[5%] top-[9%]", delay: 0.05 },          // → Portfolio X-Ray
+  { text: "Am I still following my own plan?", pos: "right-[6%] top-[5%]", delay: 0.12 },        // → Policy Score
+  { text: "Am I drifting from my goals?", pos: "left-[8%] top-[45%]", delay: 0.2 },              // → Goal alignment
+  { text: "Is this company as strong as it looks?", pos: "right-[6%] bottom-[10%]", delay: 0.27 }, // → Research
+  { text: "Why did I buy this again?", pos: "left-[7%] bottom-[9%]", delay: 0.34 },              // → Thesis / discipline log
 ];
 
 /* ── Shared content pieces ─────────────────────────────────────────────── */
