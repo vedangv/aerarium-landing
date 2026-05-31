@@ -10,10 +10,10 @@ import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
-import HeroSignalScene from "./components/HeroSignalScene";
+import HeroCalmScene from "./components/HeroCalmScene";
 import AppSurfaceStrip from "./components/AppSurfaceStrip";
 import { motion } from "motion/react";
-import { Sparkles, ArrowDown, ChevronRight, Lock, CheckCircle2, Instagram, ShieldCheck } from "lucide-react";
+import { ArrowDown, Lock, Instagram, ShieldCheck } from "lucide-react";
 
 export default function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -51,43 +51,25 @@ export default function App() {
         <div className="max-w-[1480px] mx-auto px-6 md:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-center">
           <MobileSnapBeat className="lg:col-span-12" />
           
-          {/* Left Text Block */}
-          <div className="min-w-0 w-full max-w-[620px] lg:col-span-5 space-y-8 text-left flex flex-col justify-center">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-full bg-emerald-450/10 border border-emerald-500/20 text-emerald-300 text-sm font-semibold w-fit">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Hidden exposure, made visible</span>
-            </div>
-
+          {/* Left Text Block — calm, emotional, beginner-friendly */}
+          <div className="min-w-0 w-full max-w-[640px] lg:col-span-6 space-y-8 text-left flex flex-col justify-center">
             <div className="space-y-6">
-              <h1 className="max-w-full font-editorial text-[58px] leading-[0.9] tracking-tight text-white min-[380px]:text-[64px] sm:text-[92px] lg:text-[78px] xl:text-[100px] 2xl:text-[108px]">
-                <span className="block">You thought</span>
-                <span className="block">you owned</span>
-                <span className="block">8% NVDA.</span>
-                <span className="mt-3 block font-display text-[34px] font-bold leading-[0.98] tracking-tight text-emerald-200 min-[380px]:text-[38px] sm:text-[56px] lg:text-[48px] xl:text-[60px] 2xl:text-[64px]">
-                  <span className="block">Aerarium found</span>
-                  <span className="block">18.7%.</span>
-                </span>
+              <h1 className="max-w-full font-editorial text-[52px] leading-[1.02] tracking-tight text-white min-[380px]:text-[60px] sm:text-[78px] lg:text-[72px] xl:text-[84px]">
+                <span className="block">Invest with intention,</span>
+                <span className="block text-emerald-200">not impulse.</span>
               </h1>
               <p className="max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-                Aerarium looks through funds and accounts, then ties the real exposure back to your investment policy, goals, and Policy Score.
+                You can’t follow a plan you can’t see. Aerarium helps you understand what you
+                really own, build your investment plan, and stay disciplined for the long term.
+              </p>
+              <p className="max-w-lg text-base leading-relaxed text-slate-400">
+                For long-term investors who want to invest with intention —
+                whether you’re just starting or already run a playbook.
               </p>
             </div>
 
-            {/* Premium proof chips */}
-            <div className="flex flex-wrap gap-3 py-1" aria-label="Aerarium proof points">
-              {["ETF look-through", "Read-only sync", "Policy Score"].map((proof) => (
-                <div
-                  key={proof}
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-4 py-2.5 text-sm font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
-                  <span>{proof}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Primary Action Button Row */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            {/* Single primary action */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
               <a
                 href="https://testflight.apple.com/join/Xna39VKU"
                 target="_blank"
@@ -95,24 +77,19 @@ export default function App() {
                 className="w-full max-w-full py-4 px-8 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center sm:w-auto"
                 id="btn-hero-join-waitlist"
               >
-                Join iOS Beta
+                Get Early Access
               </a>
-              <a
-                href="https://research.aerarium.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-4 px-2 sm:px-4 rounded-2xl text-base font-semibold text-slate-300 hover:text-white transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer flex items-center justify-center space-x-2"
-                id="btn-hero-learn-more"
-              >
-                <span>Open Research</span>
-                <ChevronRight className="w-4 h-4 text-emerald-400" />
-              </a>
+              <span className="text-sm text-slate-500">Free on iOS · via TestFlight</span>
             </div>
 
+            {/* Quiet trust line */}
+            <p className="text-sm text-slate-500">
+              Read-only. No trading. Not financial advice.
+            </p>
           </div>
 
-          <div className="min-w-0 lg:col-span-7 w-full">
-            <HeroSignalScene />
+          <div className="min-w-0 lg:col-span-6 w-full">
+            <HeroCalmScene />
           </div>
         </div>
 
