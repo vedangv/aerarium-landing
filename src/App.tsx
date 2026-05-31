@@ -11,9 +11,9 @@ import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
 import AppSurfaceStrip from "./components/AppSurfaceStrip";
-import InvestorQuestions from "./components/InvestorQuestions";
+import HeroQuestionsScene from "./components/HeroQuestionsScene";
 import { motion } from "motion/react";
-import { ArrowDown, Lock, Instagram } from "lucide-react";
+import { Lock, Instagram } from "lucide-react";
 
 export default function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -46,58 +46,10 @@ export default function App() {
       {/* 2. Navigation */}
       <Navbar />
 
-      {/* 3. Hero Section — calm, centered, text-only (Luffu/Poly air) */}
-      <header id="hero" className="scroll-stop-section relative min-h-[100svh] flex items-center justify-center pt-28 pb-24 z-10">
-        <MobileSnapBeat />
-        {/* Warm ambient light so the dark hero reads as lit, not an empty void.
-            Soft single glow above the headline; kept subtle so text stays crisp. */}
-        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
-        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(38%_34%_at_64%_72%,rgba(245,200,130,0.045)_0%,transparent_72%)]" />
-        <motion.div
-          className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-9 px-6 text-center"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-        >
-          <h1 className="font-editorial text-[56px] leading-[1.0] tracking-tight text-white min-[380px]:text-[64px] sm:text-[88px] lg:text-[104px]">
-            <span className="block">Invest with intention,</span>
-            <span className="block text-emerald-200">not impulse.</span>
-          </h1>
-
-          <p className="max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-            You can’t follow a plan you can’t see. Aerarium helps you understand what you
-            really own, build your investment plan, and stay disciplined for the long term.
-          </p>
-
-          <div className="flex flex-col items-center gap-3 pt-2">
-            <a
-              href="https://testflight.apple.com/join/Xna39VKU"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-4 px-9 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
-              id="btn-hero-join-waitlist"
-            >
-              Get Early Access
-            </a>
-            <span className="text-sm text-slate-500">Free on iOS · via TestFlight</span>
-          </div>
-
-          <p className="text-sm text-slate-500">
-            For long-term investors — whether you’re just starting or already run a playbook.
-            <span className="mx-2 text-slate-700">·</span>
-            Read-only. No trading. Not financial advice.
-          </p>
-        </motion.div>
-
-        {/* Scroll cue */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-1.5 pointer-events-none animate-bounce">
-          <span className="text-[9px] font-mono tracking-widest text-slate-500">SCROLL</span>
-          <ArrowDown className="w-3.5 h-3.5 text-emerald-550" />
-        </div>
-      </header>
-
-      {/* 4. Empathy — the questions every investor carries */}
-      <InvestorQuestions />
+      {/* 3. Hero → Questions scroll scene — foreground hero dissolves as the
+             background questions resolve into focus (desktop). Mobile + reduced
+             motion get a clean stacked hero → questions. */}
+      <HeroQuestionsScene />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
