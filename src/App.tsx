@@ -10,10 +10,10 @@ import WaitlistPortal from "./components/WaitlistPortal";
 import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
-import HeroCalmScene from "./components/HeroCalmScene";
 import AppSurfaceStrip from "./components/AppSurfaceStrip";
+import InvestorQuestions from "./components/InvestorQuestions";
 import { motion } from "motion/react";
-import { ArrowDown, Lock, Instagram, ShieldCheck } from "lucide-react";
+import { ArrowDown, Lock, Instagram } from "lucide-react";
 
 export default function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -46,83 +46,54 @@ export default function App() {
       {/* 2. Navigation */}
       <Navbar />
 
-      {/* 3. Hero Section (Visual Fintech Asset Redesign) */}
-      <header id="hero" className="scroll-stop-section relative min-h-[100svh] flex items-center pt-28 pb-20 z-10">
-        <div className="max-w-[1480px] mx-auto px-6 md:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-center">
-          <MobileSnapBeat className="lg:col-span-12" />
-          
-          {/* Left Text Block — calm, emotional, beginner-friendly */}
-          <div className="min-w-0 w-full max-w-[640px] lg:col-span-6 space-y-8 text-left flex flex-col justify-center">
-            <div className="space-y-6">
-              <h1 className="max-w-full font-editorial text-[52px] leading-[1.02] tracking-tight text-white min-[380px]:text-[60px] sm:text-[78px] lg:text-[72px] xl:text-[84px]">
-                <span className="block">Invest with intention,</span>
-                <span className="block text-emerald-200">not impulse.</span>
-              </h1>
-              <p className="max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-                You can’t follow a plan you can’t see. Aerarium helps you understand what you
-                really own, build your investment plan, and stay disciplined for the long term.
-              </p>
-              <p className="max-w-lg text-base leading-relaxed text-slate-400">
-                For long-term investors who want to invest with intention —
-                whether you’re just starting or already run a playbook.
-              </p>
-            </div>
+      {/* 3. Hero Section — calm, centered, text-only (Luffu/Poly air) */}
+      <header id="hero" className="scroll-stop-section relative min-h-[100svh] flex items-center justify-center pt-28 pb-24 z-10">
+        <MobileSnapBeat />
+        <motion.div
+          className="mx-auto flex max-w-3xl flex-col items-center gap-9 px-6 text-center"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+        >
+          <h1 className="font-editorial text-[56px] leading-[1.0] tracking-tight text-white min-[380px]:text-[64px] sm:text-[88px] lg:text-[104px]">
+            <span className="block">Invest with intention,</span>
+            <span className="block text-emerald-200">not impulse.</span>
+          </h1>
 
-            {/* Single primary action */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
-              <a
-                href="https://testflight.apple.com/join/Xna39VKU"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full max-w-full py-4 px-8 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center sm:w-auto"
-                id="btn-hero-join-waitlist"
-              >
-                Get Early Access
-              </a>
-              <span className="text-sm text-slate-500">Free on iOS · via TestFlight</span>
-            </div>
+          <p className="max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
+            You can’t follow a plan you can’t see. Aerarium helps you understand what you
+            really own, build your investment plan, and stay disciplined for the long term.
+          </p>
 
-            {/* Quiet trust line */}
-            <p className="text-sm text-slate-500">
-              Read-only. No trading. Not financial advice.
-            </p>
+          <div className="flex flex-col items-center gap-3 pt-2">
+            <a
+              href="https://testflight.apple.com/join/Xna39VKU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-4 px-9 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
+              id="btn-hero-join-waitlist"
+            >
+              Get Early Access
+            </a>
+            <span className="text-sm text-slate-500">Free on iOS · via TestFlight</span>
           </div>
 
-          <div className="min-w-0 lg:col-span-6 w-full">
-            <HeroCalmScene />
-          </div>
-        </div>
+          <p className="text-sm text-slate-500">
+            For long-term investors — whether you’re just starting or already run a playbook.
+            <span className="mx-2 text-slate-700">·</span>
+            Read-only. No trading. Not financial advice.
+          </p>
+        </motion.div>
 
-        {/* Scroll downstream anchor tag */}
+        {/* Scroll cue */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-1.5 pointer-events-none animate-bounce">
           <span className="text-[9px] font-mono tracking-widest text-slate-500">SCROLL</span>
           <ArrowDown className="w-3.5 h-3.5 text-emerald-550" />
         </div>
       </header>
 
-      <section className="relative z-10 border-y border-white/5 bg-slate-900/40 py-12 sm:py-14">
-        <MobileSnapBeat />
-        <div className="mx-auto grid max-w-7xl gap-4 px-6 md:grid-cols-3">
-          {[
-            ["True exposure across accounts", "Direct positions and ETF look-through roll into one number."],
-            ["Rules after reality", "The Policy Score evaluates the real portfolio, not a stale spreadsheet."],
-            ["Private by design", "Read-only sync, encrypted sensitive fields, and no trade placement."],
-          ].map(([title, body], i) => (
-            <motion.div
-              key={title}
-              className="rounded-2xl border border-white/6 bg-slate-950/55 p-6"
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.08 }}
-            >
-              <ShieldCheck className="h-4 w-4 text-emerald-300" />
-              <h2 className="mt-3 font-display text-base font-bold text-white">{title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">{body}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* 4. Empathy — the questions every investor carries */}
+      <InvestorQuestions />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
