@@ -18,7 +18,7 @@ html {
 
 .scroll-stop-section {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
 .snap-beat {
@@ -52,11 +52,9 @@ html {
   }
 }
 
-@media (min-width: 1024px) {
-  html {
-    scroll-snap-type: y proximity;
-  }
-}
+/* Desktop scroll-snap removed — it trapped the tall hero->questions scroll
+   scene and prevented settling on later sections. Free scrolling reads calmer
+   and is the Luffu/Poly behavior anyway. */
 
 @media (prefers-reduced-motion: reduce) {
   html {
