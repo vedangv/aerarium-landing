@@ -93,12 +93,13 @@ ticker up top).
    calm screens. ⏳ pending (trim copy ~40%).
 6. **Security / founder / launch list** — each one calm screen, trimmed. ⏳.
 
-Open experiment: a **hero→questions scroll transition** (foreground hero fades
-out, blurred questions background sharpens into focus). Built in
-`HeroQuestionsScene.tsx` but UNDER REVIEW — it slightly muddies the hero by
-overlapping two headlines mid-scroll. Alternative if rejected: revert to plain
-stacked sections + add a **warm ambient glow** behind the hero (the `ambient-warm`
-CSS class already exists) so the dark bg feels lit, not empty.
+RESOLVED: the **hero→questions blur-parallax** was tried 3× and REJECTED — two
+centered blocks in one sticky frame always overlap (muddy) or trap the scroll.
+Final approach = **clean stacked sections**: hero (with warm radial glow so the
+dark bg reads lit, not empty) → questions section, plain. Also removed desktop
+`scroll-snap` (it trapped scrolling / blocked seeing section 2). Don't re-attempt
+the blur-overlap parallax. If motion is wanted later, do the CLEAN kind (hero
+scrolls up and out as questions rise in from below — never sharing the screen).
 
 ---
 
@@ -161,11 +162,16 @@ CSS class already exists) so the dark bg feels lit, not empty.
 
 ## What's done vs pending (snapshot 2026-05-31)
 
-- ✅ Section 1 hero (calm, centered, text-only).
-- ✅ Section 2 questions (floating empathy beat).
-- 🔬 Hero→questions blur-parallax transition (built, under founder review).
-- ⏳ Section 3 "The Answer" / NVDA X-Ray reveal.
+- ✅ Section 1 hero (calm, centered, text-only, warm radial glow).
+- ✅ Section 2 questions (floating empathy beat; clean stacked, fully visible).
+- ✅ Desktop scroll-snap removed (free scroll).
+- ❌ Hero→questions blur-parallax — tried 3×, rejected (overlap/scroll-trap).
+- 🔜 NEXT: change the Section 2 question copy (map each to a FEATURES.md feature).
+- ⏳ Section 3 "The Answer" / NVDA X-Ray reveal (one calm phone, warm gradient).
 - ⏳ Section 4 feature moments redesign (un-cram the tour, one feature per screen).
 - ⏳ Research / security / founder / launch trims.
 - ⏳ Font experiment.
-- ⏳ Warm ambient glow on hero (the fallback if parallax is rejected).
+
+Branch state (2026-05-31): `feat/calmer-emotional-hero`, NOT yet PR'd. Commits:
+hero copy + layout, questions section, warm glow, scroll-snap removal, FEATURES/
+PRICING/HANDOFF docs.
