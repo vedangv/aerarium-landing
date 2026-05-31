@@ -5,6 +5,7 @@ import {
   useTransform,
   useMotionTemplate,
   useReducedMotion,
+  type MotionValue,
 } from "motion/react";
 import { ArrowDown } from "lucide-react";
 import MobileSnapBeat from "./MobileSnapBeat";
@@ -89,6 +90,33 @@ function QuestionsCopy() {
 
 /* ── Desktop scroll scene ──────────────────────────────────────────────── */
 
+/**
+ * One floating question that reveals on its own slice of the scroll. Each chip
+ * derives a staggered [start, end] window from its index so the five appear in
+ * sequence (top-to-bottom) rather than all at once. Held at full opacity after
+ * its window so it stays put while the rest reveal and the scene dwells.
+ */
+const RevealChip: React.FC<{
+  progress: MotionValue<number>;
+  q: (typeof QUESTIONS)[number];
+  index: number;
+}> = ({ progress, q, index }) => {
+  const start = 0.46 + index * 0.08;
+  const end = start + 0.1;
+  const opacity = useTransform(progress, [0, start, end, 1], [0, 0, 1, 1]);
+  const y = useTransform(progress, [start, end], [18, 0]);
+  const blurPx = useTransform(progress, [start, end], [6, 0]);
+  const filter = useMotionTemplate`blur(${blurPx}px)`;
+  return (
+    <motion.div
+      className={`absolute ${q.pos} max-w-[280px] rounded-2xl border border-white/8 bg-slate-900/55 px-5 py-3.5 text-[15px] font-medium text-slate-300 shadow-[0_18px_60px_rgba(0,0,0,0.3)] backdrop-blur-sm`}
+      style={{ opacity, y, filter }}
+    >
+      {q.text}
+    </motion.div>
+  );
+};
+
 function DesktopScene() {
   const trackRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -101,51 +129,45 @@ function DesktopScene() {
   // than clamping, which made the hero opacity climb back up and ghost over the
   // questions. Full-range keyframes guarantee the end state stays put.
 
-  // Hero (foreground): fades + blurs + lifts away early, fully gone by ~0.26
+  // Hero (foreground): fades + blurs + lifts away early, fully gone by ~0.24
   // and held invisible for the rest of the scroll.
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.26, 1], [1, 0, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.42, 1], [0, -110, -110]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.42, 1], [1, 0.96, 0.96]);
-  const heroBlurPx = useTransform(scrollYProgress, [0, 0.26, 1], [0, 8, 8]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.24, 1], [1, 0, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.4, 1], [0, -110, -110]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.4, 1], [1, 0.96, 0.96]);
+  const heroBlurPx = useTransform(scrollYProgress, [0, 0.24, 1], [0, 8, 8]);
   const heroFilter = useMotionTemplate`blur(${heroBlurPx}px)`;
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.12, 1], [1, 0, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.1, 1], [1, 0, 0]);
 
-  // Questions (background): held out of focus until the hero has nearly cleared
-  // (~0.24), then resolve into focus and stay resolved.
-  const qOpacity = useTransform(scrollYProgress, [0, 0.24, 0.5, 1], [0, 0, 1, 1]);
-  const qScale = useTransform(scrollYProgress, [0, 0.24, 0.62, 1], [0.92, 0.92, 1, 1]);
-  const qY = useTransform(scrollYProgress, [0, 0.24, 0.62, 1], [44, 44, 0, 0]);
-  const qBlurPx = useTransform(scrollYProgress, [0, 0.24, 0.5, 1], [12, 12, 0, 0]);
-  const qFilter = useMotionTemplate`blur(${qBlurPx}px)`;
+  // Questions headline: resolves into focus right after the hero clears (~0.22),
+  // anchoring the section BEFORE the individual questions begin popping in.
+  const headOpacity = useTransform(scrollYProgress, [0, 0.22, 0.4, 1], [0, 0, 1, 1]);
+  const headScale = useTransform(scrollYProgress, [0, 0.22, 0.42, 1], [0.94, 0.94, 1, 1]);
+  const headBlurPx = useTransform(scrollYProgress, [0, 0.22, 0.4, 1], [10, 10, 0, 0]);
+  const headFilter = useMotionTemplate`blur(${headBlurPx}px)`;
 
   return (
-    // Tall track gives the scene room to breathe and lets the resolved
-    // questions stay pinned long enough to read before releasing.
-    <div ref={trackRef} className="relative hidden h-[260vh] lg:block">
+    // Tall track gives the scene room to breathe: the hero clears, the headline
+    // resolves, then the five questions pop in one at a time as you scroll.
+    <div ref={trackRef} className="relative hidden h-[300vh] lg:block">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Warm ambient light so the dark scene reads as lit, not an empty void. */}
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(38%_34%_at_64%_72%,rgba(245,200,130,0.045)_0%,transparent_72%)]" />
 
-        {/* Background layer: the questions, resolving into focus */}
-        <motion.div
-          className="absolute inset-0 z-10 flex items-center justify-center"
-          style={{ opacity: qOpacity, scale: qScale, y: qY, filter: qFilter }}
-        >
+        {/* Background layer: headline resolves into focus, then each question
+            reveals in turn (top-to-bottom, following the scroll). */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
           <div className="relative mx-auto h-[560px] w-full max-w-6xl px-6">
-            {QUESTIONS.map((q) => (
-              <div
-                key={q.text}
-                className={`absolute ${q.pos} max-w-[280px] rounded-2xl border border-white/8 bg-slate-900/55 px-5 py-3.5 text-[15px] font-medium text-slate-300 shadow-[0_18px_60px_rgba(0,0,0,0.3)] backdrop-blur-sm`}
-              >
-                {q.text}
-              </div>
+            {QUESTIONS.map((q, i) => (
+              <RevealChip key={q.text} progress={scrollYProgress} q={q} index={i} />
             ))}
             <div className="absolute left-1/2 top-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2">
-              <QuestionsCopy />
+              <motion.div style={{ opacity: headOpacity, scale: headScale, filter: headFilter }}>
+                <QuestionsCopy />
+              </motion.div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Foreground layer: the hero, dissolving away */}
         <motion.div
