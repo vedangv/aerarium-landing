@@ -49,8 +49,12 @@ export default function App() {
       {/* 3. Hero Section — calm, centered, text-only (Luffu/Poly air) */}
       <header id="hero" className="scroll-stop-section relative min-h-[100svh] flex items-center justify-center pt-28 pb-24 z-10">
         <MobileSnapBeat />
+        {/* Warm ambient light so the dark hero reads as lit, not an empty void.
+            Soft single glow above the headline; kept subtle so text stays crisp. */}
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(38%_34%_at_64%_72%,rgba(245,200,130,0.045)_0%,transparent_72%)]" />
         <motion.div
-          className="mx-auto flex max-w-3xl flex-col items-center gap-9 px-6 text-center"
+          className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-9 px-6 text-center"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: "easeOut" }}
