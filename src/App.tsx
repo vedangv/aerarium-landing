@@ -16,6 +16,7 @@ import HiddenExposureReveal from "./components/HiddenExposureReveal";
 import PolicyScoreSection from "./components/PolicyScoreSection";
 import GoalsSection from "./components/GoalsSection";
 import TradeCheckerSection from "./components/TradeCheckerSection";
+import ThesisSection from "./components/ThesisSection";
 import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
 
@@ -66,6 +67,9 @@ export default function App() {
 
       {/* 3e. Trade Checker — pre-trade compliance (answers "will this trade break my rules?") */}
       <TradeCheckerSection />
+
+      {/* 3f. Thesis log — capture your reasoning (answers "why did I buy this again?") */}
+      <ThesisSection />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
