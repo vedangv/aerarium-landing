@@ -14,6 +14,8 @@ import AppSurfaceStrip from "./components/AppSurfaceStrip";
 import HeroQuestionsScene from "./components/HeroQuestionsScene";
 import HiddenExposureReveal from "./components/HiddenExposureReveal";
 import PolicyScoreSection from "./components/PolicyScoreSection";
+import GoalsSection from "./components/GoalsSection";
+import TradeCheckerSection from "./components/TradeCheckerSection";
 import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
 
@@ -58,6 +60,12 @@ export default function App() {
 
       {/* 3c. Policy Score — one number for discipline (answers "am I on plan?") */}
       <PolicyScoreSection />
+
+      {/* 3d. Goals — funding + drift (answers "am I drifting from my goals?") */}
+      <GoalsSection />
+
+      {/* 3e. Trade Checker — pre-trade compliance (answers "will this trade break my rules?") */}
+      <TradeCheckerSection />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
