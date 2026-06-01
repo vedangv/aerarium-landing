@@ -11,16 +11,18 @@ import { ArrowDown } from "lucide-react";
 import MobileSnapBeat from "./MobileSnapBeat";
 
 /**
- * Hero → Questions scroll scene (desktop).
+ * Hero → Questions scroll scene (all viewports).
  *
  * The foreground (hero) dissolves up and out of focus while the background
- * (the questions) resolves into focus underneath it. Critically, the two
- * layers DON'T share the screen at full opacity: the hero is fully gone
- * (opacity 0) before the questions finish resolving, so there's no muddy
- * ghosting. Scroll-snap is removed globally, so nothing traps the scroll.
+ * (the questions) sits behind it, faint and out of focus, then pulls into
+ * focus as the hero clears — a rack-focus. The two layers never share the
+ * screen prominent-and-blurred at once, so there's no muddy ghosting. The
+ * questions then reveal one at a time as you keep scrolling.
  *
- * On < lg, the scroll scene is skipped entirely (sticky + mobile snap fight
- * each other); we render a clean stacked hero + questions instead.
+ * The same scene runs on phone, tablet, and desktop — only the question
+ * LAYOUT differs (floating around the headline on lg+, stacked below it on
+ * smaller screens). Scroll-snap is removed globally so nothing traps the
+ * sticky scroll. Reduced-motion users get a plain stacked hero + questions.
  */
 
 // 6 worries, each setting up ONE distinct later feature (no repeats), so the
@@ -38,12 +40,23 @@ const QUESTIONS = [
   { text: "Is this company as strong as it looks?", pos: "right-[6%] bottom-[10%]", delay: 0.41 }, // → Research
 ];
 
+// Shared chip styling.
+const CHIP_BASE =
+  "rounded-2xl border border-white/8 bg-slate-900/55 px-5 py-3.5 text-[15px] font-medium text-slate-300 shadow-[0_18px_60px_rgba(0,0,0,0.3)] backdrop-blur-sm";
+
+// Question reveal pacing (as fractions of the scene's scroll progress). A wide
+// stagger on a tall track means each question gets a generous slice of scroll
+// before the next appears — they reveal one at a time, unhurried.
+const CHIP_START = 0.4;
+const CHIP_STAGGER = 0.092;
+const CHIP_WINDOW = 0.085;
+
 /* ── Shared content pieces ─────────────────────────────────────────────── */
 
 function HeroCopy() {
   return (
-    <div className="mx-auto flex max-w-3xl flex-col items-center gap-9 px-6 text-center">
-      <h1 className="font-editorial text-[56px] leading-[1.0] tracking-tight text-white min-[380px]:text-[64px] sm:text-[88px] lg:text-[104px]">
+    <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center sm:gap-9">
+      <h1 className="font-editorial text-[52px] leading-[1.0] tracking-tight text-white min-[380px]:text-[60px] sm:text-[88px] lg:text-[104px]">
         <span className="block">Invest with intention,</span>
         <span className="block text-emerald-200">not impulse.</span>
       </h1>
@@ -78,48 +91,47 @@ function HeroCopy() {
 function QuestionsCopy() {
   return (
     <div className="text-center">
-      <h2 className="font-editorial text-5xl leading-[1.05] tracking-tight text-white xl:text-6xl">
+      <h2 className="font-editorial text-4xl leading-[1.05] tracking-tight text-white sm:text-5xl xl:text-6xl">
         Questions worth asking
-        <br />
-        about your own money.
+        <br className="hidden sm:block" /> about your own money.
       </h2>
-      <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-slate-400">
+      <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-slate-400 sm:mt-6 sm:text-lg">
         Most investors can’t answer these with confidence. Aerarium is built so you can.
       </p>
     </div>
   );
 }
 
-/* ── Desktop scroll scene ──────────────────────────────────────────────── */
+/* ── Scroll scene ──────────────────────────────────────────────────────── */
 
 /**
- * One floating question that reveals on its own slice of the scroll. Each chip
- * derives a staggered [start, end] window from its index so the five appear in
- * sequence (top-to-bottom) rather than all at once. Held at full opacity after
- * its window so it stays put while the rest reveal and the scene dwells.
+ * One question that reveals on its own slice of the scroll. Each chip derives a
+ * staggered [start, end] window from its index so the six appear in sequence
+ * (top-to-bottom) rather than all at once. Held at full opacity after its window
+ * so it stays put while the rest reveal and the scene dwells. Layout-agnostic:
+ * the caller passes positioning via `className` (absolute float on lg, stacked
+ * block on smaller screens).
  */
 const RevealChip: React.FC<{
   progress: MotionValue<number>;
-  q: (typeof QUESTIONS)[number];
   index: number;
-}> = ({ progress, q, index }) => {
-  const start = 0.46 + index * 0.07;
-  const end = start + 0.1;
+  text: string;
+  className: string;
+}> = ({ progress, index, text, className }) => {
+  const start = CHIP_START + index * CHIP_STAGGER;
+  const end = start + CHIP_WINDOW;
   const opacity = useTransform(progress, [0, start, end, 1], [0, 0, 1, 1]);
   const y = useTransform(progress, [start, end], [18, 0]);
   const blurPx = useTransform(progress, [start, end], [6, 0]);
   const filter = useMotionTemplate`blur(${blurPx}px)`;
   return (
-    <motion.div
-      className={`absolute ${q.pos} max-w-[280px] rounded-2xl border border-white/8 bg-slate-900/55 px-5 py-3.5 text-[15px] font-medium text-slate-300 shadow-[0_18px_60px_rgba(0,0,0,0.3)] backdrop-blur-sm`}
-      style={{ opacity, y, filter }}
-    >
-      {q.text}
+    <motion.div className={className} style={{ opacity, y, filter }}>
+      {text}
     </motion.div>
   );
 };
 
-function DesktopScene() {
+function Scene() {
   const trackRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: trackRef,
@@ -132,46 +144,74 @@ function DesktopScene() {
   // questions. Full-range keyframes guarantee the end state stays put.
 
   // Hero (foreground): fades + lifts away early with a light blur, fully gone by
-  // ~0.2 so it doesn't sit half-present over the background during the focus
+  // ~0.16 so it doesn't sit half-present over the background during the focus
   // pull. Held invisible for the rest of the scroll.
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2, 1], [1, 0, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.4, 1], [0, -110, -110]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.4, 1], [1, 0.96, 0.96]);
-  const heroBlurPx = useTransform(scrollYProgress, [0, 0.2, 1], [0, 6, 6]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.16, 1], [1, 0, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.32, 1], [0, -110, -110]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.32, 1], [1, 0.96, 0.96]);
+  const heroBlurPx = useTransform(scrollYProgress, [0, 0.16, 1], [0, 6, 6]);
   const heroFilter = useMotionTemplate`blur(${heroBlurPx}px)`;
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.1, 1], [1, 0, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.08, 1], [1, 0, 0]);
 
   // Questions headline: sits BEHIND the hero from the very start — faint and
   // heavily blurred — so Section 2 reads as out-of-focus DEPTH behind the hero.
-  // It stays faint+blurred until the hero has largely cleared (~0.2), THEN pulls
-  // into focus (the "background coming into focus" rack-focus effect) without
-  // both layers sitting prominent-and-blurred at once. Anchors the section
-  // before the questions pop in.
-  const headOpacity = useTransform(scrollYProgress, [0, 0.2, 0.42, 1], [0.16, 0.22, 1, 1]);
-  const headScale = useTransform(scrollYProgress, [0, 0.2, 0.42, 1], [0.9, 0.92, 1, 1]);
-  const headBlurPx = useTransform(scrollYProgress, [0, 0.2, 0.42, 1], [16, 14, 0, 0]);
+  // It stays faint+blurred until the hero has largely cleared (~0.16), THEN
+  // pulls into focus (the "background coming into focus" rack-focus) without both
+  // layers sitting prominent-and-blurred at once. Anchors the section before the
+  // questions pop in.
+  const headOpacity = useTransform(scrollYProgress, [0, 0.16, 0.36, 1], [0.16, 0.22, 1, 1]);
+  const headScale = useTransform(scrollYProgress, [0, 0.16, 0.36, 1], [0.9, 0.92, 1, 1]);
+  const headBlurPx = useTransform(scrollYProgress, [0, 0.16, 0.36, 1], [16, 14, 0, 0]);
   const headFilter = useMotionTemplate`blur(${headBlurPx}px)`;
+
+  const headStyle = { opacity: headOpacity, scale: headScale, filter: headFilter };
 
   return (
     // Tall track gives the scene room to breathe: the hero clears, the headline
-    // resolves, then the five questions pop in one at a time as you scroll.
-    <div ref={trackRef} className="relative hidden h-[300vh] lg:block">
+    // pulls into focus, then the six questions reveal one at a time — each with a
+    // generous slice of scroll so nothing feels rushed.
+    <div ref={trackRef} className="relative h-[420svh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Warm ambient light so the dark scene reads as lit, not an empty void. */}
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(38%_34%_at_64%_72%,rgba(245,200,130,0.045)_0%,transparent_72%)]" />
 
-        {/* Background layer: headline resolves into focus, then each question
-            reveals in turn (top-to-bottom, following the scroll). */}
+        {/* Background layer: headline pulls into focus, then each question reveals
+            in turn. Same reveal logic, two layouts. */}
         <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <div className="relative mx-auto h-[560px] w-full max-w-6xl px-6">
+          {/* lg+: questions float around the centered headline */}
+          <div className="relative mx-auto hidden h-[560px] w-full max-w-6xl px-6 lg:block">
             {QUESTIONS.map((q, i) => (
-              <RevealChip key={q.text} progress={scrollYProgress} q={q} index={i} />
+              <RevealChip
+                key={q.text}
+                progress={scrollYProgress}
+                index={i}
+                text={q.text}
+                className={`absolute ${q.pos} max-w-[280px] ${CHIP_BASE}`}
+              />
             ))}
             <div className="absolute left-1/2 top-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2">
-              <motion.div style={{ opacity: headOpacity, scale: headScale, filter: headFilter }}>
+              <motion.div style={headStyle}>
                 <QuestionsCopy />
               </motion.div>
+            </div>
+          </div>
+
+          {/* < lg: headline on top, questions stacked below — same reveal */}
+          <div className="flex w-full max-w-md flex-col px-6 lg:hidden">
+            <motion.div style={headStyle}>
+              <QuestionsCopy />
+            </motion.div>
+            <div className="mt-8 flex flex-col gap-3">
+              {QUESTIONS.map((q, i) => (
+                <RevealChip
+                  key={q.text}
+                  progress={scrollYProgress}
+                  index={i}
+                  text={q.text}
+                  className={`${CHIP_BASE} text-center`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -197,58 +237,34 @@ function DesktopScene() {
   );
 }
 
-/* ── Mobile / reduced-motion fallback: clean stacked sections ──────────── */
+/* ── Reduced-motion fallback: clean stacked sections, no scroll effects ──── */
 
-function StackedFallback({ className }: { className: string }) {
+function StackedFallback() {
   return (
-    <div className={className}>
+    <div>
       <header
         id="hero-stacked"
-        className="scroll-stop-section relative flex min-h-[100svh] items-center justify-center px-2 pt-28 pb-24"
+        className="relative flex min-h-[100svh] items-center justify-center px-2 pt-28 pb-24"
       >
         <MobileSnapBeat />
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(38%_34%_at_64%_72%,rgba(245,200,130,0.045)_0%,transparent_72%)]" />
-        <motion.div
-          className="relative z-10"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-        >
+        <div className="relative z-10">
           <HeroCopy />
-        </motion.div>
+        </div>
       </header>
 
       <section className="relative z-10 overflow-hidden px-6 py-28">
         <MobileSnapBeat />
-        <motion.div
-          className="mx-auto max-w-md text-center"
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <h2 className="font-editorial text-4xl leading-[1.05] tracking-tight text-white sm:text-5xl">
-            Questions worth asking about your own money.
-          </h2>
-          <p className="mx-auto mt-5 max-w-sm text-base leading-relaxed text-slate-400">
-            Most investors can’t answer these with confidence. Aerarium is built so you can.
-          </p>
-        </motion.div>
-
-        <div className="mx-auto mt-10 flex max-w-md flex-col gap-3">
-          {QUESTIONS.map((q, i) => (
-            <motion.div
-              key={q.text}
-              className="rounded-2xl border border-white/8 bg-slate-900/55 px-5 py-3.5 text-[15px] font-medium text-slate-300"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.06 }}
-            >
-              {q.text}
-            </motion.div>
-          ))}
+        <div className="mx-auto max-w-md">
+          <QuestionsCopy />
+          <div className="mt-10 flex flex-col gap-3">
+            {QUESTIONS.map((q) => (
+              <div key={q.text} className={`${CHIP_BASE} text-center`}>
+                {q.text}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>
@@ -260,14 +276,7 @@ export default function HeroQuestionsScene() {
 
   return (
     <section id="hero" className="relative z-10">
-      {/* Desktop gets the scroll scene; reduced-motion users get the fallback. */}
-      {prefersReduced ? (
-        <StackedFallback className="hidden lg:block" />
-      ) : (
-        <DesktopScene />
-      )}
-      {/* Mobile always gets the clean stacked version. */}
-      <StackedFallback className="lg:hidden" />
+      {prefersReduced ? <StackedFallback /> : <Scene />}
     </section>
   );
 }
