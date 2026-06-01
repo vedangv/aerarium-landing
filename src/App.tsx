@@ -13,6 +13,7 @@ import FounderExposureBridge from "./components/FounderExposureBridge";
 import AppSurfaceStrip from "./components/AppSurfaceStrip";
 import HeroQuestionsScene from "./components/HeroQuestionsScene";
 import HiddenExposureReveal from "./components/HiddenExposureReveal";
+import PolicyScoreSection from "./components/PolicyScoreSection";
 import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
 
@@ -54,6 +55,9 @@ export default function App() {
 
       {/* 3b. The Answer — hidden-exposure reveal (answers "how concentrated am I?") */}
       <HiddenExposureReveal />
+
+      {/* 3c. Policy Score — one number for discipline (answers "am I on plan?") */}
+      <PolicyScoreSection />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
