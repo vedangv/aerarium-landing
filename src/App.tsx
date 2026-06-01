@@ -12,6 +12,7 @@ import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
 import AppSurfaceStrip from "./components/AppSurfaceStrip";
 import HeroQuestionsScene from "./components/HeroQuestionsScene";
+import HiddenExposureReveal from "./components/HiddenExposureReveal";
 import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
 
@@ -50,6 +51,9 @@ export default function App() {
              background questions resolve into focus (desktop). Mobile + reduced
              motion get a clean stacked hero → questions. */}
       <HeroQuestionsScene />
+
+      {/* 3b. The Answer — hidden-exposure reveal (answers "how concentrated am I?") */}
+      <HiddenExposureReveal />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
