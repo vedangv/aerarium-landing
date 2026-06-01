@@ -20,6 +20,7 @@ import ThesisSection from "./components/ThesisSection";
 import CtaBridge from "./components/CtaBridge";
 import ResearchQuestions from "./components/ResearchQuestions";
 import ResearchScreens from "./components/ResearchScreens";
+import ResearchCloseCta from "./components/ResearchCloseCta";
 import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
 
@@ -82,6 +83,9 @@ export default function App() {
 
       {/* 3i. Research web screens — 5 browser-frame beats showing the web product */}
       <ResearchScreens />
+
+      {/* 3j. Research closing CTA — Bloomberg price anchor + Open Research */}
+      <ResearchCloseCta />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
