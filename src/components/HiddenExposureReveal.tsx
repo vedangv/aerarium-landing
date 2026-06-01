@@ -20,7 +20,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function HiddenExposureReveal() {
   return (
-    <section id="answer" className="relative overflow-hidden bg-slate-950 py-28 sm:py-36">
+    <section id="answer" className="relative overflow-hidden bg-slate-950 py-12 sm:py-16">
       {/* Warm light so the reveal feels lit, continuous with the hero/questions. */}
       <div className="ambient-warm pointer-events-none absolute inset-0 opacity-60" />
       <div className="warm-hairline pointer-events-none absolute inset-x-0 top-0 h-px" />
@@ -38,7 +38,7 @@ export default function HiddenExposureReveal() {
         </motion.div>
 
         <motion.h2
-          className="mt-7 font-editorial text-[40px] leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl"
+          className="mt-5 font-editorial text-[32px] leading-[1.05] tracking-tight text-white sm:text-5xl"
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.55 }}
@@ -49,7 +49,7 @@ export default function HiddenExposureReveal() {
         </motion.h2>
 
         <motion.p
-          className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl"
+          className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
@@ -61,10 +61,10 @@ export default function HiddenExposureReveal() {
 
         {/* The X-Ray phone (the feature) beside the reveal (the number it
             surfaces). Side by side on desktop, stacked on mobile. */}
-        <div className="mt-12 grid items-center gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-14">
+        <div className="mt-8 grid items-center gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-12">
           {/* The X-Ray on a real phone */}
           <motion.div
-            className="mx-auto w-full max-w-[240px] sm:max-w-[268px]"
+            className="mx-auto w-full max-w-[172px] sm:max-w-[188px]"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
@@ -141,17 +141,6 @@ export default function HiddenExposureReveal() {
           </p>
           </motion.div>
         </div>
-
-        <motion.p
-          className="mx-auto mt-10 max-w-xl text-base leading-relaxed text-slate-400"
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, ease: EASE }}
-        >
-          That hidden overlap is concentration you didn’t choose. Aerarium’s Portfolio
-          X-Ray surfaces it across every fund and account — the first thing you see.
-        </motion.p>
       </div>
     </section>
   );
