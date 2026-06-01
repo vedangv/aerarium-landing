@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { Layers } from "lucide-react";
+import xrayScreenSrc from "../../assets/product-tour/portfolio.jpg";
 
 /**
  * Section 3 — "The Answer."
@@ -24,7 +25,7 @@ export default function HiddenExposureReveal() {
       <div className="ambient-warm pointer-events-none absolute inset-0 opacity-60" />
       <div className="warm-hairline pointer-events-none absolute inset-x-0 top-0 h-px" />
 
-      <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
         <motion.div
           className="inline-flex items-center gap-2 rounded-full border border-emerald-400/16 bg-emerald-400/[0.07] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300"
           initial={{ opacity: 0, y: 14 }}
@@ -58,14 +59,42 @@ export default function HiddenExposureReveal() {
           fund you hold — until something looks through them.
         </motion.p>
 
-        {/* The reveal: what you'd guess vs what a look-through actually finds. */}
-        <motion.div
-          className="mt-12 rounded-[28px] border border-white/8 bg-slate-900/45 p-6 text-left shadow-[0_28px_90px_rgba(0,0,0,0.28)] backdrop-blur-sm sm:p-9"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-        >
+        {/* The X-Ray phone (the feature) beside the reveal (the number it
+            surfaces). Side by side on desktop, stacked on mobile. */}
+        <div className="mt-12 grid items-center gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-14">
+          {/* The X-Ray on a real phone */}
+          <motion.div
+            className="mx-auto w-full max-w-[240px] sm:max-w-[268px]"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.85, ease: EASE }}
+          >
+            <div className="relative">
+              <div className="pointer-events-none absolute -inset-6 rounded-[60px] bg-emerald-400/[0.07] blur-3xl" />
+              <div className="relative aspect-[345/720] overflow-hidden rounded-[44px] border-4 border-slate-900 bg-slate-950 p-2.5 shadow-[0_36px_110px_rgba(0,0,0,0.42)]">
+                <div className="h-full w-full overflow-hidden rounded-[34px] border border-white/5 bg-[#040805]">
+                  <img
+                    src={xrayScreenSrc}
+                    alt="Aerarium Portfolio X-Ray — true exposure across every fund and account"
+                    className="h-full w-full object-cover"
+                    style={{ objectPosition: "50% 72%" }}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="pointer-events-none absolute inset-0 rounded-[44px] bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* The reveal: what you'd guess vs what a look-through actually finds. */}
+          <motion.div
+            className="rounded-[28px] border border-white/8 bg-slate-900/45 p-6 text-left shadow-[0_28px_90px_rgba(0,0,0,0.28)] backdrop-blur-sm sm:p-9"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+          >
           {/* What you'd guess */}
           <div>
             <div className="flex items-baseline justify-between gap-4">
@@ -110,7 +139,8 @@ export default function HiddenExposureReveal() {
             Illustrative example — one name compounding across S&amp;P 500, Nasdaq-100,
             and tech funds. Your real number depends on what you actually hold.
           </p>
-        </motion.div>
+          </motion.div>
+        </div>
 
         <motion.p
           className="mx-auto mt-10 max-w-xl text-base leading-relaxed text-slate-400"
