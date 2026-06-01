@@ -19,6 +19,7 @@ import TradeCheckerSection from "./components/TradeCheckerSection";
 import ThesisSection from "./components/ThesisSection";
 import CtaBridge from "./components/CtaBridge";
 import ResearchQuestions from "./components/ResearchQuestions";
+import ResearchScreens from "./components/ResearchScreens";
 import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
 
@@ -78,7 +79,9 @@ export default function App() {
 
       {/* 3h. Research intro — the pivot to the web product (questions about companies) */}
       <ResearchQuestions />
-      {/* TODO: 5 Research web screens (browser-frame) go here, pending fresh screenshots. */}
+
+      {/* 3i. Research web screens — 5 browser-frame beats showing the web product */}
+      <ResearchScreens />
 
       {/* 4. Launch Status */}
       <section className="bg-slate-950 py-14 relative z-10 font-sans">
