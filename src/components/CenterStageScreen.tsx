@@ -28,12 +28,15 @@ import type { LucideIcon } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Reveal windows as fractions of the pinned scroll progress (desktop).
+// Reveal windows as fractions of the pinned scroll progress (desktop). The
+// schedule finishes by ~0.7 so there's a long, deliberate dwell (~0.3 of the
+// track) after the phone resolves — the scene holds, so releasing to the next
+// screen feels intentional rather than abrupt.
 const W = {
-  headline: [0.06, 0.24],
-  graphic: [0.32, 0.5],
-  subheader: [0.58, 0.74],
-  phone: [0.8, 0.96],
+  headline: [0.04, 0.16],
+  graphic: [0.23, 0.35],
+  subheader: [0.42, 0.54],
+  phone: [0.58, 0.7],
 } as const;
 
 // Sequential delays for the mobile scroll-into-view stagger (seconds).
@@ -146,7 +149,7 @@ export default function CenterStageScreen({
       <div className="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-10">
         {/* Subheader — first on mobile, right on desktop */}
         <motion.div
-          className="order-1 mx-auto max-w-md text-center text-base leading-relaxed text-slate-300 sm:text-lg lg:order-3 lg:mx-0 lg:max-w-xs lg:text-left"
+          className="order-1 mx-auto max-w-md text-center text-base leading-relaxed text-slate-300 sm:text-lg lg:order-3 lg:ml-auto lg:mr-0 lg:max-w-[232px] lg:text-left"
           style={styleFor(subheaderR)}
           {...fade(MOBILE_DELAY.subheader)}
         >
@@ -203,7 +206,7 @@ export default function CenterStageScreen({
   // Desktop: pinned, scroll-driven reveal.
   return (
     <section id={id} className="relative bg-slate-950">
-      <div ref={trackRef} className="relative h-[200svh]">
+      <div ref={trackRef} className="relative h-[250svh]">
         {/* pt clears the fixed navbar so the pinned eyebrow pill stays visible */}
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden pt-20">
           <div className="ambient-warm pointer-events-none absolute inset-0 opacity-50" />
