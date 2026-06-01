@@ -23,17 +23,19 @@ import MobileSnapBeat from "./MobileSnapBeat";
  * each other); we render a clean stacked hero + questions instead.
  */
 
-// 5 worries, each setting up ONE distinct later feature (no repeats), so the
-// section works when revealed one-at-a-time on scroll. Four are personal-
-// portfolio worries; the last is a Research worry — a deliberate early signal
-// that Aerarium covers both your portfolio AND the companies you research.
+// 6 worries, each setting up ONE distinct later feature (no repeats), so the
+// section works when revealed one-at-a-time on scroll. Five are personal-
+// portfolio worries; one is a Research worry — a deliberate early signal that
+// Aerarium covers both your portfolio AND the companies you research. Ordered
+// top-to-bottom so the reveal follows the scroll; balanced 3 left / 3 right.
 // See social-media-kit/FEATURES.md for the feature each question answers.
 const QUESTIONS = [
-  { text: "How concentrated am I, really?", pos: "left-[5%] top-[9%]", delay: 0.05 },          // → Portfolio X-Ray
-  { text: "Am I still following my own plan?", pos: "right-[6%] top-[5%]", delay: 0.12 },        // → Policy Score
-  { text: "Am I drifting from my goals?", pos: "left-[8%] top-[45%]", delay: 0.2 },              // → Goal alignment
-  { text: "Is this company as strong as it looks?", pos: "right-[6%] bottom-[10%]", delay: 0.27 }, // → Research
-  { text: "Why did I buy this again?", pos: "left-[7%] bottom-[9%]", delay: 0.34 },              // → Thesis / discipline log
+  { text: "How concentrated am I, really?", pos: "left-[5%] top-[9%]", delay: 0.05 },             // → Portfolio X-Ray
+  { text: "Am I still following my own plan?", pos: "right-[6%] top-[5%]", delay: 0.12 },          // → Policy Score
+  { text: "Am I drifting from my goals?", pos: "left-[8%] top-[45%]", delay: 0.2 },                // → Goal alignment
+  { text: "Will this trade break my own rules?", pos: "right-[4%] top-[45%]", delay: 0.27 },       // → Trade Checker / IPS compliance
+  { text: "Why did I buy this again?", pos: "left-[7%] bottom-[9%]", delay: 0.34 },                // → Thesis / discipline log
+  { text: "Is this company as strong as it looks?", pos: "right-[6%] bottom-[10%]", delay: 0.41 }, // → Research
 ];
 
 /* ── Shared content pieces ─────────────────────────────────────────────── */
@@ -101,7 +103,7 @@ const RevealChip: React.FC<{
   q: (typeof QUESTIONS)[number];
   index: number;
 }> = ({ progress, q, index }) => {
-  const start = 0.46 + index * 0.08;
+  const start = 0.46 + index * 0.07;
   const end = start + 0.1;
   const opacity = useTransform(progress, [0, start, end, 1], [0, 0, 1, 1]);
   const y = useTransform(progress, [start, end], [18, 0]);
@@ -129,20 +131,25 @@ function DesktopScene() {
   // than clamping, which made the hero opacity climb back up and ghost over the
   // questions. Full-range keyframes guarantee the end state stays put.
 
-  // Hero (foreground): fades + blurs + lifts away early, fully gone by ~0.24
-  // and held invisible for the rest of the scroll.
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.24, 1], [1, 0, 0]);
+  // Hero (foreground): fades + lifts away early with a light blur, fully gone by
+  // ~0.2 so it doesn't sit half-present over the background during the focus
+  // pull. Held invisible for the rest of the scroll.
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.2, 1], [1, 0, 0]);
   const heroY = useTransform(scrollYProgress, [0, 0.4, 1], [0, -110, -110]);
   const heroScale = useTransform(scrollYProgress, [0, 0.4, 1], [1, 0.96, 0.96]);
-  const heroBlurPx = useTransform(scrollYProgress, [0, 0.24, 1], [0, 8, 8]);
+  const heroBlurPx = useTransform(scrollYProgress, [0, 0.2, 1], [0, 6, 6]);
   const heroFilter = useMotionTemplate`blur(${heroBlurPx}px)`;
   const cueOpacity = useTransform(scrollYProgress, [0, 0.1, 1], [1, 0, 0]);
 
-  // Questions headline: resolves into focus right after the hero clears (~0.22),
-  // anchoring the section BEFORE the individual questions begin popping in.
-  const headOpacity = useTransform(scrollYProgress, [0, 0.22, 0.4, 1], [0, 0, 1, 1]);
-  const headScale = useTransform(scrollYProgress, [0, 0.22, 0.42, 1], [0.94, 0.94, 1, 1]);
-  const headBlurPx = useTransform(scrollYProgress, [0, 0.22, 0.4, 1], [10, 10, 0, 0]);
+  // Questions headline: sits BEHIND the hero from the very start — faint and
+  // heavily blurred — so Section 2 reads as out-of-focus DEPTH behind the hero.
+  // It stays faint+blurred until the hero has largely cleared (~0.2), THEN pulls
+  // into focus (the "background coming into focus" rack-focus effect) without
+  // both layers sitting prominent-and-blurred at once. Anchors the section
+  // before the questions pop in.
+  const headOpacity = useTransform(scrollYProgress, [0, 0.2, 0.42, 1], [0.16, 0.22, 1, 1]);
+  const headScale = useTransform(scrollYProgress, [0, 0.2, 0.42, 1], [0.9, 0.92, 1, 1]);
+  const headBlurPx = useTransform(scrollYProgress, [0, 0.2, 0.42, 1], [16, 14, 0, 0]);
   const headFilter = useMotionTemplate`blur(${headBlurPx}px)`;
 
   return (
