@@ -40,9 +40,11 @@ const QUESTIONS = [
   { text: "Is this company as strong as it looks?", pos: "right-[6%] bottom-[10%]", delay: 0.41 }, // → Research
 ];
 
-// Shared chip styling.
+// Shared chip styling. Slightly tighter padding on small screens so the stacked
+// mobile column (headline + 6 chips) stays comfortably shorter than the viewport
+// and centers clear of the navbar even on short phones (iPhone SE).
 const CHIP_BASE =
-  "rounded-2xl border border-white/8 bg-slate-900/55 px-5 py-3.5 text-[15px] font-medium text-slate-300 shadow-[0_18px_60px_rgba(0,0,0,0.3)] backdrop-blur-sm";
+  "rounded-2xl border border-white/8 bg-slate-900/55 px-5 py-3 text-[15px] font-medium text-slate-300 shadow-[0_18px_60px_rgba(0,0,0,0.3)] backdrop-blur-sm sm:py-3.5";
 
 // Question reveal pacing (as fractions of the scene's scroll progress). A wide
 // stagger on a tall track means each question gets a generous slice of scroll
@@ -91,11 +93,11 @@ function HeroCopy() {
 function QuestionsCopy() {
   return (
     <div className="text-center">
-      <h2 className="font-editorial text-4xl leading-[1.05] tracking-tight text-white sm:text-5xl xl:text-6xl">
+      <h2 className="font-editorial text-[30px] leading-[1.12] tracking-tight text-white sm:text-5xl sm:leading-[1.05] xl:text-6xl">
         Questions worth asking
         <br className="hidden sm:block" /> about your own money.
       </h2>
-      <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-slate-400 sm:mt-6 sm:text-lg">
+      <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-slate-400 sm:mt-6 sm:max-w-md sm:text-lg">
         Most investors can’t answer these with confidence. Aerarium is built so you can.
       </p>
     </div>
@@ -202,7 +204,7 @@ function Scene() {
             <motion.div style={headStyle}>
               <QuestionsCopy />
             </motion.div>
-            <div className="mt-8 flex flex-col gap-3">
+            <div className="mt-6 flex flex-col gap-2.5">
               {QUESTIONS.map((q, i) => (
                 <RevealChip
                   key={q.text}
