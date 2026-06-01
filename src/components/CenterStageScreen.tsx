@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { motion } from "motion/react";
+import React, { ReactNode, useRef } from "react";
+import { motion, useInView } from "motion/react";
 import type { LucideIcon } from "lucide-react";
 
 /**
@@ -10,12 +10,26 @@ import type { LucideIcon } from "lucide-react";
  * whole beat fits one screen. On mobile it stacks: header → subheader → phone →
  * graphic.
  *
- * Reused by the X-Ray "answer" and Policy Score screens; the per-screen content
- * (headline, subheader, the small left graphic, the phone screenshot) is passed
- * in so the layout stays identical and one change updates every screen.
+ * Reveal: a single section-level useInView gates a deliberate, drawn-out
+ * cascade — eyebrow → headline → graphic → subheader → phone (the app/solution
+ * lands LAST). Gating on the SECTION (not each element) means the cascade fires
+ * when the visitor actually arrives at the screen, instead of pre-firing while
+ * they're still scrolling out of the section above it.
+ *
+ * Reused by the X-Ray "answer" and Policy Score screens; per-screen content is
+ * passed in so one change updates every screen.
  */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+// Deliberate, drawn-out stagger (seconds). The app resolves in last.
+const D = {
+  eyebrow: 0.0,
+  headline: 0.3,
+  graphic: 0.75,
+  subheader: 1.2,
+  phone: 1.7,
+} as const;
 
 type Props = {
   id: string;
@@ -41,20 +55,28 @@ export default function CenterStageScreen({
   phoneAlt,
   phoneObjectPosition = "50% 50%",
 }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4, margin: "0px 0px -8% 0px" });
+
+  // Each element rests hidden until the section is in view, then animates after
+  // its delay — so the whole cascade plays as one deliberate sequence.
+  const reveal = (delay: number, y = 22, duration = 0.9) => ({
+    initial: { opacity: 0, y },
+    animate: inView ? { opacity: 1, y: 0 } : { opacity: 0, y },
+    transition: { duration, ease: EASE, delay },
+  });
+
   return (
     <section id={id} className="relative overflow-hidden bg-slate-950 py-14 sm:py-16">
       <div className="ambient-warm pointer-events-none absolute inset-0 opacity-50" />
       <div className="warm-hairline pointer-events-none absolute inset-x-0 top-0 h-px" />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
+      <div ref={ref} className="relative z-10 mx-auto max-w-6xl px-6">
         {/* Header — eyebrow + headline, centered on top */}
         <div className="text-center">
           <motion.div
             className="inline-flex items-center gap-2 rounded-full border border-emerald-400/16 bg-emerald-400/[0.07] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300"
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.6, ease: EASE }}
+            {...reveal(D.eyebrow, 14, 0.7)}
           >
             <Icon className="h-3.5 w-3.5" />
             {eyebrow}
@@ -62,10 +84,7 @@ export default function CenterStageScreen({
 
           <motion.h2
             className="mx-auto mt-5 max-w-4xl font-editorial text-[30px] leading-[1.05] tracking-tight text-white sm:text-5xl"
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.12 }}
+            {...reveal(D.headline)}
           >
             {headline}
           </motion.h2>
@@ -74,13 +93,10 @@ export default function CenterStageScreen({
         {/* Trio — graphic (left) · phone (center) · subheader (right) on desktop;
             subheader · phone · graphic stacked on mobile. */}
         <div className="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-10">
-          {/* Subheader — first on mobile, right on desktop (3rd in the reveal) */}
+          {/* Subheader — first on mobile, right on desktop (4th in the reveal) */}
           <motion.div
             className="order-1 mx-auto max-w-md text-center text-base leading-relaxed text-slate-300 sm:text-lg lg:order-3 lg:mx-0 lg:max-w-xs lg:text-left"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.44 }}
+            {...reveal(D.subheader)}
           >
             {subheader}
           </motion.div>
@@ -88,10 +104,7 @@ export default function CenterStageScreen({
           {/* Phone — center stage, appears LAST (the solution reveal) */}
           <motion.div
             className="order-2 mx-auto w-full max-w-[214px] sm:max-w-[238px]"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.9, ease: EASE, delay: 0.6 }}
+            {...reveal(D.phone, 26, 1.0)}
           >
             <div className="relative">
               <div className="pointer-events-none absolute -inset-7 rounded-[64px] bg-emerald-400/[0.08] blur-3xl" />
@@ -111,13 +124,10 @@ export default function CenterStageScreen({
             </div>
           </motion.div>
 
-          {/* Small graphic — last on mobile, left on desktop (2nd in the reveal) */}
+          {/* Small graphic — last on mobile, left on desktop (3rd in the reveal) */}
           <motion.div
             className="order-3 w-full lg:order-1 lg:justify-self-end"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.28 }}
+            {...reveal(D.graphic)}
           >
             {leftSlot}
           </motion.div>
