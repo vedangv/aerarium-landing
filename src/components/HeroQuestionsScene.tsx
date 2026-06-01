@@ -48,10 +48,12 @@ const CHIP_BASE =
 
 // Question reveal pacing (as fractions of the scene's scroll progress). A wide
 // stagger on a tall track means each question gets a generous slice of scroll
-// before the next appears — they reveal one at a time, unhurried.
-const CHIP_START = 0.4;
-const CHIP_STAGGER = 0.092;
-const CHIP_WINDOW = 0.085;
+// before the next appears — they reveal one at a time, unhurried. The schedule
+// finishes by ~0.87 so there's a real beat of dwell (~0.13 of the track) after
+// the last question resolves — time to linger before scrolling to the answer.
+const CHIP_START = 0.37;
+const CHIP_STAGGER = 0.084;
+const CHIP_WINDOW = 0.078;
 
 /* ── Shared content pieces ─────────────────────────────────────────────── */
 
@@ -148,12 +150,12 @@ function Scene() {
   // Hero (foreground): fades + lifts away early with a light blur, fully gone by
   // ~0.16 so it doesn't sit half-present over the background during the focus
   // pull. Held invisible for the rest of the scroll.
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.16, 1], [1, 0, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.32, 1], [0, -110, -110]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.32, 1], [1, 0.96, 0.96]);
-  const heroBlurPx = useTransform(scrollYProgress, [0, 0.16, 1], [0, 6, 6]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.15, 1], [1, 0, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.29, 1], [0, -110, -110]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.29, 1], [1, 0.96, 0.96]);
+  const heroBlurPx = useTransform(scrollYProgress, [0, 0.15, 1], [0, 6, 6]);
   const heroFilter = useMotionTemplate`blur(${heroBlurPx}px)`;
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.08, 1], [1, 0, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.07, 1], [1, 0, 0]);
 
   // Questions headline: sits BEHIND the hero from the very start — faint and
   // heavily blurred — so Section 2 reads as out-of-focus DEPTH behind the hero.
@@ -161,9 +163,9 @@ function Scene() {
   // pulls into focus (the "background coming into focus" rack-focus) without both
   // layers sitting prominent-and-blurred at once. Anchors the section before the
   // questions pop in.
-  const headOpacity = useTransform(scrollYProgress, [0, 0.16, 0.36, 1], [0.16, 0.22, 1, 1]);
-  const headScale = useTransform(scrollYProgress, [0, 0.16, 0.36, 1], [0.9, 0.92, 1, 1]);
-  const headBlurPx = useTransform(scrollYProgress, [0, 0.16, 0.36, 1], [16, 14, 0, 0]);
+  const headOpacity = useTransform(scrollYProgress, [0, 0.15, 0.33, 1], [0.16, 0.22, 1, 1]);
+  const headScale = useTransform(scrollYProgress, [0, 0.15, 0.33, 1], [0.9, 0.92, 1, 1]);
+  const headBlurPx = useTransform(scrollYProgress, [0, 0.15, 0.33, 1], [16, 14, 0, 0]);
   const headFilter = useMotionTemplate`blur(${headBlurPx}px)`;
 
   const headStyle = { opacity: headOpacity, scale: headScale, filter: headFilter };
@@ -172,7 +174,7 @@ function Scene() {
     // Tall track gives the scene room to breathe: the hero clears, the headline
     // pulls into focus, then the six questions reveal one at a time — each with a
     // generous slice of scroll so nothing feels rushed.
-    <div ref={trackRef} className="relative h-[420svh]">
+    <div ref={trackRef} className="relative h-[450svh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Warm ambient light so the dark scene reads as lit, not an empty void. */}
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
