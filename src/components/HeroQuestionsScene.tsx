@@ -70,17 +70,30 @@ function HeroCopy() {
         really own, build your investment plan, and stay disciplined for the long term.
       </p>
 
-      <div className="flex flex-col items-center gap-3 pt-2">
-        <a
-          href="https://testflight.apple.com/join/Xna39VKU"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="py-4 px-9 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
-          id="btn-hero-join-waitlist"
-        >
-          Get Early Access
-        </a>
-        <span className="text-sm text-slate-500">Free on iOS · via TestFlight</span>
+      <div className="flex flex-col items-center gap-4 pt-2">
+        <div className="flex flex-col items-center gap-3 sm:flex-row">
+          {/* Emerald = the iOS app */}
+          <a
+            href="https://testflight.apple.com/join/Xna39VKU"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-4 px-9 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
+            id="btn-hero-join-waitlist"
+          >
+            Get Early Access
+          </a>
+          {/* Cyan = the web research product */}
+          <a
+            href="https://research.aerarium.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-2xl border border-cyan-400/35 bg-cyan-400/[0.08] px-9 py-4 text-base font-semibold text-cyan-200 transition-all duration-300 hover:border-cyan-300/55 hover:bg-cyan-400/[0.14] hover:text-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
+            id="btn-hero-open-research"
+          >
+            Open Research
+          </a>
+        </div>
+        <span className="text-sm text-slate-500">Free on iOS via TestFlight · Research free in your browser</span>
       </div>
 
       <p className="text-sm text-slate-500">

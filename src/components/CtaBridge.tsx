@@ -69,7 +69,7 @@ export default function CtaBridge() {
           <motion.div className="mt-10" {...fade(0.18)}>
             <CtaButton />
           </motion.div>
-          <motion.p className="mt-12 text-sm text-slate-500" {...fade(0.24)}>
+          <motion.p className="mt-12 text-sm font-medium text-cyan-300" {...fade(0.24)}>
             And your portfolio is only half of Aerarium.
           </motion.p>
         </div>
@@ -104,8 +104,8 @@ export default function CtaBridge() {
               className="mt-12 flex flex-col items-center gap-2"
               style={{ opacity: lead.opacity, y: lead.y }}
             >
-              <p className="text-sm text-slate-500">And your portfolio is only half of Aerarium.</p>
-              <ArrowDown className="h-4 w-4 animate-bounce text-emerald-550" />
+              <p className="text-sm font-medium text-cyan-300">And your portfolio is only half of Aerarium.</p>
+              <ArrowDown className="h-4 w-4 animate-bounce text-cyan-400" />
             </motion.div>
           </div>
         </div>
