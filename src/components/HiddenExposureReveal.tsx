@@ -53,12 +53,7 @@ export default function HiddenExposureReveal() {
       id="answer"
       icon={Layers}
       eyebrow="The hidden exposure"
-      headline={
-        <>
-          You own more
-          <br className="hidden sm:block" /> than you think.
-        </>
-      }
+      headline="You own more than you think."
       subheader="Index funds quietly stack the same megacaps. One stock can hide across every fund you hold — until something looks through them."
       leftSlot={<ExposureReveal />}
       phoneSrc={xrayScreenSrc}

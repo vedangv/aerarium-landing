@@ -61,11 +61,11 @@ export default function CenterStageScreen({
           </motion.div>
 
           <motion.h2
-            className="mx-auto mt-5 max-w-3xl font-editorial text-[32px] leading-[1.05] tracking-tight text-white sm:text-5xl"
+            className="mx-auto mt-5 max-w-4xl font-editorial text-[30px] leading-[1.05] tracking-tight text-white sm:text-5xl"
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.55 }}
-            transition={{ duration: 0.8, ease: EASE }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.12 }}
           >
             {headline}
           </motion.h2>
@@ -74,29 +74,30 @@ export default function CenterStageScreen({
         {/* Trio — graphic (left) · phone (center) · subheader (right) on desktop;
             subheader · phone · graphic stacked on mobile. */}
         <div className="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-10">
-          {/* Subheader — first on mobile, right on desktop */}
+          {/* Subheader — first on mobile, right on desktop (3rd in the reveal) */}
           <motion.div
             className="order-1 mx-auto max-w-md text-center text-base leading-relaxed text-slate-300 sm:text-lg lg:order-3 lg:mx-0 lg:max-w-xs lg:text-left"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.05 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.44 }}
           >
             {subheader}
           </motion.div>
 
-          {/* Phone — center stage */}
+          {/* Phone — center stage, appears LAST (the solution reveal) */}
           <motion.div
-            className="order-2 mx-auto w-full max-w-[196px] sm:max-w-[208px]"
+            className="order-2 mx-auto w-full max-w-[214px] sm:max-w-[238px]"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.85, ease: EASE }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.6 }}
           >
             <div className="relative">
               <div className="pointer-events-none absolute -inset-7 rounded-[64px] bg-emerald-400/[0.08] blur-3xl" />
-              <div className="relative aspect-[345/720] overflow-hidden rounded-[44px] border-4 border-slate-900 bg-slate-950 p-2.5 shadow-[0_36px_110px_rgba(0,0,0,0.42)]">
-                <div className="h-full w-full overflow-hidden rounded-[34px] border border-white/5 bg-[#040805]">
+              {/* Thin modern bezel (~6px) */}
+              <div className="relative aspect-[345/720] overflow-hidden rounded-[42px] border border-slate-700/70 bg-slate-950 p-1.5 shadow-[0_36px_110px_rgba(0,0,0,0.42)]">
+                <div className="h-full w-full overflow-hidden rounded-[36px] border border-white/5 bg-[#040805]">
                   <img
                     src={phoneSrc}
                     alt={phoneAlt}
@@ -105,18 +106,18 @@ export default function CenterStageScreen({
                     loading="lazy"
                   />
                 </div>
-                <div className="pointer-events-none absolute inset-0 rounded-[44px] bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
+                <div className="pointer-events-none absolute inset-0 rounded-[42px] bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
               </div>
             </div>
           </motion.div>
 
-          {/* Small graphic — last on mobile, left on desktop */}
+          {/* Small graphic — last on mobile, left on desktop (2nd in the reveal) */}
           <motion.div
             className="order-3 w-full lg:order-1 lg:justify-self-end"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.28 }}
           >
             {leftSlot}
           </motion.div>
