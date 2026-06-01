@@ -49,7 +49,7 @@ export default function PolicyScoreSection() {
       icon={Gauge}
       eyebrow="Policy Score"
       headline="Always know if you’re on plan."
-      subheader="Returns rise and fall outside your control. Aerarium scores the part you can — your discipline. One number, 0 to 100, for how closely your portfolio still follows the plan you set."
+      subheader="You can’t control returns. Aerarium scores what you can — your discipline — as one number, 0 to 100."
       leftSlot={<ScoreDimensions />}
       phoneSrc={scoreScreenSrc}
       phoneAlt="Aerarium Policy Score — a 0–100 score for how closely the portfolio follows its plan"
