@@ -1,177 +1,134 @@
 # Aerarium Landing Page — Handoff / Context Doc
 
 Purpose: anyone (Codex, another Claude, a contractor) can read this and be
-instantly up to speed on the landing-page redesign — the goal, the decisions,
-the architecture, the conventions, and what's done vs. pending.
+instantly up to speed on the landing-page redesign.
 
-Last updated: 2026-05-31.
+Last updated: 2026-06-01.
 
 ---
 
 ## TL;DR
 
-We're redesigning `aerarium.app` (the brand landing page) to feel **calm, airy,
-and beginner-friendly** like **luffu.com** and **poly.app**, while staying on the
-**dark emerald** theme that matches the actual products. We keep ALL features but
-present them with **space and one-idea-per-screen**, not dense panels.
+`aerarium.app` is now a **two-product scrollytelling landing page**, calm and
+airy like luffu.com / poly.app but on the **dark emerald** theme that matches the
+real apps. It tells one story top-to-bottom:
 
-Work happens **section by section, atomic commits, on a feature branch**, with the
-founder reviewing each section via live screenshots before moving on. Slower but
-intentional.
+> your worries → **the app answers them** (5 feature screens) → there's more →
+> **the companies' worries** → **Research answers those** (5 web screens) → CTAs.
+
+**Two products, color-coded:**
+- 🟢 **Emerald = Aerarium Portfolio** — the iOS app (TestFlight beta).
+- 🔵 **Cyan = Aerarium Research** — the web product (research.aerarium.app).
 
 ---
 
-## The two reference sites (study these)
+## Page architecture (current, top to bottom)
 
-- **Luffu** (luffu.com): hero = one image + headline + 1 subhead + 1 button,
-  nothing else. Then a scroll sequence where EACH feature gets its own calm
-  full-screen moment (one headline, one line, phone(s), lots of air). Floating
-  "question" chips around a centered headline for the empathy beat. Light/cream.
-- **Poly** (poly.app): one cinematic product object, 4-word headline, dark but
-  airy. Proves dark CAN feel calm — air comes from space + restraint, not from
-  being light.
+Assembled in `src/App.tsx`. Sections marked ✅ are the new calm redesign;
+⚠️ marks the OLD dense sections still present but slated for removal.
 
-**Principle: don't cut features — cut crowding.** Every feature stays; each gets
-room. Calm = fewer ideas per screen + whitespace + predictable scroll.
+| Section | Component | Notes |
+|---|---|---|
+| Navbar | `Navbar.tsx` | fixed; links scroll to sections |
+| **Hero + Questions** | `HeroQuestionsScene.tsx` | ✅ pinned scene: hero dissolves → 6 "questions about your own money" reveal one-at-a-time. Hero has TWO CTAs: emerald **Get Early Access** (app) + cyan **Open Research** (web). |
+| **1. X-Ray** "You own more than you think." | `HiddenExposureReveal.tsx` | ✅ answers "how concentrated am I?" |
+| **2. Policy Score** "Always know if you're on plan." | `PolicyScoreSection.tsx` | ✅ "am I on plan?" |
+| **3. Goals** "See a goal slip before it falls." | `GoalsSection.tsx` | ✅ "am I drifting from my goals?" |
+| **4. Trade Checker** "Know before you break a rule." | `TradeCheckerSection.tsx` | ✅ "will this trade break my rules?" |
+| **5. Thesis log** "Remember why you bought it." | `ThesisSection.tsx` | ✅ "why did I buy this again?" |
+| **App CTA bridge** "…and so much more." | `CtaBridge.tsx` | ✅ TestFlight CTA + cyan "…only half of Aerarium ↓" lead-in into the web half |
+| **Research intro** "Now ask the same of every company." | `ResearchQuestions.tsx` | ✅ pinned; 6 questions about the companies you research |
+| **5 Research web screens** | `ResearchScreens.tsx` → `WebScreen.tsx` | ✅ Financials · Segments · Ownership · Smart-money 13F · Macro. Browser-frame, cyan accent. |
+| **Research closing CTA** "Institutional depth, not institutional price." | `ResearchCloseCta.tsx` | ✅ Bloomberg $24k anchor + Open Research → research.aerarium.app |
+| Launch status (countdown) | `CountdownTimer.tsx` (wrapped in App) | June 2026 target; kept |
+| ⚠️ Product surfaces (2×2) | `AppSurfaceStrip.tsx` | **DUPLICATE — remove** (X-Ray etc. shown calm above) |
+| ⚠️ Product proof (Portfolio tour + Research carousel + Security) | `FeatureGrid.tsx` | **DUPLICATE — remove Portfolio+Research; keep/extract Security** |
+| Founder story | `FounderExposureBridge.tsx` | restyle to match calm aesthetic |
+| Founder email list | `WaitlistPortal.tsx` | under review — may be redundant now |
+| Footer | inline in `App.tsx` | brand, links, copyright |
+
+The five app feature screens all use the shared **`CenterStageScreen.tsx`**; the
+five web screens use **`WebScreen.tsx`**. Both share the reveal mechanism below.
+
+---
+
+## The pinned reveal mechanism (how the feature screens work)
+
+Every feature screen + CTA is a **pinned, scroll-driven scene**, like the
+questions scene:
+
+- A tall track (`h-[250svh]`) wraps a `sticky top-0 h-[100svh]` frame with
+  `pt-20` (clears the fixed navbar). `useScroll({ target, offset:["start
+  start","end end"] })` gives `scrollYProgress`.
+- The **eyebrow pill is the pinned anchor** (always visible). The other elements
+  fade + lift in over their own slices of scroll via the shared
+  **`useReveal(progress, [start,end])`** hook (`src/components/useReveal.ts`) —
+  full-range keyframes so motion/react holds, doesn't extrapolate.
+- The app (phone / browser frame) resolves in **last**, then a dwell before the
+  scene releases.
+- **`CenterStageScreen`** (app): pill → headline → graphic (left) → subheader
+  (right) → phone (center). On mobile it stacks and the small graphic CROSS-FADES
+  OUT as the phone fades in (a phone + graphic can't both fit one screen).
+- **`WebScreen`** (web): pill → headline → subheader → browser frame. Frame is
+  height-clamped + object-cover on desktop (fits one screen); full natural-aspect
+  dashboard on mobile.
+- Every component has a **reduced-motion fallback** (plain static section).
+
+Global scroll-snap is removed (it fought the sticky scenes).
 
 ---
 
 ## Brand + positioning (do not change, just align to)
 
-- ONE brand: **Aerarium** (`aerarium.app` umbrella).
-- TWO products: **Aerarium Portfolio** (iOS app; portfolio.aerarium.app) and
-  **Aerarium Research** (web; research.aerarium.app; formerly "FinSight" — that
-  name is retired publicly).
-- Portfolio spine: **"Guardrails, not handholding" / "a compliance officer in
-  your pocket."** Not a trading app, not a robo-advisor.
-- Research spine: **institutional analytics from SEC EDGAR primary sources** —
-  a replacement for the $24k/yr Bloomberg terminal and $39–79/mo fiscal.ai.
-- Audience: long-term investors who want to invest with intention — BOTH total
-  beginners (may not know tickers) AND advanced ("already run a playbook").
-  Beginner-inclusive language up top; advanced/ticker-specific stuff lives lower
-  once the visitor is engaged.
+- ONE brand **Aerarium** (`aerarium.app`). Two products: **Portfolio** (iOS;
+  emerald) and **Research** (web, research.aerarium.app; cyan).
+- Portfolio spine: "Guardrails, not handholding" / "a compliance officer in your
+  pocket." Not a trading app.
+- Research spine: institutional analytics from SEC EDGAR primary sources — a
+  replacement for a $24k/yr Bloomberg terminal (the price anchor closes the web
+  section).
+- Audience: long-term investors, beginner-inclusive up top, advanced/ticker
+  specifics lower once engaged.
 
 ### Compliance (YMYL — hard rules)
-Never imply advice/returns; no "beat the market", "best stocks", "guaranteed".
-Always allow "Read-only. No trading. Not financial advice." Full list in
-`social-media-kit/MESSAGING.md`.
-
----
-
-## Locked hero copy (section 1)
-
-- **Headline:** Invest with intention, not impulse.
-- **Support:** You can't follow a plan you can't see. Aerarium helps you
-  understand what you really own, build your investment plan, and stay
-  disciplined for the long term.
-- **Target/trust footnote:** For long-term investors — whether you're just
-  starting or already run a playbook. · Read-only. No trading. Not financial
-  advice.
-- **CTA:** Get Early Access · Free on iOS · via TestFlight (single CTA only).
-
-The headline leads with the EMOTIONAL promise (not the NVDA fact). The concrete
-**"You thought you owned 8% NVDA → 18.7%"** hook is RELOCATED to a later "Answer"
-proof section, where the visitor is already engaged (beginners won't bounce on a
-ticker up top).
-
----
-
-## Page architecture (target)
-
-1. **Hero** — calm, centered, text-only, huge serif, one button, max air. ✅ done.
-2. **Questions** ("Questions worth asking about your own money") — investor
-   worries floating around a centered headline (empathy beat). No stock faces
-   (wrong for finance) — typographic question chips. ✅ done.
-   - Each question maps to a feature that answers it later (see `FEATURES.md`).
-3. **The Answer** — one calm phone on a warm gradient; THE NVDA / Portfolio X-Ray
-   reveal ("You own more than you think" — 8% → 18.7%). ⏳ next.
-4. **Feature moments** — existing features re-presented as a SEQUENCE of calm
-   one-feature screens (Policy Score, Trade Checker, Goals, Thesis/IPS log,
-   Privacy/encryption). All kept, each given air. Replaces the cramped pinned
-   tour. Use the feature→problem framings in `FEATURES.md`. ⏳ pending.
-5. **Research** — institutional-data angle + Bloomberg/fiscal.ai price anchor;
-   calm screens. ⏳ pending (trim copy ~40%).
-6. **Security / founder / launch list** — each one calm screen, trimmed. ⏳.
-
-RESOLVED: the **hero→questions blur-parallax** was tried 3× and REJECTED — two
-centered blocks in one sticky frame always overlap (muddy) or trap the scroll.
-Final approach = **clean stacked sections**: hero (with warm radial glow so the
-dark bg reads lit, not empty) → questions section, plain. Also removed desktop
-`scroll-snap` (it trapped scrolling / blocked seeing section 2). Don't re-attempt
-the blur-overlap parallax. If motion is wanted later, do the CLEAN kind (hero
-scrolls up and out as questions rise in from below — never sharing the screen).
+Never imply advice/returns. The NVDA 8% → 18.7% figure and the Trade-Checker
+breach are labeled ILLUSTRATIVE examples. Always allow "Read-only. No trading.
+Not financial advice." Full list in `social-media-kit/MESSAGING.md`.
 
 ---
 
 ## Tech / conventions
 
-- **Stack:** Vite + React 19 + TypeScript + Tailwind v4 (`@theme` tokens in
-  `src/index.css`) + `motion/react` (Framer Motion) + lucide-react icons.
-- **Fonts (theme tokens):** `--font-editorial` = Instrument Serif (display
-  headlines), `--font-display` = Space Grotesk, `--font-sans` = Inter,
-  `--font-mono` = JetBrains Mono. A font experiment is on the backlog.
-- **Theme:** warm near-black tokens override slate (`--color-slate-950: #080b09`
-  etc.). Accent = emerald. There's a `.ambient-warm` radial-glow helper and a
-  `.warm-hairline` divider in `index.css`.
-- **Motion:** prefer `whileInView` reveal (fade-up, ~0.6s easeOut, stagger
-  ~0.06–0.08s). ALWAYS provide a `prefers-reduced-motion` fallback for anything
-  scroll-driven (see HeroQuestionsScene for the pattern).
-- **Responsive:** verify at desktop 1440×900 AND mobile 390×844. Mobile must
-  degrade gracefully (e.g. floating layouts → stacked).
-- **Accessibility:** focus-visible rings on CTAs; don't blur real text into
-  unreadability; keep contrast ≥4.5:1 for body.
-- **Verify each change:** `npm run lint` (tsc --noEmit) + screenshot desktop &
-  mobile before committing.
-- **Dev server:** `npm run dev` → http://localhost:3000/. Build: `npm run build`
-  (output to `dist/`; static files like robots/sitemap/llms/og-image live in
-  `/public`).
+- Vite + React 19 + TS + Tailwind v4 (`@theme` in `src/index.css`) + `motion/react`
+  + lucide-react.
+- Fonts: `--font-editorial` = Instrument Serif (display), `--font-sans` = Inter,
+  `--font-display` = Space Grotesk, `--font-mono` = JetBrains Mono.
+- Accent: emerald (app) + cyan (research). Warm near-black slate overrides.
+  Helpers `.ambient-warm`, `.warm-hairline` in `index.css`.
+- Verify each change: `npm run lint` (tsc --noEmit) + screenshot at desktop AND
+  mobile before committing. Dev server `npm run dev` → http://localhost:3000/.
+- Screenshots of the live Research site live in `assets/screenshots/latest/`
+  (captured 2026-06-01; 5 used, rest reference). App screenshots in
+  `assets/product-tour/`.
 
-## Key files
+---
 
-- `src/App.tsx` — page composition / section order.
-- `src/components/HeroQuestionsScene.tsx` — hero + questions scroll scene (under
-  review). Contains the plain-hero fallback too.
-- `src/components/InvestorQuestions.tsx` — the floating-questions section.
-- `src/components/FeatureGrid.tsx` — Portfolio tour + Research carousel
-  (scroll-pinned; SLATED for the "one feature = one calm screen" redesign).
-- `src/components/PortfolioCockpitTour.tsx` — the pinned iPhone tour.
-- `src/components/AppSurfaceStrip.tsx` — the 2×2 "questions the app answers" grid.
-- `src/components/FounderExposureBridge.tsx`, `CountdownTimer.tsx`,
-  `WaitlistPortal.tsx`, `Navbar.tsx` — supporting sections.
-- `index.html` — SEO/OG/JSON-LD (SEO Phase 1 already shipped).
+## What's done vs pending (2026-06-01)
 
-## Source-of-truth docs (in `social-media-kit/`)
+✅ Hero (2 CTAs) + 6-question empathy scene.
+✅ 5 app feature screens (pinned center-stage): X-Ray, Policy Score, Goals,
+   Trade Checker, Thesis.
+✅ App CTA bridge (pinned) with cyan web lead-in.
+✅ Research intro (pinned, 6 questions) + 5 web screens (pinned browser-frame) +
+   closing Research CTA (Bloomberg anchor).
+✅ Color system: emerald = app, cyan = research, throughout.
 
-- `FEATURES.md` — feature→problem map for BOTH products (from the project brain).
-  Use this for every feature section's copy. Has the brand lines + price anchors.
-- `MESSAGING.md` — voice, the NVDA hook, YMYL banned/approved phrases, hashtags.
-- `PRICING.md` — tier decisions (App Free[CSV]/$4.99/$9.99; Research free/$5/$10),
-  margin math, qualtrim/Bloomberg anchors. Two items still open.
-- `BRAND-AND-RESEARCH-STRATEGY.md` — two-product brand, SSO (Supabase; iCloud
-  Keychain blocker), monetization sequencing, Research SEO plan.
-- `SEO-GEO-PLAYBOOK.md`, `LAUNCH-CALENDAR.csv`, `LINKS.csv`, caption files.
+🔜 Remove the duplicated old sections (`AppSurfaceStrip`, the Portfolio+Research
+   parts of `FeatureGrid`); keep/restyle **Security**.
+🔜 Restyle **Founder story** + **Security** to match the calm aesthetic.
+🔜 Decide whether the **email/waitlist CTA** is still needed.
+🔜 Footer review (anchor links, copy).
+🔜 Font experiment (backlog).
 
-## Git / workflow
-
-- Branch per workstream; **atomic commits per section**; PR to `main`; founder
-  reviews. Commit message co-author line:
-  `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`.
-- Current landing branch: `feat/calmer-emotional-hero` (hero + questions done).
-- Merged already on main: redesign (#1), launch kit + SEO Phase 1 (#2), tour
-  layout fixes + pricing doc (#3).
-
-## What's done vs pending (snapshot 2026-05-31)
-
-- ✅ Section 1 hero (calm, centered, text-only, warm radial glow).
-- ✅ Section 2 questions (floating empathy beat; clean stacked, fully visible).
-- ✅ Desktop scroll-snap removed (free scroll).
-- ❌ Hero→questions blur-parallax — tried 3×, rejected (overlap/scroll-trap).
-- 🔜 NEXT: change the Section 2 question copy (map each to a FEATURES.md feature).
-- ⏳ Section 3 "The Answer" / NVDA X-Ray reveal (one calm phone, warm gradient).
-- ⏳ Section 4 feature moments redesign (un-cram the tour, one feature per screen).
-- ⏳ Research / security / founder / launch trims.
-- ⏳ Font experiment.
-
-Branch state (2026-05-31): `feat/calmer-emotional-hero`, NOT yet PR'd. Commits:
-hero copy + layout, questions section, warm glow, scroll-snap removal, FEATURES/
-PRICING/HANDOFF docs.
+See `social-media-kit/FEATURES.md` for the feature→question mapping that drives
+every section's copy.

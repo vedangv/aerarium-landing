@@ -18,19 +18,35 @@ the table of contents; each numbered comment there points at a section's file.
 
 ## The page, top to bottom
 
+Order is assembled in **`src/App.tsx`**. Two products are colour-coded:
+🟢 emerald = the iOS app, 🔵 cyan = Aerarium Research (web).
+
 | # | Section (what you see) | File to edit | Anchor id |
 |---|---|---|---|
 | 0 | Top nav bar + mobile menu | `src/components/Navbar.tsx` | — |
-| 1 | Hero ("Invest with intention…") **and** the floating questions | `src/components/HeroQuestionsScene.tsx` | `#hero` |
-| 2 | Launch status / countdown card | `src/components/CountdownTimer.tsx` | — |
-| 3 | "Questions the app answers" — 2×2 screenshot grid | `src/components/AppSurfaceStrip.tsx` | `#surfaces` |
-| 4 | Product proof: **Portfolio** tour + **Research** carousel + **Security** | `src/components/FeatureGrid.tsx` | `#portfolio` `#research` `#security` |
-| 4b | The pinned iPhone in the Portfolio tour | `src/components/PortfolioCockpitTour.tsx`, `src/components/IosCockpitMockup.tsx` | — |
-| 5 | Founder story ("The spreadsheet stopped answering…") | `src/components/FounderExposureBridge.tsx` | `#founder-story` |
-| 6 | Founder email list (the form) | `src/components/WaitlistPortal.tsx` | `#waitlist` |
-| 7 | Footer (brand, links, copyright) | `src/App.tsx` | — |
+| 1 | Hero ("Invest with intention…") + floating questions + the **two CTAs** (emerald Get Early Access, cyan Open Research) | `src/components/HeroQuestionsScene.tsx` → `HeroCopy()` | `#hero` |
+| 2 | App screen 1 — X-Ray "You own more than you think." | `src/components/HiddenExposureReveal.tsx` | `#answer` |
+| 3 | App screen 2 — Policy Score | `src/components/PolicyScoreSection.tsx` | `#policy-score` |
+| 4 | App screen 3 — Goals | `src/components/GoalsSection.tsx` | `#goals` |
+| 5 | App screen 4 — Trade Checker | `src/components/TradeCheckerSection.tsx` | `#trade-checker` |
+| 6 | App screen 5 — Thesis log | `src/components/ThesisSection.tsx` | `#thesis` |
+| 7 | App CTA bridge ("…and so much more" + TestFlight) | `src/components/CtaBridge.tsx` | — |
+| 8 | Research intro ("Now ask the same of every company") | `src/components/ResearchQuestions.tsx` | `#research-questions` |
+| 9 | 5 Research web screens (Financials/Segments/Ownership/Smart-money/Macro) | `src/components/ResearchScreens.tsx` (data) + `WebScreen.tsx` (layout) | `#research-financials` … |
+| 10 | Research closing CTA (Bloomberg anchor + Open Research) | `src/components/ResearchCloseCta.tsx` | — |
+| — | Shared layouts/reveal | `CenterStageScreen.tsx` (app screens), `WebScreen.tsx` (web), `useReveal.ts` (the pinned fade-in) | — |
+| 11 | Launch status / countdown card | `src/components/CountdownTimer.tsx` | — |
+| ⚠️ | OLD 2×2 grid — **slated for removal (duplicate)** | `src/components/AppSurfaceStrip.tsx` | `#surfaces` |
+| ⚠️ | OLD product proof — **Portfolio+Research slated for removal; Security kept** | `src/components/FeatureGrid.tsx` | `#portfolio` `#research` `#security` |
+| 12 | Founder story | `src/components/FounderExposureBridge.tsx` | `#founder-story` |
+| 13 | Founder email list (under review) | `src/components/WaitlistPortal.tsx` | `#waitlist` |
+| 14 | Footer (brand, links, copyright) | `src/App.tsx` | — |
 | — | Browser tab title, SEO/social preview text | `index.html` | — |
 | — | Colors, fonts, theme | `src/index.css` | — |
+
+> Per-feature copy lives in each screen's component (`HiddenExposureReveal`,
+> `PolicyScoreSection`, etc.): the eyebrow, `headline`, `subheader`, the small
+> `leftSlot` graphic, and the screenshot import are all right there at the top.
 
 ---
 
