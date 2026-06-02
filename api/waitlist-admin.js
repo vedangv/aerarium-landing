@@ -1,4 +1,4 @@
-import { timingSafeEqual } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 
 const TABLE = "landing_waitlist";
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
@@ -59,6 +59,14 @@ async function fetchWaitlistRows({ supabaseUrl, serviceKey, fetchImpl }) {
 }
 
 function getClientIp(req) {
+  // On Vercel, `x-real-ip` is set by the edge to the true client IP and cannot
+  // be spoofed (Vercel overwrites any client-supplied value), so it can't be
+  // rotated to escape the rate limit. Prefer it. The `x-forwarded-for` fallback
+  // is only for non-Vercel/local environments.
+  const realIp = req.headers?.["x-real-ip"];
+  if (realIp) {
+    return String(Array.isArray(realIp) ? realIp[0] : realIp).trim() || "unknown";
+  }
   const forwarded = req.headers?.["x-forwarded-for"];
   const value = Array.isArray(forwarded) ? forwarded[0] : forwarded;
   return value?.split(",")[0]?.trim() || req.socket?.remoteAddress || "unknown";
@@ -66,10 +74,12 @@ function getClientIp(req) {
 
 function passwordsMatch(actual, expected) {
   if (typeof actual !== "string" || typeof expected !== "string") return false;
-  const actualBuffer = Buffer.from(actual);
-  const expectedBuffer = Buffer.from(expected);
-  if (actualBuffer.length !== expectedBuffer.length) return false;
-  return timingSafeEqual(actualBuffer, expectedBuffer);
+  // Compare fixed-length SHA-256 digests so the check is constant-time and never
+  // short-circuits on length (an early length-mismatch return would leak the
+  // admin password's length via response timing).
+  const actualHash = createHash("sha256").update(actual).digest();
+  const expectedHash = createHash("sha256").update(expected).digest();
+  return timingSafeEqual(actualHash, expectedHash);
 }
 
 function getFailureRecord(store, key, now) {
