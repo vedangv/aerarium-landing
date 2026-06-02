@@ -23,6 +23,13 @@ different platforms, different value, no premature billing complexity.
 
 ## Aerarium Portfolio (iOS)
 
+> **Refinement (project brain, 2026-05-31):** the free path is **CSV upload**, not
+> "manual entry." Per the brain, CSV is a deliberate privacy feature ("privacy
+> maxis" who won't put brokerage creds in the cloud) — so the free tier is a
+> *choice*, not a crippled tier. Reframe: **Free = CSV import + core X-Ray +
+> Policy Score; Paid = SnapTrade brokerage auto-sync** (which also carries the
+> ~$2/user/mo cost). See FEATURES.md.
+
 The hidden cost stack: **Apple takes 15%** (Small Business Program, <$1M/yr) AND
 **SnapTrade costs ~$2/user/mo** on the brokerage tier. Both must clear.
 
@@ -73,6 +80,14 @@ portfolio, and brokerage above it. Then $5→$10 is "add the AI + your portfolio
 Your **$10 Full** sits right at Qualtrim's $10 — but you give a free tier *and* a
 $5 entry they don't. That's the undercut: more accessible price ladder, same
 ceiling. When traction proves the value, the Full tier can move to $12–15.
+
+### The bigger price anchor (project brain, 2026-05-31)
+Research is positioned as **institutional-grade analytics built from SEC EDGAR
+primary sources — a replacement for the $24k/yr Bloomberg terminal and $39–79/mo
+fiscal.ai.** Use this in copy + pricing comms: $10 reframes from "cheap" to
+"institutional data for ~0.04% of a Bloomberg terminal." It justifies raising
+Full toward $12–15 with traction without ever feeling expensive. See FEATURES.md
+for the full provenance/feature list that backs the claim.
 
 ### SnapTrade double-cost warning (for the merge phase)
 If a user pays for brokerage on **both** app and Research separately, that's

@@ -18,7 +18,7 @@ html {
 
 .scroll-stop-section {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
 .snap-beat {
@@ -32,31 +32,14 @@ html {
 
 @media (max-width: 1023px) {
   html {
-    scroll-snap-type: y proximity;
     scroll-padding-top: 72px;
   }
-
-  .scroll-stop-section {
-    scroll-snap-align: none;
-    scroll-snap-stop: normal;
-  }
-
-  .snap-beat {
-    display: block;
-    height: 1px;
-    margin-bottom: -1px;
-    pointer-events: none;
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
-    width: 100%;
-  }
 }
 
-@media (min-width: 1024px) {
-  html {
-    scroll-snap-type: y proximity;
-  }
-}
+/* Scroll-snap removed on ALL breakpoints — it trapped the tall hero->questions
+   sticky scene (the responsive scroll scene now runs on mobile + tablet too)
+   and prevented settling on later sections. Free scrolling reads calmer and is
+   the Luffu/Poly behavior anyway. The .snap-beat anchors are now inert. */
 
 @media (prefers-reduced-motion: reduce) {
   html {

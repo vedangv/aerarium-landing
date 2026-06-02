@@ -5,15 +5,22 @@
 
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
-import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
-import HeroSignalScene from "./components/HeroSignalScene";
-import AppSurfaceStrip from "./components/AppSurfaceStrip";
+import SecuritySection from "./components/SecuritySection";
+import HeroQuestionsScene from "./components/HeroQuestionsScene";
+import HiddenExposureReveal from "./components/HiddenExposureReveal";
+import PolicyScoreSection from "./components/PolicyScoreSection";
+import GoalsSection from "./components/GoalsSection";
+import TradeCheckerSection from "./components/TradeCheckerSection";
+import ThesisSection from "./components/ThesisSection";
+import CtaBridge from "./components/CtaBridge";
+import ResearchQuestions from "./components/ResearchQuestions";
+import ResearchScreens from "./components/ResearchScreens";
+import ResearchCloseCta from "./components/ResearchCloseCta";
 import { motion } from "motion/react";
-import { Sparkles, ArrowDown, ChevronRight, Lock, CheckCircle2, Instagram, ShieldCheck } from "lucide-react";
+import { Lock, Instagram } from "lucide-react";
 
 export default function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -46,128 +53,42 @@ export default function App() {
       {/* 2. Navigation */}
       <Navbar />
 
-      {/* 3. Hero Section (Visual Fintech Asset Redesign) */}
-      <header id="hero" className="scroll-stop-section relative min-h-[100svh] flex items-center pt-28 pb-20 z-10">
-        <div className="max-w-[1480px] mx-auto px-6 md:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-center">
-          <MobileSnapBeat className="lg:col-span-12" />
-          
-          {/* Left Text Block */}
-          <div className="min-w-0 w-full max-w-[620px] lg:col-span-5 space-y-8 text-left flex flex-col justify-center">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-full bg-emerald-450/10 border border-emerald-500/20 text-emerald-300 text-sm font-semibold w-fit">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Hidden exposure, made visible</span>
-            </div>
+      {/* 3. Hero → Questions scroll scene — foreground hero dissolves as the
+             background questions resolve into focus (desktop). Mobile + reduced
+             motion get a clean stacked hero → questions. */}
+      <HeroQuestionsScene />
 
-            <div className="space-y-6">
-              <h1 className="max-w-full font-editorial text-[58px] leading-[0.9] tracking-tight text-white min-[380px]:text-[64px] sm:text-[92px] lg:text-[78px] xl:text-[100px] 2xl:text-[108px]">
-                <span className="block">You thought</span>
-                <span className="block">you owned</span>
-                <span className="block">8% NVDA.</span>
-                <span className="mt-3 block font-display text-[34px] font-bold leading-[0.98] tracking-tight text-emerald-200 min-[380px]:text-[38px] sm:text-[56px] lg:text-[48px] xl:text-[60px] 2xl:text-[64px]">
-                  <span className="block">Aerarium found</span>
-                  <span className="block">18.7%.</span>
-                </span>
-              </h1>
-              <p className="max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-                Aerarium looks through funds and accounts, then ties the real exposure back to your investment policy, goals, and Policy Score.
-              </p>
-            </div>
+      {/* 3b. The Answer — hidden-exposure reveal (answers "how concentrated am I?") */}
+      <HiddenExposureReveal />
 
-            {/* Premium proof chips */}
-            <div className="flex flex-wrap gap-3 py-1" aria-label="Aerarium proof points">
-              {["ETF look-through", "Read-only sync", "Policy Score"].map((proof) => (
-                <div
-                  key={proof}
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/[0.07] px-4 py-2.5 text-sm font-semibold text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
-                  <span>{proof}</span>
-                </div>
-              ))}
-            </div>
+      {/* 3c. Policy Score — one number for discipline (answers "am I on plan?") */}
+      <PolicyScoreSection />
 
-            {/* Primary Action Button Row */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-              <a
-                href="https://testflight.apple.com/join/Xna39VKU"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full max-w-full py-4 px-8 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center sm:w-auto"
-                id="btn-hero-join-waitlist"
-              >
-                Join iOS Beta
-              </a>
-              <a
-                href="https://research.aerarium.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-4 px-2 sm:px-4 rounded-2xl text-base font-semibold text-slate-300 hover:text-white transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer flex items-center justify-center space-x-2"
-                id="btn-hero-learn-more"
-              >
-                <span>Open Research</span>
-                <ChevronRight className="w-4 h-4 text-emerald-400" />
-              </a>
-            </div>
+      {/* 3d. Goals — funding + drift (answers "am I drifting from my goals?") */}
+      <GoalsSection />
 
-          </div>
+      {/* 3e. Trade Checker — pre-trade compliance (answers "will this trade break my rules?") */}
+      <TradeCheckerSection />
 
-          <div className="min-w-0 lg:col-span-7 w-full">
-            <HeroSignalScene />
-          </div>
-        </div>
+      {/* 3f. Thesis log — capture your reasoning (answers "why did I buy this again?") */}
+      <ThesisSection />
 
-        {/* Scroll downstream anchor tag */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-1.5 pointer-events-none animate-bounce">
-          <span className="text-[9px] font-mono tracking-widest text-slate-500">SCROLL</span>
-          <ArrowDown className="w-3.5 h-3.5 text-emerald-550" />
-        </div>
-      </header>
+      {/* 3g. CTA bridge — caps the app screens, free TestFlight, before the web pivot */}
+      <CtaBridge />
 
-      <section className="relative z-10 border-y border-white/5 bg-slate-900/40 py-12 sm:py-14">
-        <MobileSnapBeat />
-        <div className="mx-auto grid max-w-7xl gap-4 px-6 md:grid-cols-3">
-          {[
-            ["True exposure across accounts", "Direct positions and ETF look-through roll into one number."],
-            ["Rules after reality", "The Policy Score evaluates the real portfolio, not a stale spreadsheet."],
-            ["Private by design", "Read-only sync, encrypted sensitive fields, and no trade placement."],
-          ].map(([title, body], i) => (
-            <motion.div
-              key={title}
-              className="rounded-2xl border border-white/6 bg-slate-950/55 p-6"
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.08 }}
-            >
-              <ShieldCheck className="h-4 w-4 text-emerald-300" />
-              <h2 className="mt-3 font-display text-base font-bold text-white">{title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">{body}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* 3h. Research intro — the pivot to the web product (questions about companies) */}
+      <ResearchQuestions />
 
-      {/* 4. Launch Status */}
-      <section className="bg-slate-950 py-14 relative z-10 font-sans">
-        <MobileSnapBeat />
-        <motion.div
-          className="max-w-7xl mx-auto px-6 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <CountdownTimer />
-        </motion.div>
-      </section>
+      {/* 3i. Research web screens — 5 browser-frame beats showing the web product */}
+      <ResearchScreens />
 
-      {/* 5. Product surfaces */}
-      <AppSurfaceStrip />
+      {/* 3j. Research closing CTA — Bloomberg price anchor + Open Research */}
+      <ResearchCloseCta />
 
-      {/* 6. Product proof */}
-      <FeatureGrid />
+      {/* 5. Security — verifiable trust beat (restyled, was inside FeatureGrid) */}
+      <SecuritySection />
 
-      {/* 7. Founder story + product philosophy */}
+      {/* 6. Founder story */}
       <FounderExposureBridge />
 
       {/* 8. Reservation Portal Section */}
