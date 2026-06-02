@@ -62,8 +62,9 @@ export default function Navbar() {
           </span>
         </div>
 
-        {/* Desktop section links */}
-        <div className="hidden lg:flex items-center space-x-6">
+        {/* Desktop section links — absolutely centered on the page, independent
+            of the brand (left) and CTA (right) widths. */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center space-x-6">
           {NAV_LINKS.map((l) => (
             <button
               key={l.id}
