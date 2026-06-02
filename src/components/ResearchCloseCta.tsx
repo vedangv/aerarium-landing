@@ -6,8 +6,8 @@ import { trackOutboundClick } from "../lib/analytics";
 
 /**
  * Closing CTA for the web product (Aerarium Research). Pinned, scroll-driven
- * reveal to match the rest. Leads with the price anchor from FEATURES.md (a
- * Bloomberg terminal is $24k/yr) and sends the visitor to research.aerarium.app.
+ * reveal to match the rest. Leads with source-first depth and sends the
+ * visitor to research.aerarium.app.
  */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -54,7 +54,7 @@ export default function ResearchCloseCta() {
     </>
   );
   const Sub =
-    "A Bloomberg terminal runs $24,000 a year. Aerarium Research is built from the same SEC filings — and it’s free to explore while in beta.";
+    "Explore source-first public-market research: SEC filings, ownership views, macro context, and fund overlap — free while in beta.";
 
   if (prefersReduced) {
     const fade = (delay: number) => ({

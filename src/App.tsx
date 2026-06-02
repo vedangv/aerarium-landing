@@ -83,7 +83,7 @@ export default function App() {
       {/* 3i. Research web screens — 5 browser-frame beats showing the web product */}
       <ResearchScreens />
 
-      {/* 3j. Research closing CTA — Bloomberg price anchor + Open Research */}
+      {/* 3j. Research closing CTA — source-first positioning + Open Research */}
       <ResearchCloseCta />
 
       {/* 5. Security — verifiable trust beat (restyled, was inside FeatureGrid) */}
