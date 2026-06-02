@@ -7,6 +7,8 @@ const NAV_LINKS = [
   { label: "Portfolio", id: "answer" },
   { label: "Research", id: "research-questions" },
   { label: "Security", id: "security" },
+  { label: "Founder story", id: "founder-story" },
+  { label: "Founder list", id: "waitlist" },
 ];
 
 export default function Navbar() {
@@ -53,25 +55,25 @@ export default function Navbar() {
         </div>
 
         {/* Desktop section links */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden lg:flex items-center space-x-6">
           {NAV_LINKS.map((l) => (
             <button
               key={l.id}
               onClick={() => scrollToSection(l.id)}
-              className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
             >
               {l.label}
             </button>
           ))}
         </div>
 
-        {/* Desktop CTAs — cyan Research + emerald app */}
-        <div className="hidden md:flex items-center gap-2.5">
+        {/* Desktop CTAs — solid cyan Research + solid emerald app */}
+        <div className="hidden lg:flex items-center gap-2.5">
           <a
             href={RESEARCH}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-xl border border-cyan-400/35 bg-cyan-400/[0.08] px-4 py-2 text-xs font-semibold text-cyan-200 transition-all duration-300 hover:border-cyan-300/55 hover:bg-cyan-400/[0.14] hover:text-cyan-100"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-400 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20"
             id="btn-nav-open-research"
           >
             Open Research
@@ -92,7 +94,7 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-slate-300 hover:text-white transition-colors focus:outline-none"
+          className="lg:hidden text-slate-300 hover:text-white transition-colors focus:outline-none"
           id="btn-nav-mobile-toggle"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -107,7 +109,7 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-slate-950/98 backdrop-blur-lg z-40 border-t border-white/5 flex flex-col p-8 space-y-6 animate-fadeIn">
+        <div className="lg:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-slate-950/98 backdrop-blur-lg z-40 border-t border-white/5 flex flex-col p-8 space-y-5 animate-fadeIn overflow-y-auto">
           {NAV_LINKS.map((l) => (
             <button
               key={l.id}
