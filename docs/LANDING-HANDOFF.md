@@ -44,6 +44,7 @@ Assembled in `src/App.tsx`. Sections marked ✅ are the new calm redesign;
 | **Founder story** "The spreadsheet stopped answering the real question." | `FounderExposureBridge.tsx` | ✅ pinned + restyled calm; "Why I built it" pill |
 | Founder email list | `WaitlistPortal.tsx` | ✅ kept — the only owned-audience capture (App Store launch updates) |
 | Footer | inline in `App.tsx` | brand, links, copyright |
+| Static Portfolio guides | `scripts/seo-pages.mjs` | ✅ seven build-time rendered HTML pages for SEO/GEO discovery |
 
 The five app feature screens all use the shared **`CenterStageScreen.tsx`**; the
 five web screens use **`WebScreen.tsx`**. Both share the reveal mechanism below.
@@ -139,8 +140,10 @@ The full two-product redesign **shipped to `main`** (PR #5, merge `fec0821`).
    migration is reviewed and applied; until then it safely falls back to the
    legacy schema.
 ✅ Private admin dashboard: `/admin/waitlist` shows signups, referral counts,
-   top referrer, and campaign attribution. Access requires
-   `ADMIN_DASHBOARD_PASSWORD`.
+top referrer, and campaign attribution. Access requires
+`ADMIN_DASHBOARD_PASSWORD`.
+✅ Phase 2 static Portfolio guide wedge: seven crawlable, screenshot-backed
+pages generated at build time from `scripts/seo-pages.mjs`.
 
 🔜 Font experiment (backlog).
 🔜 Review and explicitly approve
@@ -149,3 +152,18 @@ The full two-product redesign **shipped to `main`** (PR #5, merge `fec0821`).
 
 See `social-media-kit/FEATURES.md` for the feature→question mapping that drives
 every section's copy.
+
+### Static Portfolio guide URLs
+
+- `/portfolio-x-ray`
+- `/investment-policy-statement-app`
+- `/policy-score`
+- `/methodology`
+- `/security`
+- `/goals-funding-plan`
+- `/investment-thesis-tracker`
+
+The guides are build-time rendered rather than runtime SSR because the content
+is evergreen. `npm run build` runs Vite first, then
+`scripts/build-seo-pages.mjs`. The initial HTML response contains the complete
+copy, metadata, screenshot reference, FAQs, FAQ JSON-LD, and internal links.
