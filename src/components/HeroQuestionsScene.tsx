@@ -116,7 +116,7 @@ function QuestionsCopy() {
         <br className="hidden sm:block" /> about your own money.
       </h2>
       <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-slate-400 sm:mt-6 sm:max-w-md sm:text-lg">
-        Most investors can’t answer these with confidence. Aerarium is built so you can.
+        Brokerage screens rarely answer these clearly. Aerarium is built so you can.
       </p>
     </div>
   );

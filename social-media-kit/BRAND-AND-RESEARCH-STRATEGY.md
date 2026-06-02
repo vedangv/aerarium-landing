@@ -18,7 +18,7 @@ You have one brand, two products, a clean domain story:
         ┌─────────┴───────────┐
         ▼                     ▼
   Aerarium Portfolio     Aerarium Research
-  portfolio.aerarium.app  research.aerarium.app
+  iOS app / TestFlight    research.aerarium.app
   (iOS app, TestFlight)   (web app — formerly FinSight)
   "see what you own"      "understand the market"
 ```
@@ -30,8 +30,11 @@ JSON-LD, llms.txt. Mixed naming confuses both humans and AI (an LLM won't connec
 
 **The relationship in one sentence (use everywhere):**
 > Aerarium Research tells you what's happening in the market. Aerarium Portfolio
-> keeps your real portfolio aligned with your rules. Same brand, same login, two
-> sides of one disciplined process.
+> keeps your real portfolio aligned with your rules. Same brand, two sides of
+> one disciplined process.
+
+Unified login is a roadmap item, not a shipped capability. Do not imply otherwise
+in public copy until both products actually share authentication.
 
 ---
 
@@ -55,7 +58,7 @@ run versions of this. You're doing it as a solo founder, which is genuinely stro
 
 ---
 
-## 3. Aerarium Research — its own SEO plan (the big opportunity)
+## 3. Aerarium Research — SEO strategy (verify live repo before execution)
 
 I looked at the Research codebase (Next.js app, S&P 500 + NASDAQ-100, routes for
 stocks/funds/macro/earnings/sectors/screener/chart-builder). Findings:
@@ -64,22 +67,18 @@ stocks/funds/macro/earnings/sectors/screener/chart-builder). Findings:
 Vite SPA landing page), it has genuinely useful data, and it has many route
 families. This is a real SEO asset.
 
-**The gaps (all fixable):**
-- No `metadata` exports / Open Graph in the layout — pages have no titles or
-  descriptions for Google/AI.
-- No `robots.ts`, `sitemap.ts`, or `llms.txt`.
-- Routes use **query parameters** (`?ticker=AAPL`) rather than path params
-  (`/stocks/AAPL`) — a deliberate choice for Vercel routing, but **query-param
-  pages are much weaker for SEO**. Google indexes `?ticker=AAPL` poorly and often
-  treats them as one page. This is the single biggest SEO limiter on Research.
+This section was originally written from an earlier Research snapshot. Treat it
+as strategy, not a current implementation audit. Verify the Research repo before
+planning another pass: metadata, robots, sitemap, `llms.txt`, and crawlable URL
+work may have changed independently.
 
 ### Research SEO priorities (in order)
-1. **Per-page metadata.** Next.js `generateMetadata()` per route so every
+1. **Verify and extend per-page metadata.** Every
    stock/fund/macro page has a unique title, description, and OG image. Biggest
    win for the least effort. ("AAPL Revenue Segments | Aerarium Research", etc.)
-2. **Dynamic `sitemap.ts` + `robots.ts`.** Auto-generate a sitemap from the 531
+2. **Verify `sitemap.ts` + `robots.ts`.** Auto-generate a sitemap from the 531
    companies × key views. This alone exposes thousands of pages to Google.
-3. **`llms.txt`** describing Research (mirror the one we shipped on aerarium.app).
+3. **Verify `llms.txt`** describing Research (mirror the factual tone on aerarium.app).
 4. **The path-vs-query decision.** Long term, real indexable URLs
    (`/stocks/aapl/revenue-segments`) will dramatically outperform query params.
    This is an architecture change (the CLAUDE.md notes path params were avoided
@@ -92,10 +91,8 @@ families. This is a real SEO asset.
    in *your* portfolio → Aerarium Portfolio."
 6. **Submit Research to Google Search Console + Bing** as a separate property.
 
-> When you're ready, I can do a "Research SEO Phase 1" pass (metadata + sitemap +
-> robots + llms.txt) in that repo, mirroring what we just shipped here — it's a
-> bigger job than the landing page because there are many routes, but the
-> metadata + sitemap piece is high-leverage and self-contained.
+> Before another Research SEO pass, read that repo's current docs and inspect the
+> live routes. Keep only the remaining gaps in the next plan.
 
 ---
 
@@ -113,10 +110,11 @@ interleaves Portfolio and Research posts).
 **The crossover post is your secret weapon.** Example:
 > "I used Aerarium *Research* to see NVDA's weight across the major ETFs. Then
 > Aerarium *Portfolio* showed me my real NVDA exposure once you add my direct
-> shares. 8% on paper → 18.7% actual. Same login, two halves of one answer."
+> shares. In one illustrative portfolio, 8% direct → 18.7% total exposure. Two
+> halves of one answer."
 
-That single post sells the brand architecture, both products, and the SSO benefit
-in one story. Make versions of it a recurring theme.
+That single post sells the brand architecture and both products in one story.
+Make versions of it a recurring theme.
 
 **Research-specific channels:** Research data (13F, macro, Fed curve) is *perfect*
 for FinTwit (X) and r/investing-adjacent subreddits, where people actively want
@@ -248,7 +246,7 @@ Founder decisions captured (2026-05-30):
 | Step | Effort | Payoff | Who |
 |---|---|---|---|
 | Ship landing SEO Phase 1 (DONE) | done | link previews + Google/AI baseline | ✅ |
-| Research SEO Phase 1 (metadata + sitemap + robots + llms.txt) | medium | thousands of indexable pages | me, when ready |
+| Verify current Research SEO baseline and plan remaining gaps | small | avoids stale work and targets the next indexing wins | me, when ready |
 | Migrate Research auth onto the app's Supabase project | medium | unlocks SSO + unified billing | you/me |
 | Define the free-wedge vs paid boundary per feature | small (decision) | protects SEO surface while monetizing | you + me |
 | Keep logged-out Research overview pages crawlable | design | preserves discovery engine | engineering |
@@ -260,8 +258,6 @@ Founder decisions captured (2026-05-30):
 
 ## Open question still pending
 
-- **Research SEO Phase 1:** want me to do this pass next in the finsight repo
-  (per-page `generateMetadata`, dynamic `sitemap.ts`, `robots.ts`, `llms.txt`) —
-  the same way I just did the landing page? It's the highest-leverage next move
-  and is self-contained. The path-param URL question can follow as its own
-  investigation.
+- **Research SEO follow-up:** after verifying the live Research repo, which
+  crawlable discovery gaps remain? The path-based URL question should follow as
+  its own investigation if it is still unresolved.

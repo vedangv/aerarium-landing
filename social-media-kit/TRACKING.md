@@ -1,8 +1,8 @@
 # Tracking — How You'll Know What's Working
 
-You already have Vercel Analytics wired into the site, and the waitlist API
-records signups. The missing piece was **knowing which post drove which click.**
-UTM tags fix that. This page explains them simply.
+You already have Vercel Analytics wired into the site, outbound CTA events are
+tagged by placement, and the waitlist API records signups. UTM tags identify
+which post drove which visit and signup.
 
 ---
 
@@ -40,7 +40,7 @@ spelled the same, or analytics will split it into two buckets.
 
 ---
 
-## How to read results (free, no setup)
+## How to read results
 
 1. Go to your Vercel project → **Analytics**.
 2. Look at **Events** — you already fire `founder_list_signup`,
@@ -49,6 +49,27 @@ spelled the same, or analytics will split it into two buckets.
    `utm_content`.
 4. Weekly, ask one question: *which `utm_content` produced the most signups?*
    Make more of that. Drop what got zero.
+
+For a simple signup view, open `/admin/waitlist` on the deployed landing domain
+and enter `ADMIN_DASHBOARD_PASSWORD`. It shows email, referral count, source,
+campaign attribution, and signup time.
+
+The admin API is private and basic by design: it uses a constant-time password
+comparison and a best-effort per-instance failed-attempt limit. This is adequate
+for the current low-volume founder dashboard, not a replacement for durable auth
+if the surface grows.
+
+### Attribution migration status
+
+The API is backward-compatible before the database change: it falls back to the
+legacy table shape if the UTM columns are absent. To persist UTM values with each
+signup, explicitly review and approve:
+
+`supabase/migrations/20260602000000_landing_waitlist_attribution.sql`
+
+Do not apply that migration to production implicitly. Until it is approved and
+applied, Vercel Analytics still records CTA events and the waitlist still
+accepts signups, but signup rows will not retain UTM columns.
 
 Tip: also check **Instagram Insights** natively (reach, saves, profile taps,
 link taps). On IG, **saves and shares** predict reach better than likes.

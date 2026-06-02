@@ -33,7 +33,7 @@ Order is assembled in **`src/App.tsx`**. Two products are colour-coded:
 | 7 | App CTA bridge ("…and so much more" + TestFlight) | `src/components/CtaBridge.tsx` | — |
 | 8 | Research intro ("Now ask the same of every company") | `src/components/ResearchQuestions.tsx` | `#research-questions` |
 | 9 | 5 Research web screens (Financials/Segments/Ownership/Smart-money/Macro) | `src/components/ResearchScreens.tsx` (data) + `WebScreen.tsx` (layout) | — |
-| 10 | Research closing CTA (Bloomberg anchor + Open Research) | `src/components/ResearchCloseCta.tsx` | — |
+| 10 | Research closing CTA (source-first scope + Open Research) | `src/components/ResearchCloseCta.tsx` | — |
 | 11 | Security ("Security you can verify, not just trust.") | `src/components/SecuritySection.tsx` | `#security` |
 | 12 | Founder story ("The spreadsheet stopped answering the real question.") | `src/components/FounderExposureBridge.tsx` | `#founder-story` |
 | 13 | Founder email list | `src/components/WaitlistPortal.tsx` | `#waitlist` |
@@ -73,7 +73,8 @@ This one file owns the whole opening scroll scene. Inside it:
   is `{ text, pos, ... }`; edit `text` to change wording, `pos` to move it.
   The comment beside each says which product feature it sets up.
 - **Questions heading** ("Questions worth asking about your own money." +
-  "Most investors can't answer these…") → the `QuestionsCopy()` function.
+  "Brokerage screens rarely answer these clearly…") → the `QuestionsCopy()`
+  function.
 - **Animation pacing** (if a question reveals too fast/slow, or the hero→questions
   transition timing): the constants `CHIP_START`, `CHIP_STAGGER`, `CHIP_WINDOW`,
   the track height `h-[450svh]`, and the `useTransform(...)` lines in `Scene()`.
@@ -108,8 +109,8 @@ screenshot import) all sits at the top of the component:
   `assets/screenshots/latest/`.
 
 ### 10. Research closing CTA — `src/components/ResearchCloseCta.tsx`
-- Headline "Institutional depth, not institutional price.", the Bloomberg
-  "$24,000 a year" subheader, and the "Open Research" button.
+- Headline "Institutional depth, not institutional price.", the source-first
+  Research subheader, and the "Open Research" button.
 
 ### 11. Security — `src/components/SecuritySection.tsx`
 - Pill "Security", heading "Security you can verify, not just trust." + its
@@ -128,6 +129,10 @@ screenshot import) all sits at the top of the component:
 - Post-signup ticket text ("You're on the founder list", "Launch Pass", "Share
   launch updates", etc.) is lower in the same file.
 - Validation/error messages are the `setError("…")` strings.
+- Signups capture referral and UTM attribution through `api/waitlist.js`.
+- The private `/admin/waitlist` route renders `AdminWaitlist.tsx`. The API falls
+  back to the legacy table shape until the draft attribution migration is
+  explicitly approved and applied.
 
 ### 14. Footer — `src/App.tsx`
 - Footer links (Privacy, Terms, Security, Founder list, TestFlight, Research,

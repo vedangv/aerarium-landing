@@ -14,7 +14,8 @@ is live, and you have an Instagram account. App Store launch target is
 
 People don't share features. They share a *moment of surprise*. Yours is:
 
-> **You think you own 8% NVDA. Look through your ETFs and it's actually 18.7%.**
+> **Illustrative example: you think you own 8% NVDA. Look through your ETFs and
+> it's actually 18.7%.**
 
 That "wait, what do I *actually* own?" feeling is the single most powerful thing
 Aerarium does. Almost every post, ad, and SEO page should lead with a version of
@@ -80,8 +81,8 @@ solo founders burn out.
    It's your best hook. Use the IG caption from `CAPTIONS-INSTAGRAM.md`.
 3. Follow `LAUNCH-CALENDAR.csv` for the daily posts.
 4. Put your **UTM founder-list link** in your IG bio (from `LINKS.csv`).
-5. Optional but high-value: do the 30-minute "Phase 1" technical SEO setup in
-   `SEO-GEO-PLAYBOOK.md` so Google and AI can find you while you sleep.
+5. Submit `aerarium.app` to Google Search Console and Bing Webmaster Tools using
+   the shipped sitemap. See `SEO-GEO-PLAYBOOK.md`.
 
 **Don't yet:** run paid ads, buy followers, post the same thing 5×/day, or claim
 user numbers you don't have. None of that helps a real beta launch.
@@ -109,7 +110,8 @@ category Google and Apple scrutinize hardest. Three hard rules:
 You don't need fancy analytics. Watch four numbers weekly (all free):
 - **Founder-list signups** (your waitlist dashboard)
 - **TestFlight clicks** (Vercel Analytics → events)
-- **Which UTM** drove them (Vercel Analytics → filter by `utm_campaign`)
+- **Which UTM** drove them (Vercel Analytics events or `/admin/waitlist` after
+  the draft attribution migration is approved and applied)
 - **Instagram reach/saves** (IG Insights — saves matter more than likes here)
 
 A good week early on isn't "viral." It's *5–20 genuinely interested signups* and

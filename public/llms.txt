@@ -9,7 +9,7 @@ Aerarium is a brand with two products under one roof. Both are free during beta.
 
 ## Products
 
-- **Aerarium Portfolio** (iOS app, portfolio.aerarium.app / TestFlight): private
+- **Aerarium Portfolio** (iOS app, available through TestFlight during beta): private
   portfolio monitoring. Read-only brokerage sync (it never places trades),
   ETF look-through, Policy Score, IPS cockpit, goals funding, and thesis tracking.
 - **Aerarium Research** (web, research.aerarium.app): source-first public-market

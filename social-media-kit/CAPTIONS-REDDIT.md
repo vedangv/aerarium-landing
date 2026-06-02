@@ -52,16 +52,17 @@ I held SPY and QQQ for diversification, plus a smaller direct position in NVDA. 
 my brokerage screen NVDA looked like ~8% of my portfolio.
 
 But NVDA is a top weight in both SPY and QQQ. Once you add its weight inside those
-funds — and sum across my retirement + taxable accounts — my real NVDA exposure
-was closer to 18%.
+funds — and sum across my retirement + taxable accounts — the look-through
+calculation can change the answer materially. One illustrative portfolio on the
+Aerarium site moves from 8% direct NVDA to 18.7% total exposure.
 
 The lesson I took: you can't actually follow your own allocation rules if your
 true exposure is hidden inside fund wrappers and split across accounts.
 
 Full disclosure: this annoyed me enough that I built a tool to do the look-through
 automatically (I'm a CFA, solo founder, it's in free beta). Happy to share if it's
-allowed here, but mostly I wanted to flag the overlap issue because I think a lot
-of people are off by ~2x and don't realize it.
+allowed here, but mostly I wanted to flag the overlap issue because account-level
+screens do not always show the full exposure picture.
 
 How do you all track look-through exposure — manually, a spreadsheet, or do you
 just not?

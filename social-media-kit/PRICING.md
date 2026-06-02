@@ -81,13 +81,12 @@ Your **$10 Full** sits right at Qualtrim's $10 — but you give a free tier *and
 $5 entry they don't. That's the undercut: more accessible price ladder, same
 ceiling. When traction proves the value, the Full tier can move to $12–15.
 
-### The bigger price anchor (project brain, 2026-05-31)
-Research is positioned as **institutional-grade analytics built from SEC EDGAR
-primary sources — a replacement for the $24k/yr Bloomberg terminal and $39–79/mo
-fiscal.ai.** Use this in copy + pricing comms: $10 reframes from "cheap" to
-"institutional data for ~0.04% of a Bloomberg terminal." It justifies raising
-Full toward $12–15 with traction without ever feeling expensive. See FEATURES.md
-for the full provenance/feature list that backs the claim.
+### Competitor context (internal only)
+Research is a source-first workspace built from SEC EDGAR filings and other
+public-market data. Bloomberg and fiscal.ai pricing can inform packaging
+research, but Aerarium should not be marketed as a replacement or as equivalent
+coverage. Validate willingness to pay against actual retention before setting
+public prices. See FEATURES.md for the provenance and feature list.
 
 ### SnapTrade double-cost warning (for the merge phase)
 If a user pays for brokerage on **both** app and Research separately, that's

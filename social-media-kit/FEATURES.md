@@ -28,12 +28,12 @@ officer, not a trading platform or robo-advisor.
 
 ---
 
-## Aerarium Research (web) — institutional analytics from SEC primary sources
+## Aerarium Research (web) — source-first public-market research
 
-Positioning from the brain: **institutional-grade analytics built directly from
-SEC EDGAR primary sources — a replacement for the $24k/yr Bloomberg terminal and
-$39–79/mo services like fiscal.ai.** This price anchor is a weapon: it reframes
-the $10 tier from "cheap" to "institutional data for 0.04% of a Bloomberg."
+Positioning: **a source-first workspace that turns SEC EDGAR filings and other
+public-market data into inspectable financial, ownership, fund-overlap, and
+macro views.** It is not a Bloomberg terminal replacement. Competitor pricing
+may inform future packaging decisions, but it is not a public product claim.
 
 | # | Feature | The problem it solves |
 |---|---|---|
@@ -51,7 +51,7 @@ the $10 tier from "cheap" to "institutional data for 0.04% of a Bloomberg."
 ## How to use this on the landing page
 - The landing **feature sections** should each pick ONE feature, lead with the
   *problem/question*, then show the feature answering it (Luffu format).
-- The **price anchors** (Bloomberg $24k/yr; fiscal.ai $39–79/mo) belong in the
-  Research section and pricing comms.
+- Keep competitor pricing in internal pricing research only. Public Research
+  copy should lead with source-first depth and specific product views.
 - "Guardrails, not handholding" / "compliance officer in your pocket" is the
   Portfolio section's spine.
