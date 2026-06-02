@@ -29,7 +29,7 @@ Assembled in `src/App.tsx`. Sections marked ✅ are the new calm redesign;
 
 | Section | Component | Notes |
 |---|---|---|
-| Navbar | `Navbar.tsx` | fixed; links scroll to sections |
+| Navbar | `Navbar.tsx` | fixed; **page-centered** section links; emerald→cyan **scroll-progress bar**; two solid CTAs (cyan Open Research + emerald Join iOS Beta) that **roll up from the hero** once you scroll past it; full-screen opaque mobile drawer |
 | **Hero + Questions** | `HeroQuestionsScene.tsx` | ✅ pinned scene: hero dissolves → 6 "questions about your own money" reveal one-at-a-time. Hero has TWO CTAs: emerald **Get Early Access** (app) + cyan **Open Research** (web). |
 | **1. X-Ray** "You own more than you think." | `HiddenExposureReveal.tsx` | ✅ answers "how concentrated am I?" |
 | **2. Policy Score** "Always know if you're on plan." | `PolicyScoreSection.tsx` | ✅ "am I on plan?" |
@@ -40,15 +40,20 @@ Assembled in `src/App.tsx`. Sections marked ✅ are the new calm redesign;
 | **Research intro** "Now ask the same of every company." | `ResearchQuestions.tsx` | ✅ pinned; 6 questions about the companies you research |
 | **5 Research web screens** | `ResearchScreens.tsx` → `WebScreen.tsx` | ✅ Financials · Segments · Ownership · Smart-money 13F · Macro. Browser-frame, cyan accent. |
 | **Research closing CTA** "Institutional depth, not institutional price." | `ResearchCloseCta.tsx` | ✅ Bloomberg $24k anchor + Open Research → research.aerarium.app |
-| Launch status (countdown) | `CountdownTimer.tsx` (wrapped in App) | June 2026 target; kept |
-| ⚠️ Product surfaces (2×2) | `AppSurfaceStrip.tsx` | **DUPLICATE — remove** (X-Ray etc. shown calm above) |
-| ⚠️ Product proof (Portfolio tour + Research carousel + Security) | `FeatureGrid.tsx` | **DUPLICATE — remove Portfolio+Research; keep/extract Security** |
-| Founder story | `FounderExposureBridge.tsx` | restyle to match calm aesthetic |
-| Founder email list | `WaitlistPortal.tsx` | under review — may be redundant now |
+| **Security** "Security you can verify, not just trust." | `SecuritySection.tsx` | ✅ pinned; 4 verifiable-trust cards cascade in (emerald) |
+| **Founder story** "The spreadsheet stopped answering the real question." | `FounderExposureBridge.tsx` | ✅ pinned + restyled calm; "Why I built it" pill |
+| Founder email list | `WaitlistPortal.tsx` | ✅ kept — the only owned-audience capture (App Store launch updates) |
 | Footer | inline in `App.tsx` | brand, links, copyright |
 
 The five app feature screens all use the shared **`CenterStageScreen.tsx`**; the
 five web screens use **`WebScreen.tsx`**. Both share the reveal mechanism below.
+
+> **Removed in the redesign** (don't look for these — they're gone): the dense
+> `AppSurfaceStrip.tsx` 2×2 grid, the `FeatureGrid.tsx` Portfolio/Research/Security
+> block (Security was extracted to its own pinned `SecuritySection.tsx`), the
+> `CountdownTimer.tsx` launch card, and the old `PortfolioCockpitTour` /
+> `IosCockpitMockup` mockups. The June 9 launch date now lives only in prose +
+> `social-media-kit/`, not a countdown component.
 
 ---
 
@@ -113,22 +118,28 @@ Not financial advice." Full list in `social-media-kit/MESSAGING.md`.
 
 ---
 
-## What's done vs pending (2026-06-01)
+## What's done vs pending (2026-06-02)
 
-✅ Hero (2 CTAs) + 6-question empathy scene.
+The full two-product redesign **shipped to `main`** (PR #5, merge `fec0821`).
+
+✅ Hero (2 CTAs) + 6-question empathy scene; hero clears the navbar on short phones.
 ✅ 5 app feature screens (pinned center-stage): X-Ray, Policy Score, Goals,
    Trade Checker, Thesis.
 ✅ App CTA bridge (pinned) with cyan web lead-in.
 ✅ Research intro (pinned, 6 questions) + 5 web screens (pinned browser-frame) +
    closing Research CTA (Bloomberg anchor).
 ✅ Color system: emerald = app, cyan = research, throughout.
+✅ Removed the duplicated old sections (`AppSurfaceStrip`, `FeatureGrid`,
+   `CountdownTimer`); **Security** extracted to its own pinned `SecuritySection`.
+✅ **Founder story** + **Security** restyled into the calm pinned template.
+✅ Kept the **email/waitlist CTA** — it's the only owned-audience capture.
+✅ Footer reviewed (anchors valid).
+✅ Navbar finished: centered links, scroll-progress bar, hero→bar CTA roll-up,
+   solid cyan/emerald CTAs, opaque full-height mobile drawer.
 
-🔜 Remove the duplicated old sections (`AppSurfaceStrip`, the Portfolio+Research
-   parts of `FeatureGrid`); keep/restyle **Security**.
-🔜 Restyle **Founder story** + **Security** to match the calm aesthetic.
-🔜 Decide whether the **email/waitlist CTA** is still needed.
-🔜 Footer review (anchor links, copy).
 🔜 Font experiment (backlog).
+🔜 `export-social.mjs` rewrite — it still reads the removed `FeatureGrid.tsx` /
+   `FEATURES` array; stale until updated for the two-product architecture.
 
 See `social-media-kit/FEATURES.md` for the feature→question mapping that drives
 every section's copy.
