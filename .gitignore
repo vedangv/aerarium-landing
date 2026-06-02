@@ -7,8 +7,15 @@ supabase/.temp/
 node_modules/
 dist/
 build/
+*.zip
 aerarium-protocol.zip
 aerarium.zip
 aerarium (1).zip
 aerarium (2).zip
 test-results/
+
+# Playwright MCP scratch screenshots/snapshots
+.playwright-mcp/
+
+# Stray/unused draft assets (not referenced by the app)
+assets/modern minimalist image.png
