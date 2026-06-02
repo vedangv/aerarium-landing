@@ -13,12 +13,20 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+      // The hero copy (with its own CTAs) dissolves within the first ~0.6 of a
+      // viewport of scroll. Hold the nav CTAs back until then, so the two
+      // buttons aren't duplicated on the hero — they roll up into the bar after.
+      setPastHero(window.scrollY > window.innerHeight * 0.6);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -67,8 +75,16 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop CTAs — solid cyan Research + solid emerald app */}
-        <div className="hidden lg:flex items-center gap-2.5">
+        {/* Desktop CTAs — solid cyan Research + solid emerald app. Hidden on the
+            hero (where the hero card already shows them), then they roll up into
+            the bar as the visitor scrolls past it. */}
+        <motion.div
+          className="hidden lg:flex items-center gap-2.5"
+          animate={{ opacity: pastHero ? 1 : 0, y: pastHero ? 0 : 12 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          style={{ pointerEvents: pastHero ? "auto" : "none" }}
+          aria-hidden={!pastHero}
+        >
           <a
             href={RESEARCH}
             target="_blank"
@@ -89,7 +105,7 @@ export default function Navbar() {
             Join iOS Beta
             <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
-        </div>
+        </motion.div>
 
         {/* Mobile toggle */}
         <button
