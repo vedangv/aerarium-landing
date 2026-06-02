@@ -35,7 +35,7 @@ The hidden cost stack: **Apple takes 15%** (Small Business Program, <$1M/yr) AND
 
 | Tier | Founder's spitball | My suggestion | What's included |
 |---|---|---|---|
-| Free | (beta) | **Free** | Manual portfolio entry, core X-Ray, basic Policy Score. Zero marginal cost to us. |
+| Free | (beta) | **Free** | **1 portfolio** via CSV import, core X-Ray, basic Policy Score. Capped at one portfolio to nudge Plus. Zero marginal cost to us. |
 | Plus | $3.99 | **$4.99** | Manual entry, full Policy Score history, IPS cockpit, thesis tracking, goals. |
 | Pro | $6.99 | **$9.99** | Everything in Plus **+ SnapTrade brokerage auto-sync**, unlimited accounts. |
 
@@ -120,7 +120,16 @@ and we see what users actually bundle.
 4. **Post-traction:** raise Research Full toward $12–15; introduce unified Pro
    after SSO.
 
-## Open pricing questions
-- Annual discount depth? (10× monthly is standard; some go 8×.)
-- Founder/early-bird: lifetime lock at beta rate, or just first-year discount?
-- Does the app free tier cap accounts/holdings (e.g. 1 account) to nudge upgrades?
+## Locked decisions (2026-06-02)
+- **Annual discount: 10× monthly** (2 months free) across all paid tiers —
+  Plus ~$49/yr, Pro ~$99/yr, Research Starter ~$50/yr, Full ~$100/yr.
+- **Founder / early-bird: first year at founder rate, then standard.** NOT a
+  lifetime lock — rewards early users without permanently capping LTV or future
+  price raises.
+- **App free tier caps at 1 portfolio** (CSV import + core X-Ray + basic Policy
+  Score). A second portfolio is the upgrade trigger to Plus.
+
+## Still open (smaller)
+- Exact founder discount %  (e.g. 30% off year one) — pick at billing turn-on.
+- Research Starter $5: final per-view free/paid line — being specified in the
+  paywall plan (must keep the logged-out overview wedge crawlable).
