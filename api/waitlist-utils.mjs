@@ -28,7 +28,17 @@ function cleanOptionalText(value, fallback = null, maxLength = 160) {
   return cleaned.slice(0, maxLength);
 }
 
-export function buildWaitlistRow({ email, referralCode, referredBy, source, userAgent }) {
+export function buildWaitlistRow({
+  email,
+  referralCode,
+  referredBy,
+  source,
+  userAgent,
+  utmSource,
+  utmMedium,
+  utmCampaign,
+  utmContent,
+}) {
   const normalizedEmail = normalizeEmail(email);
   if (!normalizedEmail) {
     throw new Error("invalid_email");
@@ -40,5 +50,9 @@ export function buildWaitlistRow({ email, referralCode, referredBy, source, user
     referred_by: cleanReferralCode(referredBy),
     source: cleanOptionalText(source, "landing", 64),
     user_agent: cleanOptionalText(userAgent, null, 512),
+    utm_source: cleanOptionalText(utmSource, null, 64),
+    utm_medium: cleanOptionalText(utmMedium, null, 64),
+    utm_campaign: cleanOptionalText(utmCampaign, null, 96),
+    utm_content: cleanOptionalText(utmContent, null, 96),
   };
 }

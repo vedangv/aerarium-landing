@@ -37,6 +37,10 @@ describe("waitlist utilities", () => {
       referred_by: "AER-REF12345",
       source: "landing-waitlist",
       user_agent: "Safari Test Agent",
+      utm_source: null,
+      utm_medium: null,
+      utm_campaign: null,
+      utm_content: null,
     });
   });
 
@@ -52,5 +56,21 @@ describe("waitlist utilities", () => {
     assert.equal(row.referred_by, null);
     assert.equal(row.source, "landing");
     assert.equal(row.user_agent, null);
+  });
+
+  it("sanitizes and bounds attribution fields", () => {
+    const row = buildWaitlistRow({
+      email: "user@example.com",
+      referralCode: "AER-ABC123FF",
+      utmSource: " instagram ",
+      utmMedium: " social ",
+      utmCampaign: "x".repeat(120),
+      utmContent: " launch-video ",
+    });
+
+    assert.equal(row.utm_source, "instagram");
+    assert.equal(row.utm_medium, "social");
+    assert.equal(row.utm_campaign.length, 96);
+    assert.equal(row.utm_content, "launch-video");
   });
 });

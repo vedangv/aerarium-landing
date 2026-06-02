@@ -79,7 +79,7 @@ async function fetchReferralCount({ supabaseUrl, serviceKey, referralCode, fetch
 }
 
 async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl }) {
-  const response = await fetchImpl(`${supabaseUrl}/rest/v1/${TABLE}`, {
+  const requestInsert = (body) => fetchImpl(`${supabaseUrl}/rest/v1/${TABLE}`, {
     method: "POST",
     headers: {
       apikey: serviceKey,
@@ -87,8 +87,18 @@ async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl }) {
       "Content-Type": "application/json",
       Prefer: "return=representation",
     },
-    body: JSON.stringify(row),
+    body: JSON.stringify(body),
   });
+
+  let response = await requestInsert(row);
+  if (response.status === 400) {
+    const legacyRow = { ...row };
+    delete legacyRow.utm_source;
+    delete legacyRow.utm_medium;
+    delete legacyRow.utm_campaign;
+    delete legacyRow.utm_content;
+    response = await requestInsert(legacyRow);
+  }
 
   if (response.ok) {
     const rows = await response.json();
@@ -169,6 +179,10 @@ export default async function handler(req, res, context = {}) {
       referredBy: body.referredBy ?? body.ref,
       source: body.source ?? "landing",
       userAgent: getHeader(req.headers, "user-agent"),
+      utmSource: body.utmSource,
+      utmMedium: body.utmMedium,
+      utmCampaign: body.utmCampaign,
+      utmContent: body.utmContent,
     });
 
     try {
