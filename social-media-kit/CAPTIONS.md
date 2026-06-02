@@ -2,8 +2,7 @@
 caption per screenshot). Use the platform-specific libraries instead — they
 lead with the NVDA hook, include founder posts, and carry UTM links:
 START-HERE.md · CAPTIONS-INSTAGRAM.md · CAPTIONS-LINKEDIN.md · CAPTIONS-X.md ·
-CAPTIONS-REDDIT.md · LAUNCH-CALENDAR.csv. Kept only as the export-social.mjs
-reference output. -->
+CAPTIONS-REDDIT.md · LAUNCH-CALENDAR.csv. Kept only as a historical reference. -->
 
 # Aerarium Social Media Kit
 
@@ -206,4 +205,3 @@ Check it out at research.aerarium.app 🔗
 #AerariumResearch #MarketAnalysis #MacroEconomics #EquityResearch #FinancialData #InvestmentAnalysis #MarketInsights
 
 ---
-

@@ -35,10 +35,13 @@ export default function AdminWaitlist() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data?.error === "admin_not_configured"
-          ? "Admin password is not configured in Vercel."
-          : "Password failed or the waitlist could not be loaded."
-        );
+        if (data?.error === "admin_not_configured") {
+          setError("Admin password is not configured in Vercel.");
+        } else if (data?.error === "rate_limited") {
+          setError("Too many failed attempts. Wait 15 minutes before trying again.");
+        } else {
+          setError("Password failed or the waitlist could not be loaded.");
+        }
         return;
       }
 
@@ -54,7 +57,7 @@ export default function AdminWaitlist() {
     <main className="relative min-h-screen bg-slate-950 text-slate-100 font-sans overflow-x-hidden px-6 py-10">
       <div className="absolute inset-0 bg-cyber-grid opacity-25 pointer-events-none" />
       <div className="relative z-10 max-w-6xl mx-auto space-y-8">
-        <a href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-300 transition-colors">
+        <a href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">
           <ArrowLeft className="h-4 w-4" />
           Back to landing page
         </a>
@@ -77,7 +80,7 @@ export default function AdminWaitlist() {
             <button
               onClick={() => fetchRows()}
               disabled={isLoading}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-100 hover:border-emerald-400/30 hover:text-emerald-300 disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-100 hover:border-emerald-400/30 hover:text-emerald-300 disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             >
               <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
               Refresh
@@ -102,7 +105,7 @@ export default function AdminWaitlist() {
             <button
               type="submit"
               disabled={isLoading || !password}
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             >
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Eye className="h-4 w-4" />}
               View founder list
@@ -122,7 +125,7 @@ export default function AdminWaitlist() {
               <div className="glass-card rounded-3xl p-5">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Top referrer</p>
                 <p className="mt-3 truncate font-mono text-sm font-bold text-white">
-                  {payload.rows.find((row) => row.referralCount > 0)?.email ?? "None yet"}
+                  {payload.topReferrerEmail ?? "None yet"}
                 </p>
               </div>
             </section>
@@ -144,6 +147,7 @@ export default function AdminWaitlist() {
                       <th className="px-5 py-3 font-semibold">Referred by</th>
                       <th className="px-5 py-3 font-semibold">Referrals</th>
                       <th className="px-5 py-3 font-semibold">Source</th>
+                      <th className="px-5 py-3 font-semibold">Campaign</th>
                       <th className="px-5 py-3 font-semibold">Created</th>
                     </tr>
                   </thead>
@@ -155,6 +159,9 @@ export default function AdminWaitlist() {
                         <td className="whitespace-nowrap px-5 py-4 font-mono text-slate-400">{row.referredBy ?? "-"}</td>
                         <td className="whitespace-nowrap px-5 py-4">{row.referralCount}</td>
                         <td className="whitespace-nowrap px-5 py-4 text-slate-400">{row.source}</td>
+                        <td className="whitespace-nowrap px-5 py-4 text-slate-400">
+                          {[row.utmSource, row.utmMedium, row.utmCampaign, row.utmContent].filter(Boolean).join(" / ") || "-"}
+                        </td>
                         <td className="whitespace-nowrap px-5 py-4 text-slate-400">{formatDate(row.createdAt)}</td>
                       </tr>
                     ))}

@@ -54,7 +54,7 @@ Link in the comments 👇
 ### L2 — The hidden-exposure insight (teaches, then reveals)
 
 ```
-Most investors underestimate their single-name exposure by 2x or more.
+A brokerage holdings list can understate single-name exposure.
 
 Here's why.
 
@@ -67,7 +67,7 @@ But NVDA is one of the largest weights in both SPY and QQQ. So your *real* NVDA
 exposure is your direct shares PLUS its weight inside every fund you hold —
 across every account.
 
-That 8% can quietly be 18%+.
+In one illustrative portfolio, that 8% became 18.7% after ETF look-through.
 
 You can't manage risk you can't see. And you definitely can't follow your own
 investing rules if your true exposure is hidden inside fund wrappers.

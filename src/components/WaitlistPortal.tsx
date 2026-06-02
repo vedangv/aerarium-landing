@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { track } from "@vercel/analytics";
 import { WaitlistUser } from "../types";
-import { ArrowRight, CheckCircle, Mail, Share2, Sparkles, RotateCcw, AlertCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Mail, Share2, Sparkles, AlertCircle } from "lucide-react";
+import {
+  readAttribution,
+  trackFounderListSignup,
+  trackOutboundClick,
+  trackReferralLinkCopied,
+} from "../lib/analytics";
+
+function barcodeOpacity(code: string, index: number) {
+  const charCode = code.charCodeAt(index % code.length);
+  return 0.5 + ((charCode + index * 17) % 50) / 100;
+}
 
 export default function WaitlistPortal() {
   const [email, setEmail] = useState("");
@@ -38,6 +48,7 @@ export default function WaitlistPortal() {
 
     try {
       const params = new URLSearchParams(window.location.search);
+      const attribution = readAttribution();
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -45,6 +56,7 @@ export default function WaitlistPortal() {
           email,
           referredBy: params.get("ref"),
           source: "landing-waitlist-portal",
+          ...attribution,
         }),
       });
 
@@ -67,10 +79,10 @@ export default function WaitlistPortal() {
       };
 
       localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
-      track("founder_list_signup", {
+      trackFounderListSignup({
         alreadyRegistered: Boolean(newUser.alreadyRegistered),
         hasReferral: Boolean(params.get("ref")),
-        source: "landing-waitlist-portal",
+        attribution,
       });
       setRegisteredUser(newUser);
     } catch {
@@ -84,18 +96,9 @@ export default function WaitlistPortal() {
     if (!registeredUser) return;
     const shareUrl = `${window.location.origin}/?ref=${registeredUser.referralCode}`;
     navigator.clipboard.writeText(shareUrl);
-    track("referral_link_copied", {
-      referralCount: registeredUser.referralCount,
-      source: "landing-waitlist-portal",
-    });
+    trackReferralLinkCopied(registeredUser.referralCount);
     setCopiedReferral(true);
     setTimeout(() => setCopiedReferral(false), 2000);
-  };
-
-  const handleReset = () => {
-    localStorage.removeItem("aerarium_registered_user");
-    setRegisteredUser(null);
-    setEmail("");
   };
 
   return (
@@ -171,7 +174,7 @@ export default function WaitlistPortal() {
                     className="h-full bg-white rounded-sm"
                     style={{
                       width: `${(i % 3 === 0 ? 3 : i % 2 === 0 ? 1 : 2)}px`,
-                      opacity: Math.random() * 0.5 + 0.5,
+                      opacity: barcodeOpacity(registeredUser.referralCode, i),
                     }}
                   />
                 ))}
@@ -200,7 +203,7 @@ export default function WaitlistPortal() {
               />
               <button
                 onClick={copyReferralLink}
-                className="py-2 px-3.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg text-xs font-semibold text-white hover:opacity-90 transition-all shrink-0 cursor-pointer flex items-center space-x-1"
+                className="py-2 px-3.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg text-xs font-semibold text-white hover:opacity-90 transition-all shrink-0 cursor-pointer flex items-center space-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
                 id="btn-copy-referral-link"
               >
                 <Share2 className="w-3 h-3" />
@@ -209,16 +212,6 @@ export default function WaitlistPortal() {
             </div>
           </div>
 
-          <div className="pt-2">
-            <button
-              onClick={handleReset}
-              className="text-[10px] text-slate-500 hover:text-slate-300 font-mono inline-flex items-center space-x-1.5 transition-colors cursor-pointer"
-              id="btn-waitlist-register-another"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>Register clean for demo</span>
-            </button>
-          </div>
         </div>
       ) : (
         /* Empty Input Registration State */
@@ -268,7 +261,7 @@ export default function WaitlistPortal() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-cyan-500 p-[1px] rounded-xl hover:shadow-lg hover:shadow-cyan-400/15 transition-all duration-300 ${
+              className={`w-full relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-cyan-500 p-[1px] rounded-xl hover:shadow-lg hover:shadow-cyan-400/15 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                 isSubmitting ? "cursor-wait opacity-75" : "cursor-pointer"
               }`}
               id="btn-waitlist-submit"
@@ -292,8 +285,8 @@ export default function WaitlistPortal() {
               href="https://testflight.apple.com/join/Xna39VKU"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => track("outbound_testflight_click", { source: "waitlist-portal" })}
-              className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-emerald-500/20 hover:border-emerald-500/40 rounded-xl py-3 text-xs font-semibold text-emerald-400 transition-colors cursor-pointer"
+              onClick={() => trackOutboundClick("testflight", "waitlist_portal")}
+              className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-emerald-500/20 hover:border-emerald-500/40 rounded-xl py-3 text-xs font-semibold text-emerald-400 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
               id="link-testflight-direct"
             >
               <span className="flex items-center justify-center space-x-2">
@@ -306,8 +299,8 @@ export default function WaitlistPortal() {
               href="https://research.aerarium.app/"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => track("outbound_research_click", { source: "waitlist-portal" })}
-              className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-cyan-500/20 hover:border-cyan-500/40 rounded-xl py-3 text-xs font-semibold text-cyan-400 transition-colors cursor-pointer"
+              onClick={() => trackOutboundClick("research", "waitlist_portal")}
+              className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-cyan-500/20 hover:border-cyan-500/40 rounded-xl py-3 text-xs font-semibold text-cyan-400 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
               id="link-research-direct"
             >
               <span className="flex items-center justify-center space-x-2">

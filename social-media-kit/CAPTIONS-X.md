@@ -20,11 +20,11 @@ When you create an X account, start with these.
 ```
 You think you own 8% NVDA.
 
-Look through your ETFs and across your accounts and it's probably closer to 18.7%.
+In one illustrative portfolio, ETF look-through changed the answer to 18.7%.
 
 SPY holds it. QQQ holds it. Your direct shares stack on top.
 
-Most people are off by ~2x on their biggest single-name exposure.
+How different is yours?
 ```
 *(Reply to your own tweet with: "Built a tool that does the look-through for you,
 free in beta 👇 [x nvda_hook link]")*
@@ -53,7 +53,7 @@ My spreadsheet couldn't answer it. Not really.
 It's direct shares + NVDA's weight inside every fund you hold + summed across
 every account.
 
-That "8%" position was quietly closer to 18%.
+In one illustrative portfolio, that "8%" became 18.7% after look-through.
 ```
 ```
 4/ You can't manage risk you can't see.

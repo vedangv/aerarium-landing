@@ -26,14 +26,15 @@ sentence breaks a rule here, rewrite it.
 
 ## The hook (lead with this almost everywhere)
 
-> **You think you own 8% NVDA. Look through your ETFs — it's actually 18.7%.**
+> **Illustrative example: you think you own 8% NVDA. Look through your ETFs —
+> it's actually 18.7%.**
 
 Why it works: it creates a knowledge gap ("wait, is that true for me?"), it's
 specific and credible, and it sets up Portfolio X-Ray and Policy Score as the
 payoff. Variations you can rotate:
 
 - "Your portfolio says 8% NVDA. Your ETFs say otherwise."
-- "How much NVDA do you *actually* own? Most people are off by 2x."
+- "How much NVDA do you *actually* own? Your brokerage screen may not show the full answer."
 - "SPY + QQQ + your direct NVDA = way more NVDA than you think."
 - "You can't follow your own investing rules if you can't see your real exposure."
 

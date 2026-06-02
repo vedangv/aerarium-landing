@@ -3,7 +3,7 @@
 Purpose: anyone (Codex, another Claude, a contractor) can read this and be
 instantly up to speed on the landing-page redesign.
 
-Last updated: 2026-06-01.
+Last updated: 2026-06-02.
 
 ---
 
@@ -39,7 +39,7 @@ Assembled in `src/App.tsx`. Sections marked ✅ are the new calm redesign;
 | **App CTA bridge** "…and so much more." | `CtaBridge.tsx` | ✅ TestFlight CTA + cyan "…only half of Aerarium ↓" lead-in into the web half |
 | **Research intro** "Now ask the same of every company." | `ResearchQuestions.tsx` | ✅ pinned; 6 questions about the companies you research |
 | **5 Research web screens** | `ResearchScreens.tsx` → `WebScreen.tsx` | ✅ Financials · Segments · Ownership · Smart-money 13F · Macro. Browser-frame, cyan accent. |
-| **Research closing CTA** "Institutional depth, not institutional price." | `ResearchCloseCta.tsx` | ✅ Bloomberg $24k anchor + Open Research → research.aerarium.app |
+| **Research closing CTA** "Institutional depth, not institutional price." | `ResearchCloseCta.tsx` | ✅ Source-first product scope + Open Research → research.aerarium.app |
 | **Security** "Security you can verify, not just trust." | `SecuritySection.tsx` | ✅ pinned; 4 verifiable-trust cards cascade in (emerald) |
 | **Founder story** "The spreadsheet stopped answering the real question." | `FounderExposureBridge.tsx` | ✅ pinned + restyled calm; "Why I built it" pill |
 | Founder email list | `WaitlistPortal.tsx` | ✅ kept — the only owned-audience capture (App Store launch updates) |
@@ -89,9 +89,8 @@ Global scroll-snap is removed (it fought the sticky scenes).
   emerald) and **Research** (web, research.aerarium.app; cyan).
 - Portfolio spine: "Guardrails, not handholding" / "a compliance officer in your
   pocket." Not a trading app.
-- Research spine: institutional analytics from SEC EDGAR primary sources — a
-  replacement for a $24k/yr Bloomberg terminal (the price anchor closes the web
-  section).
+- Research spine: source-first public-market research from SEC filings and other
+  public data. Do not position it as a Bloomberg terminal replacement.
 - Audience: long-term investors, beginner-inclusive up top, advanced/ticker
   specifics lower once engaged.
 
@@ -127,7 +126,7 @@ The full two-product redesign **shipped to `main`** (PR #5, merge `fec0821`).
    Trade Checker, Thesis.
 ✅ App CTA bridge (pinned) with cyan web lead-in.
 ✅ Research intro (pinned, 6 questions) + 5 web screens (pinned browser-frame) +
-   closing Research CTA (Bloomberg anchor).
+   closing Research CTA (source-first scope).
 ✅ Color system: emerald = app, cyan = research, throughout.
 ✅ Removed the duplicated old sections (`AppSurfaceStrip`, `FeatureGrid`,
    `CountdownTimer`); **Security** extracted to its own pinned `SecuritySection`.
@@ -136,10 +135,17 @@ The full two-product redesign **shipped to `main`** (PR #5, merge `fec0821`).
 ✅ Footer reviewed (anchors valid).
 ✅ Navbar finished: centered links, scroll-progress bar, hero→bar CTA roll-up,
    solid cyan/emerald CTAs, opaque full-height mobile drawer.
+✅ Waitlist attribution: the API records bounded UTM fields after the draft
+   migration is reviewed and applied; until then it safely falls back to the
+   legacy schema.
+✅ Private admin dashboard: `/admin/waitlist` shows signups, referral counts,
+   top referrer, and campaign attribution. Access requires
+   `ADMIN_DASHBOARD_PASSWORD`.
 
 🔜 Font experiment (backlog).
-🔜 `export-social.mjs` rewrite — it still reads the removed `FeatureGrid.tsx` /
-   `FEATURES` array; stale until updated for the two-product architecture.
+🔜 Review and explicitly approve
+   `supabase/migrations/20260602000000_landing_waitlist_attribution.sql` before
+   applying it to production. No migration has been applied by this repo pass.
 
 See `social-media-kit/FEATURES.md` for the feature→question mapping that drives
 every section's copy.

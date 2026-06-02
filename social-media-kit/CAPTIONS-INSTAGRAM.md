@@ -17,7 +17,7 @@ whole game. Hook first, always. Hashtags go at the very bottom (or first comment
 ```
 You think you own 8% NVDA.
 
-Look through your ETFs and your actual exposure might be closer to 18.7%.
+In one illustrative portfolio, ETF look-through changed the answer to 18.7%.
 
 SPY holds it. QQQ holds it. Your direct shares add to it. Across retirement and
 taxable accounts, that "small position" quietly becomes one of your biggest.
@@ -102,7 +102,7 @@ Your brokerage shows you funds. It doesn't show you what's *inside* them.
 Portfolio X-Ray looks through your ETFs to reveal your true stock, sector,
 asset-class, and currency exposure — rolled up across every account.
 
-The result is usually surprising. Often it's the whole point.
+The result can surface concentration that account screens show separately.
 
 See yours, free during beta → link in bio 🔎
 

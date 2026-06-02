@@ -3,7 +3,8 @@
 Social posts (the rest of this kit) are a *push* — they work only while you post.
 This playbook is the *pull*: making Google, ChatGPT, Perplexity, Gemini, and
 Google's AI answers recommend Aerarium to people already searching. It's slower to
-start but **compounds for free, forever.** Do the 30-minute Phase 1 this week.
+start but **compounds for free, forever.** The technical foundation is shipped;
+the next gains come from search-engine submission and useful content pages.
 
 Two related goals:
 - **SEO** (Search Engine Optimization): rank in Google for what your buyers search.
@@ -22,13 +23,15 @@ Your landing page (`index.html`) already has:
 - ✅ A favicon + Apple touch icon
 - ✅ HTTPS, fast Vercel hosting, mobile-friendly
 
-It's **missing** (this is the to-do list):
-- ❌ Open Graph + Twitter card tags (so shared links look good — affects social too)
-- ❌ A social preview image (`og-image`)
-- ❌ `robots.txt` (tells crawlers what to index)
-- ❌ `sitemap.xml` (lists your pages for Google)
-- ❌ Structured data / JSON-LD (helps Google + AI understand what Aerarium *is*)
-- ❌ `llms.txt` (an emerging convention that gives AI a clean factual summary)
+It also ships:
+- ✅ Open Graph + Twitter card tags (shared-link previews)
+- ✅ A social preview image (`og-image.png`)
+- ✅ `robots.txt`
+- ✅ `sitemap.xml`
+- ✅ Structured data / JSON-LD
+- ✅ `llms.txt` as an experimental factual brand summary
+
+The remaining gap:
 - ❌ Real content pages (the single landing page can't rank for much on its own)
 
 ---
@@ -41,7 +44,7 @@ buyers make ("ETF look-through app", "investment policy statement app", "Fed fun
 curve chart"). Each of those needs its **own page with real content.**
 
 So the SEO plan has two tracks:
-1. **Quick technical wins** on the existing page (Phase 1) — do now, 30–60 min.
+1. **Technical foundation** on the existing page (Phase 1) — shipped.
 2. **Content pages** that each target one search intent (Phase 2) — the real
    long-term traffic engine, build over weeks.
 
@@ -50,14 +53,13 @@ asset — its data pages can rank for thousands of specific queries. Track 3.
 
 ---
 
-## Phase 1 — Technical foundation (do this week, ~30–60 min)
+## Phase 1 — Technical foundation (shipped)
 
-These are concrete files/snippets. I can implement all of them in the codebase
-for you in one pass — just say the word. Here's what each is and why:
+These files are live. Keep them current as product positioning evolves:
 
 ### 1. Open Graph + Twitter cards (also fixes ugly link previews)
-Add to `index.html` `<head>`. Controls how `aerarium.app` looks when shared on
-any platform — this directly helps your *social* posts too.
+Implemented in `index.html`. Controls how `aerarium.app` looks when shared on
+any platform and directly helps social posts.
 ```html
 <meta property="og:title" content="Aerarium — See what you actually own" />
 <meta property="og:description" content="ETF look-through and a Policy Score that shows when your portfolio drifts from your own rules. Read-only. Free iOS beta." />
@@ -70,8 +72,8 @@ any platform — this directly helps your *social* posts too.
 <meta name="twitter:image" content="https://aerarium.app/og-image.png" />
 <link rel="canonical" href="https://aerarium.app/" />
 ```
-Plus a **1200×630 `og-image.png`** in `/public` — use your strongest hero/X-Ray
-visual with the "8% → 18.7%" hook.
+The **1200×630 `og-image.png`** lives in `/public` and uses the illustrative
+"8% → 18.7%" X-Ray hook.
 
 ### 2. robots.txt (`/public/robots.txt`)
 ```
@@ -212,9 +214,9 @@ scoreboard.
 
 ---
 
-## What I can do for you next
-The Phase 1 technical foundation is a single focused coding pass — OG tags +
-og-image + robots.txt + sitemap.xml + JSON-LD + llms.txt, all committed and
-deployed. Say "do the SEO Phase 1" and I'll implement it and open a PR. Phase 2
-content pages and Phase 3 Research SEO are larger, separate efforts we can plan
-when you're ready.
+## What to do next
+1. Submit `aerarium.app` to Google Search Console and Bing Webmaster Tools using
+   the shipped sitemap.
+2. Plan Phase 2 crawlable content pages, starting with `/portfolio-x-ray`.
+3. Verify the current Research-repo SEO baseline before planning any remaining
+   Research work; do not rely on an older landing-kit audit as current state.

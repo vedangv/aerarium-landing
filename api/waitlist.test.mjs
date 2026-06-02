@@ -78,4 +78,91 @@ describe("waitlist API", () => {
     assert.equal(res.body.referralCount, 1);
     assert.equal(fetchCalls.length, 3);
   });
+
+  it("persists bounded traffic attribution for new signups", async () => {
+    const fetchCalls = [];
+    const res = createResponse();
+    const fetchImpl = async (url, options) => {
+      fetchCalls.push({ url: String(url), method: options?.method, body: options?.body });
+      if (options?.method === "POST") {
+        return {
+          ok: true,
+          status: 201,
+          json: async () => [{
+            ...JSON.parse(options.body),
+            created_at: "2026-06-02T00:00:00.000Z",
+          }],
+        };
+      }
+      return {
+        ok: true,
+        status: 200,
+        headers: { get: () => "0-0/0" },
+        json: async () => [],
+      };
+    };
+
+    await handler(
+      {
+        method: "POST",
+        body: {
+          email: "user@example.com",
+          utmSource: "instagram",
+          utmMedium: "social",
+          utmCampaign: "launch",
+          utmContent: "bio-link",
+        },
+        headers: { "user-agent": "node" },
+      },
+      res,
+      { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },
+    );
+
+    assert.equal(res.statusCode, 200);
+    const insertBody = JSON.parse(fetchCalls[0].body);
+    assert.equal(insertBody.utm_source, "instagram");
+    assert.equal(insertBody.utm_medium, "social");
+    assert.equal(insertBody.utm_campaign, "launch");
+    assert.equal(insertBody.utm_content, "bio-link");
+  });
+
+  it("falls back to the legacy insert shape before the attribution migration is applied", async () => {
+    const insertBodies = [];
+    const res = createResponse();
+    const fetchImpl = async (url, options) => {
+      if (options?.method === "POST") {
+        insertBodies.push(JSON.parse(options.body));
+        if (insertBodies.length === 1) return { ok: false, status: 400 };
+        return {
+          ok: true,
+          status: 201,
+          json: async () => [{
+            ...JSON.parse(options.body),
+            created_at: "2026-06-02T00:00:00.000Z",
+          }],
+        };
+      }
+      return {
+        ok: true,
+        status: 200,
+        headers: { get: () => "0-0/0" },
+        json: async () => [],
+      };
+    };
+
+    await handler(
+      {
+        method: "POST",
+        body: { email: "legacy@example.com", utmSource: "instagram" },
+        headers: {},
+      },
+      res,
+      { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },
+    );
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(insertBodies.length, 2);
+    assert.equal(insertBodies[0].utm_source, "instagram");
+    assert.equal("utm_source" in insertBodies[1], false);
+  });
 });

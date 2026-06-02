@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useReducedMotion } from "motion/react";
 import { ArrowUpRight, ArrowDown, Smartphone } from "lucide-react";
 import { useReveal } from "./useReveal";
+import { trackOutboundClick } from "../lib/analytics";
 
 /**
  * CTA bridge — caps the Portfolio-app feature screens, offers the free
@@ -26,6 +27,7 @@ function CtaButton() {
         href="https://testflight.apple.com/join/Xna39VKU"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackOutboundClick("testflight", "portfolio_bridge")}
         className="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 px-9 py-4 text-base font-semibold text-slate-950 transition-all duration-300 hover:bg-emerald-450 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
         id="btn-bridge-testflight"
       >

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useReducedMotion } from "motion/react";
 import { User } from "lucide-react";
 import { useReveal } from "./useReveal";
+import { trackOutboundClick } from "../lib/analytics";
 
 /**
  * Founder story — pinned, scroll-driven. One calm, personal beat: why Aerarium
@@ -42,7 +43,8 @@ const Signature = (
     href="https://www.linkedin.com/in/vedangv/"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex text-sm font-semibold text-emerald-300 transition hover:text-emerald-200"
+    onClick={() => trackOutboundClick("linkedin", "founder_signature")}
+    className="inline-flex text-sm font-semibold text-emerald-300 transition hover:text-emerald-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
   >
     — Vedang, CFA charterholder &amp; solo founder
   </a>

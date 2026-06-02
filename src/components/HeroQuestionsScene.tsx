@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 import { ArrowDown } from "lucide-react";
 import MobileSnapBeat from "./MobileSnapBeat";
+import { trackOutboundClick } from "../lib/analytics";
 
 /**
  * Hero → Questions scroll scene (all viewports).
@@ -77,6 +78,7 @@ function HeroCopy() {
             href="https://testflight.apple.com/join/Xna39VKU"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackOutboundClick("testflight", "hero")}
             className="py-3 px-7 text-sm sm:py-4 sm:px-9 sm:text-base bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
             id="btn-hero-join-waitlist"
           >
@@ -87,6 +89,7 @@ function HeroCopy() {
             href="https://research.aerarium.app/"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackOutboundClick("research", "hero")}
             className="py-3 px-7 text-sm sm:py-4 sm:px-9 sm:text-base bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
             id="btn-hero-open-research"
           >
@@ -113,7 +116,7 @@ function QuestionsCopy() {
         <br className="hidden sm:block" /> about your own money.
       </h2>
       <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-slate-400 sm:mt-6 sm:max-w-md sm:text-lg">
-        Most investors can’t answer these with confidence. Aerarium is built so you can.
+        Brokerage screens rarely answer these clearly. Aerarium is built so you can.
       </p>
     </div>
   );
