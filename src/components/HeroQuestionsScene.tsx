@@ -87,7 +87,7 @@ function HeroCopy() {
             href="https://research.aerarium.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-2xl border border-cyan-400/35 bg-cyan-400/[0.08] px-9 py-4 text-base font-semibold text-cyan-200 transition-all duration-300 hover:border-cyan-300/55 hover:bg-cyan-400/[0.14] hover:text-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
+            className="py-4 px-9 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
             id="btn-hero-open-research"
           >
             Open Research

@@ -49,14 +49,14 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
           <button
-            onClick={() => scrollToSection("portfolio")}
+            onClick={() => scrollToSection("answer")}
             className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
             id="btn-nav-portfolio"
           >
             Portfolio
           </button>
           <button
-            onClick={() => scrollToSection("research")}
+            onClick={() => scrollToSection("research-questions")}
             className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
             id="btn-nav-research"
           >
@@ -119,14 +119,14 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-slate-950/98 backdrop-blur-lg z-40 border-t border-white/5 flex flex-col p-8 space-y-6 animate-fadeIn">
           <button
-            onClick={() => scrollToSection("portfolio")}
+            onClick={() => scrollToSection("answer")}
             className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
             id="btn-mobile-nav-portfolio"
           >
             Portfolio
           </button>
           <button
-            onClick={() => scrollToSection("research")}
+            onClick={() => scrollToSection("research-questions")}
             className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
             id="btn-mobile-nav-research"
           >

@@ -7,10 +7,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
-import FeatureGrid from "./components/FeatureGrid";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
-import AppSurfaceStrip from "./components/AppSurfaceStrip";
+import SecuritySection from "./components/SecuritySection";
 import HeroQuestionsScene from "./components/HeroQuestionsScene";
 import HiddenExposureReveal from "./components/HiddenExposureReveal";
 import PolicyScoreSection from "./components/PolicyScoreSection";
@@ -101,13 +100,10 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* 5. Product surfaces */}
-      <AppSurfaceStrip />
+      {/* 5. Security — verifiable trust beat (restyled, was inside FeatureGrid) */}
+      <SecuritySection />
 
-      {/* 6. Product proof */}
-      <FeatureGrid />
-
-      {/* 7. Founder story + product philosophy */}
+      {/* 6. Founder story */}
       <FounderExposureBridge />
 
       {/* 8. Reservation Portal Section */}
