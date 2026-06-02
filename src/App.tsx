@@ -5,7 +5,6 @@
 
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import CountdownTimer from "./components/CountdownTimer";
 import WaitlistPortal from "./components/WaitlistPortal";
 import MobileSnapBeat from "./components/MobileSnapBeat";
 import FounderExposureBridge from "./components/FounderExposureBridge";
@@ -85,20 +84,6 @@ export default function App() {
 
       {/* 3j. Research closing CTA — Bloomberg price anchor + Open Research */}
       <ResearchCloseCta />
-
-      {/* 4. Launch Status */}
-      <section className="bg-slate-950 py-14 relative z-10 font-sans">
-        <MobileSnapBeat />
-        <motion.div
-          className="max-w-7xl mx-auto px-6 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <CountdownTimer />
-        </motion.div>
-      </section>
 
       {/* 5. Security — verifiable trust beat (restyled, was inside FeatureGrid) */}
       <SecuritySection />

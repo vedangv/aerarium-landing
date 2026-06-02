@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { ArrowUpRight, Lock, Menu, X } from "lucide-react";
+import { motion, useScroll } from "motion/react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import logoSrc from "../assets/logo.png";
+
+const NAV_LINKS = [
+  { label: "Portfolio", id: "answer" },
+  { label: "Research", id: "research-questions" },
+  { label: "Security", id: "security" },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const TESTFLIGHT = "https://testflight.apple.com/join/Xna39VKU";
+  const RESEARCH = "https://research.aerarium.app/";
 
   return (
     <nav
@@ -32,9 +38,9 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Brand Logo */}
-        <div 
-          onClick={() => scrollToSection("hero")} 
+        {/* Brand */}
+        <div
+          onClick={() => scrollToSection("hero")}
           className="flex items-center space-x-3 cursor-pointer group"
           id="btn-nav-logo"
         >
@@ -46,66 +52,44 @@ export default function Navbar() {
           </span>
         </div>
 
-        {/* Desktop Menu */}
+        {/* Desktop section links */}
         <div className="hidden md:flex items-center space-x-8">
-          <button
-            onClick={() => scrollToSection("answer")}
-            className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
-            id="btn-nav-portfolio"
-          >
-            Portfolio
-          </button>
-          <button
-            onClick={() => scrollToSection("research-questions")}
-            className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
-            id="btn-nav-research"
-          >
-            Research
-          </button>
-          <button
-            onClick={() => scrollToSection("security")}
-            className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
-            id="btn-nav-security"
-          >
-            Security
-          </button>
+          {NAV_LINKS.map((l) => (
+            <button
+              key={l.id}
+              onClick={() => scrollToSection(l.id)}
+              className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Desktop CTAs — cyan Research + emerald app */}
+        <div className="hidden md:flex items-center gap-2.5">
           <a
-            href="https://testflight.apple.com/join/Xna39VKU"
+            href={RESEARCH}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
-            id="btn-nav-legacy-testflight"
-          >
-            Early Access
-          </a>
-          <a
-            href="https://research.aerarium.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer"
-            id="btn-nav-legacy-finsight"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-cyan-400/35 bg-cyan-400/[0.08] px-4 py-2 text-xs font-semibold text-cyan-200 transition-all duration-300 hover:border-cyan-300/55 hover:bg-cyan-400/[0.14] hover:text-cyan-100"
+            id="btn-nav-open-research"
           >
             Open Research
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
-        </div>
-
-        {/* CTA Button */}
-        <div className="hidden md:block">
           <a
-            href="https://testflight.apple.com/join/Xna39VKU"
+            href={TESTFLIGHT}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative group overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 p-[1px] hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 cursor-pointer inline-block"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-emerald-450 hover:shadow-lg hover:shadow-emerald-500/20"
             id="btn-nav-join-cta"
           >
-            <span className="relative block px-5 py-2.5 bg-slate-950 rounded-[11px] text-xs font-semibold text-white group-hover:bg-slate-950/40 transition-colors flex items-center space-x-1.5">
-              <span>Join iOS Beta</span>
-              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </span>
+            Join iOS Beta
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="md:hidden text-slate-300 hover:text-white transition-colors focus:outline-none"
@@ -115,58 +99,41 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Scroll progress bar (the two-product journey) */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-emerald-400 via-emerald-300 to-cyan-400"
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      {/* Mobile drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-slate-950/98 backdrop-blur-lg z-40 border-t border-white/5 flex flex-col p-8 space-y-6 animate-fadeIn">
-          <button
-            onClick={() => scrollToSection("answer")}
-            className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
-            id="btn-mobile-nav-portfolio"
-          >
-            Portfolio
-          </button>
-          <button
-            onClick={() => scrollToSection("research-questions")}
-            className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
-            id="btn-mobile-nav-research"
-          >
-            Research
-          </button>
-          <button
-            onClick={() => scrollToSection("security")}
-            className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
-            id="btn-mobile-nav-security"
-          >
-            Security
-          </button>
+          {NAV_LINKS.map((l) => (
+            <button
+              key={l.id}
+              onClick={() => scrollToSection(l.id)}
+              className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
+            >
+              {l.label}
+            </button>
+          ))}
           <a
-            href="https://testflight.apple.com/join/Xna39VKU"
+            href={RESEARCH}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
-            id="btn-mobile-nav-testflight"
+            className="mt-2 flex items-center justify-center gap-2 rounded-xl border border-cyan-400/35 bg-cyan-400/[0.08] py-4 text-sm font-semibold text-cyan-200"
           >
-            Early Access
+            <span>Open Research</span>
+            <ArrowUpRight className="h-4.5 w-4.5" />
           </a>
           <a
-            href="https://research.aerarium.app/"
+            href={TESTFLIGHT}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
-            id="btn-mobile-nav-finsight"
-          >
-            Open Research
-          </a>
-
-          <a
-            href="https://testflight.apple.com/join/Xna39VKU"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full mt-4 flex items-center justify-center space-x-2 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-xl font-semibold text-white text-sm"
-            id="btn-mobile-nav-join-cta"
+            className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 py-4 text-sm font-semibold text-slate-950"
           >
             <span>Join iOS Beta</span>
-            <ArrowUpRight className="w-4.5 h-4.5" />
+            <ArrowUpRight className="h-4.5 w-4.5" />
           </a>
         </div>
       )}
