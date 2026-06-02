@@ -39,7 +39,7 @@ export default function Navbar() {
           : "bg-transparent py-6"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div className="relative z-50 max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Brand */}
         <div
           onClick={() => scrollToSection("hero")}
@@ -109,7 +109,7 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed top-[73px] left-0 right-0 bottom-0 bg-slate-950/98 backdrop-blur-lg z-40 border-t border-white/5 flex flex-col p-8 space-y-5 animate-fadeIn overflow-y-auto">
+        <div className="lg:hidden fixed top-0 left-0 w-full h-[100dvh] bg-slate-950 z-40 flex flex-col px-8 pt-24 pb-10 space-y-5 animate-fadeIn overflow-y-auto">
           {NAV_LINKS.map((l) => (
             <button
               key={l.id}

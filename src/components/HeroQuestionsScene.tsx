@@ -59,13 +59,13 @@ const CHIP_WINDOW = 0.078;
 
 function HeroCopy() {
   return (
-    <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center sm:gap-9">
-      <h1 className="font-editorial text-[52px] leading-[1.0] tracking-tight text-white min-[380px]:text-[60px] sm:text-[88px] lg:text-[104px]">
+    <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-6 text-center sm:gap-9">
+      <h1 className="font-editorial text-[40px] leading-[1.02] tracking-tight text-white min-[380px]:text-[46px] sm:text-[88px] sm:leading-[1.0] lg:text-[104px]">
         <span className="block">Invest with intention,</span>
         <span className="block text-emerald-200">not impulse.</span>
       </h1>
 
-      <p className="max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
+      <p className="max-w-2xl text-base leading-relaxed text-slate-300 sm:text-xl">
         You can’t follow a plan you can’t see. Aerarium helps you understand what you
         really own, build your investment plan, and stay disciplined for the long term.
       </p>
@@ -77,7 +77,7 @@ function HeroCopy() {
             href="https://testflight.apple.com/join/Xna39VKU"
             target="_blank"
             rel="noopener noreferrer"
-            className="py-4 px-9 bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
+            className="py-3 px-7 text-sm sm:py-4 sm:px-9 sm:text-base bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
             id="btn-hero-join-waitlist"
           >
             Get Early Access
@@ -87,7 +87,7 @@ function HeroCopy() {
             href="https://research.aerarium.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="py-4 px-9 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold rounded-2xl text-base transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
+            className="py-3 px-7 text-sm sm:py-4 sm:px-9 sm:text-base bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
             id="btn-hero-open-research"
           >
             Open Research
