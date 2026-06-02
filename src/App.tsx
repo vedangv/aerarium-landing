@@ -21,6 +21,7 @@ import ResearchScreens from "./components/ResearchScreens";
 import ResearchCloseCta from "./components/ResearchCloseCta";
 import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
+import { trackOutboundClick } from "./lib/analytics";
 
 export default function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -114,13 +115,13 @@ export default function App() {
 
           <div className="flex flex-col items-center gap-3 md:items-end">
             <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-400">
-              <a href="/privacy.html" className="hover:text-emerald-300 transition-colors">Privacy</a>
-              <a href="/terms.html" className="hover:text-emerald-300 transition-colors">Terms</a>
-              <a href="#security" className="hover:text-emerald-300 transition-colors">Security</a>
-              <a href="#waitlist" className="hover:text-emerald-300 transition-colors">Founder list</a>
-              <a href="https://testflight.apple.com/join/Xna39VKU" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">TestFlight</a>
-              <a href="https://research.aerarium.app/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">Research</a>
-              <a href="https://www.instagram.com/aerarium.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-emerald-300 transition-colors">
+              <a href="/privacy.html" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Privacy</a>
+              <a href="/terms.html" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Terms</a>
+              <a href="#security" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Security</a>
+              <a href="#waitlist" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Founder list</a>
+              <a href="https://testflight.apple.com/join/Xna39VKU" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("testflight", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">TestFlight</a>
+              <a href="https://research.aerarium.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("research", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300">Research</a>
+              <a href="https://www.instagram.com/aerarium.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("instagram", "footer")} className="inline-flex items-center gap-1.5 hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">
                 <Instagram className="h-3.5 w-3.5" />
                 <span>Instagram</span>
               </a>

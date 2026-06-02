@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Search } from "lucide-react";
 import { useReveal } from "./useReveal";
+import { trackOutboundClick } from "../lib/analytics";
 
 /**
  * Closing CTA for the web product (Aerarium Research). Pinned, scroll-driven
@@ -25,6 +26,7 @@ function CtaButton() {
         href="https://research.aerarium.app/"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackOutboundClick("research", "research_close")}
         className="inline-flex items-center gap-2 rounded-2xl bg-cyan-400 px-9 py-4 text-base font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
         id="btn-research-close"
       >

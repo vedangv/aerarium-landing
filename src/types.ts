@@ -12,6 +12,10 @@ export interface WaitlistAdminRow {
   referralCode: string;
   referredBy: string | null;
   source: string;
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  utmContent: string | null;
   createdAt: string;
   referralCount: number;
 }
@@ -19,6 +23,7 @@ export interface WaitlistAdminRow {
 export interface WaitlistAdminPayload {
   totalSignups: number;
   totalReferredSignups: number;
+  topReferrerEmail: string | null;
   rows: WaitlistAdminRow[];
 }
 

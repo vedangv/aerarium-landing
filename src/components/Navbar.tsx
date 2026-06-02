@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, useScroll } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import logoSrc from "../assets/logo.png";
+import { trackOutboundClick } from "../lib/analytics";
 
 const NAV_LINKS = [
   { label: "Portfolio", id: "answer" },
@@ -69,7 +70,7 @@ export default function Navbar() {
             <button
               key={l.id}
               onClick={() => scrollToSection(l.id)}
-              className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+              className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             >
               {l.label}
             </button>
@@ -90,7 +91,8 @@ export default function Navbar() {
             href={RESEARCH}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-400 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20"
+            onClick={() => trackOutboundClick("research", "navbar_desktop")}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-400 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
             id="btn-nav-open-research"
           >
             Open Research
@@ -100,7 +102,8 @@ export default function Navbar() {
             href={TESTFLIGHT}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-emerald-450 hover:shadow-lg hover:shadow-emerald-500/20"
+            onClick={() => trackOutboundClick("testflight", "navbar_desktop")}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-emerald-450 hover:shadow-lg hover:shadow-emerald-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             id="btn-nav-join-cta"
           >
             Join iOS Beta
@@ -111,8 +114,11 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden text-slate-300 hover:text-white transition-colors focus:outline-none"
+          className="lg:hidden text-slate-300 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
           id="btn-nav-mobile-toggle"
+          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation-menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -126,12 +132,12 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed top-0 left-0 w-full h-[100dvh] bg-slate-950 z-40 flex flex-col px-8 pt-24 pb-10 space-y-5 animate-fadeIn overflow-y-auto">
+        <div id="mobile-navigation-menu" className="lg:hidden fixed top-0 left-0 w-full h-[100dvh] bg-slate-950 z-40 flex flex-col px-8 pt-24 pb-10 space-y-5 animate-fadeIn overflow-y-auto">
           {NAV_LINKS.map((l) => (
             <button
               key={l.id}
               onClick={() => scrollToSection(l.id)}
-              className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer"
+              className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             >
               {l.label}
             </button>
@@ -140,7 +146,8 @@ export default function Navbar() {
             href={RESEARCH}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 flex items-center justify-center gap-2 rounded-xl border border-cyan-400/35 bg-cyan-400/[0.08] py-4 text-sm font-semibold text-cyan-200"
+            onClick={() => trackOutboundClick("research", "navbar_mobile")}
+            className="mt-2 flex items-center justify-center gap-2 rounded-xl border border-cyan-400/35 bg-cyan-400/[0.08] py-4 text-sm font-semibold text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
           >
             <span>Open Research</span>
             <ArrowUpRight className="h-4.5 w-4.5" />
@@ -149,7 +156,8 @@ export default function Navbar() {
             href={TESTFLIGHT}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 py-4 text-sm font-semibold text-slate-950"
+            onClick={() => trackOutboundClick("testflight", "navbar_mobile")}
+            className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 py-4 text-sm font-semibold text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
           >
             <span>Join iOS Beta</span>
             <ArrowUpRight className="h-4.5 w-4.5" />
