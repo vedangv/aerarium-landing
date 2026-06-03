@@ -129,10 +129,10 @@ Aerarium does not place trades, give investment advice, or recommend securities.
 
 ---
 
-## Phase 2 — Content pages (the real traffic engine)
+## Phase 2 — Content pages (shipped for the Portfolio wedge)
 
-Each page targets ONE thing people search. Build over the coming weeks, priority
-order. The strategy doc lists these; here's how to prioritize by effort vs reward:
+Each page targets ONE thing people search. The first seven Portfolio guides now
+ship as build-time rendered HTML under `aerarium.app`:
 
 | Page | Targets the search | Priority |
 |---|---|---|
@@ -152,12 +152,10 @@ order. The strategy doc lists these; here's how to prioritize by effort vs rewar
 5. 3–5 genuine FAQs (these often become the AI's answer verbatim).
 6. A CTA to TestFlight / founder list.
 
-**Important:** these must be real, crawlable HTML (not hidden behind JavaScript).
-Since your site is a Vite SPA, that means either pre-rendering these pages,
-building them as static HTML (like your existing `privacy.html`/`terms.html`), or
-moving the marketing site to a framework that renders server-side. I can advise on
-the simplest path when you're ready — for a few static content pages, plain HTML
-files in `/public` (like privacy/terms already are) is the lowest-effort option.
+**Implementation:** these are real, crawlable HTML pages rather than
+JavaScript-only SPA routes. `npm run build` generates them from the structured
+content source in `scripts/seo-pages.mjs`. Each page includes visible copy, a
+real screenshot, internal links, FAQs, and FAQ JSON-LD.
 
 ---
 
@@ -217,6 +215,6 @@ scoreboard.
 ## What to do next
 1. Submit `aerarium.app` to Google Search Console and Bing Webmaster Tools using
    the shipped sitemap.
-2. Plan Phase 2 crawlable content pages, starting with `/portfolio-x-ray`.
+2. Submit the seven landing-site Portfolio guides for indexing after deployment.
 3. Verify the current Research-repo SEO baseline before planning any remaining
    Research work; do not rely on an older landing-kit audit as current state.

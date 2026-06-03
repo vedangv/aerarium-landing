@@ -25,6 +25,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/admin/waitlist", "destination": "/index.html" }
   ]
 }

@@ -39,6 +39,16 @@ or predict prices. It shows investors their own data and public market data.
 - Aerarium Research: https://research.aerarium.app
 - iOS beta (TestFlight): https://testflight.apple.com/join/Xna39VKU
 
+## Portfolio guides
+
+- Portfolio X-Ray and ETF look-through: https://aerarium.app/portfolio-x-ray
+- Investment Policy Statement app and IPS Cockpit: https://aerarium.app/investment-policy-statement-app
+- Policy Score methodology: https://aerarium.app/policy-score
+- Goals funding plan: https://aerarium.app/goals-funding-plan
+- Investment thesis tracker: https://aerarium.app/investment-thesis-tracker
+- Security and read-only sync: https://aerarium.app/security
+- Aerarium methodology: https://aerarium.app/methodology
+
 ## About
 
 Aerarium is built by Vedang, a solo founder and CFA charterholder, from a real

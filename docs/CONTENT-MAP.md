@@ -38,6 +38,7 @@ Order is assembled in **`src/App.tsx`**. Two products are colour-coded:
 | 12 | Founder story ("The spreadsheet stopped answering the real question.") | `src/components/FounderExposureBridge.tsx` | `#founder-story` |
 | 13 | Founder email list | `src/components/WaitlistPortal.tsx` | `#waitlist` |
 | 14 | Footer (brand, links, copyright) | `src/App.tsx` | — |
+| — | Static Portfolio guide pages | `scripts/seo-pages.mjs` | `/portfolio-x-ray`, `/policy-score`, and five related paths |
 | — | Shared layouts/reveal | `CenterStageScreen.tsx` (app screens), `WebScreen.tsx` (web), `useReveal.ts` (the pinned fade-in) | — |
 | — | Browser tab title, SEO/social preview text | `index.html` | — |
 | — | Colors, fonts, theme | `src/index.css` | — |
@@ -164,6 +165,7 @@ screenshot import) all sits at the top of the component:
 | Browser tab title / Google & social preview | `index.html` |
 | Brand colors or fonts | `src/index.css` (the `@theme` block at top) |
 | The Instagram link | `App.tsx` (footer) |
+| Static SEO guide titles, copy, FAQs, screenshots, or related links | `scripts/seo-pages.mjs` |
 
 ## Shared values that appear in many files (change every copy)
 - **TestFlight URL:** `https://testflight.apple.com/join/Xna39VKU`
@@ -174,6 +176,8 @@ screenshot import) all sits at the top of the component:
 
 ## Images / assets
 - App screenshots used on the page: `assets/product-tour/`.
+- Stable screenshots used by the generated static guide pages:
+  `public/assets/seo/`.
 - Research web screenshots: `assets/screenshots/latest/`.
 - Logo: `src/assets/logo.png`. Social share image: `public/og-image.png`.
 - To swap a screenshot, replace the file (keep the name) or update the `import`

@@ -4,14 +4,14 @@ A do-this-then-watch-that guide for getting Aerarium indexed. No code; this is
 your operational checklist.
 
 ## Two properties (both should exist in GSC)
-- **`aerarium.app`** — the marketing site. Sitemap = 3 URLs (home, privacy,
-  terms). Small on purpose. ✅ added + submitted.
+- **`aerarium.app`** — the marketing site. Sitemap = 10 URLs (home, privacy,
+  terms, and 7 Portfolio guides). ✅ added + submitted.
 - **`research.aerarium.app`** — the research engine. Sitemap = **~3,616 URLs**.
   This is the one that matters. ✅ added + submitted (2026-06-02).
 
-> Reality check: meaningful indexing/ranking gains on the research pages come
-> **after the SSR/ISR build ships** (the wedge content is client-rendered until
-> then). GSC work now = get on Google's radar + establish a baseline to watch.
+> Reality check: the first landing-site Portfolio wedge now ships as build-time
+> rendered HTML. Meaningful indexing/ranking gains on the Research pages still
+> come after the Research SSR/ISR pass ships.
 
 ## One-time: seed the priority pages
 In the `research.aerarium.app` property → **URL Inspection** (top search bar) →

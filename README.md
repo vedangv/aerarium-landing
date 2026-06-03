@@ -61,13 +61,29 @@ Research domain: `https://research.aerarium.app/`.
 - `docs/superpowers/specs/2026-05-27-seo-geo-launch-design.md`
   - Captures the planned SEO/GEO pass across the landing site, Research public
     routes, and social launch kit.
-  - No SEO implementation should start until the implementation plan is written
-    and approved.
+- `docs/superpowers/plans/2026-06-02-landing-phase-2-static-seo-pages.md`
+  - Records the build-time rendering approach for the seven crawlable Portfolio
+    guide pages under `aerarium.app`.
 
-Before the SEO pass, the current product focus is still the landing page itself:
-the page needs more “spark” and a stronger launch feel while staying calm,
-premium, and institutional. Treat the SEO plan as queued work, not the active
-design task, until approved.
+The homepage creative pass and the first landing SEO content wedge are shipped
+as separate concerns: keep the scrollytelling homepage conversion-first, and
+keep the static guide pages useful, visible, and crawlable without JavaScript.
+
+## Static Portfolio guides
+
+`npm run build` generates seven flat HTML pages after the Vite app build:
+
+- `/portfolio-x-ray`
+- `/investment-policy-statement-app`
+- `/policy-score`
+- `/methodology`
+- `/security`
+- `/goals-funding-plan`
+- `/investment-thesis-tracker`
+
+The source content and renderer live in `scripts/seo-pages.mjs`. The pages use
+stable screenshots from `public/assets/seo/`, are listed in `public/sitemap.xml`,
+and are linked from `public/llms.txt`.
 
 ## Founder launch list
 
