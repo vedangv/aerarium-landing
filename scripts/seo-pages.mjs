@@ -36,22 +36,22 @@ export const seoPages = [
   {
     slug: "investment-policy-statement-app",
     eyebrow: "IPS portfolio app",
-    title: "Investment Policy Statement App and IPS Cockpit | Aerarium",
-    description: "Turn an Investment Policy Statement into live portfolio guardrails. Aerarium Portfolio tracks IPS rules, versions, reviews, and exceptions.",
+    title: "Investment Policy Statement App — Write and Follow Your Investing Rules | Aerarium",
+    description: "Turn an Investment Policy Statement into live portfolio guardrails. Aerarium Portfolio tracks your rules, versions, reviews, and exceptions.",
     h1: "Turn your investment policy into live guardrails.",
-    intro: "A written plan is useful only when it stays close to the portfolio. Aerarium Portfolio turns an Investment Policy Statement into a working cockpit for rules, reviews, and exceptions.",
+    intro: "A written plan is useful only when it stays close to the portfolio. Aerarium Portfolio turns your Investment Policy Statement into a living plan you can actually follow — your rules, reviews, and exceptions in one place.",
     problemTitle: "Your rules should not live in a forgotten document.",
     problem: [
       "Investors often know the principles they want to follow: position limits, asset-allocation ranges, liquidity floors, restricted assets, and a review cadence. The hard part is remembering those rules when the market moves.",
-      "The IPS Cockpit keeps the current policy visible and makes policy drift easier to review without turning the app into a trading interface.",
+      "Aerarium keeps your current plan visible and makes it easy to see when you've drifted, without turning the app into a trading interface.",
     ],
     featureTitle: "A policy record with an active review loop.",
     feature: [
       "Aerarium Portfolio stores an IPS as an immutable versioned policy. When you revise it, the prior version remains part of the history rather than being silently overwritten.",
-      "The cockpit surfaces allocation checks, guardrails, policies, liquidity, and version history in one place. It is designed to support disciplined review, not constant activity.",
+      "Aerarium surfaces allocation checks, guardrails, policies, liquidity, and version history in one place. It is designed to support disciplined review, not constant activity.",
     ],
-    image: "/assets/seo/ips-cockpit.jpg",
-    imageAlt: "Aerarium IPS cockpit showing a policy score and allocation checks against investment policy ranges.",
+    image: "/assets/seo/investment-policy-statement.jpg",
+    imageAlt: "Aerarium Investment Policy Statement view showing a policy score and allocation checks against your plan.",
     highlights: ["Immutable IPS versions", "Allocation ranges and guardrails", "Review cadence and exceptions"],
     audience: "Investors who want a repeatable decision process, a written portfolio policy, and a calmer way to check whether the portfolio still matches the plan.",
     limitations: "Aerarium provides tools for documenting and monitoring your own policy. It is not a robo-advisor and does not generate individualized investment advice.",
@@ -197,8 +197,8 @@ export const seoPages = [
     ],
     featureTitle: "The portfolio is a system, not a list.",
     feature: [
-      "Aerarium Portfolio connects visibility with discipline: Portfolio X-Ray for look-through exposure, an IPS Cockpit for written rules, Policy Score for transparent monitoring, a goals funding plan for sleeve assignments, and thesis check-ins for decision hygiene.",
-      "Aerarium Research complements that private workflow with source-first public-market research. The products remain distinct: public research informs decisions, while private portfolio monitoring keeps those decisions connected to your plan.",
+      "Aerarium Portfolio connects visibility with discipline: Portfolio X-Ray to see what you really own inside your funds, your written investing rules, a Policy Score for how well you're following the plan, a goals funding plan, and thesis check-ins to remember why you bought each holding.",
+      "Aerarium Research complements that with free company research built from public filings. The products remain distinct: public research informs decisions, while private portfolio monitoring keeps those decisions connected to your plan.",
     ],
     image: "/assets/seo/dashboard.jpg",
     imageAlt: "Aerarium Portfolio dashboard showing private portfolio monitoring, policy score, and account overview.",
@@ -306,7 +306,7 @@ export function renderSeoPage(page) {
     <header class="nav">
       <div class="shell nav-inner">
         <a class="brand" href="/"><img src="/assets/brand/app-icon-512.png" alt="" /><span>Aerarium</span></a>
-        <nav class="nav-links" aria-label="Primary"><a href="/portfolio-x-ray">Portfolio X-Ray</a><a href="/investment-policy-statement-app">IPS Cockpit</a><a href="/methodology">Methodology</a><a href="/security">Security</a></nav>
+        <nav class="nav-links" aria-label="Primary"><a href="/portfolio-x-ray">Portfolio X-Ray</a><a href="/investment-policy-statement-app">Investing Rules</a><a href="/methodology">Methodology</a><a href="/security">Security</a></nav>
         <div class="actions"><a class="quiet" href="${RESEARCH_URL}">Open Research</a><a class="button" href="${TESTFLIGHT_URL}">Join iOS Beta</a></div>
       </div>
     </header>

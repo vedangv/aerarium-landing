@@ -1,19 +1,21 @@
 # Aerarium
 
-> Aerarium is the discipline layer between market research and your real
-> portfolio. It shows you what you actually own — looking through your ETFs and
-> across all your accounts — and tells you when your portfolio has drifted from
-> your own written rules.
+> Aerarium helps long-term investors understand what they really own — looking
+> through their funds and across all their accounts — and tells them when their
+> portfolio has drifted from the plan they set. Beginner-friendly, read-only, and
+> never trades for you.
 
 Aerarium is a brand with two products under one roof. Both are free during beta.
 
 ## Products
 
 - **Aerarium Portfolio** (iOS app, available through TestFlight during beta): private
-  portfolio monitoring. Read-only brokerage sync (it never places trades),
-  ETF look-through, Policy Score, IPS cockpit, goals funding, and thesis tracking.
-- **Aerarium Research** (web, research.aerarium.app): source-first public-market
-  research workspace covering S&P 500 and NASDAQ-100 companies — 13F fund-overlap
+  portfolio monitoring. Read-only brokerage sync (it never places trades), a view
+  of what you really own inside your funds (Portfolio X-Ray), a Policy Score for
+  how well you're following your plan, goal tracking, your written investing rules,
+  and a place to record why you bought each holding.
+- **Aerarium Research** (web, research.aerarium.app): free company research covering
+  S&P 500 and NASDAQ-100 companies, built from public filings — fund-overlap
   heatmaps, a macro dashboard, the market-implied Fed funds curve, revenue
   segments, financial charts, ownership/insider activity, earnings calendar, and
   a stock screener. Data from SEC EDGAR and other public sources.
@@ -25,8 +27,9 @@ Aerarium is a brand with two products under one roof. Both are free during beta.
 - **Policy Score**: a transparent score for whether a portfolio still matches the
   investor's written rules, based on allocation drift, concentration, liquidity,
   goal funding, and review cadence.
-- **IPS Cockpit**: a control room for an Investment Policy Statement — rules,
-  versions, tolerances, and review reminders.
+- **Investment Policy Statement (IPS)**: your written investing rules — target
+  allocations, limits, versions, and review reminders — kept in one place and easy
+  to check your portfolio against.
 
 ## What Aerarium does NOT do
 
@@ -42,7 +45,7 @@ or predict prices. It shows investors their own data and public market data.
 ## Portfolio guides
 
 - Portfolio X-Ray and ETF look-through: https://aerarium.app/portfolio-x-ray
-- Investment Policy Statement app and IPS Cockpit: https://aerarium.app/investment-policy-statement-app
+- Investment Policy Statement app — write and follow your investing rules: https://aerarium.app/investment-policy-statement-app
 - Policy Score methodology: https://aerarium.app/policy-score
 - Goals funding plan: https://aerarium.app/goals-funding-plan
 - Investment thesis tracker: https://aerarium.app/investment-thesis-tracker
