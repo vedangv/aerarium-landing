@@ -140,7 +140,7 @@ export const seoPages = [
       "Aerarium lets you capture an investment thesis and maintain a review loop around it. The app keeps check-ins visible alongside the rest of your portfolio discipline workflow.",
       "The point is not to generate a recommendation. It is to preserve your reasoning so future decisions are less dependent on memory or impulse.",
     ],
-    image: "/assets/seo/thesis-tracker.png",
+    image: "/assets/seo/thesis-tracker.jpg",
     imageAlt: "Aerarium thesis check-in view showing an investment thesis and its review workflow.",
     highlights: ["Written decision context", "Review reminders", "Thesis check-in history"],
     audience: "Investors who want to document the reason behind a position and create a repeatable check-in habit before market noise changes the narrative.",
@@ -285,7 +285,7 @@ export function renderSeoPage(page) {
     <link rel="canonical" href="${SITE_URL}/${page.slug}" />
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64.png" />
     <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" />
-    <meta property="og:type" content="article" />
+    <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Aerarium" />
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
@@ -321,7 +321,7 @@ export function renderSeoPage(page) {
       <section class="band">
         <div class="shell split">
           <div class="copy"><h2>${escapeHtml(page.problemTitle)}</h2>${problemParagraphs}</div>
-          <figure class="visual"><img src="${page.image}" alt="${escapeHtml(page.imageAlt)}" /></figure>
+          <figure class="visual"><img src="${page.image}" alt="${escapeHtml(page.imageAlt)}" width="280" height="610" loading="lazy" decoding="async" /></figure>
         </div>
       </section>
       <section class="band">
