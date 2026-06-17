@@ -117,6 +117,7 @@ export default function App() {
             <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-400">
               <a href="/privacy.html" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Privacy</a>
               <a href="/terms.html" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Terms</a>
+              <a href="/support.html" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Support</a>
               <a href="/methodology" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Methodology</a>
               <a href="/portfolio-x-ray" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Portfolio X-Ray</a>
               <a href="/security" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Security</a>
