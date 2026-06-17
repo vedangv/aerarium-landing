@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aerarium Support</title>
+    <meta name="description" content="Get help with Aerarium: brokerage connections, data security, subscriptions, data export and account deletion." />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #020617;
+        --panel: #0b1210;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --line: rgba(255, 255, 255, 0.1);
+        --green: #74d99f;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top left, rgba(47, 191, 113, 0.16), transparent 34%), var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.65;
+      }
+      main {
+        width: min(860px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 72px 0;
+      }
+      a { color: var(--green); }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--green);
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 12px;
+      }
+      h1 {
+        font-size: clamp(34px, 7vw, 64px);
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+        margin: 26px 0 14px;
+      }
+      h2 {
+        margin-top: 34px;
+        font-size: 20px;
+      }
+      p, li { color: var(--muted); }
+      .panel {
+        margin-top: 28px;
+        border: 1px solid var(--line);
+        background: rgba(15, 23, 42, 0.58);
+        border-radius: 22px;
+        padding: 24px;
+      }
+      .lede { color: var(--green); font-size: 13px; font-weight: 700; }
+      .contact {
+        margin-top: 18px;
+        font-size: 18px;
+      }
+      .nav { margin-top: 30px; font-size: 13px; }
+      .nav a { margin-right: 18px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="brand" href="/">Aerarium</a>
+      <h1>Support</h1>
+      <p class="lede">We're here to help.</p>
+
+      <section class="panel">
+        <p class="contact">
+          <strong>Email:</strong> <a href="mailto:investorrelations05@gmail.com">investorrelations05@gmail.com</a><br />
+          We aim to respond within 2 business days.
+        </p>
+
+        <h2>Connecting a brokerage</h2>
+        <p>
+          In the app, go to Profile &rarr; Financial Setup &rarr; Brokerage Connections. Aerarium
+          connects through SnapTrade using read-only OAuth &mdash; we never see your brokerage
+          password. You can disconnect at any time, which revokes access immediately. Prefer to
+          keep things manual? You can add accounts and positions yourself.
+        </p>
+
+        <h2>How is my data protected?</h2>
+        <p>
+          Your sensitive financial values are encrypted on your device before they're stored. You
+          can also enable a Face ID / Touch ID lock in Profile, and you set a recovery key to
+          restore access on a new device. See our <a href="/privacy.html">Privacy Policy</a> for
+          details on what we do and don't store.
+        </p>
+
+        <h2>Managing or canceling a subscription</h2>
+        <p>
+          Aerarium Premium subscriptions are handled by Apple. Open the App Store app &rarr; tap
+          your account &rarr; Subscriptions, or go to Settings &rarr; [your name] &rarr;
+          Subscriptions on your device to manage, change, or cancel.
+        </p>
+
+        <h2>Exporting or deleting my data</h2>
+        <p>
+          In the app: Profile &rarr; Export Data to download a copy of your data, or Profile
+          &rarr; Delete My Account to permanently delete your account and associated data.
+        </p>
+
+        <h2>"Encryption Key Needed"</h2>
+        <p>
+          This message protects your data when you sign in on a new device. Use your recovery key
+          from Profile &rarr; Security, or follow the in-app recovery steps. If you're stuck,
+          email us and we'll help.
+        </p>
+      </section>
+
+      <nav class="nav">
+        <a href="/">Home</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/security">Security</a>
+      </nav>
+    </main>
+  </body>
+</html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aerarium Privacy Policy</title>
+    <meta name="description" content="How Aerarium collects, uses, encrypts, and lets you control your data across the Aerarium app and website." />
     <style>
       :root {
         color-scheme: dark;
@@ -62,48 +63,106 @@
         font-size: 13px;
         font-weight: 700;
       }
+      .nav { margin-top: 30px; font-size: 13px; }
+      .nav a { margin-right: 18px; }
     </style>
   </head>
   <body>
     <main>
       <a class="brand" href="/">Aerarium</a>
       <h1>Privacy Policy</h1>
-      <p class="updated">Last updated: May 25, 2026</p>
+      <p class="updated">Last updated: June 17, 2026</p>
 
       <section class="panel">
         <p>
-          This policy covers the Aerarium launch page, founder list, and public Research links.
-          The Aerarium Portfolio iOS beta may collect additional app data after you choose to
-          sign in and connect accounts.
+          This policy explains how Aerarium collects, uses, protects, and lets you control your
+          information across the Aerarium iOS app ("the app") and the Aerarium website. We do not
+          sell your personal data, and we do not use it for third-party advertising or cross-app
+          tracking.
         </p>
 
-        <h2>Information we collect on this site</h2>
+        <h2>Information we collect</h2>
         <ul>
-          <li>Email address when you join the founder launch list.</li>
-          <li>Optional referral code, source, and timestamp metadata used to understand launch interest.</li>
-          <li>Basic hosting and security logs from our infrastructure providers.</li>
+          <li><strong>Account information:</strong> your email address and name, used to authenticate you and create your profile.</li>
+          <li><strong>Financial data you create:</strong> portfolio accounts, positions, goals, trade theses, cash-flow settings, and Investment Policy Statements.</li>
+          <li><strong>Profile data:</strong> age, risk-tolerance responses, investment horizon, and base-currency preference.</li>
+          <li><strong>Brokerage data (optional):</strong> if you connect a brokerage through SnapTrade, we receive read-only access to your holdings, balances, and connection metadata.</li>
+          <li><strong>Identifiers:</strong> an account user ID that associates your data with your account.</li>
+          <li><strong>Website data:</strong> if you join the founder/launch list, your email plus optional referral code, source, and timestamp; and standard hosting and security logs.</li>
         </ul>
 
-        <h2>How we use it</h2>
+        <h2>What we do not collect</h2>
         <ul>
-          <li>To send launch updates, beta notes, and founder pricing information.</li>
-          <li>To understand which channels bring people to Aerarium.</li>
-          <li>To protect the site from abuse and keep the service reliable.</li>
+          <li>Social Security Numbers, Tax IDs, or other government-issued identifiers.</li>
+          <li>Bank or brokerage login credentials &mdash; SnapTrade uses read-only OAuth, so we never see your brokerage password.</li>
+          <li>Payment card numbers &mdash; subscriptions are processed by Apple through the App Store.</li>
         </ul>
 
-        <h2>What this site does not do</h2>
+        <h2>How we use your information</h2>
         <ul>
-          <li>It does not ask for brokerage credentials.</li>
-          <li>It does not place trades or request trading permissions.</li>
-          <li>It does not sell personal information.</li>
+          <li>To provide the app's features: portfolio tracking, policy scoring, exposure analysis (Portfolio X-Ray), and goals.</li>
+          <li>To authenticate you and operate optional brokerage sync.</li>
+          <li>To send launch updates and founder communications if you joined the list.</li>
+          <li>To keep the service reliable and protect it from abuse.</li>
         </ul>
+        <p>We use your data only to deliver and improve the app's functionality &mdash; not for advertising or tracking.</p>
 
-        <h2>Data controls</h2>
+        <h2>Encryption &mdash; and what it does and doesn't cover</h2>
         <p>
-          To request deletion from the launch list, reply to any Aerarium email or contact the
-          founder directly through the same channel used for beta communication.
+          We take a data-minimization approach and encrypt your <strong>sensitive financial
+          values</strong> (such as position quantities, cost basis, balances, and goal amounts)
+          on your device using standard encryption (AES-256-GCM) before they are stored, so those
+          dollar amounts are not readable in our database.
+        </p>
+        <p>
+          To be clear about what this does <em>not</em> mean: Aerarium is not a fully
+          "zero-knowledge" system. Some information is necessarily stored in a readable form to
+          operate the service &mdash; including your email address, your name, account and
+          brokerage <em>connection metadata</em>, and the brokerage holdings imported on your
+          behalf through SnapTrade. This operational data is protected by access controls and
+          used only to run the service. No method of storage is perfectly secure.
+        </p>
+        <p>
+          You can also enable an optional Face ID / Touch ID lock in the app, and you set a
+          recovery key that lets you restore access to your encrypted financial fields on a new
+          device.
+        </p>
+
+        <h2>How we share data</h2>
+        <p>
+          We share data only with service providers that help us operate Aerarium: our backend
+          host (Supabase), and &mdash; if you opt in &mdash; the brokerage-connectivity provider
+          (SnapTrade). Apple processes subscription payments. We do not sell personal data.
+        </p>
+
+        <h2>Data retention, export, and deletion</h2>
+        <p>
+          We keep your data while your account is active. In the app you can export your data
+          (Profile &rarr; Export Data) or permanently delete your account and associated data
+          (Profile &rarr; Delete My Account). To be removed from the website founder list, reply
+          to any Aerarium email or contact us below.
+        </p>
+
+        <h2>Children</h2>
+        <p>Aerarium is not directed to children under 13, and we do not knowingly collect their data.</p>
+
+        <h2>Changes</h2>
+        <p>We may update this policy and will revise the "Last updated" date above.</p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions or requests: <a href="mailto:investorrelations05@gmail.com">investorrelations05@gmail.com</a>.
+        </p>
+
+        <p style="margin-top:28px;font-size:13px;">
+          Aerarium is a personal finance tool and is not a broker-dealer or investment adviser. It
+          does not provide investment advice.
         </p>
       </section>
+
+      <nav class="nav">
+        <a href="/">Home</a><a href="/terms.html">Terms</a><a href="/support.html">Support</a><a href="/security">Security</a>
+      </nav>
     </main>
   </body>
 </html>
