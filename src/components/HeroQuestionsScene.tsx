@@ -96,7 +96,7 @@ function HeroCopy() {
             Open Research
           </a>
         </div>
-        <span className="text-sm text-slate-500">Free on iOS via TestFlight · Research free in your browser</span>
+        <span className="text-sm text-slate-500">Free on iOS via TestFlight · Research free for 5 showcase tickers</span>
       </div>
 
       <p className="text-sm text-slate-500">

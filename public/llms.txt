@@ -5,7 +5,7 @@
 > portfolio has drifted from the plan they set. Beginner-friendly, read-only, and
 > never trades for you.
 
-Aerarium is a brand with two products under one roof. Both are free during beta.
+Aerarium is a brand with two products under one roof: a private portfolio app (iOS) and a public research site (web).
 
 ## Products
 
@@ -14,7 +14,7 @@ Aerarium is a brand with two products under one roof. Both are free during beta.
   of what you really own inside your funds (Portfolio X-Ray), a Policy Score for
   how well you're following your plan, goal tracking, your written investing rules,
   and a place to record why you bought each holding.
-- **Aerarium Research** (web, research.aerarium.app): free company research covering
+- **Aerarium Research** (web, research.aerarium.app): company research covering
   S&P 500 and NASDAQ-100 companies, built from public filings — fund-overlap
   heatmaps, a macro dashboard, the market-implied Fed funds curve, revenue
   segments, financial charts, ownership/insider activity, earnings calendar, and

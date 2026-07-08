@@ -33,7 +33,7 @@ function CtaButton() {
         Open Research
         <ArrowUpRight className="h-4 w-4" />
       </a>
-      <span className="text-sm text-slate-500">Free to explore · in your browser</span>
+      <span className="text-sm text-slate-500">Free showcase tickers · Pro CAD $10/mo (≈US$7)</span>
     </div>
   );
 }
@@ -54,7 +54,7 @@ export default function ResearchCloseCta() {
     </>
   );
   const Sub =
-    "Explore source-first public-market research: SEC filings, ownership views, macro context, and fund overlap — free while in beta.";
+    "Source-first public-market research: SEC filings, ownership views, macro context, and fund overlap. Free for five showcase tickers — the full S&P 500 + Nasdaq-100 universe is CAD $10/mo (≈US$7). Signal, not noise.";
 
   if (prefersReduced) {
     const fade = (delay: number) => ({

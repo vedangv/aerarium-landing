@@ -226,7 +226,7 @@ export default function WaitlistPortal() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {["Free during beta", "Founder pricing notes", "No trading access requested"].map((item) => (
+            {["App Store launch alerts", "Founder pricing notes", "No trading access requested"].map((item) => (
               <span key={item} className="rounded-full border border-emerald-400/16 bg-emerald-400/[0.07] px-3 py-1.5 text-[10px] font-bold text-emerald-200">
                 {item}
               </span>

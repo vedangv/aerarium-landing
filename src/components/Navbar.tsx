@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { label: "Research", id: "research-questions" },
   { label: "Security", id: "security" },
   { label: "Founder story", id: "founder-story" },
-  { label: "Founder list", id: "waitlist" },
+  { label: "Launch updates", id: "waitlist" },
 ];
 
 export default function Navbar() {
