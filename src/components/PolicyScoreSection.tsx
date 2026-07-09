@@ -1,7 +1,7 @@
 import React from "react";
 import { Gauge } from "lucide-react";
 import CenterStageScreen from "./CenterStageScreen";
-import scoreScreenSrc from "../../assets/product-tour/ips-score.jpg";
+import scoreScreenSrc from "../../assets/product-tour/xray-policy-score.jpg";
 
 /**
  * Feature screen 2 — Policy Score.
