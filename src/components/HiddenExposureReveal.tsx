@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { Layers } from "lucide-react";
 import CenterStageScreen from "./CenterStageScreen";
-import xrayScreenSrc from "../../assets/product-tour/portfolio.jpg";
+import xrayScreenSrc from "../../assets/product-tour/xray-policy-score.jpg";
 
 /**
  * Feature screen 1 — "The Answer" (hidden exposure / Portfolio X-Ray).
