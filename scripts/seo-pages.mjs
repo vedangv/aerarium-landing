@@ -344,7 +344,7 @@ export function renderSeoPage(page) {
       </section>
     </main>
     <footer class="footer">
-      <div class="shell footer-inner"><a class="brand" href="/"><img src="/assets/brand/app-icon-512.png" alt="" /><span>Aerarium</span></a><div><a class="quiet" href="/privacy.html">Privacy</a> · <a class="quiet" href="/terms.html">Terms</a> · <a class="quiet" href="/security">Security</a> · <a class="quiet" href="/methodology">Methodology</a></div></div>
+      <div class="shell footer-inner"><a class="brand" href="/"><img src="/assets/brand/app-icon-512.png" alt="" /><span>Aerarium</span></a><div><a class="quiet" href="/privacy">Privacy</a> · <a class="quiet" href="/terms">Terms</a> · <a class="quiet" href="/security">Security</a> · <a class="quiet" href="/methodology">Methodology</a></div></div>
     </footer>
   </body>
 </html>`;

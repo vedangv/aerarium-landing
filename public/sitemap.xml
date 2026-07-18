@@ -6,17 +6,17 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://aerarium.app/privacy.html</loc>
+    <loc>https://aerarium.app/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://aerarium.app/terms.html</loc>
+    <loc>https://aerarium.app/terms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://aerarium.app/support.html</loc>
+    <loc>https://aerarium.app/support</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
