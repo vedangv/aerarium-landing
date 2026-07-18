@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.vedang.aerarium.debug",
+      "sha256_cert_fingerprints": [
+        "7D:E0:54:49:08:87:12:03:D4:2D:81:FA:34:CE:93:73:FF:97:D0:07:77:E8:07:DE:EF:F7:EB:D2:49:9C:14:72"
+      ]
+    }
+  }
+]
