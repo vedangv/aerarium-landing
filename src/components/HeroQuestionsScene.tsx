@@ -75,14 +75,14 @@ function HeroCopy() {
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           {/* Emerald = the iOS app */}
           <a
-            href="https://testflight.apple.com/join/Xna39VKU"
+            href="https://apps.apple.com/app/aerarium/id6760155168"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackOutboundClick("testflight", "hero")}
+            onClick={() => trackOutboundClick("appstore", "hero")}
             className="py-3 px-7 text-sm sm:py-4 sm:px-9 sm:text-base bg-emerald-500 hover:bg-emerald-450 text-slate-950 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 cursor-pointer text-center"
             id="btn-hero-join-waitlist"
           >
-            Get Early Access
+            Download on the App Store
           </a>
           {/* Cyan = the web research product */}
           <a
@@ -96,7 +96,7 @@ function HeroCopy() {
             Open Research
           </a>
         </div>
-        <span className="text-sm text-slate-500">Free on iOS via TestFlight · Research free for 5 showcase tickers</span>
+        <span className="text-sm text-slate-500">Now on the App Store · Research free for 5 showcase tickers</span>
       </div>
 
       <p className="text-sm text-slate-500">

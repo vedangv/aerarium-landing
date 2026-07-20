@@ -273,25 +273,25 @@ export default function WaitlistPortal() {
             </button>
           </form>
 
-          {/* Sourced direct Apple TestFlight download link */}
+          {/* Sourced direct Apple App Store download link */}
           <div className="relative flex py-2 items-center">
             <div className="flex-grow border-t border-white/5"></div>
-            <span className="flex-shrink mx-4 text-[10px] font-mono text-slate-500 uppercase">Already ready to test?</span>
+            <span className="flex-shrink mx-4 text-[10px] font-mono text-slate-500 uppercase">Already ready to download?</span>
             <div className="flex-grow border-t border-white/5"></div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <a
-              href="https://testflight.apple.com/join/Xna39VKU"
+              href="https://apps.apple.com/app/aerarium/id6760155168"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackOutboundClick("testflight", "waitlist_portal")}
+              onClick={() => trackOutboundClick("appstore", "waitlist_portal")}
               className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-emerald-500/20 hover:border-emerald-500/40 rounded-xl py-3 text-xs font-semibold text-emerald-400 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
-              id="link-testflight-direct"
+              id="link-appstore-direct"
             >
               <span className="flex items-center justify-center space-x-2">
                 <Sparkles className="w-4 h-4" />
-                <span>Immediate iOS Beta</span>
+                <span>Get the App Now</span>
               </span>
             </a>
             
@@ -313,7 +313,7 @@ export default function WaitlistPortal() {
           {/* Secure lock disclaimer footer */}
           <div className="flex items-center space-x-2 bg-slate-950/40 p-3 rounded-xl border border-white/5 text-[10px] text-slate-400">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span>Email signup is for launch updates. Beta access and Research stay available through the links above.</span>
+            <span>Email signup is for launch updates. App Store download and Research stay available through the links above.</span>
           </div>
         </div>
       )}

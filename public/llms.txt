@@ -9,7 +9,7 @@ Aerarium is a brand with two products under one roof: a private portfolio app (i
 
 ## Products
 
-- **Aerarium Portfolio** (iOS app, available through TestFlight during beta): private
+- **Aerarium Portfolio** (iOS app, available on the App Store): private
   portfolio monitoring. Read-only brokerage sync (it never places trades), a view
   of what you really own inside your funds (Portfolio X-Ray), a Policy Score for
   how well you're following your plan, goal tracking, your written investing rules,
@@ -40,7 +40,7 @@ or predict prices. It shows investors their own data and public market data.
 
 - Brand / landing: https://aerarium.app
 - Aerarium Research: https://research.aerarium.app
-- iOS beta (TestFlight): https://testflight.apple.com/join/Xna39VKU
+- iOS app (App Store): https://apps.apple.com/app/aerarium/id6760155168
 
 ## Portfolio guides
 

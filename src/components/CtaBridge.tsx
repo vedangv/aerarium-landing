@@ -6,7 +6,7 @@ import { trackOutboundClick } from "../lib/analytics";
 
 /**
  * CTA bridge — caps the Portfolio-app feature screens, offers the free
- * TestFlight beta, and tees up the web product ("…only half of it"). Pinned,
+ * App Store download, and tees up the web product ("…only half of it"). Pinned,
  * scroll-driven reveal to match the feature screens: the pill stays anchored,
  * then headline → subheader → button → lead-in fade in.
  */
@@ -24,17 +24,17 @@ function CtaButton() {
   return (
     <div className="flex flex-col items-center gap-3">
       <a
-        href="https://testflight.apple.com/join/Xna39VKU"
+        href="https://apps.apple.com/app/aerarium/id6760155168"
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => trackOutboundClick("testflight", "portfolio_bridge")}
+        onClick={() => trackOutboundClick("appstore", "portfolio_bridge")}
         className="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 px-9 py-4 text-base font-semibold text-slate-950 transition-all duration-300 hover:bg-emerald-450 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
-        id="btn-bridge-testflight"
+        id="btn-bridge-appstore"
       >
-        Get Early Access
+        Download on the App Store
         <ArrowUpRight className="h-4 w-4" />
       </a>
-      <span className="text-sm text-slate-500">Free on iOS · via TestFlight</span>
+      <span className="text-sm text-slate-500">Free on iOS · App Store</span>
     </div>
   );
 }
@@ -66,7 +66,7 @@ export default function CtaBridge() {
             …and so much more.
           </motion.h2>
           <motion.p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl" {...fade(0.12)}>
-            Come experience the full app — free while it’s in beta on TestFlight.
+            Come experience the full app — free on the App Store.
           </motion.p>
           <motion.div className="mt-10" {...fade(0.18)}>
             <CtaButton />
@@ -97,7 +97,7 @@ export default function CtaBridge() {
               className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl"
               style={{ opacity: sub.opacity, y: sub.y }}
             >
-              Come experience the full app — free while it’s in beta on TestFlight.
+              Come experience the full app — free on the App Store.
             </motion.p>
             <motion.div className="mt-10" style={{ opacity: btn.opacity, y: btn.y }}>
               <CtaButton />

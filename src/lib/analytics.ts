@@ -34,7 +34,7 @@ function attributionProperties(attribution = readAttribution()) {
   });
 }
 
-export function trackOutboundClick(destination: "testflight" | "research" | "instagram" | "linkedin", placement: string) {
+export function trackOutboundClick(destination: "appstore" | "research" | "instagram" | "linkedin", placement: string) {
   track(`outbound_${destination}_click`, {
     placement,
     ...attributionProperties(),

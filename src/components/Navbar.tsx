@@ -36,7 +36,7 @@ export default function Navbar() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const TESTFLIGHT = "https://testflight.apple.com/join/Xna39VKU";
+  const APP_STORE = "https://apps.apple.com/app/aerarium/id6760155168";
   const RESEARCH = "https://research.aerarium.app/";
 
   return (
@@ -99,14 +99,14 @@ export default function Navbar() {
             <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
           <a
-            href={TESTFLIGHT}
+            href={APP_STORE}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackOutboundClick("testflight", "navbar_desktop")}
+            onClick={() => trackOutboundClick("appstore", "navbar_desktop")}
             className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-emerald-450 hover:shadow-lg hover:shadow-emerald-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             id="btn-nav-join-cta"
           >
-            Join iOS Beta
+            Get the App
             <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </motion.div>
@@ -153,13 +153,13 @@ export default function Navbar() {
             <ArrowUpRight className="h-4.5 w-4.5" />
           </a>
           <a
-            href={TESTFLIGHT}
+            href={APP_STORE}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackOutboundClick("testflight", "navbar_mobile")}
+            onClick={() => trackOutboundClick("appstore", "navbar_mobile")}
             className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 py-4 text-sm font-semibold text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
           >
-            <span>Join iOS Beta</span>
+            <span>Get the App</span>
             <ArrowUpRight className="h-4.5 w-4.5" />
           </a>
         </div>
