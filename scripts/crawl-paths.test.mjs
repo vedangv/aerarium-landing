@@ -30,17 +30,19 @@ test('deep-links the free showcase tickers', () => {
   }
 })
 
-test('links the apex static pages that are in sitemap.xml', () => {
+test('does NOT duplicate the React footer', () => {
+  // The app's own pages are already in the React contentinfo. Repeating them
+  // here produced a second visible footer and a second contentinfo landmark.
   const h = html()
-  for (const p of ['/portfolio-x-ray', '/policy-score', '/methodology', '/security']) {
-    assert.ok(h.includes(`href="${p}"`), `sitemap page ${p} is unreachable by link`)
-  }
+  const nav = h.slice(h.indexOf('<nav aria-label="Aerarium Research"'), h.indexOf('</nav>'))
+  assert.ok(!nav.includes('/portfolio-x-ray'), 'app pages duplicated from the React footer')
+  assert.ok(!/<footer/.test(nav), 'must not add a second contentinfo landmark')
 })
 
-test('the crawl footer is OUTSIDE #root so React cannot replace it', () => {
+test('the crawl nav is OUTSIDE #root so React cannot replace it', () => {
   const h = html()
   const root = h.indexOf('<div id="root">')
-  const foot = h.indexOf('<footer')
+  const foot = h.indexOf('<nav aria-label="Aerarium Research"')
   assert.ok(root !== -1 && foot > root, 'footer must follow #root')
   assert.ok(h.slice(root, foot).includes('</div>'), '#root must be closed before the footer')
 })
@@ -48,6 +50,6 @@ test('the crawl footer is OUTSIDE #root so React cannot replace it', () => {
 test('the links are followable', () => {
   // rel="nofollow" would defeat the entire point; noopener/noreferrer are fine.
   const h = html()
-  const footer = h.slice(h.indexOf('<footer'), h.indexOf('</footer>'))
+  const footer = h.slice(h.indexOf('<nav aria-label="Aerarium Research"'), h.indexOf('</nav>'))
   assert.ok(!/nofollow/.test(footer), 'crawl-path links must not be nofollow')
 })
