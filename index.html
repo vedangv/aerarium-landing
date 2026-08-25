@@ -92,6 +92,66 @@
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-300">
     <div id="root"></div>
+
+    <!--
+      Static crawl paths, rendered in the RAW HTML response.
+
+      This is a Vite SPA: the server sends an empty #root, so Googlebot's
+      first-pass HTML link extraction previously found ZERO outbound links here.
+      The React nav and footer do link to research.aerarium.app, but only after
+      JavaScript executes, and only ever to the bare root -- never to a hub or a
+      company. Measured 2026-08-25: aerarium.app/ is the ONLY indexed URL on the
+      whole domain, while research.aerarium.app/ sat at "Crawled - currently not
+      indexed" and nearly everything below it at "URL is unknown to Google".
+
+      These anchors sit OUTSIDE #root, so React never owns or replaces them, and
+      they duplicate destinations the rendered UI already offers -- they add
+      crawl paths, not new claims. Keep them in raw HTML; moving them into the
+      React tree returns this host to zero first-pass links.
+    -->
+    <footer class="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-400">
+      <nav aria-label="Aerarium Research">
+        <h2 class="text-slate-200 font-semibold mb-2">Aerarium Research</h2>
+        <p class="mb-3">
+          Source-first research on the S&amp;P 500 and Nasdaq-100, built from SEC
+          EDGAR filings: financial statements, revenue segments, operating KPIs,
+          13F institutional ownership and macro context.
+        </p>
+        <ul class="flex flex-wrap gap-x-4 gap-y-1 mb-4">
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/">Research home</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks">All companies</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/sectors">Sectors</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/earnings">Earnings calendar</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/macro">Macro</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/learn">Research guides</a></li>
+        </ul>
+        <h3 class="text-slate-300 mb-1">Free company research</h3>
+        <ul class="flex flex-wrap gap-x-4 gap-y-1">
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/NVDA">NVIDIA (NVDA)</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/AAPL">Apple (AAPL)</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/TSLA">Tesla (TSLA)</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/AMZN">Amazon (AMZN)</a></li>
+          <li><a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/PLTR">Palantir (PLTR)</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Aerarium app" class="mt-6">
+        <h2 class="text-slate-200 font-semibold mb-2">Aerarium app</h2>
+        <!-- These pages are in sitemap.xml but were reachable from no HTML link
+             on this page, which is why none of them are indexed either. -->
+        <ul class="flex flex-wrap gap-x-4 gap-y-1">
+          <li><a class="hover:text-emerald-300" href="/portfolio-x-ray">Portfolio X-Ray</a></li>
+          <li><a class="hover:text-emerald-300" href="/policy-score">Policy Score</a></li>
+          <li><a class="hover:text-emerald-300" href="/investment-policy-statement-app">Investment Policy Statement</a></li>
+          <li><a class="hover:text-emerald-300" href="/investment-thesis-tracker">Thesis Tracker</a></li>
+          <li><a class="hover:text-emerald-300" href="/goals-funding-plan">Goals &amp; Funding Plan</a></li>
+          <li><a class="hover:text-emerald-300" href="/methodology">Methodology</a></li>
+          <li><a class="hover:text-emerald-300" href="/security">Security</a></li>
+          <li><a class="hover:text-emerald-300" href="/support">Support</a></li>
+          <li><a class="hover:text-emerald-300" href="/privacy">Privacy</a></li>
+          <li><a class="hover:text-emerald-300" href="/terms">Terms</a></li>
+        </ul>
+      </nav>
+    </footer>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
