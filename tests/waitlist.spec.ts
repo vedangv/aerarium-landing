@@ -68,3 +68,15 @@ test('a malformed success response leaves a usable form instead of a broken tick
   await expect(page.getByRole('alert')).toContainText("Couldn't save your signup");
   await expect(page.getByRole('button', { name: 'Get launch updates' })).toBeEnabled();
 });
+
+test('a saved signup remains usable when referral statistics are unavailable', async ({ page }) => {
+  await page.route('**/api/waitlist', route => route.fulfill({ json: { ...savedUser, alreadyRegistered: true, referralCountUnavailable: true } }));
+  await page.goto('/');
+  await page.getByLabel('Email address').fill('test@example.com');
+  await page.getByRole('button', { name: 'Get launch updates' }).click();
+  await expect(page.getByRole('heading', { name: "You're on the founder list" })).toBeVisible();
+  await expect(page.getByText('Temporarily unavailable', { exact: true })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Your referral link' })).toHaveValue(/\?ref=AER-1234ABCD$/);
+  await page.reload();
+  await expect(page.getByText('Temporarily unavailable', { exact: true })).toBeVisible();
+});

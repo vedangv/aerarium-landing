@@ -145,6 +145,11 @@ shared rate limiter is still needed for distributed abuse protection.
 The existing referral response is retained for compatibility. Looking up an
 existing signup by submitting its email does not prove ownership of that email;
 email verification is required before this can become a private account view.
+New signups return a zero referral count without an extra database query.
+For existing signups, referral statistics are best effort: a failed count query
+still returns a successful confirmation with `referralCountUnavailable: true`.
+The UI labels this state instead of presenting the legacy numeric fallback as
+a known zero. Optional statistics must never cause a confirmed insert to retry.
 
 Admin view:
 

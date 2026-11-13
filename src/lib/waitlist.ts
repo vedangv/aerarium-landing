@@ -9,5 +9,6 @@ export function isWaitlistUser(value: unknown): value is WaitlistUser {
     && typeof user.referralCode === "string" && /^AER-[A-Z0-9]{8}$/.test(user.referralCode)
     && typeof user.ticketNumber === "string" && user.ticketNumber.length <= 64
     && typeof user.referralCount === "number" && Number.isInteger(user.referralCount) && user.referralCount >= 0
+    && (user.referralCountUnavailable === undefined || typeof user.referralCountUnavailable === "boolean")
     && (user.alreadyRegistered === undefined || typeof user.alreadyRegistered === "boolean");
 }

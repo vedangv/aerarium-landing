@@ -92,6 +92,7 @@ export default function WaitlistPortal() {
         ticketNumber: payload.ticketNumber,
         referralCode: payload.referralCode,
         referralCount: payload.referralCount ?? 0,
+        referralCountUnavailable: payload.referralCountUnavailable,
         alreadyRegistered: payload.alreadyRegistered,
       };
       if (!isWaitlistUser(newUser)) throw new Error("invalid_signup_response");
@@ -135,7 +136,7 @@ export default function WaitlistPortal() {
     setCopiedReferral(true);
     copyTimer.current = setTimeout(() => setCopiedReferral(false), 2000);
     try {
-      trackReferralLinkCopied(registeredUser.referralCount);
+      trackReferralLinkCopied(registeredUser.referralCountUnavailable ? undefined : registeredUser.referralCount);
     } catch {
       // Copying has already succeeded.
     }
@@ -200,7 +201,7 @@ export default function WaitlistPortal() {
               <div>
                 <span className="text-[10px] font-mono text-slate-500 block">REFERRED SIGNUPS</span>
                 <span className="text-xs font-semibold text-cyan-400 tracking-wide">
-                  {registeredUser.referralCount}
+                  {registeredUser.referralCountUnavailable ? "Temporarily unavailable" : registeredUser.referralCount}
                 </span>
               </div>
             </div>

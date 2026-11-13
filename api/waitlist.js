@@ -61,10 +61,11 @@ async function fetchReferralCount({ supabaseUrl, serviceKey, referralCode, fetch
 
   const contentRange = response.headers?.get?.("content-range");
   const total = contentRange?.split("/")?.[1];
-  if (total && total !== "*") return Number.parseInt(total, 10) || 0;
-
-  const rows = await response.json();
-  return Array.isArray(rows) ? rows.length : 0;
+  if (!/^\d+$/.test(total ?? "") || !Number.isSafeInteger(Number(total))) {
+    // limit=0 deliberately returns no rows; their length is not a count.
+    throw new Error("supabase_referral_count_missing");
+  }
+  return Number(total);
 }
 
 async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl, signal }) {
@@ -109,11 +110,19 @@ async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl, sig
 }
 
 async function publicPayload({ row, alreadyRegistered = false, config, fetchImpl }) {
-  const referralCount = await fetchReferralCount({
-    ...config,
-    referralCode: row.referral_code,
-    fetchImpl,
-  });
+  // A newly issued referral code starts at zero. Existing signups may have
+  // referrals, but a statistics outage must never undo a confirmed signup or
+  // trigger another insert. Retain the numeric field for older clients and
+  // explicitly tell the current UI when that number is unavailable.
+  let referralCount = 0;
+  let referralCountUnavailable = false;
+  if (alreadyRegistered) {
+    try {
+      referralCount = await fetchReferralCount({ ...config, referralCode: row.referral_code, fetchImpl });
+    } catch {
+      referralCountUnavailable = true;
+    }
+  }
 
   return {
     email: row.email,
@@ -121,6 +130,7 @@ async function publicPayload({ row, alreadyRegistered = false, config, fetchImpl
     ticketNumber: row.referral_code,
     referralCode: row.referral_code,
     referralCount,
+    ...(referralCountUnavailable ? { referralCountUnavailable: true } : {}),
     alreadyRegistered,
   };
 }
