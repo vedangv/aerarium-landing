@@ -25,9 +25,12 @@ export function cleanReferralCode(value) {
 
 function cleanOptionalText(value, fallback = null, maxLength = 160) {
   if (typeof value !== "string") return fallback;
-  const cleaned = value.trim();
+  // PostgreSQL rejects NUL and unpaired surrogates in JSON text values. Optional
+  // attribution must not prevent saving an otherwise valid email address.
+  const cleaned = Buffer.from(value.replace(/\u0000/g, ""), "utf8").toString("utf8").trim();
   if (!cleaned) return fallback;
-  return cleaned.slice(0, maxLength);
+  // Preserve the existing UTF-16 length limits without cutting a surrogate pair.
+  return cleaned.slice(0, maxLength).replace(/[\uD800-\uDBFF]$/, "");
 }
 
 export function buildWaitlistRow({

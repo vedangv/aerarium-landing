@@ -23,6 +23,38 @@ function createResponse() {
 }
 
 describe("waitlist API", () => {
+  it("saves a valid signup once when campaign text contains NUL or an emoji at the limit", async t => {
+    t.mock.method(console, "error", () => {});
+    let writes = 0;
+    let savedRow;
+    const res = createResponse();
+    await handler(
+      {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: { email: "user@example.com", utmCampaign: "x".repeat(95) + "🚀", utmContent: "launch\u0000video" },
+      }, res, {
+        env: { SUPABASE_URL: "https://example.invalid", SUPABASE_SERVICE_ROLE_KEY: "test-service" },
+        rateLimitStore: new Map(),
+        fetchImpl: async (_url, options) => {
+          writes++;
+          const row = JSON.parse(options.body);
+          // PostgreSQL text cannot store NUL or unpaired UTF-16 surrogates
+          // decoded from JSON. Model that rejection without a live database.
+          const invalid = Object.values(row).some(value => typeof value === "string"
+            && (value.includes("\u0000") || value !== Buffer.from(value, "utf8").toString("utf8")));
+          if (invalid) return { ok: false, status: 400 };
+          savedRow = row;
+          return { ok: true, status: 201, json: async () => [{ ...row, created_at: "2026-11-13T00:00:00.000Z" }] };
+        },
+      },
+    );
+    assert.equal(res.statusCode, 200);
+    assert.equal(writes, 1, "Malformed optional attribution must not cause write retries");
+    assert.equal(res.body.email, "user@example.com");
+    assert.equal(savedRow.utm_campaign, "x".repeat(95));
+    assert.equal(savedRow.utm_content, "launchvideo");
+  });
+
   it("confirms a new signup without depending on a referral-count query", async () => {
     const calls = [];
     const res = createResponse();

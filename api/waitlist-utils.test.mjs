@@ -76,4 +76,25 @@ describe("waitlist utilities", () => {
     assert.equal(row.utm_campaign.length, 96);
     assert.equal(row.utm_content, "launch-video");
   });
+
+  it("keeps optional text valid for PostgreSQL at Unicode truncation boundaries", () => {
+    const fields = [
+      ["source", "source", 64], ["userAgent", "user_agent", 512],
+      ["utmSource", "utm_source", 64], ["utmMedium", "utm_medium", 64],
+      ["utmCampaign", "utm_campaign", 96], ["utmContent", "utm_content", 96],
+    ];
+    for (const [input, output, limit] of fields) {
+      for (const text of ["launch\u0000video", "x".repeat(limit - 1) + "🚀", "launch-\ud800"]) {
+        const inputRow = { email: "user@example.com" };
+        inputRow[input] = text;
+        const row = buildWaitlistRow(inputRow);
+        assert.ok(!row[output].includes("\u0000"), `${input} must not contain NUL`);
+        assert.ok(row[output].length <= limit, `${input} must retain its length limit`);
+        assert.equal(row[output], Buffer.from(row[output], "utf8").toString("utf8"), `${input} must be valid Unicode`);
+      }
+    }
+    const empty = buildWaitlistRow({ email: "user@example.com", source: " \u0000 ", utmSource: "\u0000" });
+    assert.equal(empty.source, "landing");
+    assert.equal(empty.utm_source, null);
+  });
 });
