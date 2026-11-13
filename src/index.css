@@ -40,6 +40,7 @@ html {
 /* Keyboard focus must stay visible even before or after a desktop reveal. */
 .focus-reveal:focus-within {
   opacity: 1 !important;
+  pointer-events: auto !important;
   transform: none !important;
   filter: none !important;
 }

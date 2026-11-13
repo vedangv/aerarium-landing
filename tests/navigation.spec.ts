@@ -86,3 +86,21 @@ test('focusing a link reveals it even after its scroll scene has faded', async (
     return opacity;
   })).toBe(1);
 });
+
+test('the faded hero does not intercept clicks on the questions behind it', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/');
+  await expect(page.locator('#aerarium-navbar')).toBeVisible();
+  await page.evaluate(() => window.scrollTo({ top: 1800, behavior: 'instant' }));
+  await expect(page.locator('.hero-foreground')).toHaveCSS('opacity', '0');
+  const link = page.locator('#btn-hero-join-waitlist');
+  const intercepted = await link.evaluate(element => {
+    const rect = element.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2);
+    return Boolean(hit?.closest('.hero-foreground'));
+  });
+  expect(intercepted, 'An invisible App Store link must not capture pointer input').toBe(false);
+  // The same link must remain reachable and visible to keyboard users.
+  await link.focus();
+  await expect(page.locator('.hero-foreground')).toHaveCSS('opacity', '1');
+});

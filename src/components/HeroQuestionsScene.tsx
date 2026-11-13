@@ -144,6 +144,9 @@ function Scene() {
   // ~0.16 so it doesn't sit half-present over the background during the focus
   // pull. Held invisible for the rest of the scroll.
   const heroOpacity = useTransform(scrollYProgress, [0, 0.15, 1], [1, 0, 0]);
+  // Opacity alone leaves the invisible download link in the pointer hit area.
+  // Keep keyboard focus available; the focus-reveal rule makes it visible.
+  const heroPointerEvents = useTransform(heroOpacity, opacity => opacity > 0 ? "auto" : "none");
   const heroY = useTransform(scrollYProgress, [0, 0.29, 1], [0, -110, -110]);
   const heroScale = useTransform(scrollYProgress, [0, 0.29, 1], [1, 0.96, 0.96]);
   const heroBlurPx = useTransform(scrollYProgress, [0, 0.15, 1], [0, 6, 6]);
@@ -216,7 +219,7 @@ function Scene() {
         {/* Foreground layer: the hero, dissolving away */}
         <motion.div
           className="focus-reveal hero-foreground absolute inset-0 z-20 flex items-center justify-center"
-          style={{ opacity: heroOpacity, y: heroY, scale: heroScale, filter: heroFilter }}
+          style={{ opacity: heroOpacity, pointerEvents: heroPointerEvents, y: heroY, scale: heroScale, filter: heroFilter }}
         >
           <HeroCopy />
         </motion.div>
