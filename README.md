@@ -18,7 +18,7 @@ The intended funnel is:
 ```text
 SEO / social / Research traffic
   -> aerarium.app
-  -> TestFlight or founder launch list
+  -> App Store download or founder launch list
   -> Aerarium Portfolio iOS activation
 ```
 
@@ -43,7 +43,10 @@ This repository is safe to keep public only while it remains a marketing surface
 - no user data, screenshots with real personal data, or internal credentials
 
 Current production landing project: `aerarium-landing` on Vercel.
-Current iOS beta CTA: `https://testflight.apple.com/join/Xna39VKU`.
+Current iOS CTA: `https://apps.apple.com/app/aerarium/id6760155168`.
+The app is free to download; optional Premium (US$7.99/month) includes brokerage
+sync. Research Pro is CA$10/month. Do not add annual or converted prices without
+confirmation from the owner.
 Canonical launch domain: `https://aerarium.app/`.
 Secondary domain: `https://aerariumapp.com/`, intended to redirect to
 `https://aerarium.app/`.

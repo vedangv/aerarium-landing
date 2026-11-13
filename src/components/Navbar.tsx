@@ -77,9 +77,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop CTAs — solid cyan Research + solid emerald app. Hidden on the
-            hero (where the hero card already shows them), then they roll up into
-            the bar as the visitor scrolls past it. */}
+        {/* The app is the primary action; Research remains a section link. */}
         <motion.div
           className="hidden lg:flex items-center gap-2.5"
           animate={{ opacity: pastHero ? 1 : 0, y: pastHero ? 0 : 12 }}
@@ -87,17 +85,6 @@ export default function Navbar() {
           style={{ pointerEvents: pastHero ? "auto" : "none" }}
           aria-hidden={!pastHero}
         >
-          <a
-            href={RESEARCH}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackOutboundClick("research", "navbar_desktop")}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-400 px-4 py-2 text-xs font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
-            id="btn-nav-open-research"
-          >
-            Open Research
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </a>
           <a
             href={APP_STORE}
             target="_blank"
@@ -147,7 +134,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackOutboundClick("research", "navbar_mobile")}
-            className="mt-2 flex items-center justify-center gap-2 rounded-xl border border-cyan-400/35 bg-cyan-400/[0.08] py-4 text-sm font-semibold text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
+            className="mt-2 flex items-center justify-center gap-2 py-3 text-sm font-medium text-cyan-200 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
           >
             <span>Open Research</span>
             <ArrowUpRight className="h-4.5 w-4.5" />

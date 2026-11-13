@@ -50,13 +50,13 @@ function HeroCopy() {
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-6 text-center sm:gap-9">
       <h1 className="font-editorial text-[40px] leading-[1.02] tracking-tight text-white min-[380px]:text-[46px] sm:text-[88px] sm:leading-[1.0] lg:text-[104px]">
-        <span className="block">Invest with intention,</span>
-        <span className="block text-emerald-200">not impulse.</span>
+        <span className="block">See what you</span>
+        <span className="block text-emerald-200">actually own.</span>
       </h1>
 
       <p className="max-w-2xl text-base leading-relaxed text-slate-300 sm:text-xl">
-        You can’t follow a plan you can’t see. Aerarium helps you understand what you
-        really own, build your investment plan, and stay disciplined for the long term.
+        See the stocks hidden inside your funds, check whether your portfolio follows
+        your plan, and track your goals — all in one iPhone app.
       </p>
 
       <div className="flex flex-col items-center gap-4 pt-2">
@@ -72,25 +72,13 @@ function HeroCopy() {
           >
             Download on the App Store
           </a>
-          {/* Cyan = the web research product */}
-          <a
-            href="https://research.aerarium.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackOutboundClick("research", "hero")}
-            className="py-3 px-7 text-sm sm:py-4 sm:px-9 sm:text-base bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
-            id="btn-hero-open-research"
-          >
-            Open Research
-          </a>
         </div>
-        <span className="text-sm text-slate-500">Now on the App Store · Research free for 5 showcase tickers</span>
+        <span className="text-sm text-slate-400">Free to download · Premium US$7.99/month</span>
+        <span className="text-sm text-slate-400">Brokerage sync requires Premium.</span>
       </div>
 
-      <p className="text-sm text-slate-500">
-        For long-term investors — whether you’re just starting or already run a playbook.
-        <span className="mx-2 text-slate-700">·</span>
-        Read-only. No trading. Not financial advice.
+      <p className="text-sm text-slate-400">
+        Read-only. Aerarium never places trades. Not financial advice.
       </p>
     </div>
   );

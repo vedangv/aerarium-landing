@@ -26,7 +26,7 @@ describe("static SEO pages", () => {
       assert.match(html, new RegExp(`<h1>${page.h1.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</h1>`));
       assert.match(html, /<meta name="robots" content="index,follow,max-image-preview:large"/);
       assert.match(html, /"@type":"FAQPage"/);
-      assert.match(html, /Join the free iOS beta/);
+      assert.match(html, /Download on the App Store/);
       assert.doesNotMatch(html, /<div id="root"><\/div>/);
     }
   });

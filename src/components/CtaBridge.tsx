@@ -34,7 +34,7 @@ function CtaButton() {
         Download on the App Store
         <ArrowUpRight className="h-4 w-4" />
       </a>
-      <span className="text-sm text-slate-500">Free on iOS · App Store</span>
+      <span className="text-sm text-slate-400">Free to download · Premium US$7.99/month</span>
     </div>
   );
 }
@@ -56,16 +56,16 @@ export default function CtaBridge() {
         <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 text-center">
           <motion.div>{Pill}</motion.div>
           <motion.h2 className="mt-6 font-editorial text-[40px] leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            …and so much more.
+            Put your investing plan in view.
           </motion.h2>
           <motion.p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-            Come experience the full app — free on the App Store.
+            Bring your holdings, investing rules and goals together. Optional Premium includes read-only brokerage sync.
           </motion.p>
           <motion.div className="mt-10">
             <CtaButton />
           </motion.div>
           <motion.p className="mt-12 text-sm font-medium text-cyan-300">
-            And your portfolio is only half of Aerarium.
+            Explore company research on the companion website.
           </motion.p>
         </div>
       </section>
@@ -84,13 +84,13 @@ export default function CtaBridge() {
               className="mt-6 font-editorial text-[40px] leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl"
               style={{ opacity: head.opacity, y: head.y }}
             >
-              …and so much more.
+              Put your investing plan in view.
             </motion.h2>
             <motion.p
               className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl"
               style={{ opacity: sub.opacity, y: sub.y }}
             >
-              Come experience the full app — free on the App Store.
+              Bring your holdings, investing rules and goals together. Optional Premium includes read-only brokerage sync.
             </motion.p>
             <motion.div className="mt-10" style={{ opacity: btn.opacity, y: btn.y }}>
               <CtaButton />
@@ -99,7 +99,7 @@ export default function CtaBridge() {
               className="mt-12 flex flex-col items-center gap-2"
               style={{ opacity: lead.opacity, y: lead.y }}
             >
-              <p className="text-sm font-medium text-cyan-300">And your portfolio is only half of Aerarium.</p>
+              <p className="text-sm font-medium text-cyan-300">Explore company research on the companion website.</p>
               <ArrowDown className="h-4 w-4 animate-bounce text-cyan-400" />
             </motion.div>
           </div>

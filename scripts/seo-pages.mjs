@@ -1,5 +1,5 @@
 const SITE_URL = "https://aerarium.app";
-const TESTFLIGHT_URL = "https://testflight.apple.com/join/Xna39VKU";
+const APP_STORE_URL = "https://apps.apple.com/app/aerarium/id6760155168";
 const RESEARCH_URL = "https://research.aerarium.app/";
 
 export const seoPages = [
@@ -167,7 +167,7 @@ export const seoPages = [
     ],
     featureTitle: "Private portfolio data stays separate from public research.",
     feature: [
-      "Aerarium Portfolio includes read-only brokerage sync, encrypted sensitive fields, recovery planning, export controls, and account deletion controls. Aerarium Research uses public-market data and remains separate from private portfolio records.",
+      "Aerarium Portfolio offers optional Premium read-only brokerage sync, encrypted sensitive fields, recovery planning, export controls, and account deletion controls. Aerarium Research uses public-market data and remains separate from private portfolio records.",
       "The app is not a trading platform. That constraint is part of the product model, not a marketing footnote.",
     ],
     image: "/assets/seo/security-controls.jpg",
@@ -198,7 +198,7 @@ export const seoPages = [
     featureTitle: "The portfolio is a system, not a list.",
     feature: [
       "Aerarium Portfolio connects visibility with discipline: Portfolio X-Ray to see what you really own inside your funds, your written investing rules, a Policy Score for how well you're following the plan, a goals funding plan, and thesis check-ins to remember why you bought each holding.",
-      "Aerarium Research complements that with free company research built from public filings. The products remain distinct: public research informs decisions, while private portfolio monitoring keeps those decisions connected to your plan.",
+      "Aerarium Research complements that with company research built from public filings. Five showcase tickers and macro dashboards are free; Research Pro is CA$10/month. The products remain distinct: public research informs decisions, while private portfolio monitoring keeps those decisions connected to your plan.",
     ],
     image: "/assets/seo/dashboard.jpg",
     imageAlt: "Aerarium Portfolio dashboard showing private portfolio monitoring, policy score, and account overview.",
@@ -307,7 +307,7 @@ export function renderSeoPage(page) {
       <div class="shell nav-inner">
         <a class="brand" href="/"><img src="/assets/brand/app-icon-512.png" alt="" /><span>Aerarium</span></a>
         <nav class="nav-links" aria-label="Primary"><a href="/portfolio-x-ray">Portfolio X-Ray</a><a href="/investment-policy-statement-app">Investing Rules</a><a href="/methodology">Methodology</a><a href="/security">Security</a></nav>
-        <div class="actions"><a class="quiet" href="${RESEARCH_URL}">Open Research</a><a class="button" href="${TESTFLIGHT_URL}">Join iOS Beta</a></div>
+        <div class="actions"><a class="quiet" href="${RESEARCH_URL}">Open Research</a><a class="button" href="${APP_STORE_URL}">Get the App</a></div>
       </div>
     </header>
     <main>
@@ -315,7 +315,7 @@ export function renderSeoPage(page) {
         <span class="eyebrow">${escapeHtml(page.eyebrow)}</span>
         <h1>${escapeHtml(page.h1)}</h1>
         <p class="intro">${escapeHtml(page.intro)}</p>
-        <div class="hero-actions"><a class="button" href="${TESTFLIGHT_URL}">Join the free iOS beta</a><a class="button secondary" href="/#waitlist">Get App Store launch updates</a></div>
+        <div class="hero-actions"><a class="button" href="${APP_STORE_URL}">Download on the App Store</a><a class="button secondary" href="/#waitlist">Get product updates</a></div>
         <ul class="proof">${highlightItems}</ul>
       </section>
       <section class="band">
@@ -340,7 +340,7 @@ export function renderSeoPage(page) {
         <div class="shell"><h2 class="section-title">Keep exploring Aerarium.</h2><div class="related">${renderRelated(page)}</div></div>
       </section>
       <section class="band">
-        <div class="shell cta"><h2>Use visibility to support your own discipline.</h2><p>Aerarium Portfolio is free during the iOS beta. Brokerage sync is read-only, and Aerarium never places trades.</p><div class="hero-actions"><a class="button" href="${TESTFLIGHT_URL}">Join iOS Beta</a><a class="button secondary" href="${RESEARCH_URL}">Open Aerarium Research</a></div></div>
+        <div class="shell cta"><h2>Use visibility to support your own discipline.</h2><p>Aerarium Portfolio is free to download. Optional Premium (US$7.99/month) includes read-only brokerage sync. Aerarium never places trades.</p><div class="hero-actions"><a class="button" href="${APP_STORE_URL}">Get the App</a><a class="button secondary" href="${RESEARCH_URL}">Open Aerarium Research</a></div></div>
       </section>
     </main>
     <footer class="footer">
