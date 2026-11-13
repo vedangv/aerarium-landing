@@ -141,6 +141,9 @@ expire entries and cap memory at 4,096 client addresses per function instance.
 These are best-effort limits within a warm instance: they do **not** coordinate
 across Vercel instances or survive cold starts. An owner-configured edge or
 shared rate limiter is still needed for distributed abuse protection.
+At capacity the limiter rejects new client addresses until entries expire;
+this can temporarily block an owner login too. It deliberately does not bypass
+an exhausted limit for a correct password, which would defeat guess throttling.
 
 The existing referral response is retained for compatibility. Looking up an
 existing signup by submitting its email does not prove ownership of that email;

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import signup from './waitlist.js';
 import admin from './waitlist-admin.js';
+import { MAX_RATE_LIMIT_KEYS, RATE_LIMIT_WINDOW_MS } from './request-utils.mjs';
 
 const env = { SUPABASE_URL: 'https://example.invalid', SUPABASE_SERVICE_ROLE_KEY: 'test-service', ADMIN_DASHBOARD_PASSWORD: 'test-password' };
 const jsonHeaders = { 'content-type': 'application/json', 'x-real-ip': '203.0.113.10' };
@@ -16,6 +17,37 @@ function response() {
 const noFetch = async () => assert.fail('Rejected requests must not reach the database');
 
 for (const [name, handler, body] of [['signup', signup, { email: 'user@example.com' }], ['admin', admin, { password: 'test-password' }]]) {
+  test(`${name}: cancels stalled database requests with one eight-second budget`, async t => {
+    const controller = new AbortController();
+    const durations = [];
+    const signals = [];
+    // Control cancellation without making the suite wait eight seconds. The
+    // production timeout duration and propagation are both asserted below.
+    t.mock.method(AbortSignal, 'timeout', duration => {
+      durations.push(duration);
+      return controller.signal;
+    });
+    t.mock.method(console, 'error', () => {});
+    const res = response();
+    await handler({ method: 'POST', headers: jsonHeaders, body }, res, {
+      env, rateLimitStore: new Map(),
+      fetchImpl: async (_url, options) => {
+        signals.push(options.signal);
+        if (!options.signal) throw new Error('Request has no deadline');
+        options.signal.throwIfAborted();
+        queueMicrotask(() => controller.abort(new DOMException('Deadline exceeded', 'TimeoutError')));
+        return new Promise((_, reject) => {
+          options.signal.addEventListener('abort', () => reject(options.signal.reason), { once: true });
+        });
+      },
+    });
+    assert.equal(res.statusCode, 502);
+    assert.deepEqual(durations, [8000], 'Retries must not start a fresh timeout');
+    assert.ok(signals.length > 0);
+    assert.ok(signals.every(signal => signal === controller.signal && signal.aborted));
+    assert.equal(res.body.error, name === 'signup' ? 'waitlist_unavailable' : 'waitlist_admin_unavailable');
+  });
+
   test(`${name}: rejects malformed and non-object JSON without throwing`, async () => {
     for (const invalid of ['null', '[]', 'true', '1', '"text"', '{', null, []]) {
       const res = response();
@@ -93,4 +125,28 @@ test('signup: limits repeated requests, trusts the edge IP over forwarded input,
   assert.equal(calls, before);
   time += 15 * 60 * 1000;
   assert.equal((await submit(7)).statusCode, 200);
+});
+
+test('admin: a saturated throttle fails closed and permits login after expiry', async () => {
+  let time = 1000;
+  const store = new Map(Array.from({ length: MAX_RATE_LIMIT_KEYS }, (_, index) => [
+    `client-${index}`, { count: 5, startedAt: time },
+  ]));
+  let lookups = 0;
+  const context = {
+    env, rateLimitStore: store, now: () => time,
+    fetchImpl: async () => { lookups++; return { ok: true, json: async () => [] }; },
+  };
+  const request = { method: 'POST', headers: jsonHeaders, body: { password: 'test-password' } };
+  const blocked = response();
+  await admin(request, blocked, context);
+  assert.equal(blocked.statusCode, 429);
+  assert.equal(blocked.headers['Retry-After'], 900);
+  assert.equal(lookups, 0);
+  time += RATE_LIMIT_WINDOW_MS;
+  const recovered = response();
+  await admin(request, recovered, context);
+  assert.equal(recovered.statusCode, 200);
+  assert.equal(lookups, 1);
+  assert.equal(store.size, 0);
 });

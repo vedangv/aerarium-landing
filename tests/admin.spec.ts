@@ -92,3 +92,36 @@ test('signing out during a refresh does not let a late response restore private 
   await expect(page.getByLabel('Admin password')).toHaveValue('');
   await expect(page.getByRole('table')).toHaveCount(0);
 });
+
+test('a decoded refresh cannot restore private rows after sign out', async ({ page }) => {
+  await page.route('**/api/waitlist-admin', route => route.fulfill({ json: payload }));
+  await page.goto('/admin/waitlist');
+  await page.getByLabel('Admin password').fill('test-password');
+  await page.getByRole('button', { name: 'View founder list' }).click();
+  await expect(page.getByRole('table')).toBeVisible();
+
+  // Model a response whose headers have arrived and whose decoded data settles
+  // after logout. Aborting fetch alone cannot protect this continuation.
+  await page.evaluate(data => {
+    const originalFetch = window.fetch;
+    window.fetch = async (input, init) => {
+      if (input !== '/api/waitlist-admin') return originalFetch(input, init);
+      return {
+        ok: true, status: 200,
+        json: () => new Promise(resolve => {
+          (window as typeof window & { finishAdminBody: () => void }).finishAdminBody = () => resolve(data);
+        }),
+      } as Response;
+    };
+  }, payload);
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => 'finishAdminBody' in window)).toBe(true);
+  await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+  await page.evaluate(async () => {
+    (window as typeof window & { finishAdminBody: () => void }).finishAdminBody();
+    // Let the promise continuation and React's resulting render both run.
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+  await expect(page.getByLabel('Admin password')).toHaveValue('');
+  await expect(page.getByRole('table')).toHaveCount(0);
+});
