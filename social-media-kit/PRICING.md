@@ -1,4 +1,12 @@
-# Aerarium Pricing (working draft)
+# Aerarium Pricing
+
+**Current Portfolio pricing (2026-11-13):** free to download, with optional
+Premium at **US$7.99/month or US$79.99/year**. Brokerage sync requires Premium.
+Apple shows regional prices in the app before purchase.
+
+**Historical strategy draft (May–June 2026):** all sections below preserve
+earlier planning, including the proposed $9.99 Pro tier, annual estimates,
+beta status, and founder offers. They do not describe current prices or offers.
 
 Status: **draft / not public.** Numbers below are starting points to pressure-test,
 not committed prices. Free during beta for both products; this defines what paid

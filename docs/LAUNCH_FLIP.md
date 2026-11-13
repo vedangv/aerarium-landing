@@ -7,7 +7,7 @@ Everything TestFlight/beta-related was deliberately KEPT until then
 ## CTAs (swap TestFlight → App Store)
 - `src/components/HeroQuestionsScene.tsx` — hero microcopy "Free on iOS via TestFlight · …" → "Free on the App Store · …"; "Get Early Access" CTA → "Download on the App Store" pointing at the App Store URL.
 - `src/components/Navbar.tsx` — "Join iOS Beta" button → "Download" (App Store URL).
-- `src/components/CtaBridge.tsx` + `src/components/MobileSnapBeat.tsx` — "Come experience the full app — free while it's in beta on TestFlight" → premium-honest copy: "Free to download — Aerarium Premium unlocks everything (US$9.99/mo)".
+- `src/components/CtaBridge.tsx` + `src/components/MobileSnapBeat.tsx` — "Come experience the full app — free while it's in beta on TestFlight" → premium-honest copy: "Free to download — Aerarium Premium unlocks everything (US$7.99/month or US$79.99/year)".
 - `src/components/WaitlistPortal.tsx` — "Immediate iOS Beta" quick-link → App Store badge; consider retiring the waitlist section entirely or repurposing as newsletter.
 - Footer (`src/App.tsx`) — "TestFlight" link → "App Store".
 
