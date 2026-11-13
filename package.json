@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "test": "node --test api/*.test.mjs scripts/*.test.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:webkit": "playwright test --config playwright.webkit.config.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",

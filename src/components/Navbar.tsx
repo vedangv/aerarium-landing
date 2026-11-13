@@ -32,6 +32,7 @@ export default function Navbar() {
   const [pastHero, setPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDialogElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
@@ -73,6 +74,9 @@ export default function Navbar() {
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const menu = menuRef.current;
+    // Safari does not focus buttons on pointer clicks. Give the native dialog
+    // an explicit opener so closing it restores focus to the menu toggle.
+    menuToggleRef.current?.focus({ preventScroll: true });
     menu?.showModal();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -103,15 +107,15 @@ export default function Navbar() {
   const keepMenuFocus = (event: React.KeyboardEvent<HTMLDialogElement>) => {
     if (event.key !== "Tab") return;
     const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>("a[href], button"));
-    const first = controls[0];
-    const last = controls[controls.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last?.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first?.focus();
-    }
+    if (!controls.length) return;
+    // Cycle explicitly: Safari's default Tab order skips links, which would
+    // otherwise let focus leave the modal from the close button.
+    const current = controls.indexOf(document.activeElement as HTMLElement);
+    const next = event.shiftKey
+      ? (current <= 0 ? controls.length - 1 : current - 1)
+      : (current + 1) % controls.length;
+    event.preventDefault();
+    controls[next].focus();
   };
 
   return (
@@ -183,6 +187,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
+          ref={menuToggleRef}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="lg:hidden inline-flex h-11 w-11 items-center justify-center text-slate-300 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
           id="btn-nav-mobile-toggle"

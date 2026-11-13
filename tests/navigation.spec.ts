@@ -25,6 +25,14 @@ test('mobile navigation contains focus, closes with Escape, and restores focus',
   await toggle.click();
   const dialog = page.getByRole('dialog', { name: 'Navigation' });
   await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Close navigation menu' })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(dialog.getByRole('link', { name: 'Portfolio', exact: true })).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(dialog.getByRole('button', { name: 'Close navigation menu' })).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(dialog.getByRole('link', { name: 'Get the App', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
   for (let i = 0; i < 10; i++) {
     await page.keyboard.press('Tab');
     expect(await dialog.evaluate(element => element.contains(document.activeElement))).toBe(true);
@@ -40,15 +48,18 @@ test('mobile navigation contains focus, closes with Escape, and restores focus',
   await expect(page).toHaveURL(/#security$/);
 });
 
-test('the brand is a keyboard link and hidden desktop actions are skipped', async ({ page }) => {
+test('the brand is a keyboard link and hidden desktop actions are skipped', async ({ page, browserName }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
-  await page.keyboard.press('Tab');
+  await expect(page.locator('#aerarium-navbar')).toBeVisible();
+  // Option+Tab includes links in Safari's default keyboard-navigation mode.
+  const tab = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+  await page.keyboard.press(tab);
   await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab);
   await expect(page.getByRole('link', { name: 'Aerarium home', exact: true })).toBeFocused();
   await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Launch updates', exact: true }).focus();
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab);
   await expect(page.locator('#btn-hero-join-waitlist')).toBeFocused();
 });
 

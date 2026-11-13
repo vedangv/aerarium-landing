@@ -8,6 +8,7 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 320, height: 568 }
     const layout = await page.evaluate(() => ({
       height: document.documentElement.scrollHeight,
       width: document.documentElement.scrollWidth,
+      availableWidth: document.documentElement.clientWidth,
       hiddenHeadings: [...document.querySelectorAll('h1, h2')].filter(heading => {
         for (let node: Element | null = heading; node; node = node.parentElement) {
           if (Number(getComputedStyle(node).opacity) < 1) return true;
@@ -16,7 +17,7 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 320, height: 568 }
       }).map(heading => heading.textContent),
       stickyScenes: [...document.querySelectorAll('main *')].filter(node => getComputedStyle(node).position === 'sticky').length,
     }));
-    expect(layout.width).toBe(viewport.width);
+    expect(layout.width).toBe(layout.availableWidth);
     expect(layout.height).toBeLessThan(15000);
     expect(layout.hiddenHeadings).toEqual([]);
     expect(layout.stickyScenes).toBe(0);

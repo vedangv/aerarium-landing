@@ -179,3 +179,9 @@ The suite covers responsive layouts, keyboard navigation, storage and clipboard
 failures, mocked signup responses, and axe accessibility scans of the homepage,
 mobile menu, and signup confirmation. These scans complement manual browser
 checks; they do not certify every screen-reader interaction.
+
+For Safari-engine coverage, install WebKit with `npx playwright install webkit`
+and run `npm run test:e2e:webkit`. This runs the same local, network-isolated
+suite at phone and desktop widths without changing the default Chromium run.
+It is engine coverage, not a substitute for testing on a physical iPhone.
+Generated build, browser, and test artifacts are excluded from TypeScript checks.
