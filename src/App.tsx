@@ -21,6 +21,7 @@ import ResearchScreens from "./components/ResearchScreens";
 import ResearchCloseCta from "./components/ResearchCloseCta";
 import { Lock, Instagram } from "lucide-react";
 import { trackOutboundClick } from "./lib/analytics";
+import { appStoreLink, researchLink } from "./lib/product-links.mjs";
 
 export default function App() {
   return (
@@ -105,8 +106,8 @@ export default function App() {
               <a href="/portfolio-x-ray" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Portfolio X-Ray</a>
               <a href="/security" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Security</a>
               <a href="#waitlist" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Launch updates</a>
-              <a href="https://apps.apple.com/app/aerarium/id6760155168" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("appstore", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">App Store</a>
-              <a href="https://research.aerarium.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("research", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300">Research</a>
+              <a href={appStoreLink("footer")} target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("appstore", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">App Store</a>
+              <a href={researchLink("footer")} target="_blank" rel="noopener" onClick={() => trackOutboundClick("research", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300">Research</a>
               <a href="https://www.instagram.com/aerarium.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("instagram", "footer")} className="inline-flex items-center gap-1.5 hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">
                 <Instagram className="h-3.5 w-3.5" />
                 <span>Instagram</span>

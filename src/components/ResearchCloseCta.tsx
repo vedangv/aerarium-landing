@@ -1,3 +1,4 @@
+import { researchLink } from "../lib/product-links.mjs";
 import { useStaticLayout } from "./useStaticLayout";
 import { useSceneScroll } from "./useSceneScroll";
 import React, { useRef } from "react";
@@ -23,9 +24,9 @@ function CtaButton() {
   return (
     <div className="flex flex-col items-center gap-3">
       <a
-        href="https://research.aerarium.app/"
+        href={researchLink("research_close")}
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener"
         onClick={() => trackOutboundClick("research", "research_close")}
         className="inline-flex items-center gap-2 rounded-2xl bg-cyan-400 px-9 py-4 text-base font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
         id="btn-research-close"

@@ -31,7 +31,7 @@ test('published copy uses explicit currencies and does not advertise unconfirmed
 test('all guides send visitors to the released app and disclose paid sync', () => {
   for (const page of seoPages) {
     const html = renderSeoPage(page);
-    assert.match(html, /href="https:\/\/apps\.apple\.com\/app\/aerarium\/id6760155168"/);
+    assert.match(html, /href="https:\/\/apps\.apple\.com\/app\/aerarium\/id6760155168\?/);
     assert.match(html, /Premium.*US\$7\.99\/month.*brokerage sync/);
     assert.doesNotMatch(html, /testflight\.apple\.com|free during the iOS beta/);
   }

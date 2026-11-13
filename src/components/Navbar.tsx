@@ -3,10 +3,11 @@ import { motion, useScroll } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import logoSrc from "../../assets/brand/apple-touch-icon.png";
 import { trackOutboundClick } from "../lib/analytics";
+import { appStoreLink, researchLink } from "../lib/product-links.mjs";
 
 const NAV_LINKS = [
   { label: "Portfolio", id: "answer" },
-  { label: "Research", id: "research-questions" },
+  { label: "Research", href: researchLink("navbar") },
   { label: "Security", id: "security" },
   { label: "Founder story", id: "founder-story" },
   { label: "Launch updates", id: "waitlist" },
@@ -113,9 +114,6 @@ export default function Navbar() {
     }
   };
 
-  const APP_STORE = "https://apps.apple.com/app/aerarium/id6760155168";
-  const RESEARCH = "https://research.aerarium.app/";
-
   return (
     <nav
       id="aerarium-navbar"
@@ -148,17 +146,20 @@ export default function Navbar() {
         <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center space-x-6">
           {NAV_LINKS.map((l) => (
             <a
-              key={l.id}
-              href={`#${l.id}`}
-              onClick={(event) => scrollToSection(event, l.id)}
+              key={l.id ?? l.href}
+              href={l.href ?? `#${l.id}`}
+              target={l.href ? "_blank" : undefined}
+              rel={l.href ? "noopener" : undefined}
+              onClick={(event) => l.id ? scrollToSection(event, l.id) : trackOutboundClick("research", "navbar_desktop")}
               className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             >
               {l.label}
+              {l.href && <ArrowUpRight aria-hidden="true" className="ml-1 inline h-3.5 w-3.5" />}
             </a>
           ))}
         </div>
 
-        {/* The app is the primary action; Research remains a section link. */}
+        {/* The app is the primary action; Research is a secondary text link. */}
         <motion.div
           className="hidden lg:flex items-center gap-2.5"
           animate={{ opacity: pastHero ? 1 : 0, y: pastHero ? 0 : 12 }}
@@ -168,7 +169,7 @@ export default function Navbar() {
           inert={!pastHero}
         >
           <a
-            href={APP_STORE}
+            href={appStoreLink("navbar_desktop")}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackOutboundClick("appstore", "navbar_desktop")}
@@ -207,26 +208,19 @@ export default function Navbar() {
           </div>
           {NAV_LINKS.map((l) => (
             <a
-              key={l.id}
-              href={`#${l.id}`}
-              onClick={(event) => scrollToSection(event, l.id)}
+              key={l.id ?? l.href}
+              href={l.href ?? `#${l.id}`}
+              target={l.href ? "_blank" : undefined}
+              rel={l.href ? "noopener" : undefined}
+              onClick={(event) => l.id ? scrollToSection(event, l.id) : trackOutboundClick("research", "navbar_mobile")}
               className="text-lg text-left text-slate-300 hover:text-white font-display py-2 border-b border-white/5 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
             >
               {l.label}
+              {l.href && <ArrowUpRight aria-hidden="true" className="ml-1 inline h-4 w-4" />}
             </a>
           ))}
           <a
-            href={RESEARCH}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackOutboundClick("research", "navbar_mobile")}
-            className="mt-2 flex items-center justify-center gap-2 py-3 text-sm font-medium text-cyan-200 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
-          >
-            <span>Open Research</span>
-            <ArrowUpRight className="h-4.5 w-4.5" />
-          </a>
-          <a
-            href={APP_STORE}
+            href={appStoreLink("navbar_mobile")}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackOutboundClick("appstore", "navbar_mobile")}

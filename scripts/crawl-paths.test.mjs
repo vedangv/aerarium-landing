@@ -17,7 +17,7 @@ const html = () => readFileSync(new URL('../index.html', import.meta.url), 'utf8
 test('links the research hubs in raw HTML', () => {
   const h = html()
   for (const path of ['/', '/stocks', '/sectors', '/earnings', '/macro', '/learn']) {
-    assert.ok(h.includes(`href="https://research.aerarium.app${path}"`),
+    assert.ok(h.includes(`href="https://research.aerarium.app${path}?`),
       `missing raw-HTML link to research${path}`)
   }
 })
@@ -25,7 +25,7 @@ test('links the research hubs in raw HTML', () => {
 test('deep-links the free showcase tickers', () => {
   const h = html()
   for (const t of ['NVDA', 'AAPL', 'TSLA', 'AMZN', 'PLTR']) {
-    assert.ok(h.includes(`href="https://research.aerarium.app/stocks/${t}"`),
+    assert.ok(h.includes(`href="https://research.aerarium.app/stocks/${t}?`),
       `missing raw-HTML link to ${t}`)
   }
 })

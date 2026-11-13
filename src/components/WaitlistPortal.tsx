@@ -1,3 +1,4 @@
+import { appStoreLink, researchLink } from "../lib/product-links.mjs";
 import React, { useState, useEffect, useRef } from "react";
 import { WaitlistUser } from "../types";
 import { ArrowRight, CheckCircle, Mail, Share2, Sparkles, AlertCircle } from "lucide-react";
@@ -331,7 +332,7 @@ export default function WaitlistPortal() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <a
-              href="https://apps.apple.com/app/aerarium/id6760155168"
+              href={appStoreLink("waitlist_portal")}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackOutboundClick("appstore", "waitlist_portal")}
@@ -345,9 +346,9 @@ export default function WaitlistPortal() {
             </a>
             
             <a
-              href="https://research.aerarium.app/"
+              href={researchLink("waitlist_portal")}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               onClick={() => trackOutboundClick("research", "waitlist_portal")}
               className="w-full relative block text-center bg-slate-900 hover:bg-slate-850 border border-cyan-500/20 hover:border-cyan-500/40 rounded-xl py-3 text-xs font-semibold text-cyan-400 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
               id="link-research-direct"

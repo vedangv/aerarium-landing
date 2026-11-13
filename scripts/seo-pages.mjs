@@ -1,6 +1,6 @@
+import { appStoreLink, researchLink } from "../src/lib/product-links.mjs";
+
 const SITE_URL = "https://aerarium.app";
-const APP_STORE_URL = "https://apps.apple.com/app/aerarium/id6760155168";
-const RESEARCH_URL = "https://research.aerarium.app/";
 
 export const seoPages = [
   {
@@ -279,6 +279,7 @@ export function renderSeoPage(page) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-itunes-app" content="app-id=6760155168" />
     <title>${escapeHtml(page.title)}</title>
     <meta name="description" content="${escapeHtml(page.description)}" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -299,7 +300,7 @@ export function renderSeoPage(page) {
     <style>
       :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#080d0b;color:#f4f4ef}
       *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 10%,rgba(45,212,191,.09),transparent 28rem),#080d0b;color:#f4f4ef;line-height:1.7;overflow-x:hidden}a{color:inherit;text-decoration:none}.shell{width:min(1160px,calc(100% - 40px));margin:auto}.nav{position:sticky;top:0;z-index:3;border-bottom:1px solid rgba(148,163,184,.14);background:rgba(8,13,11,.9);backdrop-filter:blur(18px)}.nav-inner,.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 0}.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:800;letter-spacing:.01em}.brand img{width:38px;height:38px;border-radius:10px}.nav-links,.actions{display:flex;align-items:center;gap:18px}.nav-links a,.quiet{color:#a7b0aa;font-size:14px}.nav-links a:hover,.quiet:hover{color:#d7fbe9}.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(110,231,183,.62);border-radius:999px;padding:11px 18px;background:#73d79e;color:#07100c;font-size:14px;font-weight:800}.button.secondary{background:transparent;color:#d7fbe9}.hero{padding:108px 0 64px}.eyebrow{display:inline-flex;align-items:center;border:1px solid rgba(110,231,183,.36);border-radius:999px;padding:7px 12px;color:#83e9b0;font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.hero h1{max-width:930px;margin:22px 0 18px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(48px,8vw,92px);font-weight:500;letter-spacing:-.04em;line-height:.98}.hero .intro{max-width:790px;color:#bdc6c0;font-size:clamp(18px,2vw,23px)}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:50px 0 0;padding:0;list-style:none}.proof li{border-top:1px solid rgba(110,231,183,.35);padding:15px 4px;color:#d9e2dc;font-weight:700}.band{padding:76px 0;border-top:1px solid rgba(148,163,184,.13)}.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.82fr);gap:70px;align-items:center}.copy h2,.section-title{margin:0 0 18px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(35px,4.5vw,62px);font-weight:500;letter-spacing:-.035em;line-height:1.02}.copy p,.audience p,.limits p{color:#aeb8b2;font-size:17px}.visual{display:flex;justify-content:center;min-height:520px;padding:20px;border:1px solid rgba(110,231,183,.22);border-radius:28px;background:linear-gradient(150deg,rgba(16,33,27,.8),rgba(7,12,10,.92));overflow:hidden}.visual img{width:min(100%,280px);height:610px;object-fit:cover;object-position:top;border-radius:22px;border:1px solid rgba(148,163,184,.26);box-shadow:0 24px 70px rgba(0,0,0,.45)}.grid-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.plain-panel{border-top:1px solid rgba(148,163,184,.2);padding:22px 2px}.plain-panel h3{margin:0 0 8px;font-size:18px}.plain-panel p{margin:0;color:#aeb8b2}.faq details{border-top:1px solid rgba(148,163,184,.2);padding:17px 0}.faq summary{cursor:pointer;font-size:17px;font-weight:800}.faq p{max-width:820px;margin:10px 0 0;color:#aeb8b2}.related{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.related-link{display:flex;min-height:138px;flex-direction:column;justify-content:space-between;border:1px solid rgba(148,163,184,.18);border-radius:10px;padding:18px;background:rgba(14,24,20,.55)}.related-link:hover{border-color:rgba(110,231,183,.55)}.related-link span{color:#83e9b0;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.related-link strong{font-size:17px;line-height:1.3}.cta{padding:42px;border:1px solid rgba(110,231,183,.28);border-radius:16px;background:rgba(16,33,27,.62)}.cta h2{max-width:700px;margin:0 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(33px,4vw,54px);font-weight:500;line-height:1}.cta p{max-width:730px;color:#b9c3bd}.footer{border-top:1px solid rgba(148,163,184,.14);padding:16px 0 26px;color:#9ca7a0;font-size:13px}
-      @media(max-width:760px){.nav-links,.nav .actions{display:none}.shell{width:min(calc(100% - 28px),680px)}.nav-inner{gap:12px}.button{padding:10px 14px;font-size:13px}.hero-actions .button{width:100%}.hero{padding:76px 0 44px}.hero h1{font-size:clamp(38px,11vw,48px);letter-spacing:-.02em;line-height:1.04;overflow-wrap:break-word}.proof,.related,.grid-two,.split{grid-template-columns:1fr}.split{gap:34px}.band{padding:54px 0}.visual{min-height:auto}.visual img{height:min(650px,138vw)}.actions .secondary{display:none}.cta{padding:28px}.footer-inner{align-items:flex-start;flex-direction:column}}
+      @media(max-width:760px){.nav-links{display:none}.shell{width:min(calc(100% - 28px),680px)}.nav-inner{gap:12px;flex-wrap:wrap}.nav .actions{gap:12px;flex-wrap:wrap}.button{padding:10px 14px;font-size:13px}.hero-actions .button{width:100%}.hero{padding:76px 0 44px}.hero h1{font-size:clamp(38px,11vw,48px);letter-spacing:-.02em;line-height:1.04;overflow-wrap:break-word}.proof,.related,.grid-two,.split{grid-template-columns:1fr}.split{gap:34px}.band{padding:54px 0}.visual{min-height:auto}.visual img{height:min(650px,138vw)}.actions .secondary{display:none}.cta{padding:28px}.footer-inner{align-items:flex-start;flex-direction:column}}
     </style>
   </head>
   <body>
@@ -307,7 +308,7 @@ export function renderSeoPage(page) {
       <div class="shell nav-inner">
         <a class="brand" href="/"><img src="/assets/brand/apple-touch-icon.png" width="38" height="38" alt="" /><span>Aerarium</span></a>
         <nav class="nav-links" aria-label="Primary"><a href="/portfolio-x-ray">Portfolio X-Ray</a><a href="/investment-policy-statement-app">Investing Rules</a><a href="/methodology">Methodology</a><a href="/security">Security</a></nav>
-        <div class="actions"><a class="quiet" href="${RESEARCH_URL}">Open Research</a><a class="button" href="${APP_STORE_URL}">Get the App</a></div>
+        <div class="actions"><a class="quiet" href="${escapeHtml(researchLink(`guide_${page.slug}`))}">Open Research</a><a class="button" href="${escapeHtml(appStoreLink(`guide_${page.slug}`))}">Get the App</a></div>
       </div>
     </header>
     <main>
@@ -315,7 +316,7 @@ export function renderSeoPage(page) {
         <span class="eyebrow">${escapeHtml(page.eyebrow)}</span>
         <h1>${escapeHtml(page.h1)}</h1>
         <p class="intro">${escapeHtml(page.intro)}</p>
-        <div class="hero-actions"><a class="button" href="${APP_STORE_URL}">Download on the App Store</a><a class="button secondary" href="/#waitlist">Get product updates</a></div>
+        <div class="hero-actions"><a class="button" href="${escapeHtml(appStoreLink(`guide_${page.slug}`))}">Download on the App Store</a><a class="button secondary" href="/#waitlist">Get product updates</a></div>
         <ul class="proof">${highlightItems}</ul>
       </section>
       <section class="band">
@@ -340,11 +341,11 @@ export function renderSeoPage(page) {
         <div class="shell"><h2 class="section-title">Keep exploring Aerarium.</h2><div class="related">${renderRelated(page)}</div></div>
       </section>
       <section class="band">
-        <div class="shell cta"><h2>Use visibility to support your own discipline.</h2><p>Aerarium Portfolio is free to download. Optional Premium (US$7.99/month) includes read-only brokerage sync. Aerarium never places trades.</p><div class="hero-actions"><a class="button" href="${APP_STORE_URL}">Get the App</a><a class="button secondary" href="${RESEARCH_URL}">Open Aerarium Research</a></div></div>
+        <div class="shell cta"><h2>Use visibility to support your own discipline.</h2><p>Aerarium Portfolio is free to download. Optional Premium (US$7.99/month) includes read-only brokerage sync. Aerarium never places trades.</p><div class="hero-actions"><a class="button" href="${escapeHtml(appStoreLink(`guide_${page.slug}`))}">Get the App</a><a class="button secondary" href="${escapeHtml(researchLink(`guide_${page.slug}`))}">Open Aerarium Research</a></div></div>
       </section>
     </main>
     <footer class="footer">
-      <div class="shell footer-inner"><a class="brand" href="/"><img src="/assets/brand/apple-touch-icon.png" width="38" height="38" alt="" /><span>Aerarium</span></a><div><a class="quiet" href="/privacy">Privacy</a> · <a class="quiet" href="/terms">Terms</a> · <a class="quiet" href="/security">Security</a> · <a class="quiet" href="/methodology">Methodology</a></div></div>
+      <div class="shell footer-inner"><a class="brand" href="/"><img src="/assets/brand/apple-touch-icon.png" width="38" height="38" alt="" /><span>Aerarium</span></a><div><a class="quiet" href="${escapeHtml(appStoreLink(`guide_${page.slug}_footer`))}">Get the App</a> · <a class="quiet" href="${escapeHtml(researchLink(`guide_${page.slug}_footer`))}">Research</a> · <a class="quiet" href="/privacy">Privacy</a> · <a class="quiet" href="/terms">Terms</a> · <a class="quiet" href="/security">Security</a> · <a class="quiet" href="/methodology">Methodology</a></div></div>
     </footer>
   </body>
 </html>`;

@@ -1,3 +1,4 @@
+import { appStoreLink } from "../lib/product-links.mjs";
 import { useStaticLayout } from "./useStaticLayout";
 import React, { useRef } from "react";
 import {
@@ -63,7 +64,7 @@ function HeroCopy() {
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           {/* Emerald = the iOS app */}
           <a
-            href="https://apps.apple.com/app/aerarium/id6760155168"
+            href={appStoreLink("hero")}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackOutboundClick("appstore", "hero")}

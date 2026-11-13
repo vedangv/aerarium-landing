@@ -52,6 +52,14 @@ Secondary domain: `https://aerariumapp.com/`, intended to redirect to
 `https://aerarium.app/`.
 Research domain: `https://research.aerarium.app/`.
 
+Product links use `utm_source=landing`, `utm_medium=crosslink`, and
+`utm_campaign=app` or `research`; `utm_content` identifies the placement.
+React and the static guide renderer share `src/lib/product-links.mjs`. Keep
+the raw HTML fallback and crawl links in `index.html` consistent with this
+scheme, while keeping canonical URLs and JSON-LD identities free of tracking
+parameters. Research stays secondary to the app download action. The homepage
+and guides include the Smart App Banner for App Store ID `6760155168`.
+
 ## Current planning docs
 
 - `docs/research/reference-sites/2026-05-28-outlier-inspiration.md`

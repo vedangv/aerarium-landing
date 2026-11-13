@@ -1,3 +1,4 @@
+import { appStoreLink } from "../lib/product-links.mjs";
 import { useStaticLayout } from "./useStaticLayout";
 import { useSceneScroll } from "./useSceneScroll";
 import React, { useRef } from "react";
@@ -24,7 +25,7 @@ function CtaButton() {
   return (
     <div className="flex flex-col items-center gap-3">
       <a
-        href="https://apps.apple.com/app/aerarium/id6760155168"
+        href={appStoreLink("portfolio_bridge")}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackOutboundClick("appstore", "portfolio_bridge")}
