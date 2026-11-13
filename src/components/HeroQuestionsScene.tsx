@@ -50,7 +50,7 @@ function HeroCopy() {
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-6 text-center sm:gap-9">
       <h1 className="font-editorial text-[40px] leading-[1.02] tracking-tight text-white min-[380px]:text-[46px] sm:text-[88px] sm:leading-[1.0] lg:text-[104px]">
-        <span className="block">See what you</span>
+        <span className="block">See what you </span>
         <span className="block text-emerald-200">actually own.</span>
       </h1>
 
@@ -166,7 +166,7 @@ function Scene() {
     // Tall track gives the scene room to breathe: the hero clears, the headline
     // pulls into focus, then the six questions reveal one at a time — each with a
     // generous slice of scroll so nothing feels rushed.
-    <div ref={trackRef} className="relative h-[450svh]">
+    <div ref={trackRef} data-scroll-scene className="relative h-[450svh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Warm ambient light so the dark scene reads as lit, not an empty void. */}
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
@@ -214,7 +214,7 @@ function Scene() {
 
         {/* Foreground layer: the hero, dissolving away */}
         <motion.div
-          className="absolute inset-0 z-20 flex items-center justify-center"
+          className="focus-reveal hero-foreground absolute inset-0 z-20 flex items-center justify-center"
           style={{ opacity: heroOpacity, y: heroY, scale: heroScale, filter: heroFilter }}
         >
           <HeroCopy />

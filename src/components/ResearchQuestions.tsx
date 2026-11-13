@@ -80,7 +80,7 @@ function Scene() {
   const headStyle = { opacity: headOpacity, y: headY };
 
   return (
-    <div ref={trackRef} className="relative h-[280svh]">
+    <div ref={trackRef} data-scroll-scene className="relative h-[280svh]">
       {/* pt clears the navbar for the pinned content */}
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden pt-20">
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />

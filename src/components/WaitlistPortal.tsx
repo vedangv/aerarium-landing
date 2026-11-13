@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { WaitlistUser } from "../types";
 import { ArrowRight, CheckCircle, Mail, Share2, Sparkles, AlertCircle } from "lucide-react";
+import { isWaitlistUser } from "../lib/waitlist";
 import {
   readAttribution,
   trackFounderListSignup,
   trackOutboundClick,
   trackReferralLinkCopied,
 } from "../lib/analytics";
+
+const INVALID_EMAIL = "Please enter a valid email address.";
 
 function barcodeOpacity(code: string, index: number) {
   const charCode = code.charCodeAt(index % code.length);
@@ -19,32 +22,42 @@ export default function WaitlistPortal() {
   const [registeredUser, setRegisteredUser] = useState<WaitlistUser | null>(null);
   const [copiedReferral, setCopiedReferral] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copyError, setCopyError] = useState("");
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const confirmationRef = useRef<HTMLHeadingElement>(null);
+  const requestRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    // Read from local storage upon mount to check if user already signed up
-    const stored = localStorage.getItem("aerarium_registered_user");
-    if (stored) {
-      try {
-        setRegisteredUser(JSON.parse(stored));
-      } catch (e) {
-        console.error("Failed to parse stored waitlist user");
+    try {
+      const stored = localStorage.getItem("aerarium_registered_user");
+      if (stored) {
+        const user: unknown = JSON.parse(stored);
+        if (isWaitlistUser(user)) setRegisteredUser(user);
       }
+    } catch {
+      // Storage can be unavailable in private or restricted browsing. Signup
+      // remains usable; neither storage contents nor email addresses are logged.
     }
-
-    // Clean up if needed
-    return () => {};
+    return () => {
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+      requestRef.current?.abort();
+    };
   }, []);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setError("");
 
     if (!email || !email.includes("@") || email.length < 5) {
-      setError("Please enter a valid personal or corporate email address.");
+      setError(INVALID_EMAIL);
       return;
     }
 
     setIsSubmitting(true);
+    const controller = new AbortController();
+    requestRef.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
     try {
       const params = new URLSearchParams(window.location.search);
@@ -58,18 +71,21 @@ export default function WaitlistPortal() {
           source: "landing-waitlist-portal",
           ...attribution,
         }),
+        signal: controller.signal,
       });
 
       const payload = await response.json();
       if (!response.ok) {
         setError(payload?.error === "invalid_email"
-          ? "Please enter a valid personal or corporate email address."
-          : "Couldn't reserve your priority pass. Try again in a moment."
+          ? INVALID_EMAIL
+          : payload?.error === "rate_limited"
+            ? "Too many signup attempts. Please try again in a few minutes."
+            : "Couldn't save your signup. Try again in a moment."
         );
         return;
       }
 
-      const newUser: WaitlistUser = {
+      const newUser = {
         email: payload.email,
         registeredAt: payload.registeredAt ?? new Date().toISOString(),
         ticketNumber: payload.ticketNumber,
@@ -77,28 +93,51 @@ export default function WaitlistPortal() {
         referralCount: payload.referralCount ?? 0,
         alreadyRegistered: payload.alreadyRegistered,
       };
-
-      localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
-      trackFounderListSignup({
-        alreadyRegistered: Boolean(newUser.alreadyRegistered),
-        hasReferral: Boolean(params.get("ref")),
-        attribution,
-      });
+      if (!isWaitlistUser(newUser)) throw new Error("invalid_signup_response");
       setRegisteredUser(newUser);
+      requestAnimationFrame(() => confirmationRef.current?.focus());
+      try {
+        localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
+      } catch {
+        // The server has already saved the signup. Storage is only a convenience.
+      }
+      try {
+        trackFounderListSignup({
+          alreadyRegistered: Boolean(newUser.alreadyRegistered),
+          hasReferral: Boolean(params.get("ref")),
+          attribution,
+        });
+      } catch {
+        // Optional analytics must not turn a successful signup into an error.
+      }
     } catch {
-      setError("Couldn't reserve your priority pass. Check your connection and try again.");
+      setError("Couldn't save your signup. Check your connection and try again.");
     } finally {
+      clearTimeout(timeout);
+      requestRef.current = null;
       setIsSubmitting(false);
     }
   };
 
-  const copyReferralLink = () => {
+  const copyReferralLink = async () => {
     if (!registeredUser) return;
+    setCopyError("");
+    setCopiedReferral(false);
+    if (copyTimer.current) clearTimeout(copyTimer.current);
     const shareUrl = `${window.location.origin}/?ref=${registeredUser.referralCode}`;
-    navigator.clipboard.writeText(shareUrl);
-    trackReferralLinkCopied(registeredUser.referralCount);
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+    } catch {
+      setCopyError("Couldn't copy automatically. Select and copy your referral link.");
+      return;
+    }
     setCopiedReferral(true);
-    setTimeout(() => setCopiedReferral(false), 2000);
+    copyTimer.current = setTimeout(() => setCopiedReferral(false), 2000);
+    try {
+      trackReferralLinkCopied(registeredUser.referralCount);
+    } catch {
+      // Copying has already succeeded.
+    }
   };
 
   return (
@@ -118,7 +157,7 @@ export default function WaitlistPortal() {
           </div>
 
           <div>
-            <h3 className="font-display font-bold text-xl text-white">You're on the founder list</h3>
+            <h2 ref={confirmationRef} tabIndex={-1} className="font-display font-bold text-xl text-white focus:outline-none">You're on the founder list</h2>
             <p className="text-slate-400 text-xs mt-1">Launch updates and founder pricing notes will go to: {registeredUser.email}</p>
           </div>
 
@@ -137,9 +176,9 @@ export default function WaitlistPortal() {
                 <span className="text-[9px] font-mono tracking-widest text-emerald-400 uppercase font-semibold">
                   AERARIUM FOUNDER LIST
                 </span>
-                <h4 className="font-display font-medium text-lg text-white mt-1">
+                <h3 className="font-display font-medium text-lg text-white mt-1">
                   Launch Pass
-                </h4>
+                </h3>
               </div>
               <div className="text-right">
                 <span className="text-[10px] font-mono text-slate-500 block">ACCESS ID</span>
@@ -187,10 +226,10 @@ export default function WaitlistPortal() {
 
           {/* Referral action module */}
           <div className="space-y-3 bg-slate-950/40 p-4 rounded-xl border border-white/2">
-            <h4 className="text-xs font-semibold text-white flex items-center justify-center space-x-1.5">
+            <h3 className="text-xs font-semibold text-white flex items-center justify-center space-x-1.5">
               <Share2 className="w-3.5 h-3.5 text-emerald-400" />
               <span>Share launch updates</span>
-            </h4>
+            </h3>
             <p className="text-[11px] text-slate-400">
               Share this link with people who want Aerarium launch updates. We track referrals quietly for future founder offers.
             </p>
@@ -198,18 +237,21 @@ export default function WaitlistPortal() {
               <input
                 type="text"
                 readOnly
+                aria-label="Your referral link"
+                onFocus={(event) => event.currentTarget.select()}
                 value={`${window.location.origin}/?ref=${registeredUser.referralCode}`}
                 className="bg-slate-900 border border-white/5 rounded-lg py-2 px-3 text-[11px] font-mono text-slate-300 w-full select-all focus:outline-none focus:border-emerald-500/20"
               />
               <button
                 onClick={copyReferralLink}
-                className="py-2 px-3.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg text-xs font-semibold text-white hover:opacity-90 transition-all shrink-0 cursor-pointer flex items-center space-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+                className="py-3 px-3.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg text-xs font-semibold text-slate-950 hover:opacity-90 transition-all shrink-0 cursor-pointer flex items-center space-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
                 id="btn-copy-referral-link"
               >
                 <Share2 className="w-3 h-3" />
                 <span>{copiedReferral ? "Copied" : "Copy"}</span>
               </button>
             </div>
+            <p role="status" className="text-xs text-slate-300">{copyError || (copiedReferral ? "Referral link copied." : "")}</p>
           </div>
 
         </div>
@@ -217,9 +259,9 @@ export default function WaitlistPortal() {
         /* Empty Input Registration State */
         <div className="space-y-6" id="waitlist-register-view">
           <div>
-            <h3 className="font-display font-medium text-lg text-white">
+            <h2 className="font-display font-medium text-lg text-white">
               Founder launch list
-            </h3>
+            </h2>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">
               Get App Store launch updates, founder pricing notes, and major Portfolio release news.
             </p>
@@ -234,26 +276,33 @@ export default function WaitlistPortal() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4" aria-busy={isSubmitting}>
             <div className="space-y-1.5">
+              <label htmlFor="input-waitlist-email" className="block text-sm font-medium text-slate-300">Email address</label>
               <div className="relative flex items-center">
                 <Mail className="absolute left-3 w-4 h-4 text-slate-500" />
                 <input
                   type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                  maxLength={254}
+                  aria-describedby={error ? "waitlist-error" : undefined}
+                  aria-invalid={error === INVALID_EMAIL}
                   placeholder="Enter your email address..."
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     if (error) setError("");
                   }}
-                  className="w-full bg-slate-950/80 border border-white/5 focus:border-cyan-500/20 rounded-xl py-3 pl-10 pr-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none transition-all duration-300 shadow-inner"
+                  className="w-full bg-slate-950/80 border border-white/10 focus:border-emerald-300 focus:ring-1 focus:ring-emerald-300 rounded-xl py-3 pl-10 pr-4 text-base font-mono text-slate-100 placeholder-slate-400 focus:outline-none transition-all duration-300 shadow-inner"
                   id="input-waitlist-email"
                 />
               </div>
               {error && (
-                <div className="flex items-center space-x-1.5 text-rose-400 px-1 pt-1.5 animate-fadeIn">
+                <div id="waitlist-error" role="alert" className="flex items-center space-x-1.5 text-rose-300 px-1 pt-1.5 animate-fadeIn">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                  <p className="text-[10px] font-mono leading-tight">{error}</p>
+                  <p className="text-xs leading-relaxed">{error}</p>
                 </div>
               )}
             </div>
@@ -266,7 +315,7 @@ export default function WaitlistPortal() {
               }`}
               id="btn-waitlist-submit"
             >
-              <div className="bg-slate-950 rounded-[11px] py-3 text-xs font-semibold text-white group-hover:bg-transparent transition-colors flex items-center justify-center space-x-2">
+              <div className="bg-slate-950 rounded-[11px] py-3 text-xs font-semibold text-white group-hover:bg-transparent group-hover:text-slate-950 transition-colors flex items-center justify-center space-x-2">
                 <span>{isSubmitting ? "Saving..." : "Get launch updates"}</span>
                 <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSubmitting ? "animate-pulse" : "group-hover:translate-x-0.5"}`} />
               </div>

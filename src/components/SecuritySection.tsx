@@ -98,7 +98,7 @@ export default function SecuritySection() {
 
   return (
     <section id="security" className="relative bg-slate-950">
-      <div ref={trackRef} className="relative h-[250svh]">
+      <div ref={trackRef} data-scroll-scene className="relative h-[250svh]">
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden border-t border-white/5 pt-20">
           <div className="ambient-warm pointer-events-none absolute inset-0 opacity-40" />
           <div className="relative z-10 mx-auto w-full max-w-5xl px-6">

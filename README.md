@@ -140,3 +140,7 @@ npm run test:e2e
 fresh local production build and block all external traffic and unmocked API
 requests. Install Chromium with `npx playwright install chromium`, or set
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an existing Chromium/Chrome executable.
+The suite covers responsive layouts, keyboard navigation, storage and clipboard
+failures, mocked signup responses, and axe accessibility scans of the homepage,
+mobile menu, and signup confirmation. These scans complement manual browser
+checks; they do not certify every screen-reader interaction.

@@ -10,6 +10,8 @@
   --color-slate-950: #080b09;
   --color-slate-900: #0e1310;
   --color-slate-850: #141b16;
+  /* Muted copy still needs AA contrast on the dark cards and page background. */
+  --color-slate-500: #8291a8;
 }
 
 html {
@@ -32,6 +34,17 @@ html {
 
 .skip-link:focus {
   transform: none;
+}
+
+/* Keyboard focus must stay visible even before or after a desktop reveal. */
+.focus-reveal:focus-within {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.hero-foreground:focus-within {
+  background: var(--color-slate-950);
 }
 
 .scroll-stop-section {

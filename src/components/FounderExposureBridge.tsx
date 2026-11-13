@@ -80,7 +80,7 @@ export default function FounderExposureBridge() {
 
   return (
     <section id="founder-story" className="relative bg-slate-950">
-      <div ref={trackRef} className="relative h-[250svh]">
+      <div ref={trackRef} data-scroll-scene className="relative h-[250svh]">
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden border-t border-white/5 pt-20">
           <div className="ambient-warm pointer-events-none absolute inset-0 opacity-40" />
           <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
@@ -97,7 +97,7 @@ export default function FounderExposureBridge() {
             <motion.div className="mt-8" style={{ opacity: tags.opacity, y: tags.y }}>
               {Tags}
             </motion.div>
-            <motion.div className="mt-6" style={{ opacity: sig.opacity, y: sig.y }}>
+            <motion.div className="focus-reveal mt-6" style={{ opacity: sig.opacity, y: sig.y }}>
               {Signature}
             </motion.div>
           </div>

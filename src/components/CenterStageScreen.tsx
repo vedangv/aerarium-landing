@@ -99,7 +99,7 @@ export default function CenterStageScreen({
   /* ── Pinned, scroll-driven reveal ──────────────────────────────────────── */
   return (
     <section id={id} className="relative bg-slate-950">
-      <div ref={trackRef} className="relative h-[250svh]">
+      <div ref={trackRef} data-scroll-scene className="relative h-[250svh]">
         {/* pt clears the fixed navbar so the pinned eyebrow pill stays visible */}
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden pt-20">
           <div className="ambient-warm pointer-events-none absolute inset-0 opacity-50" />

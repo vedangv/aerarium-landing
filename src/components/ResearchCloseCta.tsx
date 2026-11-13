@@ -78,7 +78,7 @@ export default function ResearchCloseCta() {
 
   return (
     <section className="relative bg-slate-950">
-      <div ref={trackRef} className="relative h-[250svh]">
+      <div ref={trackRef} data-scroll-scene className="relative h-[250svh]">
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden pt-20">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_50%_at_50%_40%,rgba(34,211,238,0.08)_0%,transparent_72%)]" />
           <div className="warm-hairline pointer-events-none absolute inset-x-0 top-0 h-px" />
@@ -96,7 +96,7 @@ export default function ResearchCloseCta() {
             >
               {Sub}
             </motion.p>
-            <motion.div className="mt-10" style={{ opacity: btn.opacity, y: btn.y }}>
+            <motion.div className="focus-reveal mt-10" style={{ opacity: btn.opacity, y: btn.y }}>
               <CtaButton />
             </motion.div>
           </div>
