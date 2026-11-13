@@ -1,5 +1,23 @@
 import { test, expect } from './helpers';
 
+for (const width of [390, 1440]) {
+  test(`direct section links survive reload and history navigation at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/#security');
+    await expect(page.locator('#security h2')).toBeInViewport();
+    await expect(page.locator('#security h2')).toHaveCSS('opacity', '1');
+    await page.reload();
+    await expect(page.locator('#security h2')).toBeInViewport();
+    await expect(page.locator('#security h2')).toHaveCSS('opacity', '1');
+    await page.evaluate(() => { window.location.hash = '#answer'; });
+    await expect(page.locator('#answer h2')).toBeInViewport();
+    await expect(page.locator('#answer h2')).toHaveCSS('opacity', '1');
+    await page.goBack();
+    await expect(page.locator('#security h2')).toBeInViewport();
+    await expect(page.locator('#security h2')).toHaveCSS('opacity', '1');
+  });
+}
+
 test('mobile navigation contains focus, closes with Escape, and restores focus', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');

@@ -12,12 +12,49 @@ const NAV_LINKS = [
   { label: "Launch updates", id: "waitlist" },
 ];
 
+function revealSection(section: HTMLElement, behavior: ScrollBehavior) {
+  const track = section.querySelector<HTMLElement>("[data-scroll-scene]");
+  if (track && section.id !== "hero") {
+    // A desktop scene starts before its content is revealed. Both clicks and
+    // direct fragment URLs should land where the whole section is readable.
+    window.scrollTo({
+      top: track.getBoundingClientRect().top + window.scrollY + (track.offsetHeight - window.innerHeight) * 0.85,
+      behavior,
+    });
+  } else {
+    section.scrollIntoView({ behavior, block: "start" });
+  }
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDialogElement>(null);
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    let frame = 0;
+    const revealFragment = () => {
+      cancelAnimationFrame(frame);
+      // Wait for React's layout and the browser's native fragment scroll.
+      frame = requestAnimationFrame(() => {
+        let id: string;
+        try { id = decodeURIComponent(window.location.hash.slice(1)); }
+        catch { return; }
+        const section = document.getElementById(id);
+        if (section?.matches("section[id]")) revealSection(section, "instant");
+      });
+    };
+    revealFragment();
+    window.addEventListener("load", revealFragment);
+    window.addEventListener("hashchange", revealFragment);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("load", revealFragment);
+      window.removeEventListener("hashchange", revealFragment);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,18 +93,8 @@ export default function Navbar() {
     menuRef.current?.close();
     setMobileMenuOpen(false);
     window.history.pushState(null, "", `#${id}`);
-    const track = section.querySelector<HTMLElement>("[data-scroll-scene]");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (track && id !== "hero") {
-      // A section's entrance is deliberately hidden in the desktop scene.
-      // Navigation should land after its reveal, where the content is readable.
-      window.scrollTo({
-        top: track.getBoundingClientRect().top + window.scrollY + (track.offsetHeight - window.innerHeight) * 0.85,
-        behavior: reduced ? "instant" : "smooth",
-      });
-    } else {
-      section.scrollIntoView({ behavior: reduced ? "instant" : "smooth", block: "start" });
-    }
+    revealSection(section, reduced ? "instant" : "smooth");
     section.tabIndex = -1;
     section.focus({ preventScroll: true });
   };
