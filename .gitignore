@@ -13,6 +13,8 @@ aerarium.zip
 aerarium (1).zip
 aerarium (2).zip
 test-results/
+.npm-cache/
+playwright-report/
 
 # Playwright MCP scratch screenshots/snapshots
 .playwright-mcp/

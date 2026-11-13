@@ -65,9 +65,10 @@ Research domain: `https://research.aerarium.app/`.
   - Records the build-time rendering approach for the seven crawlable Portfolio
     guide pages under `aerarium.app`.
 
-The homepage creative pass and the first landing SEO content wedge are shipped
-as separate concerns: keep the scrollytelling homepage conversion-first, and
-keep the static guide pages useful, visible, and crawlable without JavaScript.
+The homepage uses compact, immediately visible sections on phones, tablets,
+short windows, and when reduced motion is requested. Larger desktop windows
+retain the scroll scenes. Keep the static homepage fallback and guide pages
+useful, visible, and crawlable when JavaScript cannot load.
 
 ## Static Portfolio guides
 
@@ -115,4 +116,10 @@ Local checks:
 npm test
 npm run lint
 npm run build
+npm run test:e2e
 ```
+
+`lint` runs the TypeScript check. Browser regressions use Playwright against a
+fresh local production build and block all external traffic and unmocked API
+requests. Install Chromium with `npx playwright install chromium`, or set
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an existing Chromium/Chrome executable.

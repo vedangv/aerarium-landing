@@ -1,30 +1,18 @@
+import { useStaticLayout } from "./useStaticLayout";
 import React, { useRef } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useMotionTemplate,
-  useReducedMotion,
   type MotionValue,
 } from "motion/react";
 import { ArrowDown } from "lucide-react";
 import MobileSnapBeat from "./MobileSnapBeat";
 import { trackOutboundClick } from "../lib/analytics";
 
-/**
- * Hero → Questions scroll scene (all viewports).
- *
- * The foreground (hero) dissolves up and out of focus while the background
- * (the questions) sits behind it, faint and out of focus, then pulls into
- * focus as the hero clears — a rack-focus. The two layers never share the
- * screen prominent-and-blurred at once, so there's no muddy ghosting. The
- * questions then reveal one at a time as you keep scrolling.
- *
- * The same scene runs on phone, tablet, and desktop — only the question
- * LAYOUT differs (floating around the headline on lg+, stacked below it on
- * smaller screens). Scroll-snap is removed globally so nothing traps the
- * sticky scroll. Reduced-motion users get a plain stacked hero + questions.
- */
+/** The desktop hero dissolves into the questions. Small screens, short
+ * windows and reduced motion use two ordinary, immediately visible sections. */
 
 // 6 worries, each setting up ONE distinct later feature (no repeats), so the
 // section works when revealed one-at-a-time on scroll. Five are personal-
@@ -264,7 +252,7 @@ function StackedFallback() {
     <div>
       <header
         id="hero-stacked"
-        className="relative flex min-h-[100svh] items-center justify-center px-2 pt-28 pb-24"
+        className="relative flex min-h-[85svh] items-center justify-center px-2 pt-28 pb-14"
       >
         <MobileSnapBeat />
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
@@ -274,7 +262,7 @@ function StackedFallback() {
         </div>
       </header>
 
-      <section className="relative z-10 overflow-hidden px-6 py-28">
+      <section className="relative z-10 overflow-hidden px-6 py-12 sm:py-16">
         <MobileSnapBeat />
         <div className="mx-auto max-w-md">
           <QuestionsCopy />
@@ -292,11 +280,11 @@ function StackedFallback() {
 }
 
 export default function HeroQuestionsScene() {
-  const prefersReduced = useReducedMotion();
+  const staticLayout = useStaticLayout();
 
   return (
     <section id="hero" className="relative z-10">
-      {prefersReduced ? <StackedFallback /> : <Scene />}
+      {staticLayout ? <StackedFallback /> : <Scene />}
     </section>
   );
 }

@@ -1,5 +1,7 @@
-import React, { ReactNode, useRef } from "react";
-import { motion, useScroll, useReducedMotion } from "motion/react";
+import { useStaticLayout } from "./useStaticLayout";
+import { useSceneScroll } from "./useSceneScroll";
+import React, { ReactNode } from "react";
+import { motion, useScroll } from "motion/react";
 import type { LucideIcon } from "lucide-react";
 import { useReveal } from "./useReveal";
 
@@ -13,8 +15,6 @@ import { useReveal } from "./useReveal";
  * can pin. Reduced-motion users get a plain static section.
  */
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
 type Props = {
   id: string;
   icon: LucideIcon;
@@ -27,9 +27,8 @@ type Props = {
 };
 
 const WebScreen: React.FC<Props> = ({ id, icon: Icon, eyebrow, headline, subheader, src, alt, url }) => {
-  const prefersReduced = useReducedMotion();
-  const trackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
+  const staticLayout = useStaticLayout();
+  const { trackRef, progress: scrollYProgress } = useSceneScroll(staticLayout);
 
   const head = useReveal(scrollYProgress, [0.06, 0.22]);
   const sub = useReveal(scrollYProgress, [0.28, 0.44]);
@@ -62,28 +61,22 @@ const WebScreen: React.FC<Props> = ({ id, icon: Icon, eyebrow, headline, subhead
     </div>
   );
 
-  /* Reduced motion: static section */
-  if (prefersReduced) {
-    const fade = (delay: number) => ({
-      initial: { opacity: 0, y: 16 },
-      whileInView: { opacity: 1, y: 0 },
-      viewport: { once: true, amount: 0.4 },
-      transition: { duration: 0.6, ease: EASE, delay },
-    });
+  /* Small screens and reduced motion: static section */
+  if (staticLayout) {
     return (
-      <section id={id} className="relative overflow-hidden bg-slate-950 py-20 sm:py-24">
+      <section id={id} className="relative overflow-hidden bg-slate-950 py-12 sm:py-16">
         <div className="ambient-warm pointer-events-none absolute inset-0 opacity-35" />
         <div className="relative z-10 mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <motion.div {...fade(0)}>{pill}</motion.div>
-            <motion.h2 className="mt-5 font-editorial text-[32px] leading-[1.05] tracking-tight text-white sm:text-5xl" {...fade(0.06)}>
+            <motion.div>{pill}</motion.div>
+            <motion.h2 className="mt-5 font-editorial text-[32px] leading-[1.05] tracking-tight text-white sm:text-5xl">
               {headline}
             </motion.h2>
-            <motion.p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg" {...fade(0.12)}>
+            <motion.p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
               {subheader}
             </motion.p>
           </div>
-          <motion.div className="mt-10" {...fade(0.18)}>
+          <motion.div className="mt-10">
             {browserFrame}
           </motion.div>
         </div>

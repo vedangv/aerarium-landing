@@ -1,5 +1,7 @@
+import { useStaticLayout } from "./useStaticLayout";
+import { useSceneScroll } from "./useSceneScroll";
 import React, { useRef } from "react";
-import { motion, useScroll, useReducedMotion } from "motion/react";
+import { motion, useScroll } from "motion/react";
 import { ArrowUpRight, ArrowDown, Smartphone } from "lucide-react";
 import { useReveal } from "./useReveal";
 import { trackOutboundClick } from "../lib/analytics";
@@ -10,8 +12,6 @@ import { trackOutboundClick } from "../lib/analytics";
  * scroll-driven reveal to match the feature screens: the pill stays anchored,
  * then headline → subheader → button → lead-in fade in.
  */
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const Pill = (
   <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/16 bg-emerald-400/[0.07] px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
@@ -40,38 +40,31 @@ function CtaButton() {
 }
 
 export default function CtaBridge() {
-  const prefersReduced = useReducedMotion();
-  const trackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
+  const staticLayout = useStaticLayout();
+  const { trackRef, progress: scrollYProgress } = useSceneScroll(staticLayout);
 
   const head = useReveal(scrollYProgress, [0.06, 0.22]);
   const sub = useReveal(scrollYProgress, [0.28, 0.42]);
   const btn = useReveal(scrollYProgress, [0.46, 0.6]);
   const lead = useReveal(scrollYProgress, [0.66, 0.8]);
 
-  if (prefersReduced) {
-    const fade = (delay: number) => ({
-      initial: { opacity: 0, y: 16 },
-      whileInView: { opacity: 1, y: 0 },
-      viewport: { once: true, amount: 0.4 },
-      transition: { duration: 0.6, ease: EASE, delay },
-    });
+  if (staticLayout) {
     return (
-      <section className="relative overflow-hidden bg-slate-950 py-24 sm:py-28">
+      <section className="relative overflow-hidden bg-slate-950 py-14 sm:py-16">
         <div className="ambient-warm pointer-events-none absolute inset-0 opacity-50" />
         <div className="warm-hairline pointer-events-none absolute inset-x-0 top-0 h-px" />
         <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 text-center">
-          <motion.div {...fade(0)}>{Pill}</motion.div>
-          <motion.h2 className="mt-6 font-editorial text-[40px] leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl" {...fade(0.06)}>
+          <motion.div>{Pill}</motion.div>
+          <motion.h2 className="mt-6 font-editorial text-[40px] leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl">
             …and so much more.
           </motion.h2>
-          <motion.p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl" {...fade(0.12)}>
+          <motion.p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
             Come experience the full app — free on the App Store.
           </motion.p>
-          <motion.div className="mt-10" {...fade(0.18)}>
+          <motion.div className="mt-10">
             <CtaButton />
           </motion.div>
-          <motion.p className="mt-12 text-sm font-medium text-cyan-300" {...fade(0.24)}>
+          <motion.p className="mt-12 text-sm font-medium text-cyan-300">
             And your portfolio is only half of Aerarium.
           </motion.p>
         </div>

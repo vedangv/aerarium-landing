@@ -91,7 +91,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-300">
-    <div id="root"></div>
+    <div id="root">
+      <!-- Useful until React loads, including when scripts are blocked or fail. -->
+      <main class="mx-auto max-w-3xl px-6 py-20 text-slate-100">
+        <p class="font-display text-sm text-emerald-300">Aerarium Portfolio for iPhone</p>
+        <h1 class="mt-5 font-editorial text-5xl leading-tight">See what you actually own.</h1>
+        <p class="mt-6 text-lg leading-relaxed text-slate-300">See which stocks overlap across your funds and accounts, set investing rules, and track whether your portfolio still fits your goals. Aerarium never places trades.</p>
+        <a class="mt-8 inline-block rounded-xl bg-emerald-500 px-6 py-4 font-semibold text-slate-950" href="https://apps.apple.com/app/aerarium/id6760155168">Download on the App Store</a>
+        <section class="mt-12">
+          <h2 class="font-display text-2xl">Explore the app</h2>
+          <ul class="mt-5 space-y-3 text-emerald-300">
+            <li><a href="/portfolio-x-ray">Portfolio X-Ray</a> — see overlapping holdings inside your funds.</li>
+            <li><a href="/investment-policy-statement-app">Your investing plan</a> — write down the rules you want to follow.</li>
+            <li><a href="/policy-score">Policy Score</a> — check whether your portfolio follows your plan.</li>
+            <li><a href="/goals-funding-plan">Goals and funding</a> — connect your savings to your goals.</li>
+            <li><a href="/investment-thesis-tracker">Investment thesis tracker</a> — remember why you bought each investment.</li>
+            <li><a href="/security">Security</a> — read about data access, export and deletion.</li>
+            <li><a href="/methodology">Methodology</a> — understand how Aerarium works.</li>
+          </ul>
+        </section>
+        <p class="mt-10 text-slate-300">Also explore <a class="text-cyan-300 underline" href="https://research.aerarium.app/">Aerarium Research</a>, the companion website for company filings, ownership and market data.</p>
+        <p class="mt-8 text-sm text-slate-400"><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/support.html">Support</a></p>
+      </main>
+    </div>
 
     <!--
       Static crawl paths in RAW HTML.
