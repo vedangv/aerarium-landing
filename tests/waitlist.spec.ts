@@ -39,6 +39,27 @@ test('a completed signup still succeeds when browser storage cannot be written',
   expect(posted).toMatchObject({ email: 'test@example.com', referredBy: 'AER-ABCD1234', utmSource: 'test', utmCampaign: 'local' });
 });
 
+test('signup confirmation focuses after rendering even when animation frames are suspended', async ({ page }) => {
+  await page.route('**/api/waitlist', route => route.fulfill({ json: savedUser }));
+  await page.goto('/');
+  await page.getByLabel('Email address').fill('test@example.com');
+  // Browsers can suspend animation frames in background tabs. A render effect
+  // can still announce a completed request; a queued frame cannot guarantee it.
+  await page.clock.install();
+  await page.clock.pauseAt(new Date(Date.now() + 1000));
+  await page.locator('#waitlist-register-view form').evaluate(form => (form as HTMLFormElement).requestSubmit());
+  await expect(page.getByRole('heading', { name: "You're on the founder list" })).toBeFocused();
+});
+
+test('restoring a saved signup does not move focus away from the page start', async ({ page }) => {
+  await page.addInitScript(user => localStorage.setItem('aerarium_registered_user', JSON.stringify(user)), savedUser);
+  await page.goto('/');
+  const confirmation = page.getByRole('heading', { name: "You're on the founder list" });
+  await expect(confirmation).toBeVisible();
+  await expect(confirmation).not.toBeFocused();
+  await expect(page.locator('body')).toBeFocused();
+});
+
 test('clipboard failure offers manual copying and never claims success', async ({ page }) => {
   await page.addInitScript(user => {
     localStorage.setItem('aerarium_registered_user', JSON.stringify(user));
@@ -49,6 +70,8 @@ test('clipboard failure offers manual copying and never claims success', async (
   await expect(page.getByRole('button', { name: 'Copied', exact: true })).toHaveCount(0);
   await expect(page.getByRole('status')).toContainText('Select and copy');
   await expect(page.getByRole('textbox', { name: 'Your referral link' })).toHaveValue(/\?ref=AER-1234ABCD$/);
+  await page.getByRole('textbox', { name: 'Your referral link' }).focus();
+  await expect(page.getByRole('textbox', { name: 'Your referral link' })).toHaveCSS('outline-style', 'solid');
 });
 
 test('rate-limit errors are announced and keep the form available', async ({ page }) => {

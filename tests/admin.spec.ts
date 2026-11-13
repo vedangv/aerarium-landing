@@ -50,6 +50,37 @@ test('a rejected admin password clears stale private rows and returns to login',
   await expect(page.getByRole('table')).toHaveCount(0);
 });
 
+for (const action of ['sign out', 'rejected login', 'rejected refresh']) {
+  test(`${action} focuses the password field without waiting for an animation frame`, async ({ page }) => {
+    let unauthorized = action === 'rejected login';
+    await page.route('**/api/waitlist-admin', route => route.fulfill(unauthorized
+      ? { status: 401, json: { error: 'unauthorized' } }
+      : { json: payload }));
+    await page.goto('/admin/waitlist');
+    await page.getByLabel('Admin password').fill('test-password');
+    if (action !== 'rejected login') {
+      await page.getByRole('button', { name: 'View founder list' }).click();
+      await expect(page.getByRole('table')).toBeVisible();
+    } else {
+      await page.getByRole('button', { name: 'View founder list' }).focus();
+    }
+    // Model background-tab frame suspension while the request/render proceeds.
+    await page.clock.install();
+    await page.clock.pauseAt(new Date(Date.now() + 1000));
+    if (action === 'rejected login') {
+      await page.locator('form').evaluate(form => (form as HTMLFormElement).requestSubmit());
+    } else {
+      unauthorized = true;
+      const button = page.getByRole('button', { name: action === 'sign out' ? 'Sign out' : 'Refresh', exact: true });
+      await button.evaluate(element => (element as HTMLButtonElement).click());
+    }
+    await expect(page.getByLabel('Admin password')).toHaveValue('');
+    await expect(page.getByLabel('Admin password')).toBeFocused();
+    await expect(page.getByLabel('Admin password')).toHaveCSS('outline-style', 'solid');
+    await expect(page.getByRole('table')).toHaveCount(0);
+  });
+}
+
 test('malformed admin responses leave a usable login instead of crashing React', async ({ page }) => {
   let data: unknown = { rows: null };
   await page.route('**/api/waitlist-admin', route => route.fulfill({ json: data }));

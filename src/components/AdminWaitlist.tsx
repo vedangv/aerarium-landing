@@ -23,7 +23,17 @@ export default function AdminWaitlist() {
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const shouldFocusPassword = useRef(false);
   const requestRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    if (!payload && shouldFocusPassword.current) {
+      passwordRef.current?.focus();
+      shouldFocusPassword.current = false;
+    }
+    // Loading also changes when an initial login is rejected while payload
+    // remains null. In either case the input must be rendered before focusing.
+  }, [payload, isLoading]);
 
   useEffect(() => () => {
     requestRef.current?.abort();
@@ -33,11 +43,11 @@ export default function AdminWaitlist() {
   const clearSession = () => {
     requestRef.current?.abort();
     requestRef.current = null;
+    shouldFocusPassword.current = true;
     setPayload(null);
     setPassword("");
     setIsLoading(false);
     setStatus("");
-    requestAnimationFrame(() => passwordRef.current?.focus());
   };
 
   const fetchRows = async (event?: React.FormEvent) => {
@@ -155,7 +165,7 @@ export default function AdminWaitlist() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Enter password"
-              className="mt-3 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 focus:border-emerald-400/40 focus:outline-none"
+              className="mt-3 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
             />
             <button
               type="submit"

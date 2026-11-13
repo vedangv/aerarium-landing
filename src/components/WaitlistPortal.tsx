@@ -26,7 +26,15 @@ export default function WaitlistPortal() {
   const [copyError, setCopyError] = useState("");
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const confirmationRef = useRef<HTMLHeadingElement>(null);
+  const shouldFocusConfirmation = useRef(false);
   const requestRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    if (registeredUser && shouldFocusConfirmation.current) {
+      confirmationRef.current?.focus();
+      shouldFocusConfirmation.current = false;
+    }
+  }, [registeredUser]);
 
   useEffect(() => {
     try {
@@ -96,8 +104,10 @@ export default function WaitlistPortal() {
         alreadyRegistered: payload.alreadyRegistered,
       };
       if (!isWaitlistUser(newUser)) throw new Error("invalid_signup_response");
+      // Focus after React mounts the confirmation, without moving focus when a
+      // returning visitor's saved signup is restored on page load.
+      shouldFocusConfirmation.current = true;
       setRegisteredUser(newUser);
-      requestAnimationFrame(() => confirmationRef.current?.focus());
       try {
         localStorage.setItem("aerarium_registered_user", JSON.stringify(newUser));
       } catch {
@@ -242,7 +252,7 @@ export default function WaitlistPortal() {
                 aria-label="Your referral link"
                 onFocus={(event) => event.currentTarget.select()}
                 value={`${window.location.origin}/?ref=${registeredUser.referralCode}`}
-                className="bg-slate-900 border border-white/5 rounded-lg py-2 px-3 text-[11px] font-mono text-slate-300 w-full select-all focus:outline-none focus:border-emerald-500/20"
+                className="bg-slate-900 border border-white/5 rounded-lg py-2 px-3 text-[11px] font-mono text-slate-300 w-full select-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
               />
               <button
                 onClick={copyReferralLink}
