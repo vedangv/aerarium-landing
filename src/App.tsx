@@ -82,7 +82,7 @@ export default function App() {
       <FounderExposureBridge />
 
       {/* 8. Reservation Portal Section */}
-      <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="scroll-stop-section py-14 sm:py-20 relative z-10 px-6 max-w-4xl mx-auto font-sans">
+      <section id="waitlist" className="scroll-stop-section py-14 sm:py-20 relative z-10 px-6 max-w-4xl mx-auto font-sans">
         <MobileSnapBeat />
         <WaitlistPortal />
       </section>

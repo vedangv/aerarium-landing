@@ -1,5 +1,15 @@
 import { test, expect } from './helpers';
 
+test('the desktop hero is fully opaque before the visitor scrolls', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('#aerarium-navbar')).toBeVisible();
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  // Native ViewTimeline animations can override the inline opacity. Check the
+  // rendered style, with normal motion, rather than only element visibility.
+  await expect(page.locator('.hero-foreground')).toHaveCSS('opacity', '1');
+});
+
 for (const viewport of [{ width: 390, height: 844 }, { width: 320, height: 568 }, { width: 768, height: 1024 }]) {
   test(`content is readable without scrolling to reveal it at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport);

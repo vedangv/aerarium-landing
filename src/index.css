@@ -17,7 +17,12 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+}
+
+/* Keep fragment targets clear of the fixed header without changing the
+   scrollport inset used by native ViewTimeline animations. */
+:where(section[id], main[id]) {
+  scroll-margin-top: 96px;
 }
 
 .skip-link {
@@ -64,10 +69,9 @@ html {
 }
 
 @media (max-width: 1023px) {
-  html {
-    scroll-padding-top: 72px;
+  :where(section[id], main[id]) {
+    scroll-margin-top: 88px;
   }
-
 }
 
 /* Small screens use ordinary document flow; no scroll-snap or reveal is needed. */
