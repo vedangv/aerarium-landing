@@ -343,7 +343,7 @@ export function renderSeoPage(page) {
         <div class="shell"><h2 class="section-title">Keep exploring Aerarium.</h2><div class="related">${renderRelated(page)}</div></div>
       </section>
       <section class="band">
-        <div class="shell cta"><h2>Use visibility to support your own discipline.</h2><p>Aerarium Portfolio is free to download. Optional Premium (US$7.99/month) includes read-only brokerage sync. Aerarium never places trades.</p><div class="hero-actions"><a class="button" href="${escapeHtml(appStoreLink(`guide_${page.slug}`))}">Get the App</a><a class="button secondary" href="${escapeHtml(researchLink(`guide_${page.slug}`))}">Open Aerarium Research</a></div></div>
+        <div class="shell cta"><h2>Use visibility to support your own discipline.</h2><p>Aerarium Portfolio is free to download. Optional Premium (US$7.99/month or US$79.99/year) includes read-only brokerage sync. Aerarium never places trades.</p><div class="hero-actions"><a class="button" href="${escapeHtml(appStoreLink(`guide_${page.slug}`))}">Get the App</a><a class="button secondary" href="${escapeHtml(researchLink(`guide_${page.slug}`))}">Open Aerarium Research</a></div></div>
       </section>
     </main>
     <footer class="footer">

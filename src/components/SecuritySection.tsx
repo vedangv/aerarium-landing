@@ -11,7 +11,7 @@ import { useReveal } from "./useReveal";
  */
 
 const ITEMS = [
-  { icon: EyeOff, title: "Read-only by design", body: "Optional Premium brokerage sync (SnapTrade) keeps holdings current — Aerarium never places a trade." },
+  { icon: EyeOff, title: "Read-only by design", body: "Optional Premium (US$7.99/month or US$79.99/year) includes read-only brokerage sync (SnapTrade). Aerarium never places trades." },
   { icon: LockKeyhole, title: "Encrypted sensitive fields", body: "Financial data is protected with a recovery-aware encryption flow." },
   { icon: FileDown, title: "Export & delete, always", body: "Your data stays exportable, and account deletion is treated as a first-class right." },
   { icon: Database, title: "Private portfolio, public research", body: "Research uses public-market data and stays separate from your private portfolio records." },

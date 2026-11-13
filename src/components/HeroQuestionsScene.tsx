@@ -74,7 +74,7 @@ function HeroCopy() {
             Download on the App Store
           </a>
         </div>
-        <span className="text-sm text-slate-400">Free to download · Premium US$7.99/month</span>
+        <span className="text-sm text-slate-400">Free to download · Premium US$7.99/month or US$79.99/year</span>
         <span className="text-sm text-slate-400">Brokerage sync requires Premium.</span>
       </div>
 

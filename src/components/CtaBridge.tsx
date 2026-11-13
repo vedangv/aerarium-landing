@@ -35,7 +35,7 @@ function CtaButton() {
         Download on the App Store
         <ArrowUpRight className="h-4 w-4" />
       </a>
-      <span className="text-sm text-slate-400">Free to download · Premium US$7.99/month</span>
+      <span className="text-sm text-slate-400">Free to download · Premium US$7.99/month or US$79.99/year</span>
     </div>
   );
 }

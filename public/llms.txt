@@ -10,7 +10,7 @@ Aerarium is a brand with two products under one roof: a private portfolio app (i
 ## Products
 
 - **Aerarium Portfolio** (iOS app, available on the App Store): private
-  portfolio monitoring. Free to download; optional Premium is US$7.99/month and
+  portfolio monitoring. Free to download; optional Premium is US$7.99/month or US$79.99/year and
   includes read-only brokerage sync (it never places trades). Features include a view
   of what you really own inside your funds (Portfolio X-Ray), a Policy Score for
   how well you're following your plan, goal tracking, your written investing rules,

@@ -44,9 +44,9 @@ This repository is safe to keep public only while it remains a marketing surface
 
 Current production landing project: `aerarium-landing` on Vercel.
 Current iOS CTA: `https://apps.apple.com/app/aerarium/id6760155168`.
-The app is free to download; optional Premium (US$7.99/month) includes brokerage
-sync. Research Pro is CA$10/month. Do not add annual or converted prices without
-confirmation from the owner.
+The app is free to download; optional Premium (US$7.99/month or US$79.99/year) includes brokerage
+sync. Apple shows regional prices in the app before purchase. Research Pro is CA$10/month.
+Do not add converted prices or introductory offers without confirmation from the owner.
 Canonical launch domain: `https://aerarium.app/`.
 Secondary domain: `https://aerariumapp.com/`, intended to redirect to
 `https://aerarium.app/`.
