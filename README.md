@@ -157,6 +157,10 @@ Admin view:
 - Protected by `ADMIN_DASHBOARD_PASSWORD`
 - Shows latest launch-list signups, referral codes, referred-by attribution,
   and signup referral counts.
+- The counts and top referrer describe only the latest 500 rows returned by
+  the API, not all-time totals. Refresh failures leave the previous list visible
+  with an error. Sign out clears the rows and in-memory password; neither is
+  saved in browser storage. Unauthorized refreshes also clear the view.
 
 Local checks:
 
