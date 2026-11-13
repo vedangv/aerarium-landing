@@ -96,6 +96,8 @@ useful, visible, and crawlable when JavaScript cannot load.
 The source content and renderer live in `scripts/seo-pages.mjs`. The pages use
 stable screenshots from `public/assets/seo/`, are listed in `public/sitemap.xml`,
 and are linked from `public/llms.txt`.
+Guides and the standalone support/legal pages share `public/static-accessibility.css`
+for visible keyboard focus, native skip links, and reduced-motion scrolling.
 
 ## Marketing assets
 
