@@ -1,23 +1,10 @@
 import { buildWaitlistRow, generateReferralCode, normalizeEmail } from "./waitlist-utils.mjs";
 
+import { getHeader, getClientIp, readJsonRequest, getRateLimitRecord, rejectRateLimit } from "./request-utils.mjs";
+
 const TABLE = "landing_waitlist";
-
-function getHeader(headers, key) {
-  const value = headers?.[key] ?? headers?.[key.toLowerCase()];
-  return Array.isArray(value) ? value.join(", ") : value;
-}
-
-function parseBody(body) {
-  if (!body) return {};
-  if (typeof body === "string") {
-    try {
-      return JSON.parse(body);
-    } catch {
-      return {};
-    }
-  }
-  return body;
-}
+const defaultRateLimitStore = new Map();
+const MAX_SIGNUP_ATTEMPTS = 5;
 
 function getConfig(env) {
   const supabaseUrl = env.SUPABASE_URL;
@@ -31,11 +18,12 @@ function getConfig(env) {
   };
 }
 
-async function fetchExistingWaitlistUser({ supabaseUrl, serviceKey, email, fetchImpl }) {
+async function fetchExistingWaitlistUser({ supabaseUrl, serviceKey, email, fetchImpl, signal }) {
   const response = await fetchImpl(
     `${supabaseUrl}/rest/v1/${TABLE}?email=eq.${encodeURIComponent(email)}&select=email,referral_code,created_at`,
     {
       method: "GET",
+      signal,
       headers: {
         apikey: serviceKey,
         Authorization: `Bearer ${serviceKey}`,
@@ -51,13 +39,14 @@ async function fetchExistingWaitlistUser({ supabaseUrl, serviceKey, email, fetch
   return Array.isArray(rows) ? rows[0] ?? null : null;
 }
 
-async function fetchReferralCount({ supabaseUrl, serviceKey, referralCode, fetchImpl }) {
+async function fetchReferralCount({ supabaseUrl, serviceKey, referralCode, fetchImpl, signal }) {
   if (!referralCode) return 0;
 
   const response = await fetchImpl(
-    `${supabaseUrl}/rest/v1/${TABLE}?referred_by=eq.${encodeURIComponent(referralCode)}&select=id`,
+    `${supabaseUrl}/rest/v1/${TABLE}?referred_by=eq.${encodeURIComponent(referralCode)}&select=id&limit=0`,
     {
       method: "GET",
+      signal,
       headers: {
         apikey: serviceKey,
         Authorization: `Bearer ${serviceKey}`,
@@ -78,9 +67,10 @@ async function fetchReferralCount({ supabaseUrl, serviceKey, referralCode, fetch
   return Array.isArray(rows) ? rows.length : 0;
 }
 
-async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl }) {
+async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl, signal }) {
   const requestInsert = (body) => fetchImpl(`${supabaseUrl}/rest/v1/${TABLE}`, {
     method: "POST",
+    signal,
     headers: {
       apikey: serviceKey,
       Authorization: `Bearer ${serviceKey}`,
@@ -115,13 +105,7 @@ async function insertWaitlistUser({ supabaseUrl, serviceKey, row, fetchImpl }) {
     };
   }
 
-  let detail = "";
-  try {
-    detail = JSON.stringify(await response.json());
-  } catch {
-    detail = response.statusText ?? "";
-  }
-  throw new Error(`supabase_insert_failed_${response.status}:${detail}`);
+  throw new Error(`supabase_insert_failed_${response.status}`);
 }
 
 async function publicPayload({ row, alreadyRegistered = false, config, fetchImpl }) {
@@ -142,31 +126,29 @@ async function publicPayload({ row, alreadyRegistered = false, config, fetchImpl
 }
 
 export default async function handler(req, res, context = {}) {
-  res.setHeader?.("Cache-Control", "no-store");
+  const env = context.env ?? process.env;
+  const body = readJsonRequest(req, res, env);
+  if (!body) return;
 
-  if (req.method === "OPTIONS") {
-    res.status(204).json({});
+  const now = context.now?.() ?? Date.now();
+  const record = getRateLimitRecord(context.rateLimitStore ?? defaultRateLimitStore, getClientIp(req), now);
+  if (!record || record.count >= MAX_SIGNUP_ATTEMPTS) {
+    rejectRateLimit(res, record, now);
     return;
   }
+  record.count += 1;
 
-  if (req.method !== "POST") {
-    res.status(405).json({ error: "method_not_allowed" });
-    return;
-  }
-
-  const body = parseBody(req.body);
   const email = normalizeEmail(body.email);
   if (!email) {
     res.status(400).json({ error: "invalid_email" });
     return;
   }
 
-  const env = context.env ?? process.env;
   const fetchImpl = context.fetchImpl ?? fetch;
 
   let config;
   try {
-    config = getConfig(env);
+    config = { ...getConfig(env), signal: AbortSignal.timeout(8000) };
   } catch {
     res.status(500).json({ error: "waitlist_not_configured" });
     return;
@@ -197,9 +179,9 @@ export default async function handler(req, res, context = {}) {
         res.status(200).json(await publicPayload({ row: existing, alreadyRegistered: true, config, fetchImpl }));
         return;
       }
-    } catch (error) {
+    } catch {
       if (attempt === 2) {
-        console.error("[waitlist] submission failed", error);
+        console.error("[waitlist] submission failed");
         res.status(502).json({ error: "waitlist_unavailable" });
         return;
       }

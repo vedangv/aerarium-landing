@@ -16,6 +16,9 @@ describe("waitlist utilities", () => {
     assert.equal(normalizeEmail("not-an-email"), null);
     assert.equal(normalizeEmail("missing-domain@"), null);
     assert.equal(normalizeEmail(""), null);
+    assert.equal(normalizeEmail("user\u0000@example.com"), null);
+    assert.equal(normalizeEmail("user\u007f@example.com"), null);
+    assert.equal(normalizeEmail(`${"x".repeat(65)}@example.com`), null);
   });
 
   it("generates stable Aerarium referral code shape", () => {

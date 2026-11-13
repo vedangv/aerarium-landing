@@ -6,7 +6,7 @@ import handler from "./waitlist.js";
 function createResponse() {
   return {
     statusCode: 200,
-    headers: {},
+    headers: { "content-type": "application/json" },
     body: undefined,
     status(code) {
       this.statusCode = code;
@@ -28,7 +28,7 @@ describe("waitlist API", () => {
     const res = createResponse();
 
     await handler(
-      { method: "POST", body: { email: "bad" }, headers: {} },
+      { method: "POST", body: { email: "bad" }, headers: { "content-type": "application/json" } },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl: (...args) => calls.push(args) },
     );
@@ -66,7 +66,7 @@ describe("waitlist API", () => {
     };
 
     await handler(
-      { method: "POST", body: { email: "User@Example.COM" }, headers: { "user-agent": "node" } },
+      { method: "POST", body: { email: "User@Example.COM" }, headers: { "content-type": "application/json", "user-agent": "node" } },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },
     );
@@ -112,7 +112,7 @@ describe("waitlist API", () => {
           utmCampaign: "launch",
           utmContent: "bio-link",
         },
-        headers: { "user-agent": "node" },
+        headers: { "content-type": "application/json", "user-agent": "node" },
       },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },
@@ -154,7 +154,7 @@ describe("waitlist API", () => {
       {
         method: "POST",
         body: { email: "legacy@example.com", utmSource: "instagram" },
-        headers: {},
+        headers: { "content-type": "application/json" },
       },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },

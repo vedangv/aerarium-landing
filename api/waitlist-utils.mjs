@@ -6,8 +6,10 @@ const REFERRAL_PATTERN = /^AER-[A-Z0-9]{8}$/;
 export function normalizeEmail(value) {
   if (typeof value !== "string") return null;
   const normalized = value.trim().toLowerCase();
+  if (/[\u0000-\u001f\u007f]/.test(normalized)) return null;
   if (!EMAIL_PATTERN.test(normalized)) return null;
   if (normalized.length > 254) return null;
+  if (normalized.split("@")[0].length > 64) return null;
   return normalized;
 }
 

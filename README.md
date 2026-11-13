@@ -106,6 +106,20 @@ The service-role key is server-side only. Do not expose it through `VITE_`,
 `NEXT_PUBLIC_`, static assets, or client-side code. The table has RLS enabled
 and no public read/write policies; submissions go through the Vercel function.
 
+Both API routes require a JSON object of at most 8 KiB, reject cross-origin
+browser submissions, disable caching, and bound database requests to an
+eight-second deadline. Database errors and request contents are not logged.
+The signup route allows five attempts per client IP per 15 minutes; admin
+authentication allows five failed attempts in the same window. The stores
+expire entries and cap memory at 4,096 client addresses per function instance.
+These are best-effort limits within a warm instance: they do **not** coordinate
+across Vercel instances or survive cold starts. An owner-configured edge or
+shared rate limiter is still needed for distributed abuse protection.
+
+The existing referral response is retained for compatibility. Looking up an
+existing signup by submitting its email does not prove ownership of that email;
+email verification is required before this can become a private account view.
+
 Admin view:
 
 - `/admin/waitlist`

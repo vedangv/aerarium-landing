@@ -6,7 +6,7 @@ import handler from "./waitlist-admin.js";
 function createResponse() {
   return {
     statusCode: 200,
-    headers: {},
+    headers: { "content-type": "application/json" },
     body: undefined,
     status(code) {
       this.statusCode = code;
@@ -34,7 +34,7 @@ describe("waitlist admin API", () => {
     const res = createResponse();
 
     await handler(
-      { method: "POST", body: { password: "wrong" }, headers: {} },
+      { method: "POST", body: { password: "wrong" }, headers: { "content-type": "application/json" } },
       res,
       { env, fetchImpl: (...args) => calls.push(args) },
     );
@@ -70,7 +70,7 @@ describe("waitlist admin API", () => {
     });
 
     await handler(
-      { method: "POST", body: { password: "secret" }, headers: {} },
+      { method: "POST", body: { password: "secret" }, headers: { "content-type": "application/json" } },
       res,
       { env, fetchImpl },
     );
@@ -105,7 +105,7 @@ describe("waitlist admin API", () => {
     };
 
     await handler(
-      { method: "POST", body: { password: "secret" }, headers: {} },
+      { method: "POST", body: { password: "secret" }, headers: { "content-type": "application/json" } },
       res,
       { env, fetchImpl },
     );
@@ -127,7 +127,7 @@ describe("waitlist admin API", () => {
         {
           method: "POST",
           body: { password: "wrong" },
-          headers: { "x-forwarded-for": "203.0.113.10, 10.0.0.1" },
+          headers: { "content-type": "application/json", "x-forwarded-for": "203.0.113.10, 10.0.0.1" },
         },
         res,
         { env, fetchImpl: async () => assert.fail("Supabase should not be called"), rateLimitStore, now },
@@ -140,7 +140,7 @@ describe("waitlist admin API", () => {
       {
         method: "POST",
         body: { password: "secret" },
-        headers: { "x-forwarded-for": "203.0.113.10, 10.0.0.1" },
+        headers: { "content-type": "application/json", "x-forwarded-for": "203.0.113.10, 10.0.0.1" },
       },
       blocked,
       { env, fetchImpl: async () => assert.fail("Supabase should not be called"), rateLimitStore, now },
