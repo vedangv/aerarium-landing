@@ -54,6 +54,7 @@ export default function CenterStageScreen({
             className="h-full w-full object-cover"
             style={{ objectPosition: phoneObjectPosition }}
             loading="lazy"
+            decoding="async"
           />
         </div>
         <div className="pointer-events-none absolute inset-0 rounded-[42px] bg-gradient-to-tr from-transparent via-white/5 to-transparent" />

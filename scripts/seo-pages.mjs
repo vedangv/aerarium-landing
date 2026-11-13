@@ -305,7 +305,7 @@ export function renderSeoPage(page) {
   <body>
     <header class="nav">
       <div class="shell nav-inner">
-        <a class="brand" href="/"><img src="/assets/brand/app-icon-512.png" alt="" /><span>Aerarium</span></a>
+        <a class="brand" href="/"><img src="/assets/brand/apple-touch-icon.png" width="38" height="38" alt="" /><span>Aerarium</span></a>
         <nav class="nav-links" aria-label="Primary"><a href="/portfolio-x-ray">Portfolio X-Ray</a><a href="/investment-policy-statement-app">Investing Rules</a><a href="/methodology">Methodology</a><a href="/security">Security</a></nav>
         <div class="actions"><a class="quiet" href="${RESEARCH_URL}">Open Research</a><a class="button" href="${APP_STORE_URL}">Get the App</a></div>
       </div>
@@ -344,7 +344,7 @@ export function renderSeoPage(page) {
       </section>
     </main>
     <footer class="footer">
-      <div class="shell footer-inner"><a class="brand" href="/"><img src="/assets/brand/app-icon-512.png" alt="" /><span>Aerarium</span></a><div><a class="quiet" href="/privacy">Privacy</a> · <a class="quiet" href="/terms">Terms</a> · <a class="quiet" href="/security">Security</a> · <a class="quiet" href="/methodology">Methodology</a></div></div>
+      <div class="shell footer-inner"><a class="brand" href="/"><img src="/assets/brand/apple-touch-icon.png" width="38" height="38" alt="" /><span>Aerarium</span></a><div><a class="quiet" href="/privacy">Privacy</a> · <a class="quiet" href="/terms">Terms</a> · <a class="quiet" href="/security">Security</a> · <a class="quiet" href="/methodology">Methodology</a></div></div>
     </footer>
   </body>
 </html>`;

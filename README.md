@@ -89,6 +89,24 @@ The source content and renderer live in `scripts/seo-pages.mjs`. The pages use
 stable screenshots from `public/assets/seo/`, are listed in `public/sitemap.xml`,
 and are linked from `public/llms.txt`.
 
+## Marketing assets
+
+The original product screenshots remain in `assets/product-tour/`. The three
+largest phone images use 720-pixel-wide WebP derivatives in
+`src/assets/optimized/`, generated with `cwebp -q 90 -sharp_yuv -resize 720 0`.
+Keep the originals when refreshing these derivatives. The navigation and guide
+logos reuse the smaller existing Apple touch icon.
+
+The site's four font families are served locally from `public/fonts/`, with
+their SIL Open Font Licenses alongside them. These Latin WOFF2 subsets come
+from Fontsource 5.3.0; their CSS is in `src/fonts.css`. The hero's serif and body
+font are preloaded, and fonts use `font-display: swap`.
+
+The link-preview source is `scripts/og-image.html`. Render it through the local
+Vite server at 1200 × 630, after `document.fonts.ready`, to refresh
+`public/og-image.png`. Keep the example labelled and subscription claims aligned
+with the homepage. This asset is separate from the social-media kit.
+
 ## Founder launch list
 
 The “Get launch updates” form posts to the Vercel serverless route

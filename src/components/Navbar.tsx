@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import logoSrc from "../assets/logo.png";
+import logoSrc from "../../assets/brand/apple-touch-icon.png";
 import { trackOutboundClick } from "../lib/analytics";
 
 const NAV_LINKS = [

@@ -55,7 +55,7 @@ const WebScreen: React.FC<Props> = ({ id, icon: Icon, eyebrow, headline, subhead
         {/* Mobile/tablet: full dashboard at natural aspect (short frame). Desktop:
             height-clamped + object-cover so the wide frame fits the pinned screen. */}
         <div className="aspect-[16/10] w-full overflow-hidden lg:aspect-auto lg:h-[clamp(220px,44svh,520px)]">
-          <img src={src} alt={alt} loading="lazy" className="h-full w-full object-cover object-top" />
+          <img src={src} alt={alt} loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
         </div>
       </div>
     </div>

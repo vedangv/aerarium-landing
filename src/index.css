@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "tailwindcss";
 
 @theme {
@@ -65,6 +66,7 @@ html {
   html {
     scroll-padding-top: 72px;
   }
+
 }
 
 /* Small screens use ordinary document flow; no scroll-snap or reveal is needed. */
@@ -132,6 +134,14 @@ html {
 .animate-glow-slow-3 {
   animation: pulseGlow 20s infinite ease-in-out;
   animation-delay: 4s;
+}
+
+@media (max-width: 1023px) {
+  .animate-glow-slow-1,
+  .animate-glow-slow-2,
+  .animate-glow-slow-3 {
+    animation: none;
+  }
 }
 
 .animate-float-core {

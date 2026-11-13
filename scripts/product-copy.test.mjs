@@ -36,3 +36,10 @@ test('all guides send visitors to the released app and disclose paid sync', () =
     assert.doesNotMatch(html, /testflight\.apple\.com|free during the iOS beta/);
   }
 });
+
+test('the link-preview source labels the example and the paid sync feature accurately', () => {
+  const template = read('scripts/og-image.html');
+  assert.ok(!/Free during beta/.test(template), 'The published preview must not advertise the old free beta');
+  assert.match(template, /Illustrative example/);
+  assert.match(template, /Premium brokerage sync/);
+});
