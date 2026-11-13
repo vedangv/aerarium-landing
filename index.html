@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aerarium — Understand your portfolio, research the S&P 500 & Nasdaq-100</title>
-    <meta name="description" content="Aerarium helps you understand what you really own, build an investment plan, and stay disciplined for the long term — plus source-first research on every S&P 500 and Nasdaq-100 company. Read-only." />
+    <meta name="apple-itunes-app" content="app-id=6760155168" />
+    <title>Aerarium — Understand your portfolio on iPhone</title>
+    <meta name="description" content="See overlapping stocks across your funds, track your investing rules, and keep your goals in view with Aerarium for iPhone. Free to download; optional Premium." />
     <link rel="canonical" href="https://aerarium.app/" />
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64.png" />
     <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" />
@@ -44,10 +45,11 @@
           "name": "Aerarium",
           "url": "https://aerarium.app/",
           "logo": "https://aerarium.app/assets/brand/app-icon-512.png",
-          "description": "Aerarium helps long-term investors understand what they really own, build a plan, and stay disciplined — plus research any public company.",
+          "description": "Aerarium helps long-term investors understand what they really own, build a plan, and stay disciplined with a companion site for public-company research.",
           "sameAs": [
             "https://www.instagram.com/aerarium.app/",
-            "https://research.aerarium.app/"
+            "https://research.aerarium.app/",
+            "https://apps.apple.com/app/aerarium/id6760155168"
           ]
         },
         {
@@ -56,13 +58,14 @@
           "name": "Aerarium Portfolio",
           "applicationCategory": "FinanceApplication",
           "operatingSystem": "iOS",
+          "installUrl": "https://apps.apple.com/app/aerarium/id6760155168",
           "url": "https://aerarium.app/",
-          "description": "See what you really own across your funds and accounts (Portfolio X-Ray), a clear Policy Score for how well you're following your plan, goal tracking, your written investing rules, and a place to record why you bought each holding. Read-only brokerage sync; Aerarium never places trades.",
+          "description": "See what you really own across your funds and accounts (Portfolio X-Ray), a clear Policy Score for how well you're following your plan, goal tracking, your written investing rules, and a place to record why you bought each holding. Optional Premium includes read-only brokerage sync; Aerarium never places trades.",
           "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "USD",
-            "description": "Free to download; Aerarium Premium subscription US$9.99/month or US$89.99/year"
+            "description": "Free to download; optional Aerarium Premium US$7.99/month or US$79.99/year includes read-only brokerage sync."
           },
           "publisher": { "@id": "https://aerarium.app/#organization" }
         },
@@ -79,27 +82,48 @@
             "@type": "Offer",
             "price": "10",
             "priceCurrency": "CAD",
-            "description": "Free for five showcase tickers and macro dashboards; Aerarium Research Pro CAD $10/month unlocks every S&P 500 + Nasdaq-100 company"
+            "description": "Free for five showcase tickers and macro dashboards; Aerarium Research Pro CA$10/month unlocks every S&P 500 + Nasdaq-100 company"
           },
           "publisher": { "@id": "https://aerarium.app/#organization" }
         }
       ]
     }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-300">
-    <div id="root"></div>
+    <div id="root">
+      <!-- Useful until React loads, including when scripts are blocked or fail. -->
+      <main class="mx-auto max-w-3xl px-6 py-20 text-slate-100">
+        <p class="font-display text-sm text-emerald-300">Aerarium Portfolio for iPhone</p>
+        <h1 class="mt-5 font-editorial text-5xl leading-tight">See what you actually own.</h1>
+        <p class="mt-6 text-lg leading-relaxed text-slate-300">See which stocks overlap across your funds and accounts, set investing rules, and track whether your portfolio still fits your goals. Aerarium never places trades.</p>
+        <a class="mt-8 inline-block rounded-xl bg-emerald-500 px-6 py-4 font-semibold text-slate-950" href="https://apps.apple.com/app/aerarium/id6760155168?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=app&amp;utm_content=homepage_fallback">Download on the App Store</a>
+        <p class="mt-4 text-sm text-slate-400">Free to download. Premium US$7.99/month or US$79.99/year includes read-only brokerage sync.</p>
+        <section class="mt-12">
+          <h2 class="font-display text-2xl">Explore the app</h2>
+          <ul class="mt-5 space-y-3 text-emerald-300">
+            <li><a href="/portfolio-x-ray">Portfolio X-Ray</a> — see overlapping holdings inside your funds.</li>
+            <li><a href="/investment-policy-statement-app">Your investing plan</a> — write down the rules you want to follow.</li>
+            <li><a href="/policy-score">Policy Score</a> — check whether your portfolio follows your plan.</li>
+            <li><a href="/goals-funding-plan">Goals and funding</a> — connect your savings to your goals.</li>
+            <li><a href="/investment-thesis-tracker">Investment thesis tracker</a> — remember why you bought each investment.</li>
+            <li><a href="/security">Security</a> — read about data access, export and deletion.</li>
+            <li><a href="/methodology">Methodology</a> — understand how Aerarium works.</li>
+          </ul>
+        </section>
+        <p class="mt-10 text-slate-300">Also explore <a class="text-cyan-300 underline" href="https://research.aerarium.app/?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=homepage_fallback">Aerarium Research</a>, the companion website for company filings, ownership and market data. Five showcase tickers and macro dashboards are free; Research Pro is CA$10/month.</p>
+        <p class="mt-8 text-sm text-slate-400"><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/support.html">Support</a></p>
+      </main>
+    </div>
 
     <!--
       Static crawl paths in RAW HTML.
 
-      This is a Vite SPA: the server sends an empty #root, so Googlebot's
-      first-pass link extraction sees only what is literally here. The React nav
-      and footer DO link to research.aerarium.app, but only after JS runs and
-      only to the bare root -- there are no deep links to any hub or company.
+      The homepage fallback and this nav expose useful first-pass crawl links.
+      Keep the Research hubs and company links outside #root so they remain
+      available after React replaces the fallback.
 
       Deliberately a <nav>, not a <footer>: the React app already renders a
       contentinfo landmark, and a second one is both an a11y smell and a visibly
@@ -111,17 +135,17 @@
     -->
     <nav aria-label="Aerarium Research" class="mx-auto max-w-5xl px-6 pb-10 text-xs text-slate-500">
       <span class="text-slate-400">Aerarium Research:</span>
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/">Home</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks">All companies</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/sectors">Sectors</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/earnings">Earnings calendar</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/macro">Macro</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/learn">Research guides</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/NVDA">NVDA</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/AAPL">AAPL</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/TSLA">TSLA</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/AMZN">AMZN</a> ·
-      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/PLTR">PLTR</a>
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">Home</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">All companies</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/sectors?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">Sectors</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/earnings?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">Earnings calendar</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/macro?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">Macro</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/learn?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">Research guides</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/NVDA?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">NVDA</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/AAPL?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">AAPL</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/TSLA?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">TSLA</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/AMZN?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">AMZN</a> ·
+      <a class="hover:text-emerald-300" href="https://research.aerarium.app/stocks/PLTR?utm_source=landing&amp;utm_medium=crosslink&amp;utm_campaign=research&amp;utm_content=crawl_nav">PLTR</a>
     </nav>
     <script type="module" src="/src/main.tsx"></script>
   </body>

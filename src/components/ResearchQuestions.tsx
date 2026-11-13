@@ -1,10 +1,10 @@
+import { useStaticLayout } from "./useStaticLayout";
 import React, { useRef } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useMotionTemplate,
-  useReducedMotion,
   type MotionValue,
 } from "motion/react";
 
@@ -80,7 +80,7 @@ function Scene() {
   const headStyle = { opacity: headOpacity, y: headY };
 
   return (
-    <div ref={trackRef} className="relative h-[280svh]">
+    <div ref={trackRef} data-scroll-scene className="relative h-[280svh]">
       {/* pt clears the navbar for the pinned content */}
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden pt-20">
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
@@ -130,7 +130,7 @@ function Scene() {
 
 function StackedFallback() {
   return (
-    <section className="relative z-10 overflow-hidden px-6 py-28">
+    <section className="relative z-10 overflow-hidden px-6 py-12 sm:py-16">
       <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.08)_0%,transparent_70%)]" />
       <div className="relative z-10 mx-auto max-w-md">
         <ResearchCopy />
@@ -147,10 +147,10 @@ function StackedFallback() {
 }
 
 export default function ResearchQuestions() {
-  const prefersReduced = useReducedMotion();
+  const staticLayout = useStaticLayout();
   return (
     <section id="research-questions" className="relative z-10 bg-slate-950">
-      {prefersReduced ? <StackedFallback /> : <Scene />}
+      {staticLayout ? <StackedFallback /> : <Scene />}
     </section>
   );
 }

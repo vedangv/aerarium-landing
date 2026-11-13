@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { ArrowLeft, Eye, Loader2, Lock, RefreshCw, Users } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { ArrowLeft, Eye, Loader2, Lock, LogOut, RefreshCw, Users } from "lucide-react";
 import { WaitlistAdminPayload } from "../types";
+import { isWaitlistAdminPayload } from "../lib/waitlist";
 
 function formatDate(value: string) {
   try {
@@ -19,20 +20,64 @@ export default function AdminWaitlist() {
   const [password, setPassword] = useState("");
   const [payload, setPayload] = useState<WaitlistAdminPayload | null>(null);
   const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const shouldFocusPassword = useRef(false);
+  const requestRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    if (!payload && shouldFocusPassword.current) {
+      passwordRef.current?.focus();
+      shouldFocusPassword.current = false;
+    }
+    // Loading also changes when an initial login is rejected while payload
+    // remains null. In either case the input must be rendered before focusing.
+  }, [payload, isLoading]);
+
+  useEffect(() => () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+  }, []);
+
+  const clearSession = () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+    shouldFocusPassword.current = true;
+    setPayload(null);
+    setPassword("");
+    setIsLoading(false);
+    setStatus("");
+  };
 
   const fetchRows = async (event?: React.FormEvent) => {
     event?.preventDefault();
+    if (requestRef.current) return;
     setError("");
+    setStatus("");
     setIsLoading(true);
+    const controller = new AbortController();
+    requestRef.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    const failureMessage = payload
+      ? "Could not refresh. The previous list is still shown; try again."
+      : "The founder list could not be loaded. Please try again.";
 
     try {
       const response = await fetch("/api/waitlist-admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
+        signal: controller.signal,
       });
+      if (requestRef.current !== controller) return;
+      if (response.status === 401) {
+        clearSession();
+        setError("Password was not accepted. Enter it again.");
+        return;
+      }
       const data = await response.json();
+      if (requestRef.current !== controller) return;
 
       if (!response.ok) {
         if (data?.error === "admin_not_configured") {
@@ -40,16 +85,22 @@ export default function AdminWaitlist() {
         } else if (data?.error === "rate_limited") {
           setError("Too many failed attempts. Wait 15 minutes before trying again.");
         } else {
-          setError("Password failed or the waitlist could not be loaded.");
+          setError(failureMessage);
         }
         return;
       }
 
+      if (!isWaitlistAdminPayload(data)) throw new Error("invalid_admin_response");
       setPayload(data);
+      setStatus(payload ? "List refreshed." : "Founder list loaded.");
     } catch {
-      setError("Could not reach the admin endpoint.");
+      if (requestRef.current === controller) setError(failureMessage);
     } finally {
-      setIsLoading(false);
+      clearTimeout(timeout);
+      if (requestRef.current === controller) {
+        requestRef.current = null;
+        setIsLoading(false);
+      }
     }
   };
 
@@ -77,16 +128,28 @@ export default function AdminWaitlist() {
           </div>
 
           {payload && (
-            <button
-              onClick={() => fetchRows()}
-              disabled={isLoading}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-100 hover:border-emerald-400/30 hover:text-emerald-300 disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
-            >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
-              Refresh
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => fetchRows()}
+                disabled={isLoading}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-100 hover:border-emerald-400/30 hover:text-emerald-300 disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
+              >
+                <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+                Refresh
+              </button>
+              <button
+                onClick={() => { clearSession(); setError(""); }}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-sm font-semibold text-slate-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
+              >
+                <LogOut className="h-4 w-4" />
+                Sign out
+              </button>
+            </div>
           )}
         </header>
+
+        {error && <p role="alert" className="text-sm text-rose-300">{error}</p>}
+        <p role="status" className="sr-only">{status}</p>
 
         {!payload ? (
           <form onSubmit={fetchRows} className="glass-card max-w-md rounded-3xl p-6 md:p-8">
@@ -94,14 +157,16 @@ export default function AdminWaitlist() {
               Admin password
             </label>
             <input
+              ref={passwordRef}
               id="admin-password"
               type="password"
+              autoComplete="current-password"
+              required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Enter password"
-              className="mt-3 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 focus:border-emerald-400/40 focus:outline-none"
+              className="mt-3 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
             />
-            {error && <p className="mt-3 text-xs text-rose-300">{error}</p>}
             <button
               type="submit"
               disabled={isLoading || !password}
@@ -115,40 +180,42 @@ export default function AdminWaitlist() {
           <>
             <section className="grid gap-4 md:grid-cols-3">
               <div className="glass-card rounded-3xl p-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Total signups</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Signups shown</p>
                 <p className="mt-3 font-display text-4xl font-bold text-white">{payload.totalSignups}</p>
               </div>
               <div className="glass-card rounded-3xl p-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Referred signups</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Referred signups shown</p>
                 <p className="mt-3 font-display text-4xl font-bold text-emerald-300">{payload.totalReferredSignups}</p>
               </div>
               <div className="glass-card rounded-3xl p-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Top referrer</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Top referrer shown</p>
                 <p className="mt-3 truncate font-mono text-sm font-bold text-white">
                   {payload.topReferrerEmail ?? "None yet"}
                 </p>
               </div>
             </section>
 
-            <section className="glass-card overflow-hidden rounded-3xl">
+            <p className="text-sm text-slate-400">Counts and referral totals cover only the latest 500 signups shown here.</p>
+
+            <section aria-busy={isLoading} className="glass-card overflow-hidden rounded-3xl">
               <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-                <h2 className="flex items-center gap-2 font-display text-lg font-bold text-white">
+                <h2 id="admin-signups-heading" className="flex items-center gap-2 font-display text-lg font-bold text-white">
                   <Users className="h-5 w-5 text-emerald-300" />
                   Launch update signups
                 </h2>
                 <span className="text-xs text-slate-500">Latest 500 rows</span>
               </div>
-              <div className="overflow-x-auto">
-                <table className="min-w-full text-left text-sm">
+              <div role="region" aria-labelledby="admin-signups-heading" tabIndex={0} className="overflow-x-auto focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-emerald-300">
+                <table aria-labelledby="admin-signups-heading" className="min-w-full text-left text-sm">
                   <thead className="border-b border-white/10 text-[10px] uppercase tracking-[0.18em] text-slate-500">
                     <tr>
-                      <th className="px-5 py-3 font-semibold">Email</th>
-                      <th className="px-5 py-3 font-semibold">Code</th>
-                      <th className="px-5 py-3 font-semibold">Referred by</th>
-                      <th className="px-5 py-3 font-semibold">Referrals</th>
-                      <th className="px-5 py-3 font-semibold">Source</th>
-                      <th className="px-5 py-3 font-semibold">Campaign</th>
-                      <th className="px-5 py-3 font-semibold">Created</th>
+                      <th scope="col" className="px-5 py-3 font-semibold">Email</th>
+                      <th scope="col" className="px-5 py-3 font-semibold">Code</th>
+                      <th scope="col" className="px-5 py-3 font-semibold">Referred by</th>
+                      <th scope="col" className="px-5 py-3 font-semibold">Referrals</th>
+                      <th scope="col" className="px-5 py-3 font-semibold">Source</th>
+                      <th scope="col" className="px-5 py-3 font-semibold">Campaign</th>
+                      <th scope="col" className="px-5 py-3 font-semibold">Created</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">

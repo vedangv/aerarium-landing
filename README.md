@@ -18,7 +18,7 @@ The intended funnel is:
 ```text
 SEO / social / Research traffic
   -> aerarium.app
-  -> TestFlight or founder launch list
+  -> App Store download or founder launch list
   -> Aerarium Portfolio iOS activation
 ```
 
@@ -43,11 +43,22 @@ This repository is safe to keep public only while it remains a marketing surface
 - no user data, screenshots with real personal data, or internal credentials
 
 Current production landing project: `aerarium-landing` on Vercel.
-Current iOS beta CTA: `https://testflight.apple.com/join/Xna39VKU`.
+Current iOS CTA: `https://apps.apple.com/app/aerarium/id6760155168`.
+The app is free to download; optional Premium (US$7.99/month or US$79.99/year) includes brokerage
+sync. Apple shows regional prices in the app before purchase. Research Pro is CA$10/month.
+Do not add converted prices or introductory offers without confirmation from the owner.
 Canonical launch domain: `https://aerarium.app/`.
 Secondary domain: `https://aerariumapp.com/`, intended to redirect to
 `https://aerarium.app/`.
 Research domain: `https://research.aerarium.app/`.
+
+Product links use `utm_source=landing`, `utm_medium=crosslink`, and
+`utm_campaign=app` or `research`; `utm_content` identifies the placement.
+React and the static guide renderer share `src/lib/product-links.mjs`. Keep
+the raw HTML fallback and crawl links in `index.html` consistent with this
+scheme, while keeping canonical URLs and JSON-LD identities free of tracking
+parameters. Research stays secondary to the app download action. The homepage
+and guides include the Smart App Banner for App Store ID `6760155168`.
 
 ## Current planning docs
 
@@ -65,9 +76,10 @@ Research domain: `https://research.aerarium.app/`.
   - Records the build-time rendering approach for the seven crawlable Portfolio
     guide pages under `aerarium.app`.
 
-The homepage creative pass and the first landing SEO content wedge are shipped
-as separate concerns: keep the scrollytelling homepage conversion-first, and
-keep the static guide pages useful, visible, and crawlable without JavaScript.
+The homepage uses compact, immediately visible sections on phones, tablets,
+short windows, and when reduced motion is requested. Larger desktop windows
+retain the scroll scenes. Keep the static homepage fallback and guide pages
+useful, visible, and crawlable when JavaScript cannot load.
 
 ## Static Portfolio guides
 
@@ -84,6 +96,26 @@ keep the static guide pages useful, visible, and crawlable without JavaScript.
 The source content and renderer live in `scripts/seo-pages.mjs`. The pages use
 stable screenshots from `public/assets/seo/`, are listed in `public/sitemap.xml`,
 and are linked from `public/llms.txt`.
+Guides and the standalone support/legal pages share `public/static-accessibility.css`
+for visible keyboard focus, native skip links, and reduced-motion scrolling.
+
+## Marketing assets
+
+The original product screenshots remain in `assets/product-tour/`. The three
+largest phone images use 720-pixel-wide WebP derivatives in
+`src/assets/optimized/`, generated with `cwebp -q 90 -sharp_yuv -resize 720 0`.
+Keep the originals when refreshing these derivatives. The navigation and guide
+logos reuse the smaller existing Apple touch icon.
+
+The site's four font families are served locally from `public/fonts/`, with
+their SIL Open Font Licenses alongside them. These Latin WOFF2 subsets come
+from Fontsource 5.3.0; their CSS is in `src/fonts.css`. The hero's serif and body
+font are preloaded, and fonts use `font-display: swap`.
+
+The link-preview source is `scripts/og-image.html`. Render it through the local
+Vite server at 1200 × 630, after `document.fonts.ready`, to refresh
+`public/og-image.png`. Keep the example labelled and subscription claims aligned
+with the homepage. This asset is separate from the social-media kit.
 
 ## Founder launch list
 
@@ -102,12 +134,38 @@ The service-role key is server-side only. Do not expose it through `VITE_`,
 `NEXT_PUBLIC_`, static assets, or client-side code. The table has RLS enabled
 and no public read/write policies; submissions go through the Vercel function.
 
+Both API routes require a JSON object of at most 8 KiB, reject cross-origin
+browser submissions, disable caching, and bound database requests to an
+eight-second deadline. Database errors and request contents are not logged.
+The signup route allows five attempts per client IP per 15 minutes; admin
+authentication allows five failed attempts in the same window. The stores
+expire entries and cap memory at 4,096 client addresses per function instance.
+These are best-effort limits within a warm instance: they do **not** coordinate
+across Vercel instances or survive cold starts. An owner-configured edge or
+shared rate limiter is still needed for distributed abuse protection.
+At capacity the limiter rejects new client addresses until entries expire;
+this can temporarily block an owner login too. It deliberately does not bypass
+an exhausted limit for a correct password, which would defeat guess throttling.
+
+The existing referral response is retained for compatibility. Looking up an
+existing signup by submitting its email does not prove ownership of that email;
+email verification is required before this can become a private account view.
+New signups return a zero referral count without an extra database query.
+For existing signups, referral statistics are best effort: a failed count query
+still returns a successful confirmation with `referralCountUnavailable: true`.
+The UI labels this state instead of presenting the legacy numeric fallback as
+a known zero. Optional statistics must never cause a confirmed insert to retry.
+
 Admin view:
 
 - `/admin/waitlist`
 - Protected by `ADMIN_DASHBOARD_PASSWORD`
 - Shows latest launch-list signups, referral codes, referred-by attribution,
   and signup referral counts.
+- The counts and top referrer describe only the latest 500 rows returned by
+  the API, not all-time totals. Refresh failures leave the previous list visible
+  with an error. Sign out clears the rows and in-memory password; neither is
+  saved in browser storage. Unauthorized refreshes also clear the view.
 
 Local checks:
 
@@ -115,4 +173,20 @@ Local checks:
 npm test
 npm run lint
 npm run build
+npm run test:e2e
 ```
+
+`lint` runs the TypeScript check. Browser regressions use Playwright against a
+fresh local production build and block all external traffic and unmocked API
+requests. Install Chromium with `npx playwright install chromium`, or set
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an existing Chromium/Chrome executable.
+The suite covers responsive layouts, keyboard navigation, storage and clipboard
+failures, mocked signup responses, and axe accessibility scans of the homepage,
+mobile menu, and signup confirmation. These scans complement manual browser
+checks; they do not certify every screen-reader interaction.
+
+For Safari-engine coverage, install WebKit with `npx playwright install webkit`
+and run `npm run test:e2e:webkit`. This runs the same local, network-isolated
+suite at phone and desktop widths without changing the default Chromium run.
+It is engine coverage, not a substitute for testing on a physical iPhone.
+Generated build, browser, and test artifacts are excluded from TypeScript checks.

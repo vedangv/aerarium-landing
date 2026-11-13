@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import WaitlistPortal from "./components/WaitlistPortal";
 import MobileSnapBeat from "./components/MobileSnapBeat";
@@ -19,40 +19,29 @@ import CtaBridge from "./components/CtaBridge";
 import ResearchQuestions from "./components/ResearchQuestions";
 import ResearchScreens from "./components/ResearchScreens";
 import ResearchCloseCta from "./components/ResearchCloseCta";
-import { motion } from "motion/react";
 import { Lock, Instagram } from "lucide-react";
 import { trackOutboundClick } from "./lib/analytics";
+import { appStoreLink, researchLink } from "./lib/product-links.mjs";
 
 export default function App() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div className="relative min-h-screen overflow-x-clip bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
       
       {/* 1. Global ambient backdrops */}
       <div
         className="absolute top-[6%] right-[2%] w-[560px] h-[560px] bg-emerald-500/[0.06] rounded-full blur-[120px] pointer-events-none animate-glow-slow-1"
-        style={{ transform: `translateY(${scrollY * 0.18}px)` }}
       />
       <div
         className="absolute top-[46%] left-[2%] w-[420px] h-[420px] bg-amber-200/[0.035] rounded-full blur-[120px] pointer-events-none animate-glow-slow-2"
-        style={{ transform: `translateY(${scrollY * 0.12}px)` }}
       />
       <div
         className="absolute bottom-[14%] right-[12%] w-[480px] h-[480px] bg-emerald-400/[0.035] rounded-full blur-[120px] pointer-events-none animate-glow-slow-3"
-        style={{ transform: `translateY(${scrollY * 0.08}px)` }}
       />
 
       {/* 2. Navigation */}
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar />
+      <main id="main-content" tabIndex={-1}>
 
       {/* 3. Hero → Questions scroll scene — foreground hero dissolves as the
              background questions resolve into focus (desktop). Mobile + reduced
@@ -93,17 +82,12 @@ export default function App() {
       <FounderExposureBridge />
 
       {/* 8. Reservation Portal Section */}
-      <section id="waitlist" style={{ scrollMarginTop: "80px" }} className="scroll-stop-section py-24 relative z-10 px-6 max-w-4xl mx-auto font-sans">
+      <section id="waitlist" className="scroll-stop-section py-14 sm:py-20 relative z-10 px-6 max-w-4xl mx-auto font-sans">
         <MobileSnapBeat />
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.35, margin: "0px 0px -12% 0px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <WaitlistPortal />
-        </motion.div>
+        <WaitlistPortal />
       </section>
+
+      </main>
 
       {/* 9. Humble and Professional Footer */}
       <footer className="footer-snap bg-slate-950 py-12 relative z-10 border-t border-white/5 font-sans">
@@ -122,8 +106,8 @@ export default function App() {
               <a href="/portfolio-x-ray" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Portfolio X-Ray</a>
               <a href="/security" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Security</a>
               <a href="#waitlist" className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">Launch updates</a>
-              <a href="https://apps.apple.com/app/aerarium/id6760155168" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("appstore", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">App Store</a>
-              <a href="https://research.aerarium.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("research", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300">Research</a>
+              <a href={appStoreLink("footer")} target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("appstore", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">App Store</a>
+              <a href={researchLink("footer")} target="_blank" rel="noopener" onClick={() => trackOutboundClick("research", "footer")} className="hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300">Research</a>
               <a href="https://www.instagram.com/aerarium.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackOutboundClick("instagram", "footer")} className="inline-flex items-center gap-1.5 hover:text-emerald-300 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">
                 <Instagram className="h-3.5 w-3.5" />
                 <span>Instagram</span>

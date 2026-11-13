@@ -1,5 +1,7 @@
+import { useStaticLayout } from "./useStaticLayout";
+import { useSceneScroll } from "./useSceneScroll";
 import React, { useRef } from "react";
-import { motion, useScroll, useReducedMotion } from "motion/react";
+import { motion, useScroll } from "motion/react";
 import { User } from "lucide-react";
 import { useReveal } from "./useReveal";
 import { trackOutboundClick } from "../lib/analytics";
@@ -51,9 +53,8 @@ const Signature = (
 );
 
 export default function FounderExposureBridge() {
-  const prefersReduced = useReducedMotion();
-  const trackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
+  const staticLayout = useStaticLayout();
+  const { trackRef, progress: scrollYProgress } = useSceneScroll(staticLayout);
 
   const h = useReveal(scrollYProgress, [0.06, 0.2]);
   const p1 = useReveal(scrollYProgress, [0.24, 0.36]);
@@ -61,23 +62,17 @@ export default function FounderExposureBridge() {
   const tags = useReveal(scrollYProgress, [0.56, 0.66]);
   const sig = useReveal(scrollYProgress, [0.7, 0.8]);
 
-  if (prefersReduced) {
-    const fade = (delay: number) => ({
-      initial: { opacity: 0, y: 16 },
-      whileInView: { opacity: 1, y: 0 },
-      viewport: { once: true, amount: 0.5 },
-      transition: { duration: 0.7, ease: EASE, delay },
-    });
+  if (staticLayout) {
     return (
-      <section id="founder-story" className="relative overflow-hidden border-t border-white/5 bg-slate-950 py-24 sm:py-32">
+      <section id="founder-story" className="relative overflow-hidden border-t border-white/5 bg-slate-950 py-14 sm:py-24">
         <div className="ambient-warm pointer-events-none absolute inset-0 opacity-40" />
         <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
-          <motion.div {...fade(0)}>{Pill}</motion.div>
-          <motion.h2 className="mt-5 font-editorial text-[32px] leading-[1.06] tracking-tight text-white sm:text-5xl" {...fade(0.06)}>{HEADLINE}</motion.h2>
-          <motion.p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300" {...fade(0.12)}>{P1}</motion.p>
-          <motion.p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-300" {...fade(0.18)}>{P2}</motion.p>
-          <motion.div className="mt-8" {...fade(0.24)}>{Tags}</motion.div>
-          <motion.div className="mt-6" {...fade(0.3)}>{Signature}</motion.div>
+          <motion.div>{Pill}</motion.div>
+          <motion.h2 className="mt-5 font-editorial text-[32px] leading-[1.06] tracking-tight text-white sm:text-5xl">{HEADLINE}</motion.h2>
+          <motion.p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300">{P1}</motion.p>
+          <motion.p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-300">{P2}</motion.p>
+          <motion.div className="mt-8">{Tags}</motion.div>
+          <motion.div className="mt-6">{Signature}</motion.div>
         </div>
       </section>
     );
@@ -85,7 +80,7 @@ export default function FounderExposureBridge() {
 
   return (
     <section id="founder-story" className="relative bg-slate-950">
-      <div ref={trackRef} className="relative h-[250svh]">
+      <div ref={trackRef} data-scroll-scene className="relative h-[250svh]">
         <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden border-t border-white/5 pt-20">
           <div className="ambient-warm pointer-events-none absolute inset-0 opacity-40" />
           <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
@@ -102,7 +97,7 @@ export default function FounderExposureBridge() {
             <motion.div className="mt-8" style={{ opacity: tags.opacity, y: tags.y }}>
               {Tags}
             </motion.div>
-            <motion.div className="mt-6" style={{ opacity: sig.opacity, y: sig.y }}>
+            <motion.div className="focus-reveal mt-6" style={{ opacity: sig.opacity, y: sig.y }}>
               {Signature}
             </motion.div>
           </div>

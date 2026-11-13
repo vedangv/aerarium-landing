@@ -10,7 +10,8 @@ Aerarium is a brand with two products under one roof: a private portfolio app (i
 ## Products
 
 - **Aerarium Portfolio** (iOS app, available on the App Store): private
-  portfolio monitoring. Read-only brokerage sync (it never places trades), a view
+  portfolio monitoring. Free to download; optional Premium is US$7.99/month or US$79.99/year and
+  includes read-only brokerage sync (it never places trades). Features include a view
   of what you really own inside your funds (Portfolio X-Ray), a Policy Score for
   how well you're following your plan, goal tracking, your written investing rules,
   and a place to record why you bought each holding.
@@ -18,7 +19,8 @@ Aerarium is a brand with two products under one roof: a private portfolio app (i
   S&P 500 and NASDAQ-100 companies, built from public filings — fund-overlap
   heatmaps, a macro dashboard, the market-implied Fed funds curve, revenue
   segments, financial charts, ownership/insider activity, earnings calendar, and
-  a stock screener. Data from SEC EDGAR and other public sources.
+  a stock screener. Data from SEC EDGAR and other public sources. Five showcase
+  tickers and macro dashboards are free; Research Pro is CA$10/month.
 
 ## Key definitions
 

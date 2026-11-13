@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "tailwindcss";
 
 @theme {
@@ -10,10 +11,47 @@
   --color-slate-950: #080b09;
   --color-slate-900: #0e1310;
   --color-slate-850: #141b16;
+  /* Muted copy still needs AA contrast on the dark cards and page background. */
+  --color-slate-500: #8291a8;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Keep fragment targets clear of the fixed header without changing the
+   scrollport inset used by native ViewTimeline animations. */
+:where(section[id], main[id]) {
+  scroll-margin-top: 96px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: #6ee7b7;
+  color: #080b09;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Keyboard focus must stay visible even before or after a desktop reveal. */
+.focus-reveal:focus-within {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.hero-foreground:focus-within {
+  background: var(--color-slate-950);
 }
 
 .scroll-stop-section {
@@ -31,17 +69,19 @@ html {
 }
 
 @media (max-width: 1023px) {
-  html {
-    scroll-padding-top: 72px;
+  :where(section[id], main[id]) {
+    scroll-margin-top: 88px;
   }
 }
 
-/* Scroll-snap removed on ALL breakpoints — it trapped the tall hero->questions
-   sticky scene (the responsive scroll scene now runs on mobile + tablet too)
-   and prevented settling on later sections. Free scrolling reads calmer and is
-   the Luffu/Poly behavior anyway. The .snap-beat anchors are now inert. */
+/* Small screens use ordinary document flow; no scroll-snap or reveal is needed. */
 
 @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
   html {
     scroll-behavior: auto;
     scroll-snap-type: none;
@@ -99,6 +139,14 @@ html {
 .animate-glow-slow-3 {
   animation: pulseGlow 20s infinite ease-in-out;
   animation-delay: 4s;
+}
+
+@media (max-width: 1023px) {
+  .animate-glow-slow-1,
+  .animate-glow-slow-2,
+  .animate-glow-slow-3 {
+    animation: none;
+  }
 }
 
 .animate-float-core {

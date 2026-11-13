@@ -1,30 +1,19 @@
+import { appStoreLink } from "../lib/product-links.mjs";
+import { useStaticLayout } from "./useStaticLayout";
 import React, { useRef } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useMotionTemplate,
-  useReducedMotion,
   type MotionValue,
 } from "motion/react";
 import { ArrowDown } from "lucide-react";
 import MobileSnapBeat from "./MobileSnapBeat";
 import { trackOutboundClick } from "../lib/analytics";
 
-/**
- * Hero → Questions scroll scene (all viewports).
- *
- * The foreground (hero) dissolves up and out of focus while the background
- * (the questions) sits behind it, faint and out of focus, then pulls into
- * focus as the hero clears — a rack-focus. The two layers never share the
- * screen prominent-and-blurred at once, so there's no muddy ghosting. The
- * questions then reveal one at a time as you keep scrolling.
- *
- * The same scene runs on phone, tablet, and desktop — only the question
- * LAYOUT differs (floating around the headline on lg+, stacked below it on
- * smaller screens). Scroll-snap is removed globally so nothing traps the
- * sticky scroll. Reduced-motion users get a plain stacked hero + questions.
- */
+/** The desktop hero dissolves into the questions. Small screens, short
+ * windows and reduced motion use two ordinary, immediately visible sections. */
 
 // 6 worries, each setting up ONE distinct later feature (no repeats), so the
 // section works when revealed one-at-a-time on scroll. Five are personal-
@@ -62,20 +51,20 @@ function HeroCopy() {
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-6 text-center sm:gap-9">
       <h1 className="font-editorial text-[40px] leading-[1.02] tracking-tight text-white min-[380px]:text-[46px] sm:text-[88px] sm:leading-[1.0] lg:text-[104px]">
-        <span className="block">Invest with intention,</span>
-        <span className="block text-emerald-200">not impulse.</span>
+        <span className="block">See what you </span>
+        <span className="block text-emerald-200">actually own.</span>
       </h1>
 
       <p className="max-w-2xl text-base leading-relaxed text-slate-300 sm:text-xl">
-        You can’t follow a plan you can’t see. Aerarium helps you understand what you
-        really own, build your investment plan, and stay disciplined for the long term.
+        See the stocks hidden inside your funds, check whether your portfolio follows
+        your plan, and track your goals — all in one iPhone app.
       </p>
 
       <div className="flex flex-col items-center gap-4 pt-2">
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           {/* Emerald = the iOS app */}
           <a
-            href="https://apps.apple.com/app/aerarium/id6760155168"
+            href={appStoreLink("hero")}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackOutboundClick("appstore", "hero")}
@@ -84,25 +73,13 @@ function HeroCopy() {
           >
             Download on the App Store
           </a>
-          {/* Cyan = the web research product */}
-          <a
-            href="https://research.aerarium.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackOutboundClick("research", "hero")}
-            className="py-3 px-7 text-sm sm:py-4 sm:px-9 sm:text-base bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 cursor-pointer text-center"
-            id="btn-hero-open-research"
-          >
-            Open Research
-          </a>
         </div>
-        <span className="text-sm text-slate-500">Now on the App Store · Research free for 5 showcase tickers</span>
+        <span className="text-sm text-slate-400">Free to download · Premium US$7.99/month or US$79.99/year</span>
+        <span className="text-sm text-slate-400">Brokerage sync requires Premium.</span>
       </div>
 
-      <p className="text-sm text-slate-500">
-        For long-term investors — whether you’re just starting or already run a playbook.
-        <span className="mx-2 text-slate-700">·</span>
-        Read-only. No trading. Not financial advice.
+      <p className="text-sm text-slate-400">
+        Read-only. Aerarium never places trades. Not financial advice.
       </p>
     </div>
   );
@@ -167,6 +144,9 @@ function Scene() {
   // ~0.16 so it doesn't sit half-present over the background during the focus
   // pull. Held invisible for the rest of the scroll.
   const heroOpacity = useTransform(scrollYProgress, [0, 0.15, 1], [1, 0, 0]);
+  // Opacity alone leaves the invisible download link in the pointer hit area.
+  // Keep keyboard focus available; the focus-reveal rule makes it visible.
+  const heroPointerEvents = useTransform(heroOpacity, opacity => opacity > 0 ? "auto" : "none");
   const heroY = useTransform(scrollYProgress, [0, 0.29, 1], [0, -110, -110]);
   const heroScale = useTransform(scrollYProgress, [0, 0.29, 1], [1, 0.96, 0.96]);
   const heroBlurPx = useTransform(scrollYProgress, [0, 0.15, 1], [0, 6, 6]);
@@ -190,7 +170,7 @@ function Scene() {
     // Tall track gives the scene room to breathe: the hero clears, the headline
     // pulls into focus, then the six questions reveal one at a time — each with a
     // generous slice of scroll so nothing feels rushed.
-    <div ref={trackRef} className="relative h-[450svh]">
+    <div ref={trackRef} data-scroll-scene className="relative h-[450svh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Warm ambient light so the dark scene reads as lit, not an empty void. */}
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
@@ -238,8 +218,8 @@ function Scene() {
 
         {/* Foreground layer: the hero, dissolving away */}
         <motion.div
-          className="absolute inset-0 z-20 flex items-center justify-center"
-          style={{ opacity: heroOpacity, y: heroY, scale: heroScale, filter: heroFilter }}
+          className="focus-reveal hero-foreground absolute inset-0 z-20 flex items-center justify-center"
+          style={{ opacity: heroOpacity, pointerEvents: heroPointerEvents, y: heroY, scale: heroScale, filter: heroFilter }}
         >
           <HeroCopy />
         </motion.div>
@@ -264,7 +244,7 @@ function StackedFallback() {
     <div>
       <header
         id="hero-stacked"
-        className="relative flex min-h-[100svh] items-center justify-center px-2 pt-28 pb-24"
+        className="relative flex min-h-[85svh] items-center justify-center px-2 pt-28 pb-14"
       >
         <MobileSnapBeat />
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(50%_42%_at_50%_34%,rgba(16,185,129,0.10)_0%,transparent_70%)]" />
@@ -274,7 +254,7 @@ function StackedFallback() {
         </div>
       </header>
 
-      <section className="relative z-10 overflow-hidden px-6 py-28">
+      <section className="relative z-10 overflow-hidden px-6 py-12 sm:py-16">
         <MobileSnapBeat />
         <div className="mx-auto max-w-md">
           <QuestionsCopy />
@@ -292,11 +272,11 @@ function StackedFallback() {
 }
 
 export default function HeroQuestionsScene() {
-  const prefersReduced = useReducedMotion();
+  const staticLayout = useStaticLayout();
 
   return (
     <section id="hero" className="relative z-10">
-      {prefersReduced ? <StackedFallback /> : <Scene />}
+      {staticLayout ? <StackedFallback /> : <Scene />}
     </section>
   );
 }

@@ -57,9 +57,9 @@ export function trackFounderListSignup({
   });
 }
 
-export function trackReferralLinkCopied(referralCount: number) {
-  track("referral_link_copied", {
+export function trackReferralLinkCopied(referralCount?: number) {
+  track("referral_link_copied", eventProperties({
     referralCount,
     ...attributionProperties(),
-  });
+  }));
 }

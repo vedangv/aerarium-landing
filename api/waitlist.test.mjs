@@ -6,7 +6,7 @@ import handler from "./waitlist.js";
 function createResponse() {
   return {
     statusCode: 200,
-    headers: {},
+    headers: { "content-type": "application/json" },
     body: undefined,
     status(code) {
       this.statusCode = code;
@@ -23,12 +23,96 @@ function createResponse() {
 }
 
 describe("waitlist API", () => {
+  it("saves a valid signup once when campaign text contains NUL or an emoji at the limit", async t => {
+    t.mock.method(console, "error", () => {});
+    let writes = 0;
+    let savedRow;
+    const res = createResponse();
+    await handler(
+      {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: { email: "user@example.com", utmCampaign: "x".repeat(95) + "🚀", utmContent: "launch\u0000video" },
+      }, res, {
+        env: { SUPABASE_URL: "https://example.invalid", SUPABASE_SERVICE_ROLE_KEY: "test-service" },
+        rateLimitStore: new Map(),
+        fetchImpl: async (_url, options) => {
+          writes++;
+          const row = JSON.parse(options.body);
+          // PostgreSQL text cannot store NUL or unpaired UTF-16 surrogates
+          // decoded from JSON. Model that rejection without a live database.
+          const invalid = Object.values(row).some(value => typeof value === "string"
+            && (value.includes("\u0000") || value !== Buffer.from(value, "utf8").toString("utf8")));
+          if (invalid) return { ok: false, status: 400 };
+          savedRow = row;
+          return { ok: true, status: 201, json: async () => [{ ...row, created_at: "2026-11-13T00:00:00.000Z" }] };
+        },
+      },
+    );
+    assert.equal(res.statusCode, 200);
+    assert.equal(writes, 1, "Malformed optional attribution must not cause write retries");
+    assert.equal(res.body.email, "user@example.com");
+    assert.equal(savedRow.utm_campaign, "x".repeat(95));
+    assert.equal(savedRow.utm_content, "launchvideo");
+  });
+
+  it("confirms a new signup without depending on a referral-count query", async () => {
+    const calls = [];
+    const res = createResponse();
+    await handler(
+      { method: "POST", body: { email: "new@example.com" }, headers: { "content-type": "application/json" } },
+      res,
+      {
+        env: { SUPABASE_URL: "https://example.invalid", SUPABASE_SERVICE_ROLE_KEY: "test-service" },
+        rateLimitStore: new Map(),
+        fetchImpl: async (_url, options) => {
+          calls.push(options.method);
+          if (options.method !== "POST") throw new Error("Referral counting is unavailable");
+          return { ok: true, status: 201, json: async () => [{ ...JSON.parse(options.body), created_at: "2026-11-13T00:00:00.000Z" }] };
+        },
+      },
+    );
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.body.email, "new@example.com");
+    assert.equal(res.body.alreadyRegistered, false);
+    assert.equal(res.body.referralCount, 0);
+    assert.equal(res.body.referralCountUnavailable, undefined);
+    assert.deepEqual(calls, ["POST"], "A confirmed write must not be repeated because an optional statistic failed");
+  });
+
+  for (const countFailure of ["network", "upstream", "missing-total", "invalid-total"]) {
+    it(`keeps an existing signup usable when its referral count has a ${countFailure} failure`, async () => {
+      const methods = [];
+      const res = createResponse();
+      await handler(
+        { method: "POST", body: { email: "existing@example.com" }, headers: { "content-type": "application/json" } },
+        res,
+        {
+          env: { SUPABASE_URL: "https://example.invalid", SUPABASE_SERVICE_ROLE_KEY: "test-service" },
+          rateLimitStore: new Map(),
+          fetchImpl: async (url, options) => {
+            methods.push(options.method);
+            if (options.method === "POST") return { ok: false, status: 409 };
+            if (url.includes("email=eq.")) return { ok: true, json: async () => [{ email: "existing@example.com", referral_code: "AER-1234ABCD", created_at: "2026-11-13T00:00:00.000Z" }] };
+            if (countFailure === "network") throw new Error("Connection failed");
+            return { ok: countFailure !== "upstream", status: countFailure === "upstream" ? 503 : 200, headers: { get: () => countFailure === "invalid-total" ? "*/not-a-count" : null }, json: async () => [] };
+          },
+        },
+      );
+      assert.equal(res.statusCode, 200);
+      assert.equal(res.body.alreadyRegistered, true);
+      assert.equal(res.body.referralCode, "AER-1234ABCD");
+      assert.equal(res.body.referralCountUnavailable, true);
+      assert.equal(res.body.referralCount, 0, "Retain the numeric field for older clients");
+      assert.deepEqual(methods, ["POST", "GET", "GET"], "Optional statistics must not repeat writes or lookups");
+    });
+  }
+
   it("rejects invalid email without calling Supabase", async () => {
     const calls = [];
     const res = createResponse();
 
     await handler(
-      { method: "POST", body: { email: "bad" }, headers: {} },
+      { method: "POST", body: { email: "bad" }, headers: { "content-type": "application/json" } },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl: (...args) => calls.push(args) },
     );
@@ -66,7 +150,7 @@ describe("waitlist API", () => {
     };
 
     await handler(
-      { method: "POST", body: { email: "User@Example.COM" }, headers: { "user-agent": "node" } },
+      { method: "POST", body: { email: "User@Example.COM" }, headers: { "content-type": "application/json", "user-agent": "node" } },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },
     );
@@ -112,7 +196,7 @@ describe("waitlist API", () => {
           utmCampaign: "launch",
           utmContent: "bio-link",
         },
-        headers: { "user-agent": "node" },
+        headers: { "content-type": "application/json", "user-agent": "node" },
       },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },
@@ -154,7 +238,7 @@ describe("waitlist API", () => {
       {
         method: "POST",
         body: { email: "legacy@example.com", utmSource: "instagram" },
-        headers: {},
+        headers: { "content-type": "application/json" },
       },
       res,
       { env: { SUPABASE_URL: "https://example.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "service" }, fetchImpl },

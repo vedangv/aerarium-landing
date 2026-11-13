@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollText } from "lucide-react";
 import CenterStageScreen from "./CenterStageScreen";
-import thesisScreenSrc from "../../assets/product-tour/thesis.png";
+import thesisScreenSrc from "../assets/optimized/thesis.webp";
 
 /**
  * Feature screen 5 — Thesis log.

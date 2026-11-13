@@ -4,6 +4,7 @@ export interface WaitlistUser {
   ticketNumber: string;
   referralCode: string;
   referralCount: number;
+  referralCountUnavailable?: boolean;
   alreadyRegistered?: boolean;
 }
 
