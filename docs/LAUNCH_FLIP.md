@@ -1,5 +1,13 @@
 # App Store launch-day flip checklist
 
+> **Status (2026-11-13): done.** The CTA flip shipped on 2026-07-20 (`f4e351f`).
+> `src/`, `index.html`, `public/llms.txt` and `scripts/seo-pages.mjs` no longer
+> mention TestFlight or beta, and the `apple-itunes-app` Smart App Banner
+> (App Store ID `6760155168`) is on the homepage and the static guides. Current
+> copy: "Download on the App Store", "Free to download · Premium US$7.99/month or
+> US$79.99/year", "Brokerage sync requires Premium." The checklist below is kept
+> as history. Still open from it: resubmit the sitemap in Google Search Console.
+
 When the iOS app is approved and live, make these changes in one commit.
 Everything TestFlight/beta-related was deliberately KEPT until then
 (decision 2026-07-08). Grep check after editing: `grep -rn "TestFlight\|beta" src/ index.html public/llms.txt scripts/seo-pages.mjs`
