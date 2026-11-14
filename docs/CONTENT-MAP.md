@@ -1,7 +1,7 @@
 # Aerarium Landing — Content Map (where to edit what)
 
 A plain-English guide to **which file holds which text** on `aerarium.app`, so you
-can change copy without hunting. Last updated: 2026-06-02.
+can change copy without hunting. Last updated: 2026-11-13.
 
 ## How to edit text
 
@@ -24,13 +24,13 @@ Order is assembled in **`src/App.tsx`**. Two products are colour-coded:
 | # | Section (what you see) | File to edit | Anchor id |
 |---|---|---|---|
 | 0 | Top nav bar + mobile menu | `src/components/Navbar.tsx` | — |
-| 1 | Hero ("Invest with intention…") + floating questions + the **two CTAs** (emerald Get Early Access, cyan Open Research) | `src/components/HeroQuestionsScene.tsx` → `HeroCopy()` | `#hero` |
+| 1 | Hero ("Invest with intention…") + floating questions + the **primary CTA** (emerald Download on the App Store) | `src/components/HeroQuestionsScene.tsx` → `HeroCopy()` | `#hero` |
 | 2 | App screen 1 — X-Ray "You own more than you think." | `src/components/HiddenExposureReveal.tsx` | `#answer` |
 | 3 | App screen 2 — Policy Score | `src/components/PolicyScoreSection.tsx` | `#policy-score` |
 | 4 | App screen 3 — Goals | `src/components/GoalsSection.tsx` | `#goals` |
 | 5 | App screen 4 — Trade Checker | `src/components/TradeCheckerSection.tsx` | `#trade-checker` |
 | 6 | App screen 5 — Thesis log | `src/components/ThesisSection.tsx` | `#thesis` |
-| 7 | App CTA bridge ("…and so much more" + TestFlight) | `src/components/CtaBridge.tsx` | — |
+| 7 | App CTA bridge ("…and so much more" + App Store) | `src/components/CtaBridge.tsx` | — |
 | 8 | Research intro ("Now ask the same of every company") | `src/components/ResearchQuestions.tsx` | `#research-questions` |
 | 9 | 5 Research web screens (Financials/Segments/Ownership/Smart-money/Macro) | `src/components/ResearchScreens.tsx` (data) + `WebScreen.tsx` (layout) | — |
 | 10 | Research closing CTA (source-first scope + Open Research) | `src/components/ResearchCloseCta.tsx` | — |
@@ -53,12 +53,12 @@ Order is assembled in **`src/App.tsx`**. Two products are colour-coded:
 
 ### 0. Navbar — `src/components/Navbar.tsx`
 - **Section links** (centered): **Portfolio, Research, Security, Founder story,
-  Founder list** — the `NAV_LINKS` array at the top. Each scrolls to a section
-  (`#answer`, `#research-questions`, `#security`, `#founder-story`, `#waitlist`).
-- **Two CTA buttons** appear top-right on desktop AND in the mobile drawer
-  (change both): cyan **"Open Research"** → research site, emerald **"Join iOS
-  Beta"** → TestFlight. On desktop they're hidden on the hero and roll up into
-  the bar once you scroll past it.
+  Launch updates** — the `NAV_LINKS` array at the top. Portfolio, Security,
+  Founder story and Launch updates scroll to a section (`#answer`, `#security`,
+  `#founder-story`, `#waitlist`); Research opens the research site in a new tab.
+- **One CTA button**, emerald **"Get the App"** → App Store, top-right on
+  desktop AND in the mobile drawer (change both). On desktop it is hidden on the
+  hero and rolls up into the bar once you scroll past it.
 - Brand word **"Aerarium"** and the logo (`src/assets/logo.png`).
 
 ### 1. Hero + Questions — `src/components/HeroQuestionsScene.tsx`
@@ -66,9 +66,9 @@ This one file owns the whole opening scroll scene. Inside it:
 - **Hero headline / subhead / buttons** → the `HeroCopy()` function.
   - Headline: "Invest with intention, / not impulse."
   - Support line: "You can't follow a plan you can't see. Aerarium helps you…"
-  - Buttons: emerald "Get Early Access" (TestFlight) + cyan "Open Research"
-    (research site); caption "Free on iOS via TestFlight · Research free in your
-    browser"
+  - Button: emerald "Download on the App Store"; captions "Free to download ·
+    Premium US$7.99/month or US$79.99/year" and "Brokerage sync requires
+    Premium."
   - Trust footnote: "For long-term investors — whether you're just starting…"
 - **The 6 floating questions** → the `QUESTIONS` array near the top. Each entry
   is `{ text, pos, ... }`; edit `text` to change wording, `pos` to move it.
@@ -92,9 +92,9 @@ screenshot import) all sits at the top of the component:
 - **Thesis log** — `ThesisSection.tsx` — "Remember why you bought it."
 
 ### 7. App CTA bridge — `src/components/CtaBridge.tsx`
-- Pill "Aerarium Portfolio", headline "…and so much more.", subheader "Come
-  experience the full app — free while it's in beta on TestFlight.", button
-  "Get Early Access".
+- Pill "Aerarium Portfolio", headline "…and so much more.", button "Download
+  on the App Store" with the line "Free to download · Premium US$7.99/month or
+  US$79.99/year".
 - The cyan pivot lead-in into the web half: "And your portfolio is only half of
   Aerarium." + the down arrow.
 
@@ -136,8 +136,8 @@ screenshot import) all sits at the top of the component:
   explicitly approved and applied.
 
 ### 14. Footer — `src/App.tsx`
-- Footer links (Privacy, Terms, Security, Founder list, TestFlight, Research,
-  Instagram) and the copyright line "© 2026 Aerarium. High-end tools for rules-
+- Footer links (Privacy, Terms, Support, Methodology, Portfolio X-Ray, Security,
+  Launch updates, App Store, Research, Instagram) and the copyright line "© 2026 Aerarium. High-end tools for rules-
   based personal investing and public-market research." → bottom of `App.tsx`.
 
 ### Browser tab title + social preview — `index.html`
@@ -156,8 +156,8 @@ screenshot import) all sits at the top of the component:
 | Wording of a floating question | `HeroQuestionsScene.tsx` → `QUESTIONS` array |
 | A question shows up too fast on scroll | `HeroQuestionsScene.tsx` → `CHIP_STAGGER` / `h-[450svh]` |
 | A feature screen's headline / graphic | that screen's file (e.g. `PolicyScoreSection.tsx`) |
-| Nav links / the two top CTAs | `Navbar.tsx` (`NAV_LINKS` + the CTA `<a>` tags) |
-| The "Join iOS Beta" / TestFlight link | search **all files** for `testflight.apple.com/join/Xna39VKU` |
+| Nav links / the top CTA | `Navbar.tsx` (`NAV_LINKS` + the CTA `<a>` tags) |
+| The App Store / Research links | `src/lib/product-links.mjs` (`APP_STORE_URL`, `RESEARCH_URL`, `appStoreLink()`, `researchLink()`); raw HTML links in `index.html` and `scripts/seo-pages.mjs` must match |
 | The Research site link | search for `research.aerarium.app` |
 | Founder name / bio | `FounderExposureBridge.tsx` |
 | Security card copy | `SecuritySection.tsx` (`ITEMS` array) |
@@ -168,10 +168,11 @@ screenshot import) all sits at the top of the component:
 | Static SEO guide titles, copy, FAQs, screenshots, or related links | `scripts/seo-pages.mjs` |
 
 ## Shared values that appear in many files (change every copy)
-- **TestFlight URL:** `https://testflight.apple.com/join/Xna39VKU`
+- **App Store URL:** `https://apps.apple.com/app/aerarium/id6760155168` (App Store ID `6760155168`, also in the `apple-itunes-app` meta tag)
 - **Research URL:** `https://research.aerarium.app/`
-- **Launch date:** June 9, 2026 — now prose only (no countdown component); grep
-  `June 2026` / `June 9` across `index.html` + `social-media-kit/`.
+- **Premium prices:** US$7.99/month, US$79.99/year; Research Pro CA$10/month (hero, CTA bridge, `index.html`, guides, `public/llms.txt`)
+- **Launch date:** the app is live on the App Store (flip done 2026-07-20); the
+  old June 9, 2026 date may remain in `social-media-kit/` only.
 - **Founder name:** "Vedang" (founder story).
 
 ## Images / assets
